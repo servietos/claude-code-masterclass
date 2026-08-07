@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Agents on Integrations IT Solutions</title>
+    <link>http://localhost:1313/tags/agents/</link>
+    <description>Recent content in Agents on Integrations IT Solutions</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 May 2025 12:00:00 +0200</lastBuildDate><atom:link href="http://localhost:1313/tags/agents/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Implementing Agents and Copilots using Semantic Kernel and Azure AI Agent Service</title>
+      <link>http://localhost:1313/classes/agents-copilots-sk-agent-service/</link>
+      <pubDate>Thu, 01 May 2025 12:00:00 +0200</pubDate>
+      
+      <guid>http://localhost:1313/classes/agents-copilots-sk-agent-service/</guid>
+      <description>
+        
+          
+            &lt;p&gt;This in-depth course that takes developers from foundational concepts to advanced multi-agent orchestration using Microsoft&amp;rsquo;s AI ecosystem. The course begins with Azure AI Foundry essentials, covering hubs, projects, and resources while establishing expertise in prompt engineering, GitHub Models, and the Agent-to-Agent (A2A) protocol fundamentals. Students dive deep into Semantic Kernel development, mastering chat completion, multi-modal capabilities, and advanced prompt templating using YAML, Handlebar, and Liquid formats.&lt;/p&gt;
+&lt;p&gt;The curriculum provides extensive coverage of Semantic Kernel&amp;rsquo;s plugin architecture, including native functions, OpenAPI integrations, and MCP server implementations, alongside Kernel Memory and vector store connectors for RAG solutions. Participants will master both the Semantic Kernel Agent and Process Frameworks, learning to build multi-step task agents with personas while choosing between Orleans and Dapr runtimes. The course emphasizes Azure AI Foundry&amp;rsquo;s multi-agent solutions, teaching students to leverage the Azure AI Agent Service with action tools (code interpreters, function calling) and knowledge tools (file search, Azure AI Search, Bing Grounding).&lt;/p&gt;
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

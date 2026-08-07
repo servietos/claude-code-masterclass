@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GitHub Copilot on Integrations IT Solutions</title>
+    <link>http://localhost:1313/tags/github-copilot/</link>
+    <description>Recent content in GitHub Copilot on Integrations IT Solutions</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Mar 2025 12:00:00 +0200</lastBuildDate><atom:link href="http://localhost:1313/tags/github-copilot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Developing Applications using GitHub Copilot</title>
+      <link>http://localhost:1313/classes/vibe-coding-github-copilot/</link>
+      <pubDate>Sat, 01 Mar 2025 12:00:00 +0200</pubDate>
+      
+      <guid>http://localhost:1313/classes/vibe-coding-github-copilot/</guid>
+      <description>
+        
+          
+            &lt;p&gt;This comprehensive one-day online class, &amp;ldquo;Developing Applications using GitHub Copilot,&amp;rdquo; is designed to help developers fully leverage GitHub Copilot&amp;rsquo;s AI-assisted development features for real-world productivity and code quality. The course begins with configuring Copilot, prompt engineering, and model selection, then moves into practical code generation, multi-file editing, and using context and chat features for efficient development.&lt;/p&gt;
+&lt;p&gt;You will learn how to use Copilot for advanced refactoring, error fixing, and automating repetitive tasks, as well as integrating Copilot into source control workflows for better collaboration. The course covers generating high-quality documentation, including code comments and architecture diagrams with Mermaid, and explores Copilot&amp;rsquo;s capabilities for unit and integration testing with Playwright MCP.&lt;/p&gt;
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

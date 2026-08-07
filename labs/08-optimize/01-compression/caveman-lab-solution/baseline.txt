@@ -1,0 +1,6 @@
+CLAUDE.md: 3313
+api/index.ts: 302
+CLAUDE.caveman.md: 1538
+Reduction: 53.6%
+CLAUDE.caveman-strict.md: 734
+Reduction (strict, rationale dropped): 77.8%

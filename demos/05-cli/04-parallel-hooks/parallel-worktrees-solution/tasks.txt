@@ -1,0 +1,2 @@
+slug-numeric|Change slugify in src/slugify.ts to preserve leading numbers so '42 Best Practices' becomes '42-best-practices'. Add a test in test/slugify.test.ts. Commit with message "feat: preserve numeric slugs".
+camel-multi|Change kebabToCamel in src/kebab-to-camel.ts to handle inputs of four or more segments. Add a test in test/kebab-to-camel.test.ts. Commit with message "feat: handle multi-segment kebab input".

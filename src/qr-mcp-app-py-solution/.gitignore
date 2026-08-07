@@ -1,0 +1,38 @@
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local databases and env files
+*.db
+.env
+
+# Local run artifacts
+*.log
+http_out*.txt
+http_err*.txt
+stdout*.txt
+stderr*.txt
+uv_*.txt
+handshake.py
+
+# OS
+.DS_Store
+Thumbs.db

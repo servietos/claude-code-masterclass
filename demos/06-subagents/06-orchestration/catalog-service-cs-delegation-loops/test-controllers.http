@@ -1,0 +1,159 @@
+@baseUrl = http://localhost:5000
+
+### Config Controller Tests
+
+### Get Config
+GET {{baseUrl}}/config
+Content-Type: application/json
+
+### Get Environment Variables
+GET {{baseUrl}}/config/getEnvVars
+Content-Type: application/json
+
+### Get Feature Flags
+GET {{baseUrl}}/config/getFeatureFlags
+Content-Type: application/json
+
+### Food Controller Tests
+
+### Get All Food Items
+GET {{baseUrl}}/food
+Content-Type: application/json
+
+### Get Food by ID (e.g., ID 1)
+GET {{baseUrl}}/food/1
+Content-Type: application/json
+
+### Create Food Item
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "Pizza",
+  "description": "Delicious cheese pizza",
+  "price": 12.99
+}
+
+### Update Food Item
+PUT {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Margherita Pizza",
+  "description": "Classic Italian pizza with fresh mozzarella",
+  "price": 14.99
+}
+
+### POST valid item - expect 201
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 100,
+  "name": "Sushi Combo",
+  "description": "Fresh salmon and tuna nigiri set",
+  "price": 19.99,
+  "inStock": 5
+}
+
+### POST duplicate ID - expect 409
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 100,
+  "name": "Duplicate Sushi Combo",
+  "description": "Should conflict with existing ID 100",
+  "price": 9.99,
+  "inStock": 1
+}
+
+### POST blank name - expect 400
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 101,
+  "name": "",
+  "description": "Missing name",
+  "price": 9.99,
+  "inStock": 5
+}
+
+### POST negative price - expect 400
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 102,
+  "name": "Broken Price Item",
+  "description": "Negative price",
+  "price": -1,
+  "inStock": 5
+}
+
+### POST negative InStock - expect 400
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 103,
+  "name": "Broken Stock Item",
+  "description": "Negative stock",
+  "price": 9.99,
+  "inStock": -1
+}
+
+### PUT valid item - expect 200
+PUT {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Hand Pulled Noodles Deluxe",
+  "description": "Updated description",
+  "price": 18.5,
+  "inStock": 10
+}
+
+### PUT unknown id - expect 404
+PUT {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 9999,
+  "name": "Ghost Item",
+  "description": "Does not exist",
+  "price": 9.99,
+  "inStock": 5
+}
+
+### PUT negative price - expect 400
+PUT {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Hand Pulled Noodles",
+  "description": "Invalid update",
+  "price": -5,
+  "inStock": 10
+}
+
+### Delete Food Item (e.g., ID 1)
+DELETE {{baseUrl}}/food/1
+Content-Type: application/json
+
+### DELETE existing item - expect 204
+DELETE {{baseUrl}}/food/3
+Content-Type: application/json
+
+### DELETE unknown id - expect 404
+DELETE {{baseUrl}}/food/9999
+Content-Type: application/json
+
+### GET unknown id - expect 404
+GET {{baseUrl}}/food/9999
+Content-Type: application/json

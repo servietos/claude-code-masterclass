@@ -1,0 +1,8 @@
+CLAUDE.verbose.md: 1725 tokens
+CLAUDE.caveman.md:  559 tokens
+Reduction: 68%
+
+5 developers x 20 turns x 20 sessions/sprint:
+  Verbose cost:  3,450,000 tokens/sprint
+  Caveman cost:  1,118,000 tokens/sprint
+  Sprint saving: 2,332,000 tokens/sprint

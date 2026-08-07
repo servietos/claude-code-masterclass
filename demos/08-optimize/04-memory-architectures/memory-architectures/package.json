@@ -1,0 +1,16 @@
+{
+  "name": "memory-architectures-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "benchmark": "tsx benchmark.ts"
+  },
+  "dependencies": {
+    "js-tiktoken": "^1.0.16"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "@types/node": "^22.15.18",
+    "tsx": "^4.19.4"
+  }
+}

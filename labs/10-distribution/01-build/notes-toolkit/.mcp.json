@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "notes-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with-requirements",
+        "mcp-server/requirements.txt",
+        "mcp-server/server.py"
+      ]
+    }
+  }
+}

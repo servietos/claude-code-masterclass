@@ -1,0 +1,5 @@
+All of the following must hold:
+- src/slugify.ts handles leading and trailing hyphens correctly (slugify('--hello--') === 'hello')
+- npm test exits 0 with no skipped tests
+- No file outside src/ was modified
+Stop after 15 turns if the condition is not yet met.

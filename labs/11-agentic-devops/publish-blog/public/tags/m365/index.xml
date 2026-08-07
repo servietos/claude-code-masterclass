@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>M365 on Integrations IT Solutions</title>
+    <link>http://localhost:1313/tags/m365/</link>
+    <description>Recent content in M365 on Integrations IT Solutions</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Dec 2016 12:00:00 +0200</lastBuildDate><atom:link href="http://localhost:1313/tags/m365/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Microsoft 365 Development Fundamentals</title>
+      <link>http://localhost:1313/classes/m356-development-basics/</link>
+      <pubDate>Thu, 01 Dec 2016 12:00:00 +0200</pubDate>
+      
+      <guid>http://localhost:1313/classes/m356-development-basics/</guid>
+      <description>
+        
+          
+            &lt;p&gt;The Workshop Microsoft 365 Development Fundamentals is a series of modules that provide an in-depth introduction to Microsoft 365 development. It covers theory, demos, hands-on labs as well as deployment and best practices.&lt;/p&gt;
+&lt;p&gt;The workshop is designed for developers aiming to implement Microsoft 365 solutions and covers the following topics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Introduction to Microsoft 365 Development: Provides an overview of Microsoft 365 services, apps, and extension patterns, and discusses the integration with Azure and app deployment processes.&lt;/p&gt;
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

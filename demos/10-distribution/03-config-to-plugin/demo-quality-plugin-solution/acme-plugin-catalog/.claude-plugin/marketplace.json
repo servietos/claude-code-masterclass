@@ -1,0 +1,20 @@
+{
+  "name": "acme-plugin-catalog",
+  "description": "Acme team catalog of shared Claude Code plugins.",
+  "owner": {
+    "name": "Acme Platform Team",
+    "email": "platform@example.com"
+  },
+  "plugins": [
+    {
+      "name": "code-quality-plugin",
+      "source": {
+        "source": "github",
+        "repo": "acme-corp/code-quality-plugin",
+        "ref": "code-quality-plugin--v1.0.0"
+      },
+      "description": "Bundles a /create-docs command, a brand-voice skill, a code-reviewer skill, and a PostToolUse metrics hook.",
+      "version": "1.0.0"
+    }
+  ]
+}

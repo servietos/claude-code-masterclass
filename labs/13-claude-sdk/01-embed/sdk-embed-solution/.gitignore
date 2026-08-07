@@ -1,0 +1,10 @@
+node_modules/
+dist/
+build/
+.venv/
+.env
+.session-id.txt
+results/
+test-results/
+playwright-report/
+*.db

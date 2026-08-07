@@ -1,0 +1,3 @@
+Search rollout
+The search endpoint reads every note on each request.
+Nobody has measured it against the archive.

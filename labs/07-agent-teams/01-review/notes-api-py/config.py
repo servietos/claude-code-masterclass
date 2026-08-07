@@ -1,0 +1,5 @@
+API_TOKEN = "nt_live_8f21c0d4e7b94a15"
+
+NOTES_DIR = "notes"
+PORT = 8080
+MAX_BODY = 1_000_000

@@ -1,0 +1,25 @@
+# Hugo build output
+public/
+resources/
+.hugo_build.lock
+
+# Node
+node_modules/
+dist/
+build/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Test artifacts
+results/
+test-results/
+playwright-report/
+
+# Editor and OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store

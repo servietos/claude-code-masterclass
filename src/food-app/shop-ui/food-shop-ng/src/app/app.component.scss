@@ -1,0 +1,44 @@
+.loginsplash {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.maingrid {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: auto;
+  grid-template-areas:
+    "navbar"
+    "mainrow";
+  height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.gdNavbar{
+  grid-area: navbar;
+}
+
+.gdMainrow{
+  grid-area: mainrow;
+  overflow-x: hidden;
+}
+
+mat-sidenav{
+  width: min(220px, 85vw);
+  min-width: 180px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+mat-sidenav-container{
+  background-color: white;
+  min-height: 90vh;
+}
+
+mat-sidenav-content{
+  padding: 0 1rem;
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-bottom: env(safe-area-inset-bottom);
+}

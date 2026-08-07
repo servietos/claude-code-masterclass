@@ -1,0 +1,17 @@
+:8090 {
+	handle /healthz {
+		respond "ok" 200
+	}
+}
+
+app.box.test {
+	tls internal
+
+	handle /healthz {
+		respond "ok" 200
+	}
+
+	handle {
+		reverse_proxy web:80
+	}
+}

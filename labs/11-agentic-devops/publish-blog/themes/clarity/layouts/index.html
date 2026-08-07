@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="grid-inverse wrap content">
+  <div>
+    {{ if .IsHome }}
+    <div class="homepage-content">{{ .Content }}</div>
+    {{ partial "author-sidebar" . }} {{ else }}
+    <ul class="posts" id="posts">
+      {{- range (.Paginate .Pages).Pages }} {{ partial "excerpt" . }} {{- end }}
+      <li>{{- template "_internal/pagination.html" . }}</li>
+    </ul>
+    {{ partial "sidebar" . }} {{ end }}
+  </div>
+</div>
+{{ end }}

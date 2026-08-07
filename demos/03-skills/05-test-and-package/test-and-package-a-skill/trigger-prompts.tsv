@@ -1,0 +1,6 @@
+fire	Review my changes in demos/03-skills/05-test-and-package/test-and-package-a-skill.
+fire	Can you go through my diff in demos/03-skills/05-test-and-package/test-and-package-a-skill before I push? I do not want to break anything.
+fire	Anything risky in what I just added under demos/03-skills/05-test-and-package/test-and-package-a-skill?
+no-fire	Write a helper in demos/03-skills/05-test-and-package/test-and-package-a-skill that formats currency for the quote output.
+no-fire	Refactor quote in demos/03-skills/05-test-and-package/test-and-package-a-skill to take an options object instead of a currency argument.
+no-fire	Explain how the cart total is calculated in demos/03-skills/05-test-and-package/test-and-package-a-skill.

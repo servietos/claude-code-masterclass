@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git *)",
+      "Bash(ls *)",
+      "Bash(diff *)",
+      "Bash(npm show *)",
+      "Bash(python dashboard/render-dashboard.py)",
+      "Skill(create-class)",
+      "Skill(create-class:*)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:json.schemastore.org)",
+      "WebFetch(domain:www.schemastore.org)",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__list_pages"
+    ],
+    "additionalDirectories": []
+  },
+  "enableAllProjectMcpServers": true
+}

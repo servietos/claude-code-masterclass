@@ -1,0 +1,137 @@
+{
+  "food": [
+    {
+      "id": 1,
+      "name": "Wiener Schnitzel",
+      "price": 18,
+      "inStock": 12,
+      "code": "WS-01",
+      "pictureUrl": "schnitzel.jpg",
+      "description": "Breaded veal cutlet served with potato salad."
+    },
+    {
+      "id": 2,
+      "name": "Pad Kra Pao",
+      "price": 11.5,
+      "inStock": 20,
+      "code": "PKP-02",
+      "pictureUrl": "pad-kra-pao.png",
+      "description": "Thai stir fried holy basil with rice and a fried egg."
+    },
+    {
+      "id": 3,
+      "name": "Hand Pulled Noodles",
+      "price": 10.9,
+      "inStock": 15,
+      "code": "HPN-03",
+      "pictureUrl": "hand-pulled-noodles.png",
+      "description": "Fresh pulled noodles in a rich beef broth."
+    },
+    {
+      "id": 4,
+      "name": "Fried Noodles",
+      "price": 9.5,
+      "inStock": 18,
+      "code": "FN-04",
+      "pictureUrl": "fried-noodels.jpg",
+      "description": "Wok fried noodles with vegetables and soy sauce."
+    },
+    {
+      "id": 5,
+      "name": "Falafel",
+      "price": 7.9,
+      "inStock": 25,
+      "code": "FL-05",
+      "pictureUrl": "falafel.jpg",
+      "description": "Chickpea fritters with hummus and flatbread."
+    },
+    {
+      "id": 6,
+      "name": "Pizza Margherita",
+      "price": 8.9,
+      "inStock": 30,
+      "code": "PM-06",
+      "pictureUrl": "pizza.jpg",
+      "description": "Tomato, mozzarella and fresh basil."
+    },
+    {
+      "id": 7,
+      "name": "Zander Fillet",
+      "price": 21.5,
+      "inStock": 8,
+      "code": "ZF-07",
+      "pictureUrl": "zander.jpg",
+      "description": "Pan fried zander with butter potatoes."
+    }
+  ],
+  "orders": [
+    {
+      "id": 1,
+      "Total": 48,
+      "customer": {
+        "name": "Alexander Pajer",
+        "email": "alexander.pajer@integrations.at",
+        "phone": "+43 664 1234567"
+      },
+      "payment": {
+        "type": "Credit Card",
+        "account": "**** **** **** 1234"
+      },
+      "items": [
+        {
+          "id": 2,
+          "name": "Blini with Salmon",
+          "price": 9,
+          "quantity": 2
+        },
+        {
+          "id": 1,
+          "name": "Butter Chicken",
+          "price": 12,
+          "quantity": 1
+        },
+        {
+          "id": 3,
+          "name": "Wiener Schnitzel",
+          "price": 18,
+          "quantity": 1
+        }
+      ],
+      "status": "cart"
+    },
+    {
+      "id": 2,
+      "Total": 0,
+      "customer": {
+        "name": "Alexander Pajer",
+        "email": "alexander.pajer@integrations.at",
+        "address": "Hauptstraße 1, Wien, Austria"
+      },
+      "payment": {
+        "type": "Credit Card",
+        "account": "**** **** **** 1234"
+      },
+      "items": [
+        {
+          "id": 2,
+          "name": "Blini with Salmon",
+          "price": 9,
+          "quantity": 2
+        },
+        {
+          "id": 1,
+          "name": "Butter Chicken",
+          "price": 12,
+          "quantity": 1
+        },
+        {
+          "id": 3,
+          "name": "Wiener Schnitzel",
+          "price": 18,
+          "quantity": 1
+        }
+      ],
+      "status": "cart"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "command-toolkit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Release notes CLI used as the automation target for custom slash commands",
+  "scripts": {
+    "notes": "node src/notes.mjs",
+    "test": "node --test"
+  }
+}

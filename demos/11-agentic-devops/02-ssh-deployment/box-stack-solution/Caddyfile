@@ -1,0 +1,17 @@
+:8090 {
+	handle /healthz {
+		respond "ok" 200
+	}
+}
+
+box.example.at {
+	tls internal
+
+	handle /healthz {
+		respond "ok" 200
+	}
+
+	handle {
+		reverse_proxy app:8080
+	}
+}

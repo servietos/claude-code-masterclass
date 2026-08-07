@@ -1,0 +1,14 @@
+node_modules/
+.venv/
+__pycache__/
+dist/
+build/
+public/
+resources/
+*.db
+.env
+results/
+test-results/
+playwright-report/
+experiments/runs/
+metrics.json

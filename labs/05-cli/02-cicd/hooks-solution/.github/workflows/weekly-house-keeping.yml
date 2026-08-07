@@ -1,0 +1,36 @@
+name: Weekly house-keeping
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"   # every Monday at 09:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  housekeeping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run housekeeping agent
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          claude -p --max-turns 6 --allowed-tools "Read,Bash(git:*),Bash(npm:*),Bash(gh issue *)" "
+            Check the repo for housekeeping items:
+              - Open issues older than 60 days with no activity: list them with their numbers and ages.
+              - Stale branches (no commits in 30 days): list them.
+              - Direct dependencies whose latest version is more than one major behind: list them.
+
+            Open ONE issue titled 'Weekly housekeeping report ($(date +%Y-%m-%d))' with the findings as a structured markdown body. Use gh issue create.
+          "
+        # Note: gh CLI is preinstalled on ubuntu-latest runners.

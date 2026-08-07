@@ -1,0 +1,26 @@
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Local databases and env files
+*.db
+.env
+
+# Local run artifacts
+*.log
+http_out*.txt
+http_err*.txt
+stdout*.txt
+stderr*.txt

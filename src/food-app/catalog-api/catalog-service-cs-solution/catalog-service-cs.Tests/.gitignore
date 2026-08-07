@@ -1,0 +1,15 @@
+bin/
+obj/
+node_modules/
+.venv/
+dist/
+build/
+logs/
+.env
+*.db
+*.db-shm
+*.db-wal
+TestResults/
+*.trx
+coverage*.json
+coverage*.xml

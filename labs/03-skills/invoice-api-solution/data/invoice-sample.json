@@ -1,0 +1,23 @@
+{
+  "number": "INV-2026-0042",
+  "issued": "2026-07-29",
+  "due": "2026-08-12",
+  "currency": "EUR",
+  "taxRate": 0.2,
+  "seller": {
+    "name": "Integrations GmbH",
+    "address": "Hauptstrasse 12, 1010 Wien",
+    "vatId": "ATU12345678",
+    "iban": "AT61 1904 3002 3457 3201"
+  },
+  "buyer": {
+    "name": "Nordwind Handels GmbH",
+    "address": "Ringstrasse 4, 5020 Salzburg",
+    "vatId": "ATU87654321"
+  },
+  "lines": [
+    { "description": "Claude Code masterclass, two days", "quantity": 2, "unitPrice": 3200 },
+    { "description": "Harness review workshop", "quantity": 1, "unitPrice": 1450 },
+    { "description": "Follow-up support, hours", "quantity": 8, "unitPrice": 125 }
+  ]
+}

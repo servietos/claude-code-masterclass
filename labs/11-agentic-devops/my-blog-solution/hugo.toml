@@ -1,0 +1,4 @@
+baseURL = 'http://localhost:8083/'
+locale = 'en-us'
+title = 'My New Hugo Project'
+theme = "clarity"

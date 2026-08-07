@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vibe Coding on Integrations IT Solutions</title>
+    <link>http://localhost:1313/tags/vibe-coding/</link>
+    <description>Recent content in Vibe Coding on Integrations IT Solutions</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Mar 2025 12:00:00 +0200</lastBuildDate><atom:link href="http://localhost:1313/tags/vibe-coding/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Vibe Coding with GitHub Copilot</title>
+      <link>http://localhost:1313/classes/vibe-coding-github-copilot/</link>
+      <pubDate>Sat, 01 Mar 2025 12:00:00 +0200</pubDate>
+      
+      <guid>http://localhost:1313/classes/vibe-coding-github-copilot/</guid>
+      <description>
+        
+          
+            &lt;p&gt;This comprehensive one-day online class, &amp;ldquo;Vibe Coding with GitHub Copilot,&amp;rdquo; equips participants with advanced skills to maximize productivity using AI-assisted development.&lt;/p&gt;
+&lt;p&gt;It begins with a thorough introduction to GitHub Copilot, exploring its configuration options, prompt engineering techniques, and comparing various AI models before diving into practical code generation across multiple files and contexts. The next module focuses on extending GitHub Copilot with agent mode and custom tools via the Model Context Protocol, leveraging AI for git operations and source control, and applying Copilot to refactoring tasks and error resolution. Participants will also learn to generate high-quality documentation including code comments and architecture diagrams using Mermaid.&lt;/p&gt;
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

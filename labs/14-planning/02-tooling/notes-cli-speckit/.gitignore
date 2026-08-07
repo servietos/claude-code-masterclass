@@ -1,0 +1,10 @@
+.specify/
+.claude/
+specs/
+node_modules/
+.venv/
+dist/
+build/
+*.db
+.env
+logs/

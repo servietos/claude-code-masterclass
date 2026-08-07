@@ -1,0 +1,3 @@
+Audit the codebase in src/ and test/ for code quality and edge cases.
+If you find ANY issue, end your response with LINT_FAIL.
+If it is perfectly clean, end with LINT_PASS.

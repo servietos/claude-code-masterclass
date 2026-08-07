@@ -1,0 +1,25 @@
+obj/
+bin/
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+src/food-app/catalog-api/catalog-service-cs/food.db-shm
+src/food-app/catalog-api/catalog-service-cs/food.db-wal
+
+# Slide/workbook build artifacts (regenerable)
+slides/dist/
+slides/notes/_workbook.html
+slides/notes/_probe.*
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+.claude/worktrees/
+
+demos/12-managed-agents/.env
+labs/12-managed-agents/.env
+demos/13-claude-sdk/.env
+labs/13-claude-sdk/**/.env

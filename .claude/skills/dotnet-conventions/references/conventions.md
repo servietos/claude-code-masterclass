@@ -1,0 +1,82 @@
+## Naming Conventions
+
+- Use `PascalCase` for all public classes, methods, and properties
+- Use `camelCase` for private fields and local variables
+
+## Documentation & Structure
+
+- Create comprehensive XML documentation comments for all public classes, interfaces, methods, and properties
+- Include parameter descriptions and return value descriptions in XML comments
+- Follow the established namespace structure: {Core|Console|App|Service}.{Feature}
+
+## Design Patterns & Architecture
+
+- Use .NET primary constructors with no private backing fields unless additional logic is required; migrate existing classes to primary constructors where feasible
+- Use primary constructor syntax for dependency injection (e.g., `public class MyClass(IDependency dependency)`)
+- Implement the Command Handler pattern with generic base classes (e.g., `CommandHandler<TOptions>`)
+- Use interface segregation with clear naming conventions (prefix interfaces with 'I')
+- Follow the Factory pattern for complex object creation.
+
+## Dependency Injection & Services
+
+- Use constructor dependency injection with null checks via ArgumentNullException
+- Register services with appropriate lifetimes (Singleton, Scoped, Transient)
+- Use Microsoft.Extensions.DependencyInjection patterns
+- Implement service interfaces for testability
+
+## Resource Management & Localization
+
+- Use ResourceManager for localized messages and error strings
+- Separate LogMessages and ErrorMessages resource files
+- Access resources via `_resourceManager.GetString("MessageKey")`
+
+## Async/Await Patterns
+
+- Use async/await for all I/O operations and long-running tasks
+- Return Task or Task<T> from async methods
+- Use ConfigureAwait(false) where appropriate
+- Handle async exceptions properly
+
+## Testing Standards
+
+- Use xUnit with FluentAssertions for assertions and NSubstitute for mocking, or the project's chosen equivalents
+- Follow AAA pattern (Arrange, Act, Assert)
+- Test both success and failure scenarios
+- Include null parameter validation tests
+
+See [`dotnet-testing`](dotnet-testing.md) for the full xUnit / FluentAssertions / NSubstitute reference.
+
+## Configuration & Settings
+
+- Use strongly-typed configuration classes with data annotations
+- Implement validation attributes (Required, NotEmptyOrWhitespace)
+- Use IConfiguration binding for settings
+- Support appsettings.json configuration files
+
+## Error Handling & Logging
+
+- Use structured logging with Microsoft.Extensions.Logging
+- Include scoped logging with meaningful context
+- Throw specific exceptions with descriptive messages
+- Use try-catch blocks for expected failure scenarios
+
+## Performance & Security
+
+- Use C# 14 features and .NET 10 optimizations where applicable
+- Implement proper input validation and sanitization
+- Use parameterized queries for database operations
+- Follow secure coding practices for AI/ML operations
+
+## Application Lifecycle
+
+- Before starting the application, check if an instance is already running; if it is running under `dotnet watch run`, reuse that instance instead of starting a new one
+- Never start the application as a background process
+- Always dispose of resources properly when the application closes
+
+## Code Quality
+
+- Ensure SOLID principles compliance
+- Avoid code duplication through base classes and utilities
+- Use meaningful names that reflect domain concepts
+- Keep methods focused and cohesive
+- Implement proper disposal patterns (`IDisposable` / `IAsyncDisposable`) for all resources

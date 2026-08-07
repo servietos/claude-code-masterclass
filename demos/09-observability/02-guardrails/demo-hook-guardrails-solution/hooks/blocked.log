@@ -1,0 +1,8 @@
+2026-07-23T07:19:51+02:00 BLOCKED (recursive forced rm): rm -rf build/
+2026-07-23T07:19:52+02:00 BLOCKED (recursive forced rm): rm -rf .
+2026-07-23T07:19:52+02:00 BLOCKED (recursive forced Remove-Item): Remove-Item build -Recurse -Force
+2026-07-23T07:19:52+02:00 BLOCKED (git push --force): git push --force origin main
+2026-07-23T07:19:52+02:00 BLOCKED (git push -f): git push -f origin main
+2026-07-23T07:19:52+02:00 BLOCKED (git reset --hard): git reset --hard HEAD~1
+2026-07-23T07:19:52+02:00 BLOCKED (fork bomb signature): :(){ :|:& };:
+2026-07-23T07:19:53+02:00 BLOCKED (recursive forced rm): rm -fr /

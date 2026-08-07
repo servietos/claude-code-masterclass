@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dapr on Integrations IT Solutions</title>
+    <link>http://localhost:1313/tags/dapr/</link>
+    <description>Recent content in Dapr on Integrations IT Solutions</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Jun 2023 12:00:00 +0200</lastBuildDate><atom:link href="http://localhost:1313/tags/dapr/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Designing &amp; Implementing Cloud Native Applications using Microsoft Azure</title>
+      <link>http://localhost:1313/classes/cloud-native-apps/</link>
+      <pubDate>Thu, 01 Jun 2023 12:00:00 +0200</pubDate>
+      
+      <guid>http://localhost:1313/classes/cloud-native-apps/</guid>
+      <description>
+        
+          
+            &lt;p&gt;This five days comprehensive workshop guides you through the journey of designing and implementing cloud-native applications using Microsoft Azure&amp;rsquo;s powerful ecosystem.&lt;/p&gt;
+&lt;p&gt;Learn how to evolve from monolithic architectures to scalable microservices, master containerization with Azure Container Apps, leverage .NET Aspire and Dapr for distributed application development, implement event-driven architectures, and optimize application performance and security.&lt;/p&gt;
+&lt;p&gt;You&amp;rsquo;ll gain hands-on experience with modern cloud patterns, Azure services integration, and best practices for building resilient, scalable applications in the cloud.&lt;/p&gt;
+          
+          
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

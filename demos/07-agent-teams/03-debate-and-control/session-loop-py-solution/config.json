@@ -1,0 +1,5 @@
+{
+  "maxTurns": 20,
+  "transcript": "transcript.log",
+  "prompt": "you> "
+}

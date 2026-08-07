@@ -1,0 +1,13 @@
+{
+  "name": "autoresearch-loop-demo",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "score": "tsx score.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "@types/node": "^22.15.18",
+    "tsx": "^4.19.4"
+  }
+}

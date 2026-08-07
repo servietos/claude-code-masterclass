@@ -1,0 +1,7 @@
+name: box-stack
+
+services:
+  app:
+    build: ./app
+    image: box-app:latest
+    restart: unless-stopped

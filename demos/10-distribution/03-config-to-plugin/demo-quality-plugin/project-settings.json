@@ -1,0 +1,10 @@
+{
+  "model": "claude-sonnet-4-6",
+  "permissions": {
+    "allow": ["Read", "Grep", "Glob", "Edit", "Write"],
+    "deny": ["Bash(rm -rf:*)", "Bash(git push --force:*)"]
+  },
+  "env": {
+    "CODE_QUALITY_METRICS_ENABLED": "true"
+  }
+}

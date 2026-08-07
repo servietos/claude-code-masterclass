@@ -1,0 +1,14 @@
+{
+  "host": "localhost",
+  "sshPort": 2222,
+  "user": "deploy",
+  "keyFile": "deploy/target-box/keys/box_key",
+  "stackPath": "/opt/react-devops",
+  "appHost": "app.box.test",
+  "services": {
+    "web": { "image": "react-devops:v2", "internalPort": 80 },
+    "caddy": { "image": "caddy:2-alpine", "publishedPorts": [80, 443] }
+  },
+  "verifyUrls": ["https://app.box.test:8443/", "https://app.box.test:8443/healthz"],
+  "caCert": "deploy/box-local-ca.crt"
+}

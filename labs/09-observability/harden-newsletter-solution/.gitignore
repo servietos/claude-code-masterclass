@@ -1,0 +1,15 @@
+.env
+newsletter.md
+THREATS.md
+hooks/blocked.log
+hooks/session-counter.txt
+node_modules/
+.venv/
+dist/
+build/
+public/
+resources/
+*.db
+results/
+test-results/
+playwright-report/

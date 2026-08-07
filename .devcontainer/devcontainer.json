@@ -1,0 +1,134 @@
+{
+  "name": "Agentic SW Engineering",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "remoteUser": "vscode",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace",
+  "runArgs": [
+    "--network=host"
+  ],
+  "containerEnv": {
+    "NODE_ENV": "development"
+  },
+  "remoteEnv": {
+    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}"
+  },
+  "mounts": [
+    "source=claude-code-masterclass-claude-home,target=/home/vscode/.claude,type=volume"
+  ],
+  "features": {
+    "ghcr.io/devcontainers/features/node:2.0.0": {
+      "version": "22.14.0"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    },
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "jdkDistro": "ms",
+      "installMaven": true
+    },
+    "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/azure/azure-dev/azd:latest": {},
+    "ghcr.io/devcontainers/features/terraform:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/powershell:2.0.2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Java extensions
+        "vscjava.vscode-java-pack",
+        "vmware.vscode-spring-boot",
+        "vscjava.vscode-spring-initializr",
+        "vscjava.vscode-spring-boot-dashboard",
+        // .NET extensions
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "ms-dotnettools.vscodeintellicode-csharp",
+        "aliasadidev.nugetpackagemanagergui",
+        "docker.docker",
+        // Web, Angular and TypeScript extensions
+        "angular.ng-template",
+        "esbenp.prettier-vscode",
+        // General development extensions
+        "mdickin.markdown-shortcuts",
+        "github.copilot",
+        "github.copilot-chat",
+        "github.vscode-pull-request-github",
+        "streetsidesoftware.code-spell-checker",
+        "humao.rest-client",
+        "kevinrose.vsc-python-indent",
+        "hashicorp.terraform",
+        "ms-azuretools.vscode-azurecontainerapps",
+        "ms-azuretools.vscode-azurefunctions",
+        "ms-azuretools.vscode-bicep",
+        "ms-azuretools.vscode-docker",
+        "ms-playwright.playwright",
+        "ms-python.debugpy",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.vscode-python-envs",
+        "ms-vscode.azurecli",
+        "anthropic.claude-code",
+        "cjnoname.claude-terminal",
+        "TeamsDevApp.vscode-ai-foundry",
+        "vstirbu.vscode-mermaid-preview",
+        "digitarald.agent-memory",
+        "bierner.markdown-mermaid"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": "explicit"
+        },
+        "csharp.format.enable": true,
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[csharp]": {
+          "editor.defaultFormatter": "ms-dotnettools.csharp"
+        },
+        "[java]": {
+          "editor.defaultFormatter": "redhat.java"
+        },
+        "java.configuration.updateBuildConfiguration": "automatic",
+        "spring-boot.ls.java.home": "/usr/local/sdkman/candidates/java/current"
+      }
+    }
+  },
+  "forwardPorts": [
+    1313,
+    3000,
+    3002,
+    3003,
+    4173,
+    4200,
+    5000,
+    5001,
+    5173,
+    6274,
+    8000,
+    47002
+  ],
+  "portsAttributes": {
+    "1313": { "label": "Hugo dev server (labs/11-agentic-devops)" },
+    "3000": { "label": "Node demo servers" },
+    "3002": { "label": "QR MCP server (.mcp.json)" },
+    "3003": { "label": "Map MCP server (labs/04-mcp/03-mcp-app)" },
+    "4173": { "label": "Vite preview" },
+    "4200": { "label": "Angular dev server (food-shop-ng)" },
+    "5000": { "label": "ASP.NET Kestrel HTTP" },
+    "5001": { "label": "ASP.NET Kestrel HTTPS" },
+    "5173": { "label": "Vite dev server (food-shop-react)" },
+    "6274": { "label": "MCP Inspector" },
+    "8000": { "label": "Python MCP / uvicorn" },
+    "47002": { "label": "HR MCP server (demos/04-mcp)" }
+  },
+  "postCreateCommand": "bash ./.devcontainer/post-create.sh"
+}

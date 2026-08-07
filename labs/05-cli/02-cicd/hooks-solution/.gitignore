@@ -1,0 +1,10 @@
+node_modules/
+.venv/
+dist/
+build/
+*.db
+.env
+logs/
+*.log
+out/
+tmp/

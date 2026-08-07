@@ -1,0 +1,29 @@
+baseURL = 'https://blog.integrations.at/'
+languageCode = 'en-us'
+title = 'Integrations IT Solutions'
+theme = 'clarity'
+
+[params]
+  introDescription = "Software Engineering, Consulting & Training for Agentic AI, Azure & Microsoft 365"
+  introURL = "https://www.integrations.at"
+  dateFormat = "Jan, 2006"
+  lastmodSeparator = " - Last Updated: "
+  [params.Author]
+    name = "Alexander Kastil"
+    photo = "images/alexander.jpg"
+
+[menu]
+  [[menu.main]]
+    name = "Blog"
+    url = "/posts/"
+    weight = 1
+
+  [[menu.main]]
+    name = "Classes"
+    url = "/classes/"
+    weight = 2
+
+  [[menu.main]]
+    name = "Services"
+    url = "https://www.integrations.at"
+    weight = 3

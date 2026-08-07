@@ -1,0 +1,18 @@
+{
+  "entities": [
+    { "id": "INC-001", "type": "incident", "date": "2026-03-12", "severity": "P1", "owner": "Maria Chen" },
+    { "id": "INC-002", "type": "incident", "date": "2026-04-03", "severity": "P2", "owner": "James Park" },
+    { "id": "INC-003", "type": "incident", "date": "2026-04-28", "severity": "P2", "owner": "Sofia Reyes" },
+    { "id": "ADR-001", "type": "decision", "date": "2026-02-15", "topic": "event-sourcing-orders" },
+    { "id": "ADR-002", "type": "decision", "date": "2026-03-20", "topic": "redis-session-cache" },
+    { "id": "ADR-003", "type": "decision", "date": "2026-05-01", "topic": "url-versioning" },
+    { "id": "PaymentsService", "type": "component" },
+    { "id": "AUTH_TOKEN_TTL_HOURS", "type": "config" }
+  ],
+  "relations": [
+    { "from": "INC-001", "relation": "triggered", "to": "ADR-001" },
+    { "from": "INC-001", "relation": "root_cause", "to": "PaymentsService", "detail": "pool exhaustion: max 5, peak 40 concurrent" },
+    { "from": "INC-002", "relation": "root_cause", "to": "AUTH_TOKEN_TTL_HOURS", "detail": "staging 1h vs prod 24h mismatch" },
+    { "from": "ADR-002", "relation": "depends_on", "to": "AUTH_TOKEN_TTL_HOURS", "detail": "Redis TTL must match auth TTL" }
+  ]
+}

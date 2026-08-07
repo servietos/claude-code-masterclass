@@ -1,0 +1,17 @@
+services:
+  box:
+    build: .
+    container_name: box-target
+    privileged: true
+    tmpfs:
+      - /run
+      - /run/lock
+    volumes:
+      - box-docker:/var/lib/docker
+    ports:
+      - "2222:22"
+      - "8080:80"
+      - "8443:443"
+
+volumes:
+  box-docker:

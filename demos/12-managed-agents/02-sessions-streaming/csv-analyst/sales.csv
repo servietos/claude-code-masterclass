@@ -1,0 +1,11 @@
+date,region,product,units,revenue
+2026-01-15,EMEA,Pro Plan,42,8400
+2026-01-22,Americas,Pro Plan,67,13400
+2026-02-03,APAC,Starter,120,3600
+2026-02-14,EMEA,Enterprise,8,16000
+2026-02-28,Americas,Pro Plan,51,10200
+2026-03-09,APAC,Pro Plan,33,6600
+2026-03-19,EMEA,Starter,89,2670
+2026-03-30,Americas,Enterprise,5,10000
+2026-04-08,EMEA,Pro Plan,58,11600
+2026-04-21,Americas,Enterprise,12,24000

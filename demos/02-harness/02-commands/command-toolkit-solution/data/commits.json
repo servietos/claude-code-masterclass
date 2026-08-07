@@ -1,0 +1,16 @@
+[
+  { "type": "feat", "scope": "player", "subject": "add gapless playback between tracks", "author": "mira.holt" },
+  { "type": "feat", "scope": "library", "subject": "support smart playlists with saved filters", "author": "dev.okoye" },
+  { "type": "fix", "scope": "player", "subject": "stop volume reset when switching output device", "author": "mira.holt" },
+  { "type": "fix", "scope": "sync", "subject": "retry offline uploads with exponential backoff", "author": "lena.brandt" },
+  { "type": "fix", "scope": "ui", "subject": "keep queue drawer scroll position on reorder", "author": "tomas.reyes" },
+  { "type": "perf", "scope": "library", "subject": "index artwork lazily on first render", "author": "dev.okoye" },
+  { "type": "docs", "scope": "api", "subject": "document the playlist export endpoint", "author": "lena.brandt" },
+  { "type": "docs", "scope": "readme", "subject": "clarify offline cache limits", "author": "tomas.reyes" },
+  { "type": "refactor", "scope": "sync", "subject": "extract conflict resolution into its own module", "author": "lena.brandt" },
+  { "type": "test", "scope": "player", "subject": "cover crossfade boundaries with unit tests", "author": "mira.holt" },
+  { "type": "chore", "scope": "deps", "subject": "bump the audio decoder to 4.2.0", "author": "dev.okoye" },
+  { "type": "feat", "scope": "ui", "subject": "add compact mode for narrow windows", "author": "tomas.reyes" },
+  { "type": "fix", "scope": "library", "subject": "correct duration parsing for variable bitrate files", "author": "dev.okoye" },
+  { "type": "chore", "scope": "ci", "subject": "cache the node modules directory between runs", "author": "mira.holt" }
+]

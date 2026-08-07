@@ -1,0 +1,28 @@
+{
+  "label": "baseline",
+  "runs": 3,
+  "identicalOutputs": 0,
+  "sectionsPresent": 3,
+  "evaluatorEvidence": 0,
+  "abortRate": 0,
+  "perRun": [
+    {
+      "file": "run-1.md",
+      "aborted": false,
+      "sectionsPresent": 3,
+      "evaluatorEvidence": false
+    },
+    {
+      "file": "run-2.md",
+      "aborted": false,
+      "sectionsPresent": 3,
+      "evaluatorEvidence": false
+    },
+    {
+      "file": "run-3.md",
+      "aborted": false,
+      "sectionsPresent": 3,
+      "evaluatorEvidence": false
+    }
+  ]
+}

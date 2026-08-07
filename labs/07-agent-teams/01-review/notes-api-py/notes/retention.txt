@@ -1,0 +1,3 @@
+Retention policy draft
+Archived notes are kept for 90 days.
+Deletion runs weekly and is not audited yet.
