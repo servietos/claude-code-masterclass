@@ -10,7 +10,6 @@ from pathlib import Path
 from math import log
 from collections import defaultdict
 
-# ============ CONFIGURATION ============
 DATA_DIR = Path(__file__).parent.parent / "data"
 MAX_RESULTS = 3
 
@@ -77,8 +76,6 @@ CSV_CONFIG = {
     }
 }
 
-# Output columns whose content (code samples, checklists) must never be
-# hard-truncated for display -- truncating mid-snippet destroys the value.
 UNTRUNCATED_COLS = {
     "Code Example Good", "Code Example Bad", "Code Good", "Code Bad",
     "Implementation Checklist", "Design System Variables", "CSS Import",
@@ -110,7 +107,6 @@ STACK_CONFIG = {
     "uwp":              {"file": "stacks/uwp.csv"},
 }
 
-# Common columns for all stacks
 _STACK_COLS = {
     "search_cols": ["Category", "Guideline", "Description", "Do", "Don't"],
     "output_cols": ["Category", "Guideline", "Description", "Do", "Don't", "Code Good", "Code Bad", "Severity", "Docs URL"]
@@ -118,19 +114,11 @@ _STACK_COLS = {
 
 AVAILABLE_STACKS = list(STACK_CONFIG.keys())
 
-
-# ============ TOKENIZATION ============
-# Common two-letter/three-letter words that add noise without adding search
-# signal. Deliberately short -- domain-relevant short tokens (ui, ux, ai,
-# css, 3d, js, os, md, gsap) must stay searchable, which is why we don't
-# filter purely by length.
 _STOPWORDS = {
     "to", "in", "on", "at", "is", "of", "by", "or", "an", "if", "no", "so",
     "do", "be", "we", "it", "as", "the", "and", "for", "are", "was",
 }
 
-# Query/corpus normalization so common spelling variants match each other.
-# Keep this a plain dict (stdlib only, no fuzzy-matching dependency).
 _SYNONYMS = {
     "e-commerce": "ecommerce",
     "dark-mode": "dark",
@@ -149,15 +137,12 @@ _SYNONYMS = {
     "ux/ui": "ux ui",
 }
 
-
 def _normalize(text):
     """Apply synonym substitution before tokenizing."""
     for variant, canonical in _SYNONYMS.items():
         text = text.replace(variant, canonical)
     return text
 
-
-# ============ BM25 IMPLEMENTATION ============
 class BM25:
     """BM25 ranking algorithm for text search"""
 
@@ -170,7 +155,7 @@ class BM25:
         self.idf = {}
         self.doc_freqs = defaultdict(int)
         self.N = 0
-        self._term_freqs = []  # precomputed per-doc term frequencies
+        self._term_freqs = []
 
     def tokenize(self, text):
         """Lowercase, normalize synonyms, split, remove punctuation, filter stopwords"""
@@ -225,14 +210,8 @@ class BM25:
         """All indexed terms, for suggestion/typo-recovery purposes."""
         return list(self.idf.keys())
 
-
-# ============ CSV / INDEX CACHE ============
-# Data files are small and reused across multiple domain searches within a
-# single --design-system run; avoid re-reading + re-indexing the same file
-# repeatedly in one process.
-_csv_cache = {}   # filepath -> (mtime, rows)
-_bm25_cache = {}  # (filepath, tuple(search_cols)) -> (mtime, BM25 instance)
-
+_csv_cache = {}
+_bm25_cache = {}
 
 def _load_csv(filepath):
     """Load CSV and return list of dicts, with mtime-based caching."""
@@ -246,7 +225,6 @@ def _load_csv(filepath):
 
     _csv_cache[filepath] = (mtime, rows)
     return rows
-
 
 def _get_bm25(filepath, search_cols, data):
     """Fitted BM25 index for this file+columns, with mtime-based caching."""
@@ -262,8 +240,6 @@ def _get_bm25(filepath, search_cols, data):
     _bm25_cache[key] = (mtime, bm25)
     return bm25
 
-
-# ============ SEARCH FUNCTIONS ============
 def _search_csv(filepath, search_cols, output_cols, query, max_results):
     """Core search function using BM25. Returns (results, bm25_or_none)."""
     if not filepath.exists():
@@ -288,7 +264,6 @@ def _search_csv(filepath, search_cols, output_cols, query, max_results):
 
     return results, bm25
 
-
 def _suggest_terms(bm25, query, limit=6):
     """Nearest known vocabulary terms for a query that returned 0 hits,
     so the caller can retry instead of silently reporting nothing."""
@@ -305,8 +280,6 @@ def _suggest_terms(bm25, query, limit=6):
                 candidates.append(term)
                 break
 
-    # Stable de-dup, most frequent terms first (doc_freqs available via idf keys only,
-    # so just de-dup preserving discovery order).
     seen = set()
     ordered = []
     for term in candidates:
@@ -315,11 +288,6 @@ def _suggest_terms(bm25, query, limit=6):
             ordered.append(term)
     return ordered[:limit]
 
-
-# Load the product-domain keyword list from products.csv at import time so
-# it stays in sync with the data instead of needing manual updates to a
-# hardcoded list. Falls back to a small built-in seed if the file is
-# missing (e.g. package built without data/).
 def _load_product_keywords():
     seed = ["saas", "ecommerce", "e-commerce", "fintech", "healthcare", "gaming",
             "portfolio", "crypto", "dashboard", "fitness", "marketplace"]
@@ -340,9 +308,7 @@ def _load_product_keywords():
                 keywords.add(kw)
     return sorted(keywords, key=len, reverse=True)
 
-
 _DOMAIN_KEYWORDS = None
-
 
 def _domain_keywords():
     global _DOMAIN_KEYWORDS
@@ -365,14 +331,10 @@ def _domain_keywords():
     }
     return _DOMAIN_KEYWORDS
 
-
-# Domains checked in this fixed order when scores tie, so results are
-# deterministic instead of depending on dict/hash ordering.
 _DOMAIN_TIEBREAK_ORDER = [
     "ux", "product", "style", "color", "typography", "google-fonts",
     "chart", "landing", "icons", "gsap", "react", "web",
 ]
-
 
 def detect_domain(query, return_scores=False):
     """Auto-detect the most relevant domain from query.
@@ -389,7 +351,6 @@ def detect_domain(query, return_scores=False):
         total = 0.0
         for kw in keywords:
             if re.search(r'\b' + re.escape(kw) + r'\b', query_lower):
-                # weight = 1 point per word in the keyword phrase
                 total += max(1, len(kw.split()))
         scores[domain] = total
 
@@ -406,7 +367,6 @@ def detect_domain(query, return_scores=False):
         runner_up = ranked[1][0] if len(ranked) > 1 and ranked[1][1] > 0 else None
         return result, runner_up
     return result
-
 
 def search(query, domain=None, max_results=MAX_RESULTS):
     """Main search function with auto-domain detection"""
@@ -437,7 +397,6 @@ def search(query, domain=None, max_results=MAX_RESULTS):
     if not results:
         out["suggestions"] = _suggest_terms(bm25, query)
     return out
-
 
 def search_stack(query, stack, max_results=MAX_RESULTS):
     """Search stack-specific guidelines"""

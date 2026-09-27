@@ -24,17 +24,13 @@ from pathlib import Path
 
 from core import CSV_CONFIG, STACK_CONFIG, _STACK_COLS, DATA_DIR
 
-# REASONING_FILE lives in design_system.py, not core.py -- redeclared here to
-# avoid a circular import (design_system.py imports core.py).
 REASONING_FILE = "ui-reasoning.csv"
 JSON_COLUMNS = {"Decision_Rules"}
-
 
 def _read_rows(filepath):
     with open(filepath, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         return reader.fieldnames or [], list(reader)
-
 
 def _check_file(label, filepath, search_cols, output_cols, problems):
     if not filepath.exists():
@@ -52,13 +48,9 @@ def _check_file(label, filepath, search_cols, output_cols, problems):
         if col not in header_set:
             problems.append(f"[{label}] {filepath.name}: expected column '{col}' not found in header")
 
-    # Only check for duplicates against an actual identifier column ("No" is
-    # the sequential-index convention used across this dataset). The first
-    # CSV column is not reliably a unique key -- e.g. stack files use
-    # "Category", which legitimately repeats across many guideline rows.
     if "No" in header_set:
         seen = {}
-        for i, row in enumerate(rows, start=2):  # +1 header, +1 to be 1-indexed
+        for i, row in enumerate(rows, start=2):
             key = row.get("No", "")
             if key in seen:
                 problems.append(
@@ -81,7 +73,6 @@ def _check_file(label, filepath, search_cols, output_cols, problems):
                     problems.append(
                         f"[{label}] {filepath.name} row {row_idx}: column '{col}' is not valid JSON: {e}"
                     )
-
 
 def main():
     problems = []
@@ -108,7 +99,6 @@ def main():
 
     print(f"OK: validated {len(CSV_CONFIG)} domain files, {len(STACK_CONFIG)} stack files, and ui-reasoning.csv")
     sys.exit(0)
-
 
 if __name__ == "__main__":
     main()

@@ -31,6 +31,8 @@ Two pinning modes cover the realistic deployment shapes, and the choice between 
 
 Catalogs can pull from GitHub, generic git URLs, local paths for internal-only catalogs, and npm for plugins that already live in a JS ecosystem. A local source is resolved from the catalog root and may not contain `..`, so `./my-plugin` validates and `../my-plugin` is rejected. The official marketplace is `claude-plugins-official`, which is the curated set Anthropic ships, and most teams will want a private team catalog alongside it rather than instead of it.
 
+Getting a plugin into the official directory is a submission, not a pull request. Developers on a paid Claude plan submit at `claude.ai/directory/manage/new`, where the portal auto-validates the plugin, runs a safety scan, and tracks review status and install analytics per product surface. Where a listed plugin runs depends on what it bundles: MCP servers and skills work in Claude.ai as well as Claude Code, while LSP servers, commands, hooks, and agents load only in Claude Code.
+
 ## Enterprise Controls
 
 For org-managed deployments, several knobs in managed policy let admins decide what teams can install without auditing every plugin one by one. `managed-mcp.json` controls which MCP servers are allowed across the org; `deniedPlugins` and `enabledPlugins` allowlist or blocklist specific plugin names; `extraKnownMarketplaces` adds trusted catalogs to the default set; and `strictKnownMarketplaces` rejects any catalog outside the known list. The pattern most enterprises adopt is strict-mode plus an internal catalog, with the official marketplace allowed but every third-party install gated through the catalog they own.

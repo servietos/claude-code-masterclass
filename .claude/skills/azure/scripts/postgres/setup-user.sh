@@ -1,11 +1,7 @@
 #!/bin/bash
-# Setup Entra ID user access for Azure PostgreSQL Flexible Server
-# Usage: ./setup-user.sh <resource-group> <server-name> <user-upn> <database> <permission-level>
-# Permission levels: readonly, readwrite, admin
 
 set -e
 
-# Parameters
 RESOURCE_GROUP="${1:?Resource group required}"
 SERVER_NAME="${2:?Server name required}"
 USER_UPN="${3:?User UPN required (e.g., user@domain.com)}"
@@ -20,7 +16,6 @@ echo "Database: $DATABASE"
 echo "Permission Level: $PERMISSION_LEVEL"
 echo ""
 
-# Step 1: Verify server exists and get FQDN
 echo "[1/6] Verifying server..."
 SERVER_FQDN=$(az postgres flexible-server show \
   --resource-group "$RESOURCE_GROUP" \
@@ -33,7 +28,6 @@ if [ -z "$SERVER_FQDN" ]; then
 fi
 echo "Server FQDN: $SERVER_FQDN"
 
-# Step 2: Check if Entra admin exists
 echo ""
 echo "[2/6] Checking Entra admin status..."
 ADMIN_COUNT=$(az postgres flexible-server microsoft-entra-admin list \
@@ -53,13 +47,11 @@ if [ "$ADMIN_COUNT" -eq 0 ]; then
 fi
 echo "Entra admin configured: $ADMIN_COUNT admin(s)"
 
-# Step 3: Get current user info (must be Entra admin)
 echo ""
 echo "[3/6] Getting current user info..."
 CURRENT_USER=$(az ad signed-in-user show --query userPrincipalName -o tsv)
 echo "Current user: $CURRENT_USER"
 
-# Step 4: Get access token
 echo ""
 echo "[4/6] Acquiring access token..."
 export PGPASSWORD=$(az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv)
@@ -70,11 +62,9 @@ if [ -z "$PGPASSWORD" ]; then
 fi
 echo "Token acquired (valid for 5-60 minutes)"
 
-# Step 5: Create PostgreSQL role for the user
 echo ""
 echo "[5/6] Creating PostgreSQL role for $USER_UPN..."
 
-# Check if role already exists
 ROLE_EXISTS=$(psql "host=$SERVER_FQDN user=$CURRENT_USER dbname=postgres sslmode=require" -t -c \
   "SELECT 1 FROM pgaadauth_list_principals(false) WHERE rolename = '$USER_UPN';" 2>/dev/null | tr -d ' ')
 
@@ -86,7 +76,6 @@ else
   echo "Role created successfully"
 fi
 
-# Step 6: Grant permissions based on level
 echo ""
 echo "[6/6] Granting $PERMISSION_LEVEL permissions on $DATABASE..."
 

@@ -22,7 +22,6 @@ sys.path.insert(0, str(SCRIPTS_DIR))
 from core import BM25, detect_domain, search, search_stack, CSV_CONFIG, AVAILABLE_STACKS
 from design_system import generate_design_system, persist_design_system, DesignSystemGenerator
 
-
 class TestTokenizer(unittest.TestCase):
     def test_short_domain_terms_are_kept(self):
         bm25 = BM25()
@@ -41,7 +40,6 @@ class TestTokenizer(unittest.TestCase):
         bm25 = BM25()
         self.assertEqual(bm25.tokenize("e-commerce store"), bm25.tokenize("ecommerce store"))
         self.assertEqual(bm25.tokenize("dark-mode toggle"), bm25.tokenize("dark toggle"))
-
 
 class TestSearchDomains(unittest.TestCase):
     """Known query -> expected top-domain sanity checks (not exact-row pinning,
@@ -74,7 +72,6 @@ class TestSearchDomains(unittest.TestCase):
                 result = search_stack("performance", stack, max_results=1)
                 self.assertNotIn("error", result, f"stack '{stack}' failed: {result.get('error')}")
 
-
 class TestDomainDetection(unittest.TestCase):
     def test_style_keywords_route_to_style(self):
         self.assertEqual(detect_domain("glassmorphism dark ui"), "style")
@@ -85,12 +82,9 @@ class TestDomainDetection(unittest.TestCase):
     def test_ambiguous_query_returns_runner_up(self):
         domain, runner_up = detect_domain("font pairing elegant crypto", return_scores=True)
         self.assertIsNotNone(domain)
-        # runner_up may be None if the winning domain has no close second --
-        # this just verifies the call shape works without raising.
 
     def test_empty_query_falls_back_to_style(self):
         self.assertEqual(detect_domain("...!!!???"), "style")
-
 
 class TestPersistence(unittest.TestCase):
     def test_persist_then_skip_then_force(self):
@@ -101,12 +95,10 @@ class TestPersistence(unittest.TestCase):
             self.assertTrue(master.exists())
             original_content = master.read_text(encoding="utf-8")
 
-            # Second persist without force must not overwrite.
             result2 = generate_design_system("saas dashboard", "Test Project", persist=True, output_dir=tmp)
             self.assertEqual(result2["persistence"]["status"], "skipped_exists")
             self.assertEqual(master.read_text(encoding="utf-8"), original_content)
 
-            # With force=True it must overwrite.
             result3 = generate_design_system("ecommerce luxury", "Test Project", persist=True, output_dir=tmp, force=True)
             self.assertEqual(result3["persistence"]["status"], "success")
 
@@ -115,7 +107,6 @@ class TestPersistence(unittest.TestCase):
             generate_design_system("saas dashboard", "Scoped Project", persist=True, output_dir=tmp)
             expected = Path(tmp) / "design-system" / "scoped-project" / "MASTER.md"
             self.assertTrue(expected.exists())
-
 
 class TestReasoningMatch(unittest.TestCase):
     def test_known_category_matches_exactly(self):
@@ -126,9 +117,7 @@ class TestReasoningMatch(unittest.TestCase):
     def test_unknown_category_falls_back_gracefully(self):
         gen = DesignSystemGenerator()
         rule = gen._find_reasoning_rule("Totally Unknown Category XYZ")
-        # Should not raise; may return {} which _apply_reasoning handles with defaults.
         self.assertIsInstance(rule, dict)
-
 
 if __name__ == "__main__":
     unittest.main()

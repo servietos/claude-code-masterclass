@@ -1,120 +1,84 @@
 ---
 name: dotnet-conventions
-description: '.NET/C# coding conventions for ASP.NET Core controllers, EF Core models and migrations, unit testing with xUnit/FluentAssertions/NSubstitute, `.http` REST client files, dotnet CLI commands, MCP server development, health checks (readiness/liveness, Docker HEALTHCHECK), MSAL/Entra ID JWT auth, and local username/password login with DB RBAC. Also covers naming, architecture, DI, async, configuration, logging, and code-quality rules. Delegates each topic to the matching reference file. Use for any .NET 10 work before writing code. Triggers on "dotnet convention", "asp.net controller", "ef core migration", "xunit test", "nsubstitute", "fluentassertions", "http rest client file", "dotnet cli", "mcp server dotnet", "health check endpoint", "msal jwt dotnet", "local login rbac", "dependency injection", "async convention", "logging convention".'
+description: '.NET/C# conventions for .NET 10 / C# 14, routed to short task-based references. Covers C# style and architecture, dependency injection and service lifetimes, async/await, configuration and structured logging, the JSON casing contract with SPA clients, app lifecycle and `dotnet watch` hot-reload limits, the dotnet CLI, `[ApiController]` controllers, EF Core models/migrations/queries, SQL delta scripts for projects that do not use migrations, xUnit + FluentAssertions + NSubstitute testing, `.http` REST client files, MSAL/Entra ID JWT auth, local username/password login with DB RBAC, GitHub OAuth device flow, MCP servers, Microsoft Agent Framework agent calls, the app''s own DB-configured AI model (`AiModel.IsDefault`), A2UI generative-UI endpoints and their SSE streaming, health checks and Docker HEALTHCHECK wiring, NDJSON pipeline streaming, Azure Blob storage with passwordless auth, file-import/ingest endpoints, storing an uploaded file''s bytes in SQL Server itself and serving them back, and server-side WebP conversion with ImageSharp. Read the ONE matching reference; never load them all. Use for any .NET 10 work before writing code. Triggers on "dotnet convention", "c# style", "naming convention", "dependency injection", "service lifetime", "captive dependency", "a second operation was started on this context instance", "addsingleton dbcontext", "endpoint 500s only sometimes", "async convention", "configureawait", "logging convention", "structured logging", "strongly typed configuration", "json casing", "propertynamingpolicy", "jsonpropertyname", "camelcase undefined", "dotnet watch", "hot reload", "typeloadexception", "dotnet cli", "asp.net controller", "ef core migration", "efmigrationshistory", "sql delta script", "schema change", "we do not use migrations", "apply to blue and green", "schema change without migration", "xunit test", "nsubstitute", "fluentassertions", "http rest client file", "msal jwt dotnet", "401 on localhost", "authenabled false", "authorize breaks local dev", "no token works locally", "webapplicationfactory auth passes trivially", "local login rbac", "github oauth device flow", "mcp server dotnet", "mcp tool parameter", "pass the name not the id", "tool takes an id the model cannot know", "mcp tool description", "secure the mcp endpoint", "verify an mcp server", "agent framework dotnet", "db configured ai model", "aimodel isdefault", "provider baseurl", "a2ui endpoint", "sse streaming dotnet", "health check endpoint", "ndjson streaming", "azure blob dotnet", "file import endpoint", "endpoint is slow", "api slow", "slow json endpoint", "response compression", "addresponsecompression", "brotli", "enableforhttps", "output cache", "addoutputcache", "evictbytag", "cache hit not compressed", "cache-control header", "etag", "immutable image url", "asnotracking still slow", "query loads columns it does not return", "page waits on the api", "column encryption", "encrypt a db field", "DbEncrypted", "encryptbypassphrase", "decryptbypassphrase", "decrypt with only the database", "encrypt new values only", "decrypt returns null", "store a file in the database", "varbinary(max)", "blob column ef core", "save an uploaded file to sql server", "file download endpoint", "content-disposition filename", "one-to-one shared primary key", "hasforeignkey withone", "list query is slow after adding a file column", "iformfile plus form fields", "requestsizelimit", "convert an image to webp in c#", "imagesharp", "webpencoder", "WebpFileFormat does not exist", "lossy or lossless webp", "webp is bigger than the png", "shrink an uploaded image", "imageformatexception".'
 ---
 
-# .NET/C# Best Practices
+# .NET/C# Conventions
 
-Authoritative conventions for any .NET 10 project. Routes build, test, and tooling requests to the appropriate reference before applying code conventions.
+Authoritative conventions for any .NET 10 / C# 14 project. Routes build, test and tooling requests to
+the matching reference before any code convention is applied.
 
-> ⚠️ **CRITICAL**: Always validate code practices and API usage against **Microsoft Learn** using the `microsoft-learn` MCP. Do not rely on assumptions about SDK patterns, APIs, or best practices; check the official documentation.
+> ⚠️ **CRITICAL**: Always validate code practices and API usage against **Microsoft Learn** via the
+> `microsoft-learn` MCP before writing code. Do not rely on assumptions about SDK patterns, APIs or
+> best practices; check the official documentation.
 
-## Sub-skill Delegate Map
+**This file is a router and holds no conventions of its own.** Find your task below and read that ONE
+reference. Loading several defeats the point — each leaf is short so the matching one can be read whole.
 
-| Request type | Reference |
+## Language, structure and runtime behaviour
+
+| You want to... | Read |
 |---|---|
-| Build, test, run, publish, format, NuGet, EF migrations CLI | [`dotnet-cli`](references/dotnet-cli.md) |
-| Naming, documentation, architecture, DI, resources, async, testing, logging, code style | [`conventions`](references/conventions.md) |
-| `[ApiController]` controller + CRUD endpoint patterns | [`dotnet-controllers`](references/dotnet-controllers.md) |
-| EF Core models, `IEntityTypeConfiguration`, migrations, queries | [`dotnet-efcore`](references/dotnet-efcore.md) |
-| Unit tests with xUnit, FluentAssertions, NSubstitute | [`dotnet-testing`](references/dotnet-testing.md) |
-| `.http` REST client files | [`dotnet-rest-client`](references/dotnet-rest-client.md) |
-| MSAL / Microsoft.Identity.Web JWT auth | [`dotnet-msal-auth`](references/dotnet-msal-auth.md) |
-| Dual-auth: local username/password login (BCrypt + local JWT) and DB RBAC alongside MSAL | [`dotnet-local-auth-rbac`](references/dotnet-local-auth-rbac.md) |
-| MCP server with `ModelContextProtocol` / `ModelContextProtocol.AspNetCore` | [`dotnet-mcp`](references/dotnet-mcp.md) |
-| `/health` endpoints, readiness/liveness probes, dependency health checks, Docker `HEALTHCHECK` wiring | [`dotnet-health-checks`](references/dotnet-health-checks.md) |
+| Name things; structure files, types and members; apply architecture patterns and SOLID/code-quality rules | [`conventions`](references/conventions.md) |
+| Inject dependencies, choose `Singleton`/`Scoped`/`Transient`, use primary constructors, dispose resources, fix a captive `DbContext` in a singleton | [`di-and-lifetimes`](references/di-and-lifetimes.md) |
+| Write `async`/`await` code: `Task` returns, `ConfigureAwait`, async exception handling | [`async-patterns`](references/async-patterns.md) |
+| Bind strongly-typed settings, read `IConfiguration`, log with structure, throw and handle exceptions | [`configuration-and-logging`](references/configuration-and-logging.md) |
+| Fix a field arriving `undefined`/empty in a SPA after a 200 response; decide PascalCase vs camelCase on the wire | [`json-casing-contract`](references/json-casing-contract.md) |
+| Start or reuse a running app; survive `dotnet watch` rude edits and `TypeLoadException` after a structural edit | [`app-lifecycle-and-watch`](references/app-lifecycle-and-watch.md) |
 
-Always use the dotnet CLI for package management and project operations — never edit `.csproj` files directly to add or remove packages.
+## Building and testing
 
----
+| You want to... | Read |
+|---|---|
+| Build, run, watch, test, publish, format, manage NuGet, solutions or the EF migrations CLI | [`dotnet-cli`](references/dotnet-cli.md) |
+| Write unit tests with xUnit, FluentAssertions and NSubstitute; diagnose a failing or permanently-red suite | [`dotnet-testing`](references/dotnet-testing.md) |
+| Write or update a `.http` REST client file | [`dotnet-rest-client`](references/dotnet-rest-client.md) |
 
-## Naming Conventions
+## API surface and data
 
-- Use `PascalCase` for all public classes, methods, and properties.
-- Use `camelCase` for private fields and local variables.
+| You want to... | Read |
+|---|---|
+| Add or change an `[ApiController]` controller and its CRUD endpoint patterns | [`dotnet-controllers`](references/dotnet-controllers.md) |
+| Configure an EF Core model (`IEntityTypeConfiguration`), write queries, add a migration where the project uses them, or hand-create a table a migration owns | [`dotnet-efcore`](references/dotnet-efcore.md) |
+| Ship a schema or data change as a hand-written SQL delta script applied to every slot, in a project that does not use EF migrations — including marking the replaced migration applied in `__EFMigrationsHistory` so `Database.Migrate()` does not recreate the tables | [`sql-delta-scripts`](references/sql-delta-scripts.md) |
+| Encrypt individual columns so the plaintext is recoverable from the database alone (attach it anywhere, paste one statement), encrypt only new values without migrating existing rows, or debug a decrypt that silently returns NULL | [`dotnet-column-encryption`](references/dotnet-column-encryption.md) |
+| Accept an uploaded file and turn it into reviewable domain rows (`IFormFile` upload → OCR/Excel extraction → AI draft → review → EF commit) | [`file-import-ingest`](references/file-import-ingest.md) |
+| Store files in Azure Blob Storage with passwordless `DefaultAzureCredential` and `BlobServiceClient`, stage→confirm promotion, document retention (`ImportDocument`) | [`azure-blob-storage`](references/azure-blob-storage.md) |
+| Keep an uploaded file's bytes IN SQL Server (`varbinary(max)` in a side table on a shared primary key) and serve them back as a download, without the blob leaking into list queries | [`sql-stored-files`](references/sql-stored-files.md) |
+| Convert an uploaded JPEG/PNG to WebP in-process with ImageSharp: encode both ways and keep the smaller, pass everything else through untouched | [`imagesharp-webp`](references/imagesharp-webp.md) |
 
-## Design Patterns and Architecture
+## Authentication
 
-- Use .NET primary constructors with no private backing fields unless additional logic is required.
-- Use primary constructor syntax for dependency injection: `public class MyClass(IDependency dependency)`.
-- Implement the Command Handler pattern with generic base classes where applicable.
-- Use interface segregation — prefix interfaces with `I`.
-- Follow the Factory pattern for complex object creation.
+| You want to... | Read |
+|---|---|
+| Wire MSAL / Microsoft.Identity.Web JWT auth, or triage a 401 / IDX error | [`dotnet-msal-auth`](references/dotnet-msal-auth.md) |
+| Add local username/password login (BCrypt + local JWT) and DB RBAC alongside MSAL | [`dotnet-local-auth-rbac`](references/dotnet-local-auth-rbac.md) |
+| Sign in with GitHub via **device flow** (onboard/clone private repos, list repos) — no secret, no callback, Client ID in `appsettings.json`, mandatory `slow_down` back-off | [`dotnet-github-oauth`](references/dotnet-github-oauth.md) |
 
-## Dependency Injection and Services
+## AI, agents and streaming
 
-- Use constructor dependency injection.
-- Register services with appropriate lifetimes: `Singleton`, `Scoped`, `Transient`.
-- Use `Microsoft.Extensions.DependencyInjection` patterns.
-- Implement service interfaces for testability.
+| You want to... | Read |
+|---|---|
+| Expose an MCP server (`ModelContextProtocol` / `ModelContextProtocol.AspNetCore`): packages, transports, ports, client config | [`dotnet-mcp`](references/dotnet-mcp.md) |
+| Design the tool surface a model calls: parameter shape, natural keys over ids, descriptions, return payloads, propose/confirm pairs | [`dotnet-mcp-tool-design`](references/dotnet-mcp-tool-design.md) |
+| Secure an MCP server: `[Authorize]` per tool, dual auth on `/mcp`, reverse-proxy `X-Forwarded-Proto` | [`dotnet-mcp-auth`](references/dotnet-mcp-auth.md) |
+| Verify a running MCP server over HTTP and log every tool call | [`dotnet-mcp-verify`](references/dotnet-mcp-verify.md) |
+| Call an Azure AI Foundry hosted or prompt-based agent (Microsoft Agent Framework) | [`dotnet-maf`](references/dotnet-maf.md) |
+| Call the app's own DB-configured AI model (`AiModel.IsDefault`) to draft customer-facing copy; normalise a provider `BaseUrl`; turn any provider failure into one safe 503 | [`dotnet-db-configured-ai-model`](references/dotnet-db-configured-ai-model.md) |
+| Set up an A2UI generative-UI endpoint (no .NET SDK; protocol-level JSON): what it is, protocol version, packages, config, registration | [`dotnet-a2ui`](references/dotnet-a2ui.md) |
+| Define or validate the C# message types that cross the A2UI wire | [`dotnet-a2ui-messages`](references/dotnet-a2ui-messages.md) |
+| Serve the A2UI component catalog or implement the agent endpoint | [`dotnet-a2ui-endpoint`](references/dotnet-a2ui-endpoint.md) |
+| Stream A2UI over SSE — wire format, full example, anti-patterns | [`dotnet-a2ui-streaming`](references/dotnet-a2ui-streaming.md) |
+| Stream pipeline progress as NDJSON with a correlated trace a controller can tap | [`ndjson-streaming`](references/ndjson-streaming.md) |
 
-## Async/Await Patterns
+## Operations
 
-- Use `async`/`await` for all I/O operations and long-running tasks.
-- Return `Task` or `Task<T>` from async methods.
-- Use `ConfigureAwait(false)` where appropriate.
-- Handle async exceptions properly.
+| You want to... | Read |
+|---|---|
+| Add `/health` readiness and liveness probes, dependency checks, Docker `HEALTHCHECK` wiring | [`dotnet-health-checks`](references/dotnet-health-checks.md) |
+| A read endpoint is slow while its payload is small, or a page waits on one aggregate `GET`: project unread blob columns out of the query, wire response compression and output caching in the one order that works, and set `Cache-Control`/`ETag` on binary endpoints | [`dotnet-response-caching-compression`](references/dotnet-response-caching-compression.md) |
 
-## Testing Standards
+## The one rule that belongs here
 
-- Use xUnit, NSubstitute, and FluentAssertions or the project's chosen equivalents.
-- Follow the AAA pattern: Arrange, Act, Assert.
-- Test both success and failure scenarios.
-
-## Configuration and Settings
-
-- Use strongly-typed configuration classes.
-- Use `IConfiguration` binding for settings.
-- Support `appsettings.json` configuration files.
-
-## JSON casing contract with SPA clients
-
-When `PropertyNamingPolicy = null` is set (PascalCase passthrough) but the SPA's TypeScript
-models expect camelCase, **every DTO consumed by the client needs explicit
-`[JsonPropertyName("camelCase")]` attributes** — and the failure mode when one file misses them
-is silent and misleading: the client reads `response.token` from `{"Token": ...}`, gets
-`undefined`, and downstream code breaks far from the serialization boundary (here: login
-"succeeded" with 200 but the session stored `{}` and the user stayed on the login page). Rules:
-
-- Treat the casing policy as a **contract**: either camelCase globally, or attribute every
-  client-facing DTO. Check sibling DTO files for the established attribute precedent before
-  adding a new DTO file — the bug enters when a new file skips the pattern its siblings follow.
-- When a client-side flow fails with fields mysteriously `undefined`/empty after a 200 response,
-  diff the raw response body's key casing against the client interface **first** — before
-  debugging the client logic.
-
-## Error Handling and Logging
-
-- Use structured logging with `Microsoft.Extensions.Logging`.
-- Include scoped logging with meaningful context.
-- Throw specific exceptions with descriptive messages.
-- Use `try`-`catch` blocks for expected failure scenarios.
-
-## Performance and Security
-
-- Use C# 14 features and .NET 10 optimizations where applicable.
-- Implement proper input validation and sanitization.
-- Use parameterized queries for database operations.
-
-## Application Lifecycle
-
-- Before starting the application, check if an instance is already running; if it is running under `dotnet watch run`, reuse that instance instead of starting a new one.
-- Never start the application as a background process.
-- Always dispose of resources properly when the application closes.
-- **Hot-reload limits under `dotnet watch`**: structural edits (new methods, added queries/branches in controllers or services, signature changes) are rude edits. Hot reload fails with `TypeLoadException` and the process then serves that exception for every request while stuck on its interactive restart prompt; file touches do not recover it. After any structural edit under a running watch, verify with a real HTTP request; if the response is a `TypeLoadException`, ask the user to restart the watch (`Ctrl+R` in its terminal). Never kill a watch process you did not start.
-
-## Code Quality
-
-- Ensure SOLID principles compliance.
-- Avoid code duplication through base classes and utilities.
-- Use meaningful names that reflect domain concepts.
-- Keep methods focused and cohesive.
-- Implement proper disposal patterns (`IDisposable` / `IAsyncDisposable`) for all resources.
-
-## Pipeline Observability and NDJSON Streaming
-
-- **PipelineTrace pattern** — use a static `AsyncLocal<string?>` correlation id (`NewCorrelation`/`EnsureCorrelation`) and a `Write(pipeline, stage, props)` method that appends one JSON line to `logs/<pipeline>-pipeline.jsonl`. Schema: `{ts, correlationId, pipeline, stage, ...props}`. A second `AsyncLocal<Action<string,string,string>?>` subscriber (`SetSubscriber`/`ClearSubscriber`) lets a streaming controller tap every event without modifying service code. Reference: `Services/PipelineTrace.cs`.
-- **NDJSON streaming endpoint** — set `Response.ContentType = "application/x-ndjson"`, create a `Channel<T>`, install the `PipelineTrace` subscriber to feed it, then run resolution and channel draining concurrently. Emit typed lines: `{"type":"stage",...}`, `{"type":"cost",...}`, `{"type":"result",...}`. Always clear the subscriber in a `finally` block. Reference: `Controllers/ResolveController.cs` (`POST /resolve/photo/stream`).
-- **Identifier validation before fan-out** — validate EAN-13/8 (Luhn checksum; reject all-equal digits, sequential runs, long zero-runs) and PZN with private static helpers before entering the product lookup fan-out. Emit a `recognize-reject` trace stage for every dropped identifier. Return `back-label-only` when vision signals `IsBackLabel=true`.
-- **AI cost capture** — read `usage.estimated_cost` from DeepInfra responses (field absent for DeepSeek; treat as null); emit to `PipelineTrace.Write("ai", "ai-usage", new { Kind = "chat", ... })`. Image and video generation costs use `Kind = "image"` / `Kind = "video"` with a per-image config key (`Images:CostPerImage`) and per-second config key (`Videos:CostPerSecond`) as fallbacks.
-
+Always use the dotnet CLI for package and project operations — **never hand-edit `.csproj`** to add or
+remove packages.

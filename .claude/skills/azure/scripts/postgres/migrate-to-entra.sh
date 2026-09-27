@@ -1,10 +1,7 @@
 #!/bin/bash
-# Migrate existing PostgreSQL roles from password auth to Entra ID
-# Usage: ./migrate-to-entra.sh <resource-group> <server-name>
 
 set -e
 
-# Parameters
 RESOURCE_GROUP="${1:?Resource group required}"
 SERVER_NAME="${2:?Server name required}"
 
@@ -16,7 +13,6 @@ echo "WARNING: This script will help migrate password-based roles to Entra ID."
 echo "Please ensure you have tested Entra authentication before running this."
 echo ""
 
-# Step 1: Verify server exists and get FQDN
 echo "[1/5] Verifying server..."
 SERVER_FQDN=$(az postgres flexible-server show \
   --resource-group "$RESOURCE_GROUP" \
@@ -29,7 +25,6 @@ if [ -z "$SERVER_FQDN" ]; then
 fi
 echo "Server FQDN: $SERVER_FQDN"
 
-# Step 2: Check current authentication mode
 echo ""
 echo "[2/5] Checking authentication mode..."
 AUTH_CONFIG=$(az postgres flexible-server show \
@@ -40,7 +35,6 @@ AUTH_CONFIG=$(az postgres flexible-server show \
 echo "Current auth config:"
 echo "$AUTH_CONFIG" | jq .
 
-# Step 3: Get admin credentials
 echo ""
 echo "[3/5] Getting current user info..."
 CURRENT_USER=$(az ad signed-in-user show --query userPrincipalName -o tsv)
@@ -53,7 +47,6 @@ if [ -z "$PGPASSWORD" ]; then
 fi
 echo "Token acquired"
 
-# Step 4: List existing roles
 echo ""
 echo "[4/5] Listing existing PostgreSQL roles..."
 echo ""
@@ -71,7 +64,6 @@ echo "=== Existing Entra-Mapped Roles ==="
 psql "host=$SERVER_FQDN user=$CURRENT_USER dbname=postgres sslmode=require" -c \
   "SELECT * FROM pgaadauth_list_principals(false);" 2>/dev/null || echo "No Entra roles found"
 
-# Step 5: Provide migration instructions
 echo ""
 echo "[5/5] Migration Instructions"
 echo ""

@@ -1,12 +1,7 @@
 #!/bin/bash
-# Setup Group-based access for Azure PostgreSQL Flexible Server
-# Usage: ./setup-group.sh <resource-group> <server-name> <group-name> <database> <permission-level> [enable-sync]
-# Permission levels: readonly, readwrite, admin
-# enable-sync: true/false (default: false)
 
 set -e
 
-# Parameters
 RESOURCE_GROUP="${1:?Resource group required}"
 SERVER_NAME="${2:?Server name required}"
 GROUP_NAME="${3:?Group name required}"
@@ -23,7 +18,6 @@ echo "Permission Level: $PERMISSION_LEVEL"
 echo "Enable Group Sync: $ENABLE_SYNC"
 echo ""
 
-# Step 1: Verify server exists and get FQDN
 echo "[1/8] Verifying server..."
 SERVER_FQDN=$(az postgres flexible-server show \
   --resource-group "$RESOURCE_GROUP" \
@@ -36,7 +30,6 @@ if [ -z "$SERVER_FQDN" ]; then
 fi
 echo "Server FQDN: $SERVER_FQDN"
 
-# Step 2: Get group details from Azure AD
 echo ""
 echo "[2/8] Getting group details from Azure AD..."
 GROUP_INFO=$(az ad group show --group "$GROUP_NAME" --query "{id:id, displayName:displayName}" -o json 2>/dev/null || echo "")
@@ -52,12 +45,10 @@ GROUP_DISPLAY_NAME=$(echo "$GROUP_INFO" | jq -r '.displayName')
 echo "Group ID: $GROUP_ID"
 echo "Group Display Name: $GROUP_DISPLAY_NAME"
 
-# List group members
 echo ""
 echo "Group members:"
 az ad group member list --group "$GROUP_NAME" --query "[].{displayName:displayName, userPrincipalName:userPrincipalName}" -o table
 
-# Step 3: Check if Entra admin exists
 echo ""
 echo "[3/8] Checking Entra admin status..."
 ADMIN_COUNT=$(az postgres flexible-server microsoft-entra-admin list \
@@ -71,13 +62,11 @@ if [ "$ADMIN_COUNT" -eq 0 ]; then
 fi
 echo "Entra admin configured: $ADMIN_COUNT admin(s)"
 
-# Step 4: Get current user info (must be Entra admin)
 echo ""
 echo "[4/8] Getting current user info..."
 CURRENT_USER=$(az ad signed-in-user show --query userPrincipalName -o tsv)
 echo "Current user: $CURRENT_USER"
 
-# Step 5: Get access token
 echo ""
 echo "[5/8] Acquiring access token..."
 export PGPASSWORD=$(az account get-access-token --resource-type oss-rdbms --query accessToken -o tsv)
@@ -88,7 +77,6 @@ if [ -z "$PGPASSWORD" ]; then
 fi
 echo "Token acquired (valid for 5-60 minutes)"
 
-# Step 6: Configure group sync parameter if requested
 echo ""
 echo "[6/8] Configuring group sync..."
 if [ "$ENABLE_SYNC" = "true" ]; then
@@ -104,24 +92,20 @@ else
   echo "Group sync DISABLED (members use group name as username)"
 fi
 
-# Step 7: Create PostgreSQL role for the group
 echo ""
 echo "[7/8] Creating PostgreSQL role for group..."
 
-# Check if role already exists
 ROLE_EXISTS=$(psql "host=$SERVER_FQDN user=$CURRENT_USER dbname=postgres sslmode=require" -t -c \
   "SELECT 1 FROM pgaadauth_list_principals(false) WHERE objectid = '$GROUP_ID';" 2>/dev/null | tr -d ' ')
 
 if [ "$ROLE_EXISTS" = "1" ]; then
   echo "Role already exists for group '$GROUP_DISPLAY_NAME'"
 else
-  # Create role using object ID
   psql "host=$SERVER_FQDN user=$CURRENT_USER dbname=postgres sslmode=require" -c \
     "SELECT * FROM pgaadauth_create_principal_with_oid('$GROUP_DISPLAY_NAME', '$GROUP_ID', 'group', false, false);"
   echo "Role created successfully"
 fi
 
-# If sync is enabled, trigger manual sync
 if [ "$ENABLE_SYNC" = "true" ]; then
   echo ""
   echo "Triggering manual group member sync..."
@@ -129,11 +113,9 @@ if [ "$ENABLE_SYNC" = "true" ]; then
     "SELECT * FROM pgaadauth_sync_roles_for_group_members();" || echo "Note: Sync may take a moment to complete"
 fi
 
-# Step 8: Grant permissions based on level
 echo ""
 echo "[8/8] Granting $PERMISSION_LEVEL permissions on $DATABASE..."
 
-# Escape the group name for PostgreSQL (handle spaces)
 ESCAPED_GROUP_NAME=$(echo "$GROUP_DISPLAY_NAME" | sed 's/"/\\"/g')
 
 case "$PERMISSION_LEVEL" in
