@@ -4,6 +4,7 @@
 - Caveman compression with zero rule loss
 - Autoresearch loop: iterate, promote, revert
 - Memory architectures: statefile and graph
+- Prompt audit: dated instructions, stale references, contradictions
 
 ## Topics
 
@@ -13,6 +14,7 @@
 | [02: Caveman Compression](02-caveman-compression/readme.md) | Token counting and context compression on a TypeScript Fastify REST API: baseline measurement with js-tiktoken, caveman-mode rewrite targeting 60-75% reduction, and a rule-by-rule parity check that confirms no enforcement was lost in translation. |
 | [03: Autoresearch Loop](03-autoresearch-loop/readme.md) | Skill quality experiments on this repo's own `class-dashboard` skill: a deterministic TypeScript scoring harness over captured runs, the three core metrics plus the domain metric that carries the skill's own risk, single-variable iteration discipline, and the promote/revert decision rule. |
 | [04: Memory Architectures](04-memory-architectures/readme.md) | A four-way token benchmark in TypeScript comparing in-context loading, a STATE.md statefile summary, Claude Code's auto-memory index plus typed files, and knowledge graph retrieval on the same incident corpus, plus the write policy that caps what any of them can recall and a decision table mapping project shape to the right architecture. The graph approach is modelled with a static entity-relation file and a pre-retrieved subgraph prompt; no MCP server ships with the project. |
+| [05: Prompt Audit](05-prompt-audit/readme.md) | `/doctor prompt-audit` and `/claude-api prompt-audit` over a harness: the target model the audit judges against, the pattern families from pressure language to stale references and contradicting files, the keep list, the confidence levels that decide what reaches the proposed diff, and the re-audit that closes the loop. |
 
 ## Demos
 
@@ -21,6 +23,7 @@
 | [02: Caveman Compression](02-caveman-compression/demo-caveman-compression.md) | Install the shipped Fastify API starter, count baseline tokens with js-tiktoken, apply caveman compression targeting 60-75% reduction, and verify rule parity before swapping the file in. |
 | [03: Autoresearch Loop](03-autoresearch-loop/demo-autoresearch-loop.md) | Run a full propose-evaluate-promote cycle on the live `class-dashboard` skill: baseline three captured runs, let the numbers pick the target metric, change one sentence, re-measure under identical conditions, and let the rule decide. |
 | [04: Memory Architectures](04-memory-architectures/demo-memory-architectures.md) | Benchmark in-context loading, a STATE.md statefile, an auto-memory index plus the one file it points at, and knowledge graph retrieval on the same incident corpus, and read the per-question token cost side by side. The benchmark counts tokens; recall strength is a qualitative label, not a measurement. |
+| [05: Prompt Audit](05-prompt-audit/demo-prompt-audit.md) | Audit a five-file harness with `/doctor prompt-audit`, verify the high-confidence findings against the project, narrow the audit to one skill with `/claude-api prompt-audit`, apply the proposed diff, and re-audit until no finding reaches the diff. |
 
 Every demo has a presenter guide beside it (`demo-presenter-<slug>.md`) holding the same
 teaching in timed beats, for delivery without running the demo live.
