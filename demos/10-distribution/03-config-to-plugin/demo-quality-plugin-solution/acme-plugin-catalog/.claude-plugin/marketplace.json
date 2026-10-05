@@ -7,11 +7,11 @@
   },
   "plugins": [
     {
-      "name": "code-quality-plugin",
+      "name": "quality-review-plugin",
       "source": {
         "source": "github",
-        "repo": "acme-corp/code-quality-plugin",
-        "ref": "code-quality-plugin--v1.0.0"
+        "repo": "acme-corp/quality-review-plugin",
+        "ref": "quality-review-plugin--v1.0.0"
       },
       "description": "Bundles a /create-docs command, a brand-voice skill, a code-reviewer skill, and a PostToolUse metrics hook.",
       "version": "1.0.0"

@@ -10,18 +10,18 @@ Becoming a plugin is a packaging change, not a rewrite: one manifest, one hook w
 
 ------
 
-**Shell:** beats quote the Git Bash hook; [`hooks/metrics.ps1`](demo-quality-plugin/code-quality-plugin/hooks/metrics.ps1) is the twin for a machine without `jq` or Git Bash, wired as `pwsh -NoProfile -File "${CLAUDE_PLUGIN_ROOT}/hooks/metrics.ps1"` with `"shell": "powershell"` on the entry. Reading the log differs too: `cat ~/.claude/plugins/data/<id>/tool-usage.jsonl` against `Get-Content $env:USERPROFILE\.claude\plugins\data\<id>\tool-usage.jsonl`.
+**Shell:** beats quote the Git Bash hook; [`hooks/metrics.ps1`](demo-quality-plugin/quality-review-plugin/hooks/metrics.ps1) is the twin for a machine without `jq` or Git Bash, wired as `pwsh -NoProfile -File "${CLAUDE_PLUGIN_ROOT}/hooks/metrics.ps1"` with `"shell": "powershell"` on the entry. Reading the log differs too: `cat ~/.claude/plugins/data/<id>/tool-usage.jsonl` against `Get-Content $env:USERPROFILE\.claude\plugins\data\<id>\tool-usage.jsonl`.
 
 ## Beats
 
 ### Beat 1: the manifest is the only file the conversion adds (1 min)
 
-**Open:** [`code-quality-plugin/.claude-plugin/plugin.json`](demo-quality-plugin/code-quality-plugin/.claude-plugin/plugin.json) · the `name`, `description` and `version` keys · [What Moves and What Stays](readme.md#what-moves-and-what-stays)
+**Open:** [`quality-review-plugin/.claude-plugin/plugin.json`](demo-quality-plugin/quality-review-plugin/.claude-plugin/plugin.json) · the `name`, `description` and `version` keys · [What Moves and What Stays](readme.md#what-moves-and-what-stays)
 **Say:** A working `.claude/` folder already has the shape a plugin needs, so packaging is a manifest and a folder move. What the manifest adds is identity, and the release tooling reads it from this file alone.
 
 ```json
 {
-  "name": "code-quality-plugin",
+  "name": "quality-review-plugin",
   "description": "Bundles a /create-docs command, a brand-voice skill, a code-reviewer skill, and a PostToolUse metrics hook into one installable Code-Quality package.",
   "version": "1.0.0",
   ...
@@ -40,7 +40,7 @@ It prints the component inventory (3 skills, 1 hook) and the projected token cos
 
 ### Beat 2: `${CLAUDE_PLUGIN_ROOT}` resolves only inside the plugin's own hooks.json (1 min)
 
-**Open:** [`code-quality-plugin/hooks/hooks.json`](demo-quality-plugin/code-quality-plugin/hooks/hooks.json) · the `PostToolUse` entry and its `command` line · [The Conversion Lifecycle](readme.md#the-conversion-lifecycle)
+**Open:** [`quality-review-plugin/hooks/hooks.json`](demo-quality-plugin/quality-review-plugin/hooks/hooks.json) · the `PostToolUse` entry and its `command` line · [The Conversion Lifecycle](readme.md#the-conversion-lifecycle)
 **Say:** A plugin ends up at a path its author never sees, so nothing inside it can address its own files absolutely. Outside its scope the variable is not an error, it is an unexpanded string that fails later as a bad path.
 
 ```json
@@ -82,7 +82,7 @@ It prints the component inventory (3 skills, 1 hook) and the projected token cos
 **Result:** the run left it parked one level above the plugin, and no file inside the packaged tree carries either key: [`demo-quality-plugin-solution/readme.md`](demo-quality-plugin-solution/readme.md#folder-layout)
 
 ```text
-├── code-quality-plugin/                # the plugin
+├── quality-review-plugin/                # the plugin
 │   ├── .claude-plugin/plugin.json      # manifest
 ...
 ├── project-settings.json               # project-level model and permissions
@@ -106,11 +106,11 @@ Show the /plugin marketplace add and /plugin install commands that a teammate wo
 
 ```json
     {
-      "name": "code-quality-plugin",
+      "name": "quality-review-plugin",
       "source": {
         "source": "github",
-        "repo": "acme-corp/code-quality-plugin",
-        "ref": "code-quality-plugin--v1.0.0"
+        "repo": "acme-corp/quality-review-plugin",
+        "ref": "quality-review-plugin--v1.0.0"
       },
       ...
       "version": "1.0.0"

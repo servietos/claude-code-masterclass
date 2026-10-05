@@ -10,7 +10,7 @@ Hook commands default to bash, which on Windows means Git Bash, and the wired co
 
 ```text
 demo-quality-plugin/
-├── code-quality-plugin/                # the plugin
+├── quality-review-plugin/                # the plugin
 │   ├── .claude-plugin/plugin.json      # manifest
 │   ├── commands/create-docs.md         # /create-docs slash command
 │   ├── skills/
@@ -40,15 +40,15 @@ Model and permission defaults do not travel inside a plugin. `project-settings.j
 ### Step 1: Local load with `--plugin-dir`
 
 ```bash
-claude --plugin-dir ./code-quality-plugin
+claude --plugin-dir ./quality-review-plugin
 ```
 
-The init message should list `code-quality-plugin` and its components. Verify the namespaced command appears with `/code-quality-plugin:create-docs` and the skills are visible under the plugin namespace.
+The init message should list `quality-review-plugin` and its components. Verify the namespaced command appears with `/quality-review-plugin:create-docs` and the skills are visible under the plugin namespace.
 
 ### Step 2: Run `/create-docs` against the sample
 
 ```text
-/code-quality-plugin:create-docs sample-code/inventory.py
+/quality-review-plugin:create-docs sample-code/inventory.py
 ```
 
 The command produces `sample-code/inventory.py.md` with the documentation, then chains the brand-voice and code-reviewer passes. Findings on `inventory.py` are model-dependent; expect notes around `Inventory.value()` summing a generator with a `Decimal` start value, the mutation path in `adjust`, and the non-internationalized `InventoryError` messages.
@@ -58,11 +58,11 @@ The command produces `sample-code/inventory.py.md` with the documentation, then 
 The hook writes to `${CLAUDE_PLUGIN_DATA}`, which Claude Code exports to hook processes only, not to your terminal. Read the log from its resolved location instead, which is `~/.claude/plugins/data/<plugin-id>/tool-usage.jsonl`. A plugin loaded with `--plugin-dir` carries the id `<name>-inline`:
 
 ```bash
-cat ~/.claude/plugins/data/code-quality-plugin-inline/tool-usage.jsonl
+cat ~/.claude/plugins/data/quality-review-plugin-inline/tool-usage.jsonl
 ```
 
 ```powershell
-Get-Content $env:USERPROFILE\.claude\plugins\data\code-quality-plugin-inline\tool-usage.jsonl
+Get-Content $env:USERPROFILE\.claude\plugins\data\quality-review-plugin-inline\tool-usage.jsonl
 ```
 
 Each line is one tool invocation:
@@ -80,8 +80,8 @@ Tighten the `/create-docs` description in `commands/create-docs.md`, then `/relo
 ### Step 5: Validate before publishing
 
 ```bash
-claude plugin validate --strict ./code-quality-plugin
-claude --plugin-dir ./code-quality-plugin plugin details code-quality-plugin
+claude plugin validate --strict ./quality-review-plugin
+claude --plugin-dir ./quality-review-plugin plugin details quality-review-plugin
 ```
 
 `validate` takes a path and catches manifest, skill, and hook errors that would otherwise become silent no-loads at install time; a skill whose YAML frontmatter fails to parse loads with empty metadata and never triggers. `details` resolves a plugin by name, so a plugin that is not installed yet needs the `--plugin-dir` flag in front of the subcommand. It prints the component inventory (3 skills, 1 hook) and the projected token cost, which is the number you want students worrying about before they ship a plugin that loads every skill on every turn.

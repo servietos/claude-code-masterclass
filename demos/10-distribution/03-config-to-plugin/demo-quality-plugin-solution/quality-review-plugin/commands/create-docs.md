@@ -17,8 +17,8 @@ A single argument: the absolute or repo-relative path to a source file. If the a
 1. Read the source file at `$ARGUMENTS` end to end. Do not paginate; the documentation must reflect the whole file.
 2. Extract: module purpose, public surface (exported functions, classes, constants), inputs and outputs per function, side effects, and any non-obvious invariants.
 3. Write the documentation to `<source-path>.md` (same directory, `.md` appended) using the structure below.
-4. Invoke the `code-quality-plugin:brand-voice` skill against the generated file to enforce em-dash, paragraph length, and Mermaid label rules.
-5. Invoke the `code-quality-plugin:code-reviewer` skill against the original source file. Surface critical findings inline in the generated doc under a "Review Notes" section.
+4. Invoke the `quality-review-plugin:brand-voice` skill against the generated file to enforce em-dash, paragraph length, and Mermaid label rules.
+5. Invoke the `quality-review-plugin:code-reviewer` skill against the original source file. Surface critical findings inline in the generated doc under a "Review Notes" section.
 6. Print a one-line summary: documented file, brand-voice violations fixed, review findings count by severity.
 
 ## Output Structure
