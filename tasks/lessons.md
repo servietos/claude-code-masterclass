@@ -748,3 +748,7 @@
 **Pattern (2026-10-05):** Asked where mods should go, the user picked "Hooks + mods" in the question dialog. A message reading "08-optimize" surfaced right after the answer, so it was treated as the newer decision, and a mods topic was built in `08-optimize`. The message had been typed before the question was even shown; it only reached the session later.
 
 **Rule for the future:** A message surfaced mid-turn is ordered by when it arrived, not when it was written. When it contradicts an answer the user just gave in a dialog, the dialog answer stands unless the message clearly responds to that answer; if it is unclear, ask in one line before building anything.
+
+- A skill the user invokes authorizes every step its playbook prescribes (commit and push included). Run it end to end; never stop to ask for a step the skill already defines.
+- No quote cards in any deck: a one-sentence quote over a photo was rejected as filler. Practical examples become content cards.
+- Side-accent photos are rendered at 2:3 portrait with the people centred: Gamma crops a 16:9 photo to a centre strip and cuts off heads at the edges.
