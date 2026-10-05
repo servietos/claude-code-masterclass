@@ -46,7 +46,7 @@ claude --plugin-dir ./quality-review-plugin
 Inside the session:
 
 ```text
-Invoke /quality-review-plugin:code-review against any TypeScript file in this project.
+Invoke /quality-review-plugin:code-reviewer against sample-code/inventory.py.
 Then check that the hook log has a new entry.
 ```
 
