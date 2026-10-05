@@ -38,6 +38,34 @@ The consequence worth knowing is arguments. A file Claude triggers on its own re
 | Multi-file support | Yes: scripts, JSON config, reference docs                                                                 | No: one file, nothing to bundle                                                  |
 | Best for           | Reusable cross-project workflows that ship supporting files                                               | One-file project-specific procedural scripts                                     |
 
+## Call a Skill from a Short Command
+
+The two combine well. A skill holds the know-how, but calling it well still takes a paragraph: which skill, which folder, which style, which checks afterwards. A command can carry that paragraph once, with named arguments where the parts change, so the call you type shrinks to a name and three values.
+
+```markdown
+---
+description: Write a demo guide for one topic of a module
+argument-hint: [module] [topic] [title]
+arguments: [module, topic, title]
+disable-model-invocation: true
+---
+
+Use the create-class skill to write a demo guide for demos/$module/$topic, titled "$title".
+
+- Read the topic readme first and teach what it teaches, concept first
+- Prompt-recipe style: copy-paste inputs and an Expected Outcome after every step
+- Save it as demos/$module/$topic/demo-<slug>.md and never overwrite an existing file
+- Run the brand-voice-code skill on the result
+```
+
+Saved as `.claude/commands/new-demo.md`, it turns this line into the full prompt above, with every `$name` filled in from the arguments in order:
+
+```text
+/new-demo 03-skills 01-intro "Call a skill from a command"
+```
+
+Wrap a multi-word value in quotes to pass it as one argument. `argument-hint` shows the expected arguments in the `/` menu, and `disable-model-invocation: true` keeps Claude from running the command on its own, where the arguments would be empty. The expanded prompt names the skill, so Claude loads `create-class` with everything it needs on the first turn.
+
 ## Skill Anatomy
 
 Every skill file opens with a YAML frontmatter block followed by a Markdown body.

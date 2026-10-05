@@ -80,7 +80,7 @@ Run git checkout -- notes.md and report the result.
 ```text
  ☐ Guard
 
-│ Intent Guard held a command because you did not ask for it (discards git work). Run it?
+│ Claude wants to run `git checkout -- notes.md` in ...\guard-sandbox, which discards git work. Intent Guard held it because none of your recent prompts asked for that: run it?
 
 ❯ 1. Proceed
   2. Cancel

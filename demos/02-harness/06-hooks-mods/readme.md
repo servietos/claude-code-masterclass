@@ -106,6 +106,42 @@ Three properties of the contract are visible here. Exit 0 is the pass-through fo
 
 Exit 2 is not the only way to say no. A `PreToolUse` hook can instead exit 0 and print a JSON control object on stdout with `permissionDecision: "deny"` and a reason, which is the form [09-observability: Hook Guardrails and Least Privilege](../../09-observability/02-guardrails/demo-hook-guardrails.md) uses when it applies these same mechanics to destructive Bash commands, alongside a Bash and PowerShell handler pair and an audit log.
 
+## Example 3 (PostToolUse): Keep CLAUDE.md Short
+
+This repository runs a settings hook of its own on every `Write` and `Edit`: `.claude/hooks/claude-md-guard.sh`, wired under `PostToolUse` with `matcher: "Write|Edit"` and a 5 second timeout. It lets every file through except a `CLAUDE.md` that has grown past 90 lines.
+
+```bash
+#!/bin/bash
+# PostToolUse hook: keep CLAUDE.md short. Detail belongs in a skill, not here.
+# Exit 2 feeds stderr back to the model as blocking feedback; exit 0 stays silent.
+
+MAX_LINES=90
+
+file=$(jq -r '.tool_response.filePath // .tool_input.file_path // empty' 2>/dev/null)
+[ -z "$file" ] && exit 0
+[ "$(basename "$file")" = "CLAUDE.md" ] || exit 0
+[ -f "$file" ] || exit 0
+
+lines=$(wc -l < "$file")
+
+if [ "$lines" -gt "$MAX_LINES" ]; then
+  cat >&2 <<EOF
+CLAUDE.md is now $lines lines (cap $MAX_LINES). It is a router, not a manual.
+Move the detail you just added into the skill that owns it and leave a one-line pointer:
+- demo / presenter / lab guide rules -> ~/.claude/skills/create-class/references/create-guide.md
+- writing and voice rules            -> .claude/skills/brand-voice-code/references/rules.md
+- slide rules                        -> .claude/skills/create-module-pptx/
+- anything else procedural           -> a skill under .claude/skills/
+Keep only: repo purpose, folder layout, one-line rules, harness delegation.
+EOF
+  exit 2
+fi
+
+exit 0
+```
+
+Claude Code starts the script after the write has landed and pipes the tool payload into it. `jq` reads the file path, every file not named `CLAUDE.md` exits 0 at once, and a `CLAUDE.md` over the cap exits 2 with a message that names where the detail belongs. The oversized file is already on disk, so exit 2 cannot undo the write; Claude reads stderr as feedback and moves the detail out in its next step. The script keeps nothing between runs and draws nothing: it is a check, a message and an exit code.
+
 ## Session Logging: Stop Hook for Continuous Learning
 
 The `Stop` event fires when Claude finishes a turn. That timing makes it the right place to record what happened in a session (what Claude did, what tools it used, what errors it hit) and feed that record into a retrospective loop.
@@ -189,16 +225,20 @@ Every hook receives the same three arguments: `$`, the mods API that is the hook
 
 A mod can draw a band above the prompt, a pane beside the transcript, a status line or a toast, and it can restyle parts Claude Code draws itself, such as a tool call's row or the spinner. Hooks run everywhere the plugin loads, but drawing is narrower: the terminal and the Desktop app's Code tab show it, while the VS Code chat panel and `claude -p` run the hooks and draw nothing.
 
-## Mods Next to Settings Hooks
+## Hook Outside, Mod Inside
 
-The hooks above are settings hooks, and Claude Code calls both kinds hooks. The difference is where the code lives and what it can reach.
+The hooks above are settings hooks, and Claude Code calls both kinds hooks. The difference is where the code runs. A settings hook attaches to Claude Code from the outside, the same way a skill or an MCP server does: Claude Code starts a separate process for each event, hands it the event as JSON and reads back an exit code. A mod runs inside Claude Code, in the flow from prompt to model to tool call to screen, so it can stop an action before it takes effect and change what appears on the screen.
 
 | | Mod | Settings hook |
 |---|---|---|
-| What it is | Functions in a plugin, called in Claude Code's own process | A shell command, HTTP request or prompt in `settings.json` |
-| Lifetime | Loads once and keeps state for the session | Starts fresh on every event |
-| Can it draw | Yes | No |
+| Where it runs | Inside Claude Code's own process | In a separate process Claude Code starts for the event |
+| What it is | JavaScript or TypeScript functions in a plugin | A shell command, HTTP request or prompt in `settings.json` |
+| Lifetime | Loads once and keeps state for the session | Starts fresh on every event and remembers nothing |
+| Can it draw | Yes: a band, a pane, a status line, a toast, a question with buttons | No |
+| How it ships | A plugin from a marketplace, installed once per machine | A file committed with the repository and wired in `.claude/settings.json` |
 | Pick it when | You want a pane, a band, a custom command, or to rewrite an event | You want to block, allow or log an event with a script you already have |
+
+`claude-md-guard.sh` above is the hook side of that table: one script, one rule, one exit code, and nothing it can remember or show. The mod side is `intent-guard`, further below.
 
 ## The Build Loop
 
@@ -225,19 +265,64 @@ The [integrations.at harness](https://integrations.at/ai-trends/customize-your-a
 |---|---|
 | `intent-guard` | Checks commands against the team's own prompts: requested work and reads run at once, risky unrequested actions wait for approval |
 | `ask-check` | Matches a question Claude is about to ask against earlier prompts and shows the answer already given |
-| `learn-queue` | Starts the learning review after five idle minutes |
+| `learn-queue` | Starts `/claude-learn` after five idle minutes once a session had two prompts, more than three edited files or an agent; a band above the prompt shows the planned time, and key `2` runs it now |
 | `report-loop` | Posts a status update every five minutes on any task running longer than five minutes |
 
 The raw material is the transcripts under `~/.claude/projects/`: which requests recur, which commands were cancelled or rejected, and how changes get reviewed. Before shipping a mod that classifies commands or text, replay it over those transcripts and read a sample of every case it fires on.
 
-A mod ships like any plugin, through a marketplace:
+## A Mod at Work: intent-guard
 
-```bash
-claude plugin marketplace add <owner>/<repo>
-claude plugin install <mod>@<marketplace>
+Claude Code's own permission handling has two ends. The permission classifier can block a command your team asked for, and bypass mode runs every command with nobody checking it. `intent-guard` sits between the two and applies your team's rule: it remembers the last ten prompts you typed and checks every `Bash`, `PowerShell` and MCP delete call against them.
+
+| The command | What intent-guard does |
+|---|---|
+| A read, or anything that is not risky | Runs at once |
+| Risky, and a recent prompt asked for it | Runs at once |
+| Risky, and nobody asked for it | Holds it and asks: Proceed or Cancel |
+
+Risky means one of a fixed list of families: deleting files, discarding git work, committing, pushing, merging a pull request, writing to a database, deleting remote resources, changing DNS, killing processes, running tests, and deleting through an MCP tool. Commit, push, merge and test runs count as requested only within the last three prompts. The question names who wants to run what, where, and why it was held:
+
+```text
+Claude wants to run `git checkout -- src` in D:\repo, which discards git work. Intent Guard held it because none of your recent prompts asked for that: run it?
 ```
 
-Then run `/reload-plugins` in an open session to load it.
+Proceed lets the command run. Cancel denies it with a message that tells Claude not to retry it or reach the same result another way, and a pane lists every command still waiting. A settings hook starts with an empty memory on every event, so it would have to parse the session transcript again on each call to learn what you asked; the mod keeps the prompts in its own state and draws the waiting commands in its own pane.
+
+## Install Mods from a Marketplace
+
+A mod reaches a machine the way every plugin does: through a marketplace. A marketplace is a git repository or a folder that holds `.claude-plugin/marketplace.json`, a list of plugins with the path to each one. The integrations.at mods live in one such repository, `claude-mods`:
+
+```json
+{
+  "name": "claude-mods",
+  "owner": { "name": "Alexander Kastil" },
+  "plugins": [
+    { "name": "intent-guard", "source": "./intent-guard" },
+    { "name": "learn-queue", "source": "./learn-queue" },
+    { "name": "learn-loop", "source": "./learn-loop" }
+  ]
+}
+```
+
+`claude plugin marketplace add` takes four kinds of source: a GitHub `owner/repo`, the `https://` clone URL of any other git host, a local folder, or the URL of a hosted `marketplace.json`. The repository can be private. Claude Code clones it with the git credentials already on the machine and never prompts for a password, so anyone with read access can add it: over HTTPS after `gh auth login` and `gh auth setup-git`, or over SSH with a key loaded in the agent. A folder works too, which is how the author uses a marketplace before pushing it anywhere: plugins from a folder load in place, so an edit shows up at the next session start or after `/reload-plugins`.
+
+```bash
+claude plugin marketplace add alexander-kastil/claude-mods
+claude plugin install intent-guard@claude-mods
+claude plugin list
+```
+
+`claude plugin install` from the shell defaults to user scope, and the scope decides which repositories get the mod:
+
+| Scope | Recorded in | Who gets it |
+|---|---|---|
+| User | `enabledPlugins` in `~/.claude/settings.json` | You, in every repository on this machine |
+| Project | `.claude/settings.json`, committed | Everyone in this repository, after each person runs the install once with `--scope project` |
+| Local | `.claude/settings.local.json` | You, in this repository only |
+
+So a mod is installed once per machine, not once per repository: install it at user scope and every session in every repository loads it. A second machine repeats the two commands. A mod that needs another plugin names it under `dependencies` in its `plugin.json`, and the install pulls it in from the same marketplace: installing `learn-queue` also installs `learn-loop`, which carries the `claude-learn` skill it starts. A mod with options, such as the five-minute intervals of `report-loop`, takes them with `claude plugin configure report-loop@claude-mods`.
+
+Plugins installed from the shell load in the next session, or in the open one after `/reload-plugins`. Background updates are off for a marketplace you added yourself: run `claude plugin marketplace update claude-mods`, or turn on auto-update for it under Marketplaces in `/plugin`.
 
 ## Trust and Off Switches
 

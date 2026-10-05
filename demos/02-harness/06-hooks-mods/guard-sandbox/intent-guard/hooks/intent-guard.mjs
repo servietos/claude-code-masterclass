@@ -145,7 +145,10 @@ export function register(on) {
     try {
       await $.ui.open({ id: PANE, title: "Intent Guard" }).catch(() => {});
       const why = `you did not ask for it (${item.reasons.join(", ")})`;
-      const choice = await $.ui.ask(`Intent Guard held a command because ${why}. Run it?`, { header: "Guard", options: ["Proceed", "Cancel"] });
+      const who = item.agentId ? `Subagent ${item.agentId}` : "Claude";
+      const where = isShell && cwd ? ` in ${cwd}` : "";
+      const question = `${who} wants to run \`${brief(item.command, isShell, e.tool)}\`${where}, which ${item.reasons.join(" and ")}. Intent Guard held it because none of your recent prompts asked for that: run it?`;
+      const choice = await $.ui.ask(question, { header: "Guard", options: ["Proceed", "Cancel"] });
       if (choice === "Proceed") return next(e);
       return { deny: `Intent Guard: the user pressed ${JSON.stringify(choice)} instead of Proceed for this command. It was held because ${why}. Do not retry it or reach the same result another way; ask the user.` };
     } catch {
@@ -251,6 +254,11 @@ function expandVars(command) {
   return command.replace(/\$\{?([A-Za-z_]\w*)\}?/g, (all, name) => vars[name] ?? all);
 }
 
+
+function brief(command, isShell, tool) {
+  const text = isShell ? command.split("\n").find((l) => l.trim() !== "")?.trim() ?? "" : tool;
+  return text.length > 120 ? `${text.slice(0, 117)}...` : text;
+}
 
 function stripReserved(e) {
   const { tool, tool_use_id, agentId, consent, ...rest } = e;

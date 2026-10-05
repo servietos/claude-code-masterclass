@@ -31,4 +31,12 @@ Machine hours spent on this repository, one row per working day.
 
 | 2026-10-05 | 1.38 | 18:46 | 20:09 | Rebuilt the slide decks for all fourteen course modules with new diagrams, photos and speaker notes |
 
-**Total: 30.35 hours**
+| 2026-10-05 | 0.72 | 22:09 | 22:52 | Course decks: hooks and mods topic rebuilt with five worked examples, two new skills slides, new trainer and copyright lines on every deck |
+
+| 2026-10-05 | 0.28 | 22:53 | 23:10 | Course decks: Fast Lane copyright line on every title slide, hooks and mods section exported as its own deck |
+
+| 2026-10-05 | 0.30 | 23:29 | 23:47 | Course decks: Fast Lane title slide retypeset (one footer size, two-line tagline, balanced spacing) and trainer slide relabelled across three classes, PDFs re-exported |
+
+| 2026-10-05 | 0.08 | 23:47 | 23:52 | Course decks: new Fast Lane title slide published to the class folders with refreshed PDFs |
+
+**Total: 31.73 hours**

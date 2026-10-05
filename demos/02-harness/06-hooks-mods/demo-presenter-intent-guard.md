@@ -40,7 +40,10 @@ A mod can hold a tool call until a person answers, and it can decide from the co
 **Say:** The hook does not call `next` until you choose. Proceed passes the call on; anything else returns a `deny` that Claude reads as the tool result.
 
 ```javascript
-      const choice = await $.ui.ask(`Intent Guard held a command because ${why}. Run it?`, { header: "Guard", options: ["Proceed", "Cancel"] });
+      const who = item.agentId ? `Subagent ${item.agentId}` : "Claude";
+      const where = isShell && cwd ? ` in ${cwd}` : "";
+      const question = `${who} wants to run \`${brief(item.command, isShell, e.tool)}\`${where}, which ${item.reasons.join(" and ")}. Intent Guard held it because none of your recent prompts asked for that: run it?`;
+      const choice = await $.ui.ask(question, { header: "Guard", options: ["Proceed", "Cancel"] });
       if (choice === "Proceed") return next(e);
       return { deny: `Intent Guard: the user pressed ${JSON.stringify(choice)} instead of Proceed for this command. It was held because ${why}. Do not retry it or reach the same result another way; ask the user.` };
 ```
@@ -48,7 +51,7 @@ A mod can hold a tool call until a person answers, and it can decide from the co
 **Result:** the question in the interactive session, with the Intent Guard pane open beside it and `notes.md` untouched
 
 ```text
-│ Intent Guard held a command because you did not ask for it (discards git work). Run it?
+│ Claude wants to run `git checkout -- notes.md` in ...\guard-sandbox, which discards git work. Intent Guard held it because none of your recent prompts asked for that: run it?
 
 ❯ 1. Proceed
   2. Cancel

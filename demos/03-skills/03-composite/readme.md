@@ -45,6 +45,39 @@ allowed-tools: Bash(${CLAUDE_SKILL_DIR}/scripts/validate.sh *)
 
 Use `${CLAUDE_PROJECT_DIR}` when the skill needs a project-local file instead. Both resolve identically whether the skill is installed at the personal, project, or plugin level.
 
+## Orchestration and Deterministic Skills
+
+A bundled script raises the question of who produces the output, and choosing wrongly is the most expensive mistake in skills. An orchestration skill is instructions only: Claude reads the procedure and does the work, applying judgement at every step. A deterministic skill inverts that: Claude's only job is to collect parameters from the conversation and hand them to a script, which produces the output the same way every time.
+
+| | Orchestration skill | Deterministic skill |
+|---|---|---|
+| What `SKILL.md` holds | The procedure, conventions, gotchas | The parameter list and the command to run |
+| Who produces the output | Claude | A bundled script under `scripts/` |
+| Varies between runs | Yes, by design | No |
+| Fails by | Wrong judgement, missed edge case | Bad parameters, missing runtime |
+| Right when | The task needs taste, context, or code Claude writes anyway | The output must be exact, or Claude cannot produce it at all |
+
+Most of the value in a repository sits in the left column. The `dotnet-conventions` skill in this repo is one: its `SKILL.md` routes each request to one file under `references/`, such as `conventions.md`, `dotnet-cli.md` or `async-patterns.md`, and Claude applies what it reads.
+
+The right column is the one people skip. When the answer must be identical every run, or Claude cannot generate it at all (a PNG, a valid PPTX, a QR code), instructions are the wrong tool however carefully you write them. A QR code either scans or it does not, so a QR skill such as `qr-batch` holds no image logic: it collects the links and the output folder, runs `${CLAUDE_SKILL_DIR}/scripts/generate_qr_batch.py --dry-run`, shows the plan, and runs it for real after you confirm.
+
+```markdown
+## Steps
+
+1. Collect the parameters from the conversation. Ask only for what is missing.
+
+   | Parameter | Required | Default | Notes |
+   |-----------|----------|---------|-------|
+   | Links | Yes | none | One `slug` and one `url` per code |
+   | Output directory | Yes | none | Where the PNG files land |
+   | Box size | No | `10` | Print needs 12 or more, screen is fine at 6 |
+
+2. Run `${CLAUDE_SKILL_DIR}/scripts/generate_qr_batch.py --dry-run` and show the plan.
+3. After the user confirms, run it without `--dry-run` and report the JSON it prints.
+```
+
+A default with its reason attached tells Claude when to override it without asking, and the dry run lets a person catch a wrong parameter before any file is written.
+
 ## References
 
 The `references/` directory holds Markdown documentation that `SKILL.md` loads on demand. The pattern is called progressive disclosure: `SKILL.md` stays small and fast to load, while deep reference material sits in branch files that Claude reads only when the task requires it.

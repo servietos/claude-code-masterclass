@@ -767,3 +767,28 @@
 
 **Pattern:** the cost tally reported renders=0 because subagent HTTP renders and the batch job leave no media-creator tool result in the main transcript.
 **Rule:** for photo cost, sum the CostUsd from the agents' reports and the batch result, or query MediaItems.CostUsd by date.
+
+## A proposal is the obvious two or three
+
+**Pattern:** asked which other repeating slides were worth templating, the session scanned 411 decks across every class folder before answering; the owner stopped it: the most obvious, max 2-3.
+**Rule:** answer "what else is worth X" from what the session already holds, two or three candidates with one number each; scan wider only when asked.
+
+## The OneDrive deck is the owner's working copy
+
+**Pattern:** the owner swapped slides 26 and 27 and edited slide 2 of 03-skills in the OneDrive copy; the repo decks no longer matched.
+**Rule:** cmp the repo deck against OneDrive before editing a finished deck, start from the OneDrive copy when they differ, and bring the specs in line with any reorder.
+
+## The copyright line names the owner the user named
+
+**Pattern:** told that for this class the copyright owner is Fast Lane, the slide 1 note went out as "© 2026 Alexander Kastil / integrations.at", copied from another class's LICENSE.
+**Rule:** a copyright line names exactly the party the user stated, by its legal name from that party's imprint (here Fast Lane Institute for Knowledge Transfer GmbH); never borrow the owner from a sibling repo.
+
+## The intro slides are copied by value into every deck
+
+**Pattern:** a typography fix to the Fast Lane and trainer slides was applied to the create-pptx template and this repo's decks only; the owner then pointed at the 00 deck and module decks of two other class repos, their `assets/ModuleIntro.pptx` and per-module `intro.pptx` copies, and the OneDrive working copies with their `-pdf` folders.
+**Rule:** a change to the intro slides goes through `create-pptx/scripts/intro_sync.py` over every root the owner names at once (here: the skill templates and the three class repos; the OneDrive Classes folder only when named); it finds the copies by the `www.flane.de` marker and re-exports each sibling or `<folder>-pdf` PDF. Never change the text owners: the integrations.at classes carry no Fast Lane copyright line and the script only restyles runs.
+
+## A design ask gets a rendered choice
+
+**Pattern:** "present the line better" with ui-ux-pro-max was first answered with a footer-only plan; the owner had to repeat the goal, then asked for spacing after seeing size previews.
+**Rule:** for a visual request, render two variants of the real slide (size and spacing together, PowerPoint export plus PyMuPDF since LibreOffice and poppler are not installed here) and send them with SendUserFile; a scratchpad path alone is not viewable for the owner.

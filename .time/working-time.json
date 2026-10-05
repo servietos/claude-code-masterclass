@@ -72,6 +72,212 @@
     "useCases": [],
     "groups": []
    }
+  },
+  {
+   "date": "2026-10-05",
+   "from": "22:09",
+   "to": "22:52",
+   "sessionId": "1d820d71-353e-4ed2-8456-943b0d0f841a",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "demos/02-harness",
+    "demos/03-skills",
+    "create-pptx skill"
+   ],
+   "files": [
+    "demos/02-harness/06-hooks-mods/readme.md",
+    "demos/02-harness/pptx/06-0*.md",
+    "demos/03-skills/01-intro/readme.md",
+    "demos/03-skills/03-composite/readme.md",
+    "~/.claude/skills/create-pptx/scripts/add_spec_slide.py",
+    "~/.claude/skills/create-pptx/templates/intro.pptx"
+   ],
+   "mechanism": {
+    "takes": "a module readme plus a slide spec per new slide and a hand-drawn SVG",
+    "does": "adds teaching sections and clones an existing diagram card of the finished deck for each new slide, fills it from the spec, writes speaker notes, re-exports the PDF and publishes to the class folder without regenerating the deck",
+    "returns": "updated module decks and PDFs in the trainer's OneDrive, with the intro slides served from one shared template"
+   },
+   "portsAsIs": [
+    "add one slide to a finished deck from a spec without Gamma",
+    "shared intro template for every class deck",
+    "bulk text change on a fixed slide across all decks"
+   ],
+   "perCustomer": [
+    "the course content",
+    "the partner and trainer intro slides"
+   ],
+   "evidence": [
+    "add_spec_slide.py reproduced the hand-built slide with identical text, fonts and image",
+    "14 decks delivered to OneDrive with removed=0 bullets=0"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-class",
+     "create-pptx",
+     "mod-authoring",
+     "claude-learn",
+     "claude-learn-harvest",
+     "claude-learn-worktime"
+    ],
+    "mcpServers": [],
+    "agents": []
+   },
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-05",
+   "from": "22:53",
+   "to": "23:10",
+   "sessionId": "1d820d71-353e-4ed2-8456-943b0d0f841a",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "demos/*/pptx",
+    "create-pptx skill"
+   ],
+   "files": [
+    "demos/*/pptx/[0-9][0-9]-*.pptx",
+    "assets/00-agentic-sw-engineering.pptx",
+    "assets/01-fundamentals.pptx",
+    "~/.claude/skills/create-pptx/templates/intro.pptx"
+   ],
+   "mechanism": {
+    "takes": "the class owner's legal name and a slide range",
+    "does": "rewrites one fixed run on the title slide of every deck in place, sized to stay on one line, re-exports each PDF and publishes, and copies a slide range into a standalone deck",
+    "returns": "14 republished decks and PDFs plus a section deck in the class folder"
+   },
+   "portsAsIs": [
+    "bulk edit of a fixed slide across every deck of a class",
+    "section export to its own deck"
+   ],
+   "perCustomer": [
+    "the copyright owner and provider URL"
+   ],
+   "evidence": [
+    "slide 1 text of all 14 PDFs contains the Fast Lane legal name",
+    "section deck: 7 slides, 6 with speaker notes"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-pptx",
+     "claude-learn",
+     "claude-learn-worktime"
+    ],
+    "mcpServers": [],
+    "agents": []
+   },
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-05",
+   "from": "23:29",
+   "to": "23:47",
+   "sessionId": "e8fbd8bd-8e0b-4120-b895-eb38121cfa2b",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "demos/*/pptx",
+    "create-pptx skill",
+    "agentic-sw-engineering",
+    "angular-agentic-sw-engineering"
+   ],
+   "files": [
+    "~/.claude/skills/create-pptx/scripts/intro_sync.py",
+    "~/.claude/skills/create-pptx/templates/intro.pptx",
+    "~/.claude/skills/create-pptx/references/finished-deck-edits.md"
+   ],
+   "mechanism": {
+    "takes": "a set of folders, a marker text identifying a fixed shared slide, and the typography and layout values to apply",
+    "does": "finds every presentation that carries the shared slide, applies one font size and weight to its footer, replaces whole text runs, repositions and resizes the headline block, saves only changed decks and re-exports each matching PDF",
+    "returns": "per-deck change counts and refreshed PDFs, idempotent on a second run"
+   },
+   "portsAsIs": [
+    "bulk restyle of a shared slide copied into many decks",
+    "matching PDF re-export beside each deck or in a sibling -pdf folder"
+   ],
+   "perCustomer": [
+    "the marker text",
+    "the brand's footer size and headline layout"
+   ],
+   "evidence": [
+    "second run printed decks=56 changed=0 pdfs=0",
+    "rendered Fast Lane slide checked in three classes' PDFs"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-pptx",
+     "ui-ux-pro-max",
+     "claude-learn",
+     "claude-learn-harvest",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "chrome-devtools"
+    ],
+    "agents": []
+   },
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-05",
+   "from": "23:47",
+   "to": "23:52",
+   "sessionId": "e8fbd8bd-8e0b-4120-b895-eb38121cfa2b",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "OneDrive class folders"
+   ],
+   "files": [
+    "~/.claude/skills/create-pptx/scripts/intro_sync.py",
+    "~/.claude/skills/claude-learn/SKILL.md"
+   ],
+   "mechanism": {
+    "takes": "the delivered copies of three classes' decks",
+    "does": "applies the shared title slide change in place and re-exports every stale PDF, recovering from export dialogs by restarting only its own presentation process",
+    "returns": "38 decks checked, 31 changed, every PDF current; a rerun changes nothing"
+   },
+   "portsAsIs": [
+    "resumable bulk PDF re-export keyed on file age"
+   ],
+   "perCustomer": [
+    "the delivery folder layout"
+   ],
+   "evidence": [
+    "rerun printed decks=38 changed=0 pdfs=0",
+    "OneDrive 01-fundamentals.pdf slide 1 rendered and checked"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-pptx",
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": []
+   },
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
   }
  ]
 }
