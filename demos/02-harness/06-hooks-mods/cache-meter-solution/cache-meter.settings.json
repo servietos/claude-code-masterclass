@@ -1,0 +1,12 @@
+{
+  "pluginConfigs": {
+    "prompt-cache-control@skills-dir": {
+      "options": {
+        "ttl": "1h",
+        "warnSeconds": 120,
+        "compactAtTokens": 50000,
+        "status": true
+      }
+    }
+  }
+}

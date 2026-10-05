@@ -65,7 +65,7 @@ claude --version
 claude "What files are in this directory?"
 ```
 
-A successful response confirms authentication and tool access are working. From here, proceed to the [CLAUDE.md Constitution](../04-constitution/readme.md) module.
+A successful response confirms authentication and tool access are working. From here, proceed to the [Editors](../03-editors/readme.md) module.
 
 ## Helpful Claude Slash Commands
 

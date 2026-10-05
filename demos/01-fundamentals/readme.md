@@ -2,10 +2,10 @@
 
 - Claude product family and surfaces
 - Installation, authentication, editor setup
-- CLAUDE.md hierarchy and `@`-file mentions
-- Prompt caching: prefix, invalidation, hit rate
 - Model selection and token cost
+- Prompt caching: prefix, invalidation, hit rate
 - Permission tiers, modes, scope precedence
+- Session checkpoints and rollback
 - Git worktrees and the Agents View
 - Publishing artifacts: versions and sharing
 
@@ -16,25 +16,23 @@
 | [01: Introduction](01-intro/readme.md) | The Claude product family (Claude.ai, Desktop, Code CLI, IDE extensions, API, and Managed Agents) and why the terminal-first tool is the focus of this course. |
 | [02: Setup](02-setup/readme.md) | Installing Node.js and the `@anthropic-ai/claude-code` CLI, first-time authentication, and configuring the VS Code and Claude Terminal extensions. |
 | [03: Editors](03-editors/readme.md) | Running Claude Code in the terminal, VS Code sidebar, and Claude Desktop, with guidance on which environment fits which working style. |
-| [04: Constitution](04-constitution/readme.md) | Context engineering with `CLAUDE.md`, the multi-layer file hierarchy (global, project, subfolder), `@`-file mentions, and examples that pin the output shape. |
-| [05: Prompt Caching](05-prompt-caching/readme.md) | How Claude Code orders each request into a system prompt, project context, and conversation layer, the actions that invalidate the cached prefix and the ones that safely append, why a mid-session `CLAUDE.md` edit is silently inert, the five-minute and one-hour TTLs, per-directory cache scope, and reading `cache read` against `cache write` in `/usage`. |
-| [06: Model Selection](06-model-selection/readme.md) | Choosing between Opus, Sonnet, and Haiku based on task complexity, and managing token usage and session cost. |
-| [07: Permissions](07-permissions/readme.md) | The three permission tiers, the allow/ask/deny rule syntax, permission modes, and the settings scopes that decide which rule wins. |
-| [08: Git Worktrees](08-git-worktrees/readme.md) | How git worktrees enable parallel branch checkouts, the `--worktree` flag and `EnterWorktree` tool that isolate agentic changes from your working copy, and how to clean them up. |
-| [09: Agents View](09-agents-view/readme.md) | Dispatching background sessions with `--bg`, triaging the board by state, the keys that let you peek and reply without attaching, and the supervisor that keeps sessions alive. |
-| [10: Artifacts](10-artifacts/readme.md) | Publishing session output as a live page on claude.ai: the permission prompt and `Ctrl+]`, versions and the sharing model, design tokens read from `CLAUDE.md`, the Content Security Policy constraints, and the availability rules that decide whether publishing works at all. |
+| [04: Model Selection](04-model-selection/readme.md) | Choosing between Opus, Sonnet, and Haiku based on task complexity, managing token usage and session cost, and keeping the prompt cache warm: how Claude Code orders each request into a system prompt, project context, and conversation layer, the actions that invalidate the cached prefix and the ones that safely append, why a mid-session `CLAUDE.md` edit is silently inert, the five-minute and one-hour TTLs, per-directory cache scope, and reading `cache read` against `cache write` in `/usage`. |
+| [05: Permissions](05-permissions/readme.md) | The three permission tiers, the allow/ask/deny rule syntax, permission modes, and the settings scopes that decide which rule wins. |
+| [06: Checkpoints and Worktrees](06-git-worktrees/readme.md) | Session checkpoints for undoing file changes, rolling back risky edits, and keeping long sessions safe; how git worktrees enable parallel branch checkouts, the `--worktree` flag and `EnterWorktree` tool that isolate agentic changes from your working copy, and how to clean them up. |
+| [07: Agents View](07-agents-view/readme.md) | Dispatching background sessions with `--bg`, triaging the board by state, the keys that let you peek and reply without attaching, and the supervisor that keeps sessions alive. |
+| [08: Artifacts](08-artifacts/readme.md) | Publishing session output as a live page on claude.ai: the permission prompt and `Ctrl+]`, versions and the sharing model, design tokens read from `CLAUDE.md`, the Content Security Policy constraints, and the availability rules that decide whether publishing works at all. |
 
 ## Demos
 
 | Topic | Description |
 |-------|-------------|
-| [04: Constitution](04-constitution/demo-claude-md-constitution.md) | Builds a three-layer CLAUDE.md (global, project, subfolder) from a real project map, then replaces pasted code with `@`-mentions and separates durable rules from `/memory` notes. |
-| [05: Prompt Caching](05-prompt-caching/demo-cache-hit-rate.md) | Warms a cache across three turns on a dependency-free TypeScript sample, breaks it on purpose with a `/model` switch, proves a mid-session `CLAUDE.md` edit is inert until `/clear`, compares `/compact` against `/rewind`, and records every reading in `CACHE-NOTES.md`. |
-| [06: Model Selection](06-model-selection/demo-model-routing.md) | Runs the same tasks on Haiku, Sonnet, and Opus against one API, measures each with `/usage` and `/context`, and writes the measured routing policy into CLAUDE.md. |
-| [07: Permissions](07-permissions/demo-permission-settings.md) | Builds `.claude/settings.json` with allow and deny rules, makes a secrets file unreachable by file and by shell, and splits team policy from a git-ignored personal override. |
-| [08: Git Worktrees](08-git-worktrees/demo-worktrees-intro.md) | Runs two Claude sessions in parallel worktrees editing the same file, then reviews, merges, and cleans up the branches they produce. |
-| [09: Agents View](09-agents-view/demo-agents-view.md) | Dispatches three background sessions on independent chores, triages them from the board without attaching, reviews each branch in place, and merges only the work that earns it. |
-| [10: Artifacts](10-artifacts/demo-artifact-publish-share.md) | Publishes a CI failure dashboard from a CSV, revises it in place through versions, restyles it from design tokens in `CLAUDE.md`, lays three remediation plans side by side with a copy-as-prompt control, and proves the fallback when `Artifact` is denied. |
+| [04: Model Selection](04-model-selection/demo-model-routing.md) | Runs the same tasks on Haiku, Sonnet, and Opus against one API, measures each with `/usage` and `/context`, and writes the measured routing policy into CLAUDE.md. |
+| [04: Model Selection](04-model-selection/demo-cache-hit-rate.md) | Warms a cache across three turns on a dependency-free TypeScript sample, breaks it on purpose with a `/model` switch, proves a mid-session `CLAUDE.md` edit is inert until `/clear`, compares `/compact` against `/rewind`, and records every reading in `CACHE-NOTES.md`. |
+| [05: Permissions](05-permissions/demo-permission-settings.md) | Builds `.claude/settings.json` with allow and deny rules, makes a secrets file unreachable by file and by shell, and splits team policy from a git-ignored personal override. |
+| [06: Checkpoints and Worktrees](06-git-worktrees/demo-anchor-and-roll-back-a-session.md) | Anchors a green Node test suite, lets Claude run an over-reaching cross-cutting refactor, then rewinds and proves the rollback with `npm test` and a clean `git status`. |
+| [06: Checkpoints and Worktrees](06-git-worktrees/demo-worktrees-intro.md) | Runs two Claude sessions in parallel worktrees editing the same file, then reviews, merges, and cleans up the branches they produce. |
+| [07: Agents View](07-agents-view/demo-agents-view.md) | Dispatches three background sessions on independent chores, triages them from the board without attaching, reviews each branch in place, and merges only the work that earns it. |
+| [08: Artifacts](08-artifacts/demo-artifact-publish-share.md) | Publishes a CI failure dashboard from a CSV, revises it in place through versions, restyles it from design tokens in `CLAUDE.md`, lays three remediation plans side by side with a copy-as-prompt control, and proves the fallback when `Artifact` is denied. |
 
 Every demo has a presenter guide beside it (`demo-presenter-<slug>.md`) holding the same
 teaching in timed beats, for delivery without running the demo live.
@@ -45,7 +43,6 @@ teaching in timed beats, for delivery without running the demo live.
 |-----|-------------|
 | [Install and Set Up Claude Code](../../labs/01-fundamentals/01-setup-claude/readme.md) | Install the Claude Code CLI, authenticate, and explore it through the VS Code extension. |
 | [Build a Task Tracking REST API](../../labs/01-fundamentals/02-hello-claude/readme.md) | Build a Python REST API for task management, every step driven by a prompt you write. |
-| [Apply Prompting Techniques](../../labs/01-fundamentals/lab-03-prompting-techniques-and-plugins.md) | Apply five prompting techniques to your harness: statefile maintenance, anchors, `@`-mentions, few-shot examples, and slash-command promotion. |
 
 ## Knowledge Check
 

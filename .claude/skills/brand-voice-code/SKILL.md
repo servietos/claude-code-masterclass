@@ -49,7 +49,7 @@ When fixing slash command tables, consult the "Topic-specific slash commands" se
 For each changed file, output:
 
 ```
-FILE: demos/02-harness/03-hooks/readme.md
+FILE: demos/02-harness/06-hooks-mods/readme.md
   [em-dash]   line 3 — fixed
   [mermaid]   line 29 — \n replaced with <br/>
   [paragraph] line 84 — split after sentence 4

@@ -742,3 +742,9 @@
 **Pattern (2026-08-06):** A `sequenceDiagram` used opaque pastel bands (`rect rgb(220, 235, 255)`) and flowchart nodes used mid-tone fills with `color:#fff`. Both looked right in the light preview they were written in. In the reader's dark theme the band paints near-white under the theme's white message labels, and the mid-tones sit at 2.0-2.8:1 against their own white text. Nothing errors, nothing fails to render, and the previous lesson on this (verify the pixel, not the artifact) only covers catching it, not what to write instead.
 
 **Rule for the future:** Colour a Mermaid block so it survives both themes before considering locking it to one. A band or backdrop takes alpha (`rect rgba(74, 158, 255, 0.12)`) so it tints the page rather than replacing it; a fill carrying `color:#fff` must be dark enough to pass 4.5:1 on its own, which the cheerful defaults (`#4a9eff`, `#51cf66`, `#ff6b6b`, `#4CAF50`) are not. Compute the ratio, do not eyeball it. The rule and the check live in the mermaid skill's playbook under Contrast.
+
+## A queued message can predate the answer it seems to override
+
+**Pattern (2026-10-05):** Asked where mods should go, the user picked "Hooks + mods" in the question dialog. A message reading "08-optimize" surfaced right after the answer, so it was treated as the newer decision, and a mods topic was built in `08-optimize`. The message had been typed before the question was even shown; it only reached the session later.
+
+**Rule for the future:** A message surfaced mid-turn is ordered by when it arrived, not when it was written. When it contradicts an answer the user just gave in a dialog, the dialog answer stands unless the message clearly responds to that answer; if it is unclear, ask in one line before building anything.

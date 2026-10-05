@@ -1,39 +1,39 @@
 # Module 2: Claude Code Configure Harness
 
 - Settings hierarchy and CLAUDE.md injection
+- CLAUDE.md constitution and `@`-file mentions
 - Built-in and custom slash commands
-- Hooks: PreToolUse, PostToolUse, Stop
 - MCP transports and `.mcp.json` configuration
 - Installable skills: folders and sources
-- Plugins as the distribution wrapper
-- Auto-memory: `MEMORY.md` index and files
-- Session checkpoints and rollback
 - Sub-agents under `.claude/agents/`
+- Hooks: PreToolUse, PostToolUse, Stop
+- Mods: extend and customize the harness
+- Auto-memory: `MEMORY.md` index and files
 
 ## Topics
 
 | Topic | Description |
 |-------|-------------|
-| [01: Intro](01-intro/readme.md) | Harness overview, settings hierarchy (global, project, session), and how `CLAUDE.md` injects rules and context into every turn. |
+| [01: Intro Constitution](01-intro-constitution/readme.md) | Harness overview, settings hierarchy (global, project, session), and how `CLAUDE.md` injects rules and context into every turn; context engineering with the multi-layer `CLAUDE.md` hierarchy (global, project, subfolder), `@`-file mentions, and examples that pin the output shape. |
 | [02: Commands](02-commands/readme.md) | Built-in and custom slash commands, argument patterns, and authoring reusable workflows under `.claude/commands/`. |
-| [03: Hooks](03-hooks/readme.md) | Event-driven shell hooks for `PreToolUse`, `PostToolUse`, `Notification`, and `Stop`, wired in `settings.json` and proven through the exit-code contract. [Module 9: 02](../09-observability/02-guardrails/readme.md) owns destructive-command guardrails. |
-| [04: MCP](04-mcp/readme.md) | Model Context Protocol servers (stdio, HTTP, WebSocket), `.mcp.json` configuration, and developer use cases like Playwright, Azure Deploy, GitHub, and Microsoft Learn. |
-| [05: Skills](05-skills/readme.md) | What a skill folder is and where skills come from: the catalog, `/find-skills`, and what an install actually changes. [Module 3](../03-skills/readme.md) owns anatomy, frontmatter, and forked execution. |
-| [06: Plugins](06-plugins/readme.md) | Plugins as the distribution wrapper around the commands, hooks, MCP config, skills, and agents built here. [Module 10](../10-distribution/readme.md) owns the manifest, layout, `--plugin-dir` testing, and marketplaces. |
+| [03: MCP](03-mcp/readme.md) | Model Context Protocol servers (stdio, HTTP, WebSocket), `.mcp.json` configuration, and developer use cases like Playwright, Azure Deploy, GitHub, and Microsoft Learn. |
+| [04: Skills](04-skills/readme.md) | What a skill folder is and where skills come from: the catalog, `/find-skills`, and what an install actually changes. [Module 3](../03-skills/readme.md) owns anatomy, frontmatter, and forked execution. |
+| [05: Subagents](05-subagents/readme.md) | Sub-agents as a harness file type under `.claude/agents/`, discovered alongside commands, hooks, and skills. [Module 6](../06-subagents/readme.md) owns frontmatter, orchestration, and contracts. |
+| [06: Hooks and Mods](06-hooks-mods/readme.md) | Event-driven shell hooks for `PreToolUse`, `PostToolUse`, `Notification`, and `Stop`, wired in `settings.json` and proven through the exit-code contract, and mods that extend and customize the harness itself: they watch or rewrite any event, hold a tool call for a person, and add panes, bands, and commands. [Module 9: 02](../09-observability/02-guardrails/readme.md) owns destructive-command guardrails. |
 | [07: Memory](07-memory/readme.md) | The auto-memory system: the `MEMORY.md` index and the `user`, `feedback`, `project`, and `reference` file types. [Module 8: 04](../08-optimize/04-memory-architectures/readme.md) benchmarks whole memory architectures. |
-| [08: Checkpoints](08-checkpoints/readme.md) | Session checkpoints for undoing file changes, rolling back risky edits, and keeping long sessions safe. |
-| [09: Subagents](09-subagents/readme.md) | Sub-agents as a harness file type under `.claude/agents/`, discovered alongside commands, hooks, and skills. [Module 6](../06-subagents/readme.md) owns frontmatter, orchestration, and contracts. |
 
 ## Demos
 
 | Topic | Description |
 |-------|-------------|
+| [01: Intro Constitution](01-intro-constitution/demo-claude-md-constitution.md) | Builds a three-layer CLAUDE.md (global, project, subfolder) from a real project map, then replaces pasted code with `@`-mentions and separates durable rules from `/memory` notes. |
 | [02: Commands](02-commands/demo-slash-command-toolkit.md) | Turns a dependency-free changelog CLI into a four-command toolkit, covering frontmatter fields, zero-based positional arguments, the `` !`command` `` bash injection, and project versus personal command scope. |
-| [03: Hooks](03-hooks/demo-hook-pipeline.md) | Builds a `PreToolUse`, `PostToolUse`, and `Stop` pipeline in stdlib Python, teaching the `settings.json` wiring shape, the stdin payload contract, and the exit-code semantics with 15 passing tests. |
-| [03: Hooks](03-hooks/demo-skill-guard.md) | Guards the master-skill folder convention with two hooks: a `PreToolUse` blocker that refuses a nested `SKILL.md` before it lands, and a `PostToolUse` bash linter that sweeps `.claude/skills/` and `.claude/agents/` for defects the blocker cannot see. |
-| [04: MCP](04-mcp/demo-maf-foundry-migration.md) | Connects the Microsoft Agent Framework starter to a live Azure AI Foundry project and migrates it to the current API using Microsoft Learn MCP lookups. |
-| [05: Skills](05-skills/demo-docx-invoice.md) | Installs a DOCX skill and uses it to generate a TypeScript program that renders a sample invoice as a `.docx` file. |
-| [08: Checkpoints](08-checkpoints/demo-anchor-and-roll-back-a-session.md) | Anchors a green Node test suite, lets Claude run an over-reaching cross-cutting refactor, then rewinds and proves the rollback with `npm test` and a clean `git status`. |
+| [03: MCP](03-mcp/demo-maf-foundry-migration.md) | Connects the Microsoft Agent Framework starter to a live Azure AI Foundry project and migrates it to the current API using Microsoft Learn MCP lookups. |
+| [04: Skills](04-skills/demo-docx-invoice.md) | Installs a DOCX skill and uses it to generate a TypeScript program that renders a sample invoice as a `.docx` file. |
+| [06: Hooks and Mods](06-hooks-mods/demo-hook-pipeline.md) | Builds a `PreToolUse`, `PostToolUse`, and `Stop` pipeline in stdlib Python, teaching the `settings.json` wiring shape, the stdin payload contract, and the exit-code semantics with 15 passing tests. |
+| [06: Hooks and Mods](06-hooks-mods/demo-skill-guard.md) | Guards the master-skill folder convention with two hooks: a `PreToolUse` blocker that refuses a nested `SKILL.md` before it lands, and a `PostToolUse` bash linter that sweeps `.claude/skills/` and `.claude/agents/` for defects the blocker cannot see. |
+| [06: Hooks and Mods](06-hooks-mods/demo-cache-meter.md) | Installs a prompt-cache meter mod from a template gallery, reviews what it can reach with `claude plugin validate` and its tests, watches a model switch rewrite the cache in its `/cache` pane, and pins its options under the full plugin id in a `--settings` file. |
+| [06: Hooks and Mods](06-hooks-mods/demo-intent-guard.md) | Loads a guard mod with `--plugin-dir` that holds a destructive git command you never asked for and passes it once a prompt asks for its effect, then adds a package-publish family with two tests. |
 
 Every demo has a presenter guide beside it (`demo-presenter-<slug>.md`) holding the same
 teaching in timed beats, for delivery without running the demo live.
@@ -44,6 +44,8 @@ teaching in timed beats, for delivery without running the demo live.
 |-----|-------------|
 | [Install a React Agent Skill](../../labs/02-harness/lab-01-react-skill.md) | Install the `react-best-practices` skill into the React app's own `.claude/skills/` and confirm it is active. |
 | [Configure the Harness on a Broken React App](../../labs/02-harness/lab-02-fix-the-react-food-shop.md) | Configure the harness piece by piece, then watch it work together as Claude fixes a broken React app. |
+| [Apply Prompting Techniques](../../labs/02-harness/lab-03-prompting-techniques.md) | Apply five prompting techniques to your harness: statefile maintenance, anchors, `@`-mentions, few-shot examples, and slash-command promotion. |
+| [Build an Ask-Check Mod Test-First](../../labs/02-harness/lab-04-ask-check.md) | Build a mod that shows your own earlier answer above the prompt when Claude asks again, test-first against six shipped tests. |
 
 ## Knowledge Check
 

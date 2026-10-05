@@ -6,7 +6,7 @@ Welcome to the new standard.
 
 Agentic software engineering is a discipline shift, and once you experience it, there's no going back. Instead of spending days on tasks that take agents minutes, you orchestrate workflows that reduce cost, eliminate repetition, and scale your output without scaling your team. The developers who master this don't just move faster. They do more with less, and they do it consistently.
 
-Across 14 hands-on modules, you'll go from Claude Code fundamentals to production-grade multi-agent pipelines. You'll design composable skills, build MCP tools that connect agents to real systems, architect parallel sub-agent workflows, and harden everything for real-world conditions. Every module is built around genuine engineering decisions, because the goal was never to write more code. It was always to build software that matters.
+Across 14 hands-on modules, you'll go from Claude Code fundamentals to production-grade multi-agent pipelines. You'll design composable skills, build MCP tools that connect agents to real systems, extend and customize the harness with mods, architect parallel sub-agent workflows, and harden everything for real-world conditions. Every module is built around genuine engineering decisions, because the goal was never to write more code. It was always to build software that matters.
 
 The class also covers everything required to pass the [Claude Certified Architect: Foundations certification](https://anthropic-partners.skilljar.com/claude-certified-architect-foundations-certification). Every exam area, from the CLAUDE.md constitution and the permission model through skills, MCP, sub-agents and security, is taught in a module and practiced in its lab. Work through the 14 modules and you are prepared for the exam without any separate study track. Still we want to point out that this is not a dedicated exam prep class.
 
@@ -15,24 +15,26 @@ The class also covers everything required to pass the [Claude Certified Architec
 - Introduction to Claude Code
 - Setup & Installation
 - Editors: Console, Desktop App, VS Code
-- CLAUDE.md constitution, @-mentioning files and URLs
-- Prompt caching, cost and token awareness
 - Model Selection Strategy
+- Prompt caching, cost and token awareness
 - Permission Model: Tools, Bash, Network
-- Git worktrees and the agents view
+- Checkpoints & Session Safety
+- Git worktrees: isolated checkouts
+- Agents view: background sessions
 - Artifacts: results as shareable pages
 
 ## Module 2: Claude Code Configure Harness
 
 - Settings Hierarchy: Global, Project, Session
-- Rules and context via CLAUDE.md
+- CLAUDE.md constitution
+- @-mentioning files and URLs
 - Slash Commands
-- Hooks: PreToolUse, PostToolUse, Notification, Stop
 - MCP Servers & Tools
 - Skill folders and their sources
-- Plugins as distribution wrapper
+- Sub-agents under `.claude/agents/`
+- Hooks: PreToolUse, PostToolUse, Stop
+- Mods: extend and customize the harness
 - Auto-memory: MEMORY.md index, four typed files
-- Checkpoints & Session Safety
 
 ## Module 3: Creating & Managing Skills
 
@@ -130,6 +132,7 @@ The class also covers everything required to pass the [Claude Certified Architec
 - Local testing: plugin directory and reload
 - Converting `.claude/` configs into plugins
 - Publishing to official and team marketplaces
+- Plugins by Anthropic
 
 ## Module 11: Agentic DevOps & Deployment
 
@@ -175,10 +178,10 @@ The class also covers everything required to pass the [Claude Certified Architec
 
 | Clock          | Length | Deliverable                                                                                              | Description                                                                                                                                                                                                                                        |
 | -------------- | ------ | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 09:00 to 10:20 | 1h 20m | [Claude Code Fundamentals](01-fundamentals/readme.md)                                                    | Setup and editors, CLAUDE.md constitution, model selection, prompt caching and cost, permissions, git worktrees, agents view, artifacts (10 topics, 7 demos)                                                                                        |
+| 09:00 to 10:20 | 1h 20m | [Claude Code Fundamentals](01-fundamentals/readme.md)                                                    | Setup and editors, model selection, prompt caching and cost, permissions, checkpoints, git worktrees, agents view, artifacts (8 topics, 7 demos)                                                                                                                 |
 | 10:20 to 10:30 | 10m    | Break                                                                                                    |                                                                                                                                                                                                                                                    |
 | 10:30 to 11:15 | 45m    | [Lab: Build a Task Tracking REST API](../labs/01-fundamentals/02-hello-claude/readme.md)                 | Build a Python REST API for task management entirely through prompts, one step at a time. Every step gives you the prompt to paste and the result to expect.                                                                                        |
-| 11:15 to 12:20 | 1h 05m | [Claude Code Configure Harness](02-harness/readme.md)                                                    | Settings hierarchy, slash commands, hooks, MCP servers, skills, plugins, memory, checkpoints, sub-agents (9 topics, 6 demos)                                                                                                                        |
+| 11:15 to 12:20 | 1h 05m | [Claude Code Configure Harness](02-harness/readme.md)                                                    | Settings hierarchy, CLAUDE.md constitution, slash commands, MCP servers, skills, sub-agents, hooks and mods, memory (7 topics, 8 demos)                                                                                                                                              |
 | 12:20 to 13:20 | 1h 00m | Lunch                                                                                                    |                                                                                                                                                                                                                                                    |
 | 13:20 to 14:45 | 1h 25m | [Lab: Configure the Harness on a Broken React App](../labs/02-harness/lab-02-fix-the-react-food-shop.md) | Configure the harness piece by piece (CLAUDE.md, MCP servers, a PostToolUse hook, a slash command, a skill, checkpoints) on a broken React app. The app is the use case; the harness is the lesson.                                                 |
 | 14:45 to 15:30 | 45m    | [Creating & Managing Skills](03-skills/readme.md)                                                        | Skills versus slash commands, authoring and frontmatter, composite skills, dynamic context and forked execution, testing and packaging (5 topics, 3 demos)                                                                                          |

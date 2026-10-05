@@ -1,6 +1,6 @@
 import { ApplicationConfig, ErrorHandler, LOCALE_ID } from '@angular/core';
 import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     providers: [
         provideZonelessChangeDetection(),
         provideRouter(routes, withEnabledBlockingInitialNavigation()),
-        provideHttpClient(withInterceptors([apimInterceptor])),
+        provideHttpClient(withXhr(), withInterceptors([apimInterceptor])),
         { provide: LOCALE_ID, useValue: 'de' },
         { provide: ErrorHandler, useClass: ErrHandlerService },
         importProvidersFrom(

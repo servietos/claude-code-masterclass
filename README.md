@@ -8,8 +8,8 @@ Across 14 hands-on modules, you'll go from Claude Code fundamentals to productio
 
 | Module | Description |
 | ------ | ----------- |
-| [01 Fundamentals](/demos/01-fundamentals/readme.md) | Claude product family, installation and authentication, context engineering with CLAUDE.md |
-| [02 Harness](/demos/02-harness/readme.md) | Settings hierarchy, custom slash commands, and event-driven hooks |
+| [01 Fundamentals](/demos/01-fundamentals/readme.md) | Claude product family, installation and authentication, model selection and prompt caching |
+| [02 Harness](/demos/02-harness/readme.md) | Settings hierarchy, CLAUDE.md constitution, custom slash commands, and event-driven hooks |
 | [03 Skills](/demos/03-skills/readme.md) | Skill anatomy, invocation model, authoring by hand and from a conversation |
 | [04 MCP](/demos/04-mcp/readme.md) | MCP architecture, connecting remote endpoints, wrapping REST APIs as servers |
 | [05 CLI](/demos/05-cli/readme.md) | Headless `-p` runs, tool scoping, parallel isolation, and long-running goal patterns |

@@ -63,6 +63,6 @@ allowed command exit code: 0
 | Question | Answer |
 |---|---|
 | Why not just say so in `CLAUDE.md`? | A prompt instruction relies on the model complying. The hook runs at the process boundary, outside the model's awareness. |
-| Where do we write a hook from scratch? | Module 2, [Build a Three-Event Hook Pipeline](../../02-harness/03-hooks/demo-hook-pipeline.md): payload contract, exit codes, and the `Stop` event. |
+| Where do we write a hook from scratch? | Module 2, [Build a Three-Event Hook Pipeline](../../02-harness/06-hooks-mods/demo-hook-pipeline.md): payload contract, exit codes, and the `Stop` event. |
 | Is one `rm -rf` pattern enough? | No. Module 09, [Enforce Least Privilege with Hook Guardrails](../../09-observability/02-guardrails/demo-hook-guardrails.md), covers six patterns, a deny decision object, and the audit log. |
 | Do I need `--settings` for a headless run? | Not when the agent starts inside the project. Pass it when the working directory is not the project root. |

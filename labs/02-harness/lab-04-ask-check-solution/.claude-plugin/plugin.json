@@ -1,0 +1,11 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "ask-check",
+  "version": "0.1.0",
+  "description": "When an answer ends in a question, shows the user's own earlier sentence that already answers it and sends it back on one key",
+  "author": {
+    "name": "Alexander Kastil",
+    "email": "alexander.kastil@integrations.at"
+  },
+  "types": "./types/index.d.ts"
+}

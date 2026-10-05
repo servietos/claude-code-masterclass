@@ -86,7 +86,7 @@ When splitting, find the natural break: prefer splitting after a topic shift, no
 
 Every module README contains a "Helpful Claude Slash Commands" table. Commands in that table must be specific to the module's topic. The same generic set (`/update-config`, `/fewer-permission-prompts`, `/find-skills`, `/init`) must not appear unchanged across every module.
 
-**Do not include `/init` unless the module is explicitly about starting a new project or initializing a `CLAUDE.md`.** Modules where `/init` is appropriate: `01-intro`, `07-memory`.
+**Do not include `/init` unless the module is explicitly about starting a new project or initializing a `CLAUDE.md`.** Modules where `/init` is appropriate: `01-intro-constitution`, `07-memory`.
 
 ### Approved command sets by module topic
 

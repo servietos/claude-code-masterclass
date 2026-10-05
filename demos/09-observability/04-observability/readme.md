@@ -97,7 +97,7 @@ A system prompt warning the model that it will be penalized for dropping a citat
 
 ## Governing Published Artifacts
 
-[Artifacts](../../01-fundamentals/10-artifacts/readme.md): a page published to Anthropic-operated infrastructure, visible to authenticated members of the publishing organization unless it was shared publicly. That makes them an inventory to govern rather than a feature to enable and forget.
+[Artifacts](../../01-fundamentals/08-artifacts/readme.md): a page published to Anthropic-operated infrastructure, visible to authenticated members of the publishing organization unless it was shared publicly. That makes them an inventory to govern rather than a feature to enable and forget.
 
 Owners on Team and Enterprise plans control four separate things, and conflating them is the usual source of confusion. The artifacts toggle under Settings > Claude Code > Capabilities turns publishing on or off, and Enterprise plans can additionally scope it per role. External sharing sits under that same toggle, is off by default, and blocks access through existing public links the moment it is turned back off, without changing any artifact's audience. Connector calls from artifacts have their own toggle under Settings > Capabilities, because it also governs artifacts created in claude.ai conversations.
 

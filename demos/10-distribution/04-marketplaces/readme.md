@@ -33,6 +33,41 @@ Catalogs can pull from GitHub, generic git URLs, local paths for internal-only c
 
 Getting a plugin into the official directory is a submission, not a pull request. Developers on a paid Claude plan submit at `claude.ai/directory/manage/new`, where the portal auto-validates the plugin, runs a safety scan, and tracks review status and install analytics per product surface. Where a listed plugin runs depends on what it bundles: MCP servers and skills work in Claude.ai as well as Claude Code, while LSP servers, commands, hooks, and agents load only in Claude Code.
 
+## Plugins by Anthropic
+
+Claude Code registers the official Anthropic marketplace (`claude-plugins-official`) automatically the first time you start it interactively. If that fails because the network blocked the download or a marketplace policy denied an earlier attempt, add it yourself:
+
+```shell
+/plugin marketplace add anthropics/claude-plugins-official
+```
+
+Everything in it installs the same way, and `/plugin` shows the catalog with a context-cost estimate per plugin in the Discover tab:
+
+```shell
+/plugin install <name>@claude-plugins-official
+```
+
+These are the Anthropic-authored plugins that package the same component types [Module 2](../../02-harness/readme.md) builds:
+
+| Plugin | What it contributes |
+|--------|---------------------|
+| `claude-code-setup` | Analyzes a codebase and recommends the hooks, skills, MCP servers, and sub-agents worth adding to it |
+| `plugin-dev` | Toolkit for authoring your own plugins, with skills for hooks, commands, agents, and MCP integration |
+| `hookify` | Turns an observed unwanted behavior into a hook, defined as a Markdown rule file |
+| `skill-creator` | Creates and improves skills, and runs evals to measure whether a skill actually fires |
+| `mcp-server-dev` | Skills for designing MCP servers: deployment models, tool design, and auth |
+| `claude-md-management` | Audits `CLAUDE.md` quality and folds session learnings back into project memory |
+| `commit-commands` | Git commit, push, and PR creation workflows |
+| `pr-review-toolkit` | Review agents specialized by lens: tests, error handling, type design, simplification |
+| `security-guidance` | Reviews each change Claude makes for injection, XSS, SSRF, hardcoded secrets, and related classes |
+| `typescript-lsp` and siblings | Language server wiring so Claude sees type errors right after an edit; one plugin per language, binary installed separately |
+
+Anthropic also publishes a community marketplace of screened third-party plugins, added manually and installed under the `claude-community` name:
+
+```shell
+/plugin marketplace add anthropics/claude-plugins-community
+```
+
 ## Enterprise Controls
 
 For org-managed deployments, several knobs in managed policy let admins decide what teams can install without auditing every plugin one by one. `managed-mcp.json` controls which MCP servers are allowed across the org; `deniedPlugins` and `enabledPlugins` allowlist or blocklist specific plugin names; `extraKnownMarketplaces` adds trusted catalogs to the default set; and `strictKnownMarketplaces` rejects any catalog outside the known list. The pattern most enterprises adopt is strict-mode plus an internal catalog, with the official marketplace allowed but every third-party install gated through the catalog they own.

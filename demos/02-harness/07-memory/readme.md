@@ -58,7 +58,7 @@ The solid arrows are reads into the session. The two return arrows are what make
 
 ### 1. In-Context Memory: CLAUDE.md Files
 
-`CLAUDE.md` is the always-loaded layer, resolved from the user, project, and enterprise scopes and injected into every turn. Because it costs tokens on every prompt, it earns its place only with rules that are true regardless of what the session is doing. [01-fundamentals: 04 Constitution](../../01-fundamentals/04-constitution/readme.md) owns the hierarchy, the file locations, and what belongs in it.
+`CLAUDE.md` is the always-loaded layer, resolved from the user, project, and enterprise scopes and injected into every turn. Because it costs tokens on every prompt, it earns its place only with rules that are true regardless of what the session is doing. [01: Intro Constitution](../01-intro-constitution/readme.md) owns the hierarchy, the file locations, and what belongs in it.
 
 ### 2. Persistent File Memory: The Memory Index System
 
@@ -68,7 +68,7 @@ This is the type this topic teaches, and the rest of the page is about it. A lea
 
 External memory is any data store Claude reaches through an MCP server: local files outside the project tree, databases, vector stores, or API-backed knowledge bases. Unlike in-context memory it is never loaded automatically; Claude fetches it when the workflow asks for it, which is what makes it viable for corpora far too large to inject every turn.
 
-The filesystem MCP server is the simplest form, exposing directories as readable resources so Claude can consult documentation, log archives, or reference data without those files sitting open in the session. A vector-backed server goes further by letting Claude search a large knowledge base by semantic similarity and pull back only the matching chunks. That is the right shape for an internal wiki or a documentation set that changes faster than anyone will re-copy it into a repository. [02-harness: 04 MCP](../04-mcp/readme.md) covers how a server is configured, and [08-optimize: 04 Memory Architectures](../../08-optimize/04-memory-architectures/readme.md) measures what the retrieval actually costs per turn.
+The filesystem MCP server is the simplest form, exposing directories as readable resources so Claude can consult documentation, log archives, or reference data without those files sitting open in the session. A vector-backed server goes further by letting Claude search a large knowledge base by semantic similarity and pull back only the matching chunks. That is the right shape for an internal wiki or a documentation set that changes faster than anyone will re-copy it into a repository. [02-harness: 03 MCP](../03-mcp/readme.md) covers how a server is configured, and [08-optimize: 04 Memory Architectures](../../08-optimize/04-memory-architectures/readme.md) measures what the retrieval actually costs per turn.
 
 ### 4. In-Session Memory: Conversation Context
 
@@ -169,5 +169,5 @@ The table below is the decision you actually make in practice: you have a fact, 
 
 - [Claude Code Memory](https://code.claude.com/docs/en/memory): the auto-memory system, memory file types, and the index
 - [Model Context Protocol](https://modelcontextprotocol.io/): the specification behind MCP-connected external memory
-- [04 Constitution](../../01-fundamentals/04-constitution/readme.md): the `CLAUDE.md` hierarchy and what belongs in it instead of a memory file
+- [01 Intro Constitution](../01-intro-constitution/readme.md): the `CLAUDE.md` hierarchy and what belongs in it instead of a memory file
 - [04 Memory Architectures](../../08-optimize/04-memory-architectures/readme.md): in-context loading, statefile, auto-memory, and knowledge graph benchmarked head to head, plus the write policy that decides what a memory file is allowed to hold

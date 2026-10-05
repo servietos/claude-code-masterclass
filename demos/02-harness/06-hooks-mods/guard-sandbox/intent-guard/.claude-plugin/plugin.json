@@ -1,0 +1,11 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "intent-guard",
+  "version": "0.1.0",
+  "description": "Holds destructive or unrequested shell commands unless the user asked for them in this session",
+  "author": {
+    "name": "Alexander Kastil",
+    "email": "alexander.kastil@integrations.at"
+  },
+  "types": "./types/index.d.ts"
+}
