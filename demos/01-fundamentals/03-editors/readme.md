@@ -35,7 +35,7 @@ Claude Desktop is useful when you want to talk through architecture decisions, r
 
 | Command | Usage |
 |---------|-------|
-| `/model` | Switch between Claude models (Opus, Sonnet, Haiku) mid-session |
+| `/model` | Switch between Claude models (Fable, Opus, Sonnet, Haiku) mid-session |
 | `/status` | Display current editor environment and session info |
 | `/help` | List all available slash commands in the current environment |
 

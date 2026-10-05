@@ -4,20 +4,21 @@
 
 | Model | Best For |
 |-------|----------|
-| Opus 5 (Default) | Complex reasoning, multi-step planning, challenging architectural decisions, agentic coding |
-| Opus 5 (1M context) | Same as Opus but with the extended context window selected explicitly: billed as extra usage |
-| Sonnet 5 | Everyday tasks, general-purpose coding, standard workflows, best value |
+| Fable 5.1 | Demanding reasoning and long-horizon agentic work, or when Opus 5.5 at higher effort still falls short |
+| Opus 5.5 (Default) | Complex reasoning, multi-step planning, challenging architectural decisions, agentic coding |
+| Opus 5.5 (1M context) | Same as Opus but with the extended context window selected explicitly: billed as extra usage |
+| Sonnet 5.5 | Everyday tasks, general-purpose coding, standard workflows, best value |
 | Haiku 4.5 | Fastest responses, quick answers, simple lookups, tight token budgets (200K context) |
 
-Opus 4.8, Opus 4.7, and Sonnet 4.6 remain selectable for teams that pinned an older model, but new work should start on the Claude 5 family.
+Opus 5, Sonnet 5, Opus 4.8, Opus 4.7, and Sonnet 4.6 remain selectable for teams that pinned an older model, but new work should start on Fable 5.1, Opus 5.5 or Sonnet 5.5.
 
 ## Fast Mode
 
-Fast mode runs Claude Opus with faster output rather than downgrading to a smaller model. Toggle it with `/fast`. It is available on Opus 5, Opus 4.8, and Opus 4.7, and it is priced above standard Opus usage, so reach for it when turnaround matters more than token spend.
+Fast mode runs Claude Opus with faster output rather than downgrading to a smaller model. Toggle it with `/fast`. It is available on Opus 5.5, Opus 5, and Opus 4.8, not on Fable 5.1, and it is priced above standard Opus usage, so reach for it when turnaround matters more than token spend.
 
 ## Token Usage & Cost Awareness
 
-Defaulting to the strongest model (Opus) on every task wastes tokens and increases costs unnecessarily. Haiku handles most everyday coding tasks efficiently and costs a fraction of Opus, while Sonnet provides an excellent middle ground for moderately complex work. Save Opus for situations where the task genuinely requires its advanced reasoning capabilities, such as complex system design or intricate debugging. By matching model strength to task complexity, you optimize both spending and response latency without sacrificing quality.
+Defaulting to the strongest models (Fable or Opus) on every task wastes tokens and increases costs unnecessarily. Haiku handles most everyday coding tasks efficiently and costs a fraction of Opus, while Sonnet provides an excellent middle ground for moderately complex work. Save Opus for situations where the task genuinely requires its advanced reasoning capabilities, such as complex system design or intricate debugging. Fable goes one step further, for demanding long-horizon agentic work where Opus at higher effort still falls short. By matching model strength to task complexity, you optimize both spending and response latency without sacrificing quality.
 
 ## Working Past Your Plan Limit
 

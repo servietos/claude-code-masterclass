@@ -29,4 +29,6 @@ Machine hours spent on this repository, one row per working day.
 
 | 2026-08-06 | 0.12 | 10:48 | 10:55 | Made the course diagrams readable in both light and dark themes and captured the rule for future diagrams |
 
-**Total: 28.97 hours**
+| 2026-10-05 | 1.38 | 18:46 | 20:09 | Rebuilt the slide decks for all fourteen course modules with new diagrams, photos and speaker notes |
+
+**Total: 30.35 hours**

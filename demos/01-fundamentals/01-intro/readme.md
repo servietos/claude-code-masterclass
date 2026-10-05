@@ -4,7 +4,7 @@ Claude Code is Anthropic's agentic coding tool: a command-line interface that pu
 
 ## The Claude Team
 
-Anthropic ships Claude through a family of products, each designed for a different context and level of autonomy. They all share the same underlying models (Opus, Sonnet, Haiku) and all connect to the same Anthropic API, but their interfaces and capabilities are tuned for different use cases.
+Anthropic ships Claude through a family of products, each designed for a different context and level of autonomy. They all share the same underlying models (Fable, Opus, Sonnet, Haiku) and all connect to the same Anthropic API, but their interfaces and capabilities are tuned for different use cases.
 
 ### Claude.ai
 

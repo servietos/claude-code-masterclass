@@ -752,3 +752,18 @@
 - A skill the user invokes authorizes every step its playbook prescribes (commit and push included). Run it end to end; never stop to ask for a step the skill already defines.
 - No quote cards in any deck: a one-sentence quote over a photo was rejected as filler. Practical examples become content cards.
 - Side-accent photos are rendered at 2:3 portrait with the people centred: Gamma crops a 16:9 photo to a centre strip and cuts off heads at the edges.
+
+## A statement is not a task
+
+**Pattern:** "i topped up google" was read as an order to re-render 14 photos; two agents spent $1.88 and overwrote committed images before the stop arrived, and one reinstalled its renders after the restore.
+**Rule:** an informational message gets an acknowledgement, never work. When stopping agents, wait for each one's final report, then re-check the files on disk against git.
+
+## Diagrams state only what the readme states
+
+**Pattern:** three diagram agents filled gaps with invented placeholder names, example rows and an event order the readme never gives.
+**Rule:** every label, name and ordering in a diagram comes from the source readme or demo files; leave it out when the source is silent.
+
+## deck_cost.py misses batch and HTTP renders
+
+**Pattern:** the cost tally reported renders=0 because subagent HTTP renders and the batch job leave no media-creator tool result in the main transcript.
+**Rule:** for photo cost, sum the CostUsd from the agents' reports and the batch result, or query MediaItems.CostUsd by date.

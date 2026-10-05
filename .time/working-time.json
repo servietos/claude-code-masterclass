@@ -1,0 +1,77 @@
+{
+ "repo": "claude-code-masterclass",
+ "origin": "https://github.com/alexander-kastil/claude-code-masterclass",
+ "sessions": [
+  {
+   "date": "2026-10-05",
+   "from": "18:46",
+   "to": "20:09",
+   "sessionId": "053ae84d-86e0-450e-896a-a2e8803eb1ca",
+   "branch": "master",
+   "commits": [
+    "d65a5cf",
+    "97b804c",
+    "d7a3140",
+    "f6d2f69",
+    "7816e73",
+    "96a0176",
+    "a84c891",
+    "8ab44ef"
+   ],
+   "surfaces": [
+    "demos/*/pptx",
+    "create-pptx skill",
+    "integrations.at media-creator-mcp"
+   ],
+   "files": [
+    "demos/03-skills/pptx/00-01-skills.md",
+    "C:/Users/AlexanderKastil/.claude/skills/create-pptx/scripts/batch_spec_photos.py",
+    "D:/git-projects/integrations.at/src/media-creator-mcp/Services/GoogleImageBatchService.cs"
+   ],
+   "mechanism": {
+    "takes": "course module readmes and demo guides plus a reference deck and a Gamma workspace template and theme",
+    "does": "writes one slide spec per card with speaker notes, hand-draws SVG diagrams, renders all photos for a whole class as one Gemini batch job at half price, generates the cards in Gamma in parallel parts, then merges, restyles, prepends intro and module slides, builds topic dividers and writes notes",
+    "returns": "one finished PPTX and PDF per module in the trainer's delivery folder"
+   },
+   "portsAsIs": [
+    "readme-to-deck pipeline with own images",
+    "batch image rendering through the media-creator service"
+   ],
+   "perCustomer": [
+    "the course content",
+    "the intro slides and template"
+   ],
+   "evidence": [
+    "demos/03-skills/pptx/03-skills.pptx"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-pptx",
+     "create-class",
+     "humanizer",
+     "claude-learn"
+    ],
+    "mcpServers": [
+     "claude_ai_Gamma",
+     "media-creator"
+    ],
+    "agents": [
+     "image-producer",
+     "dotnet-expert"
+    ]
+   },
+   "industry": "IT training and course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "extends",
+    "item": "course-platform-and-course-factory"
+   },
+   "buyer": {
+    "name": "Course decks from your readmes",
+    "gets": "Every module gets a branded slide deck with drawn diagrams, photos and speaker notes, rebuilt from the course text in under an hour.",
+    "useCases": [],
+    "groups": []
+   }
+  }
+ ]
+}
