@@ -278,6 +278,150 @@
    "catalogue": {
     "action": "none"
    }
+  },
+  {
+   "date": "2026-10-05",
+   "from": "23:52",
+   "to": "00:00",
+   "sessionId": "e8fbd8bd-8e0b-4120-b895-eb38121cfa2b",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "demos/*/pptx",
+    "create-pptx skill",
+    "agentic-sw-engineering",
+    "angular-agentic-sw-engineering",
+    "OneDrive class folders"
+   ],
+   "files": [
+    "~/.claude/skills/create-pptx/scripts/intro_sync.py",
+    "~/.claude/skills/create-pptx/templates/intro.pptx"
+   ],
+   "toolchain": {
+    "skills": [
+     "marketing-psychology",
+     "create-pptx",
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": []
+   },
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   },
+   "mechanism": {
+    "takes": "service card wording and the vendor's current product names",
+    "does": "rewrites the card lines with researched current product names and replaces them run by run in every copy of the shared slide",
+    "returns": "updated decks and PDFs with the new card lines"
+   },
+   "portsAsIs": [
+    "copy review against vendor naming of the current month"
+   ],
+   "perCustomer": [
+    "the service names"
+   ],
+   "evidence": [
+    "Microsoft Copilot rename checked against MC1454108 coverage",
+    "no old card wording left in 94 decks"
+   ]
+  },
+  {
+   "date": "2026-10-06",
+   "from": "00:00",
+   "to": "00:23",
+   "sessionId": "e8fbd8bd-8e0b-4120-b895-eb38121cfa2b",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "demos/*/pptx",
+    "create-pptx skill",
+    "agentic-sw-engineering",
+    "angular-agentic-sw-engineering",
+    "OneDrive class folders"
+   ],
+   "files": [
+    "~/.claude/skills/create-pptx/scripts/intro_sync.py",
+    "~/.claude/skills/create-pptx/templates/intro.pptx"
+   ],
+   "toolchain": {
+    "skills": [
+     "marketing-psychology",
+     "create-pptx",
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": []
+   },
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   },
+   "mechanism": {
+    "takes": "a positioning line and the owner's site",
+    "does": "rewrites the line for the audience that actually reads the slide, renders candidates on the real slide to prove they fit, then rolls the approved line out to every copy",
+    "returns": "94 decks changed, PDFs current, rerun changes nothing"
+   },
+   "portsAsIs": [
+    "render-before-rollout copy candidates"
+   ],
+   "perCustomer": [
+    "the positioning line"
+   ],
+   "evidence": [
+    "rerun printed decks=94 changed=0",
+    "OneDrive 01-fundamentals.pdf trainer slide rendered and checked"
+   ]
+  },
+  {
+   "date": "2026-10-06",
+   "from": "00:23",
+   "to": "00:29",
+   "sessionId": "e8fbd8bd-8e0b-4120-b895-eb38121cfa2b",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "skill library"
+   ],
+   "files": [
+    "~/.claude/skills/claude-learn/SKILL.md"
+   ],
+   "mechanism": {
+    "takes": "the skills a session used",
+    "does": "compares each local copy with its global and marketplace copies",
+    "returns": "a drift report"
+   },
+   "portsAsIs": [],
+   "perCustomer": [],
+   "evidence": [
+    "claude-learn global and marketplace copies identical"
+   ],
+   "toolchain": {
+    "skills": [
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": []
+   },
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
   }
  ]
 }

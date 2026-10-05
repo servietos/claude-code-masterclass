@@ -792,3 +792,18 @@
 
 **Pattern:** "present the line better" with ui-ux-pro-max was first answered with a footer-only plan; the owner had to repeat the goal, then asked for spacing after seeing size previews.
 **Rule:** for a visual request, render two variants of the real slide (size and spacing together, PowerPoint export plus PyMuPDF since LibreOffice and poppler are not installed here) and send them with SendUserFile; a scratchpad path alone is not viewable for the owner.
+
+## A wording question gets an opinion before any edit
+
+**Pattern:** asked to rephrase a trainer-slide card "use /marketing-psychology", the session started a bulk rename across every deck; the owner stopped it ("first give me the opinion") after 6 decks had changed.
+**Rule:** when the owner routes copy through an advisory skill (marketing-psychology, ui-ux-pro-max), reply with the recommendation, its reasons and one alternative, then wait for the go; the edit runs only after an explicit approval of the final wording.
+
+## Product names follow the vendor's current branding
+
+**Pattern:** the session proposed "Microsoft 365 Copilot"; the owner pointed out Microsoft unified the family, and research confirmed the Microsoft 365 Copilot app became Microsoft Copilot in August 2026 (MC1454108).
+**Rule:** before writing a Microsoft (or any fast-renaming vendor's) product name into slides, search for the name as of the current month; never use a name from memory.
+
+## The trainer slide speaks to the room, not to the consulting target
+
+**Pattern:** the audience line was reworded around the integrations.at target (Austrian SMEs); the owner objected that the training is mostly bought by large companies and the line must not make him smaller than he is.
+**Rule:** copy on the trainer slide is read by participants from large organisations; lead with track record and range ("full stack, since 1996"), name SMEs only as additional reach, and check integrations.at/about before narrowing the audience.

@@ -39,4 +39,10 @@ Machine hours spent on this repository, one row per working day.
 
 | 2026-10-05 | 0.08 | 23:47 | 23:52 | Course decks: new Fast Lane title slide published to the class folders with refreshed PDFs |
 
-**Total: 31.73 hours**
+| 2026-10-05 | 0.13 | 23:52 | 00:00 | Course decks: trainer slide service cards reworded (harness architecture, Microsoft Copilot and Foundry) |
+
+| 2026-10-06 | 0.38 | 00:00 | 00:23 | Course decks: trainer slide tagline rewritten and every class deck and PDF republished |
+
+| 2026-10-06 | 0.10 | 00:23 | 00:29 | Course tooling: skill copies checked for drift after the deck work |
+
+**Total: 32.34 hours**
