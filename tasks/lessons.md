@@ -807,3 +807,18 @@
 
 **Pattern:** the audience line was reworded around the integrations.at target (Austrian SMEs); the owner objected that the training is mostly bought by large companies and the line must not make him smaller than he is.
 **Rule:** copy on the trainer slide is read by participants from large organisations; lead with track record and range ("full stack, since 1996"), name SMEs only as additional reach, and check integrations.at/about before narrowing the audience.
+
+## A new tag copies the existing tag's form
+
+**Pattern:** asked to tag a commit as 2.0.0, the session created an annotated tag and only then saw that the existing 1.0.0 is lightweight, so it had to delete and recreate the tag before pushing.
+**Rule:** before tagging, run `git tag --list` and `git cat-file -t <last tag>` and copy its name pattern and type (here: bare semver, lightweight).
+
+## A product photo shows the product's real screen, in the setting the owner names
+
+**Pattern:** the 00 title photo took eight renders: the first was a staged training room, then "too kitschy", then "no agent connection, he could be booking a hotel", then a made-up terminal that "does not look like Claude Code on iPad", then "people too old", and only the owner's own iPad screenshot fixed the screen; a variant was also rendered as a woman although the owner had written "his iPad".
+**Rule:** before rendering a photo of a product in use, get a screenshot of the product's current screen and describe that UI in the prompt; keep every attribute the owner stated (age, gender, device orientation, setting) and vary only what they left open; show the screen large and in focus, shot over the shoulder.
+
+## A look that survives every prompt change comes from the tool
+
+**Pattern:** after ten renders the owner said "still this 70ies style": every photo carried pastel mint and lavender accents, plants and blankets, and screens kept coming out blurred. The cause was not the prompts but the house-style block `render_spec_photos.py` appends to every prompt (pastel accents, plants, "screens show only soft blurred shapes").
+**Rule:** when the same unwanted trait survives two prompt rewrites, print the full prompt the tool actually sends (`--dump-args`) before rendering again; for a photo that must show a real screen or a real place, render with `--plain`. Device orientation needs explicit geometry ("taller than it is wide"), "portrait" alone was ignored twice.

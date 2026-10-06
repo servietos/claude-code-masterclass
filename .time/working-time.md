@@ -45,4 +45,12 @@ Machine hours spent on this repository, one row per working day.
 
 | 2026-10-06 | 0.10 | 00:23 | 00:29 | Course tooling: skill copies checked for drift after the deck work |
 
-**Total: 32.34 hours**
+| 2026-10-06 | 0.12 | 00:29 | 00:36 | Course release: version 2.0.0 tagged and published |
+
+| 2026-10-06 | 0.32 | 00:36 | 00:55 | Course decks: class overview deck built, module path one slide per course day for all three classes |
+
+| 2026-10-06 | 0.43 | 00:55 | 01:21 | Course decks: class title photo of a developer directing Claude from an iPad, overview deck republished, design skill updated |
+
+| 2026-10-06 | 0.23 | 01:21 | 01:35 | Course decks: class title photo re-rendered in a Swiss panorama train without the pastel house style |
+
+**Total: 33.44 hours**

@@ -422,6 +422,197 @@
    "catalogue": {
     "action": "none"
    }
+  },
+  {
+   "date": "2026-10-06",
+   "from": "00:29",
+   "to": "00:36",
+   "sessionId": "e8fbd8bd-8e0b-4120-b895-eb38121cfa2b",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "release"
+   ],
+   "files": [],
+   "mechanism": {
+    "takes": "a commit and a version number",
+    "does": "tags the commit in the repository's existing tag form and publishes the tag",
+    "returns": "the release tag on the remote"
+   },
+   "portsAsIs": [],
+   "perCustomer": [],
+   "evidence": [
+    "git ls-remote shows refs/tags/2.0.0 at 6156abf"
+   ],
+   "toolchain": {
+    "skills": [
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": []
+   },
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-06",
+   "from": "00:36",
+   "to": "00:55",
+   "sessionId": "e8fbd8bd-8e0b-4120-b895-eb38121cfa2b",
+   "branch": "master",
+   "commits": [],
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   },
+   "surfaces": [
+    "demos/pptx",
+    "create-pptx skill",
+    "agentic-sw-engineering",
+    "angular-agentic-sw-engineering",
+    "OneDrive class folders"
+   ],
+   "files": [
+    "~/.claude/skills/create-pptx/scripts/path_slides.py",
+    "~/.claude/skills/create-pptx/scripts/class_deck.py",
+    "demos/pptx/days.json",
+    "demos/pptx/modules.json"
+   ],
+   "mechanism": {
+    "takes": "a class's module cards and its day schedule",
+    "does": "lays the modules out as one continuous route per course day with numbered stations, a progress strip across all days and cards drawn from the deck's own text, prototyped first as an HTML mockup",
+    "returns": "native, editable path slides in each class overview deck plus re-exported PDFs"
+   },
+   "portsAsIs": [
+    "course or program roadmap slides from a module list and a schedule",
+    "HTML mockup before native slide build"
+   ],
+   "perCustomer": [
+    "day names and module wording"
+   ],
+   "evidence": [
+    "class_deck.py --days rebuild produced identical path slide text",
+    "three classes rendered and checked from the delivered PDFs"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-pptx",
+     "ui-ux-pro-max",
+     "claude-learn",
+     "claude-learn-harvest",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": []
+   }
+  },
+  {
+   "date": "2026-10-06",
+   "from": "00:55",
+   "to": "01:21",
+   "sessionId": "e8fbd8bd-8e0b-4120-b895-eb38121cfa2b",
+   "branch": "master",
+   "commits": [],
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   },
+   "surfaces": [
+    "demos/pptx",
+    "create-pptx skill",
+    "ui-ux-pro-max skill"
+   ],
+   "files": [
+    "demos/pptx/images/00-00-class.jpg",
+    "~/.claude/skills/create-pptx/references/class-deck.md"
+   ],
+   "mechanism": {
+    "takes": "a product, its real screen and the owner's scene brief",
+    "does": "renders candidate title photos of the product in use, compares them on a shared review page with the images published as files, and swaps the chosen one into the deck",
+    "returns": "the delivered overview deck with the approved photo"
+   },
+   "portsAsIs": [
+    "review page for image candidates the owner can open anywhere"
+   ],
+   "perCustomer": [
+    "the scene and the product screen"
+   ],
+   "evidence": [
+    "delivered PDF title slide rendered and checked",
+    "ten photo renders, about 1.50 USD"
+   ],
+   "toolchain": {
+    "skills": [
+     "marketing-psychology",
+     "create-pptx",
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": []
+   }
+  },
+  {
+   "date": "2026-10-06",
+   "from": "01:21",
+   "to": "01:35",
+   "sessionId": "e8fbd8bd-8e0b-4120-b895-eb38121cfa2b",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "create-pptx skill",
+    "demos/pptx"
+   ],
+   "files": [
+    "~/.claude/skills/create-pptx/scripts/render_spec_photos.py",
+    "~/.claude/skills/create-pptx/references/class-deck.md"
+   ],
+   "mechanism": {
+    "takes": "a photo brief and a reference picture of the real place",
+    "does": "renders the scene with the tool's built-in house style switched off so the place keeps its own colours and the device screen stays readable",
+    "returns": "a candidate title photo on the review page"
+   },
+   "portsAsIs": [
+    "photo renders without an injected house style"
+   ],
+   "perCustomer": [
+    "the scene"
+   ],
+   "evidence": [
+    "render without pastel accents, iPad upright with the Claude app"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-pptx",
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": []
+   },
+   "industry": "IT training, course production",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
   }
  ]
 }
