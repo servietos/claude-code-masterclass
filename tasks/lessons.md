@@ -822,3 +822,18 @@
 
 **Pattern:** after ten renders the owner said "still this 70ies style": every photo carried pastel mint and lavender accents, plants and blankets, and screens kept coming out blurred. The cause was not the prompts but the house-style block `render_spec_photos.py` appends to every prompt (pastel accents, plants, "screens show only soft blurred shapes").
 **Rule:** when the same unwanted trait survives two prompt rewrites, print the full prompt the tool actually sends (`--dump-args`) before rendering again; for a photo that must show a real screen or a real place, render with `--plain`. Device orientation needs explicit geometry ("taller than it is wide"), "portrait" alone was ignored twice.
+
+## A version-dependent exam answer keeps its key and gains a note
+
+**Pattern:** checking the exam-prep bank, Q25 (MCP error channel) had a key that the current MCP spec contradicts; the session asked whether to switch the answer, and the owner answered "in such cases add annotations as >Note" and then "always check with anthropic.skilljar.com and its subcontent".
+**Rule:** when current docs contradict an exam key, keep the key, read what the Anthropic Academy lessons on Skilljar teach (signed in, via claude-in-chrome), and record the drift plus the Skilljar finding as a `> Note:` line under the Why in `exam-prep/utils/_notes_*.json`; never flip the letter on docs alone.
+
+## Browser research runs one agent at a time in the user's Chrome
+
+**Pattern:** three Skilljar research agents were spawned in parallel with chrome-devtools; every call failed with "browser already running for chrome-profile", and that profile is not the owner's signed-in browser anyway, so all three came back with "gated".
+**Rule:** a lookup behind the owner's login runs on the main thread through claude-in-chrome, sequentially; fan out only the public-page part.
+
+## A scripted text replace asserts it matched
+
+**Pattern:** a Python patch to `exam-prep/utils/_generate.py` replaced `"    why = load_why()\n"`, but the file is CRLF, so the replace silently did nothing and the generator crashed with `NameError: theory` on the next run.
+**Rule:** every scripted `str.replace` on a source file asserts `s.count(old) == 1` first and derives the line ending from the file (`"\r\n" if "\r\n" in s else "\n"`).

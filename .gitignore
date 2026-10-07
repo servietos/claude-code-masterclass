@@ -23,3 +23,5 @@ demos/12-managed-agents/.env
 labs/12-managed-agents/.env
 demos/13-claude-sdk/.env
 labs/13-claude-sdk/**/.env
+
+exam-prep/

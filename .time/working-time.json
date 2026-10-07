@@ -613,6 +613,62 @@
    "catalogue": {
     "action": "none"
    }
+  },
+  {
+   "date": "2026-10-07",
+   "from": "16:57",
+   "to": "17:32",
+   "sessionId": "2ef047e9-effb-4a47-856e-4f2702328415",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "exam-prep"
+   ],
+   "files": [
+    "exam-prep/utils/_generate.py",
+    "exam-prep/utils/_theory_001_020.json",
+    "exam-prep/utils/_notes_021_050.json",
+    "exam-prep/part-01.md",
+    ".gitignore"
+   ],
+   "mechanism": {
+    "takes": "a scraped multiple-choice exam bank with answer keys and rationales",
+    "does": "fans the questions out to parallel checker agents that re-derive each answer from vendor docs, adds a short theory block per question, aligns each rationale to it, and annotates answers whose product behavior has since changed after checking the vendor's own training courses",
+    "returns": "a regenerated study bank with verified keys, per-question theory and version-drift notes"
+   },
+   "portsAsIs": [
+    "parallel answer verification against vendor docs",
+    "theory plus rationale plus drift-note structure rendered from JSON sources"
+   ],
+   "perCustomer": [
+    "the exam and its question bank",
+    "the vendor docs and training portal used as truth"
+   ],
+   "evidence": [
+    "exam-prep/part-03.md Q25 note",
+    "134 Theory blocks across 14 part files"
+   ],
+   "toolchain": {
+    "skills": [
+     "report",
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "claude-in-chrome",
+     "worktime-mcp"
+    ],
+    "agents": [
+     "claude-code-guide",
+     "general-purpose"
+    ]
+   },
+   "industry": "IT training, certification preparation",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
   }
  ]
 }
