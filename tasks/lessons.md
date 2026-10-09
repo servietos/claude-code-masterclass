@@ -837,3 +837,8 @@
 
 **Pattern:** a Python patch to `exam-prep/utils/_generate.py` replaced `"    why = load_why()\n"`, but the file is CRLF, so the replace silently did nothing and the generator crashed with `NameError: theory` on the next run.
 **Rule:** every scripted `str.replace` on a source file asserts `s.count(old) == 1` first and derives the line ending from the file (`"\r\n" if "\r\n" in s else "\n"`).
+
+## A fix keeps the behaviour the user already asked for
+
+**Pattern:** exam-prep "Read more" links used `<a target="_blank">` so they open in a new window; when they failed on an iPad, the fix reverted them to Markdown links and silently dropped the new-window requirement.
+**Rule:** a fix for "X does not work on Y" must keep X's purpose; if the platform cannot do both, ask which viewer before changing anything.
