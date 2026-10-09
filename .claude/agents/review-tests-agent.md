@@ -1,5 +1,6 @@
 ---
 name: review-tests-agent
+color: green
 description: >-
   Test coverage lens of the parallel review team in demos/07-agent-teams/02-parallel-review.
   Reviews the whole project for what coverage exists and what a first test file would have to
