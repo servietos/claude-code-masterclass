@@ -21,6 +21,7 @@ mcpServers:
     args:
       - "-y"
       - "chrome-devtools-mcp@latest"
+color: blue      
 ---
 
 Angular v21+ specialist. Code patterns live in the `angular-conventions` skill, not here. Read the matching reference first, then write code.

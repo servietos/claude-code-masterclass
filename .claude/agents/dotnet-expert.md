@@ -10,6 +10,7 @@ mcpServers:
   microsoft-learn:
     type: http
     url: https://learn.microsoft.com/api/mcp
+color: blue       
 ---
 
 .NET backend specialist. Code patterns live in the `dotnet-conventions` skill, not here. Read the matching reference first, then write code.

@@ -56,6 +56,42 @@ mcpServers:
 | `permissionMode` | No | How the agent handles permission prompts: `default`, `acceptEdits`, `auto`, `dontAsk`, `bypassPermissions`, or `plan` |
 | `mcpServers` | No | MCP servers scoped to this agent; inline entries use the same schema as `.mcp.json` server entries; when `tools` is present, tools from these servers must be listed there too |
 
+## Proactive Delegation Is a Hint
+
+Writing "use proactively" in `description` makes the orchestrator more likely to pick the agent without being asked:
+
+```yaml
+---
+name: fact-gatherer
+description: >-
+  Proactively read-only fact gatherer. Use at the start of any task to collect
+  the facts it depends on. Apply when the task is "find out", "what does",
+  "where is", or before any implementation.
+tools: [Read, Glob, Grep, WebFetch, WebSearch]
+---
+```
+
+The orchestrator still decides. It weighs the description against every other instruction in its context, and Claude Code's own system prompt tells it to search directly when a lookup looks small. Ask "does this module cover X?" and the orchestrator often runs three greps itself, because a quick search seemed cheaper than spawning an agent. Nothing in the harness forces the agent to be picked.
+
+When the delegation must happen every time, a `UserPromptSubmit` hook ([Module 2: Hooks](../../02-harness/06-hooks-mods/readme.md)) injects the routing rule on every turn. The hook's stdout becomes context for that turn:
+
+```json
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo Route investigation questions to the fact-gatherer agent before reading files yourself."
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
 ## Restricting Tools and Permissions
 
 A docs agent that never receives `Bash` cannot run `git` or `rm` at all, even if its prompt is misconfigured.

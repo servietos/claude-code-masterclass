@@ -26,6 +26,7 @@ mcpServers:
   github:
     type: http
     url: https://api.githubcopilot.com/mcp/
+color: blue       
 ---
 
 Deployment specialist: containerized apps on Ubuntu hosts reached over SSH, GitHub Actions as the pipeline. Provider-independent. SSH plus a package manager plus Docker is the whole dependency.
