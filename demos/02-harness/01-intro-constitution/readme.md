@@ -29,7 +29,7 @@ It is composed of several file types, each responsible for a distinct aspect of 
 | `.claude/skills/` | Holds installable agent skills that add domain-specific capabilities |
 | `.claude/agents/` | Defines subagents with their own prompt, tool set, and model, so domain work routes to an owning expert |
 | `.claude/hooks/` | Holds the scripts that hook registrations execute on events like `PreToolUse`, `PostToolUse`, and `Stop` |
-| `.claude/rules/` | Holds Markdown rule files that load only for the file paths named in their frontmatter |
+| `.claude/rules/` | Holds Markdown rule files: without `paths:` they load at session start like `CLAUDE.md`, with `paths:` only when Claude touches a matching file |
 
 Together these files define the rules, context, tools, permissions, and behaviors Claude uses before it reads a single line of your codebase.
 
@@ -187,6 +187,10 @@ The glob is matched against the file path, so scope by whatever the naming conve
 | Applies to files matching a pattern, wherever they live | `.claude/rules/<name>.md` with `paths:` frontmatter |
 
 There is no `exclude:` counterpart, so express the scope positively. Naming the paths that should carry the rule is both more precise and cheaper than loading it everywhere and asking Claude to check the filename before applying it.
+
+A rule without `paths:` frontmatter loads at session start, exactly like `.claude/CLAUDE.md`. That makes `.claude/rules/` the place to split a long `CLAUDE.md` into topic files such as `testing.md` or `deploy.md`. Personal rules go in `~/.claude/rules/` and apply to every project on your machine.
+
+When a path-scoped rule never seems to apply, register an `InstructionsLoaded` hook. It logs every `CLAUDE.md` and rules file as Claude Code loads it, with when and why, so you can see whether the glob ever matched.
 
 ## Output Styles
 

@@ -18,6 +18,20 @@ A sub-agent is a harness file type like every other one in this module: a Markdo
 
 [Module 6: Scale task execution with sub-agents](../../06-subagents/readme.md) owns the full treatment across six topics and five demos. [01: Introduction](../../06-subagents/01-introduction/readme.md) covers the frontmatter field by field, including `tools`, `disallowedTools`, `permissionMode`, and `mcpServers`, plus how the allowlist and denylist resolve against each other. [06: Orchestration Patterns](../../06-subagents/06-orchestration/readme.md) covers decomposition, orchestrator prompts, convergent loops, workflow graphs, and the schema-validated contracts that hold between agents.
 
+## Give a Global Sub-Agent Your Repo's Facts
+
+A sub-agent loads the same `CLAUDE.md` files and project rules as the main session. So one definition in `~/.claude/agents/` can serve every repository, and each repository keeps what differs (app root, ports, schema folder, who runs the dev server) in its own `.claude/rules/`. The global agent picks those facts up wherever it runs, and no repository needs its own copy of the agent.
+
+```markdown
+# Orders API
+
+- Root `src/orders-api/`, `OrdersDbContext`, schema scripts in `db/deltas/`
+- The user runs the API on https://localhost:5051; never restart it
+- Debug login for auth-gated calls: see `.github/credentials.json`
+```
+
+Saved as `.claude/rules/orders-api.md` with no `paths:`, this rule reaches every sub-agent at start. A definition that sets `omitClaudeMd: true` skips `CLAUDE.md` and rules entirely, and the built-in Explore and Plan agents always skip them.
+
 ## Helpful Claude Slash Commands
 
 | Command | Usage |
