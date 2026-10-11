@@ -669,6 +669,162 @@
    "catalogue": {
     "action": "none"
    }
+  },
+  {
+   "date": "2026-10-09",
+   "from": "14:46",
+   "to": "16:08",
+   "sessionId": "590dc02d-2baa-46db-a3ba-73edf0650f51",
+   "branch": "master",
+   "commits": [
+    "5f0106c",
+    "7a93cdd",
+    "c9039d5",
+    "e0ab08d",
+    "4236ce8"
+   ],
+   "surfaces": [
+    "exam-prep"
+   ],
+   "files": [
+    "exam-prep/utils/_generate.py",
+    "exam-prep/utils/_readmore.json"
+   ],
+   "mechanism": {
+    "takes": "a question bank whose items are rendered from JSON sources",
+    "does": "adds a per-item reference link loaded from a separate JSON map and renders it beside each item's rationale",
+    "returns": "regenerated study pages with one documentation link per question"
+   },
+   "portsAsIs": [
+    "per-item reference links rendered from a JSON map"
+   ],
+   "perCustomer": [
+    "the exam bank",
+    "the documentation sites linked"
+   ],
+   "evidence": [
+    "exam-prep/part-01.md Read more lines",
+    "commit c9039d5"
+   ],
+   "toolchain": {
+    "skills": [
+     "brand-voice-code",
+     "x-get"
+    ],
+    "mcpServers": [
+     "chrome-devtools",
+     "claude-in-chrome"
+    ],
+    "agents": [
+     "general-purpose"
+    ]
+   },
+   "industry": "IT training, certification preparation",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-11",
+   "from": "09:39",
+   "to": "10:08",
+   "sessionId": "ae97f509-d8a7-4e70-b891-28357c2ce5b6",
+   "branch": "master",
+   "commits": [
+    "3aa142f"
+   ],
+   "surfaces": [
+    "exam-prep"
+   ],
+   "files": [
+    "exam-prep/utils/_readmore.json",
+    "exam-prep/utils/_check_readmore.py"
+   ],
+   "mechanism": {
+    "takes": "a question bank with one documentation link per item, many pointing at unrelated pages",
+    "does": "splits the bank across three parallel reviewers that re-derive each item's tested concept from its answer key and rationale, pick the best page, and deep-link only to section ids the live page actually renders; a script then re-verifies every link and anchor against the live sites",
+    "returns": "corrected section-level links for every item plus a reusable link and anchor checker"
+   },
+   "portsAsIs": [
+    "concept-driven link review fanned out to parallel reviewers",
+    "live heading-id anchor verification script"
+   ],
+   "perCustomer": [
+    "the question bank",
+    "the documentation hosts and their heading markup"
+   ],
+   "evidence": [
+    "exam-prep/utils/_check_readmore.py --verify: links=134 anchored=128 pages=34 bad=0",
+    "commit 3aa142f"
+   ],
+   "toolchain": {
+    "skills": [
+     "report",
+     "claude-learn",
+     "claude-learn-harvest",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [],
+    "agents": [
+     "docs-agent"
+    ]
+   },
+   "industry": "IT training, certification preparation",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-11",
+   "from": "10:49",
+   "to": "11:12",
+   "sessionId": "1dae5135-b362-4e1d-88e7-aff5c174f37d",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "demos"
+   ],
+   "files": [
+    "demos/06-subagents/01-introduction/readme.md"
+   ],
+   "mechanism": {
+    "takes": "a third-party social post making a configuration claim about the tool being taught",
+    "does": "reads the post through the signed-in browser, checks the claimed setting against the official reference and precedence rules, then folds the verified part into the course module that teaches that setting as a short note",
+    "returns": "a verdict on the claim and a one-paragraph course note linked to the official docs"
+   },
+   "portsAsIs": [
+    "claim-versus-official-docs verification of social posts",
+    "verified-claim to course-note placement"
+   ],
+   "perCustomer": [
+    "the course modules",
+    "the tool whose settings are taught"
+   ],
+   "evidence": [
+    "demos/06-subagents/01-introduction/readme.md: note under the frontmatter table",
+    "docs link https://code.claude.com/docs/en/prompt-caching returned 200"
+   ],
+   "toolchain": {
+    "skills": [
+     "x-get",
+     "brand-voice-code",
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "claude-in-chrome"
+    ],
+    "agents": []
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
   }
  ]
 }

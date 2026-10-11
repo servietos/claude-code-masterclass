@@ -842,3 +842,13 @@
 
 **Pattern:** exam-prep "Read more" links used `<a target="_blank">` so they open in a new window; when they failed on an iPad, the fix reverted them to Markdown links and silently dropped the new-window requirement.
 **Rule:** a fix for "X does not work on Y" must keep X's purpose; if the platform cannot do both, ask which viewer before changing anything.
+
+## A reference link is chosen per question and anchored to a live heading id
+
+**Pattern:** the exam-prep "Read more" links had been assigned one page per topic cluster, so many pointed at a page unrelated to what the question tests (e.g. Q2 on subagent context linked Context windows); 117 of 134 needed a new page or a section anchor.
+**Rule:** derive each link from the correct answer and its Why line, not from the question's topic; on a page with 4+ h2 sections append the section anchor, taken only from the heading ids the live page renders (both docs hosts emit `<hN id="...">`), and re-verify every anchor against the live page before regenerating.
+
+## A delegate brief names where incidental files go
+
+**Pattern:** reviewers briefed to "write exactly one file" still wrote fetch caches: one into `$HOME/.bp_tmp_check.md`, another 21 pages into the scratchpad, and left both because their rules forbid deleting.
+**Rule:** a brief that limits outputs also names a scratch subfolder for incidental downloads ("cache fetched pages under <scratchpad>/<agent>/"), so nothing lands outside it.

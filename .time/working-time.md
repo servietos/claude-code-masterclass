@@ -55,4 +55,10 @@ Machine hours spent on this repository, one row per working day.
 
 | 2026-10-07 | 0.57 | 16:57 | 17:32 | Exam prep: all 134 practice answers checked, theory added to every question, version notes verified against Anthropic Academy |
 
-**Total: 34.01 hours**
+| 2026-10-09 | 1.37 | 14:46 | 16:08 | Exam prep: documentation links added to every practice question |
+
+| 2026-10-11 | 0.48 | 09:39 | 10:08 | Exam prep: all 134 documentation links checked and pointed to the exact section each question tests |
+
+| 2026-10-11 | 0.38 | 10:49 | 11:12 | Sub-agents module: note on keeping a waiting sub-agent's cache warm for an hour |
+
+**Total: 36.24 hours**

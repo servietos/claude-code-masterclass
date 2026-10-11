@@ -56,6 +56,8 @@ mcpServers:
 | `permissionMode` | No | How the agent handles permission prompts: `default`, `acceptEdits`, `auto`, `dontAsk`, `bypassPermissions`, or `plan` |
 | `mcpServers` | No | MCP servers scoped to this agent; inline entries use the same schema as `.mcp.json` server entries; when `tools` is present, tools from these servers must be listed there too |
 
+> **Note:** a sub-agent's prompt cache expires after 5 minutes idle, so one that waits on tests or builds rebuilds its whole context on the next step. Give that agent `experimental:` with `cacheTtl: 1h` nested under it (v2.1.248+, values `5m` or `1h`); leave agents that run straight through on the default, because 1-hour cache writes cost more. The `subagentPromptCacheTtl` setting and the `CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL` variable override it. See [Choose the TTL yourself](https://code.claude.com/docs/en/prompt-caching#choose-the-ttl-yourself).
+
 ## Proactive Delegation Is a Hint
 
 Writing "use proactively" in `description` makes the orchestrator more likely to pick the agent without being asked:
