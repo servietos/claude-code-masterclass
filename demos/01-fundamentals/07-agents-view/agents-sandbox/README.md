@@ -8,4 +8,4 @@ Three small, unrelated modules used by the agents view demo. Each one is a separ
 | `src/parse.js` | No input validation; throws on malformed input |
 | `src/format.js` | No tests |
 
-The demo runs in place: this course repository is already a git repository, which is all a background session needs to isolate itself into a worktree under `.claude/worktrees/`. Step 5 of [demo-agents-view.md](../demo-agents-view.md) clears the branches it leaves behind.
+The demo runs in place: this course repository is already a git repository, which is all a background session needs to isolate itself into a worktree under `.claude/worktrees/`.

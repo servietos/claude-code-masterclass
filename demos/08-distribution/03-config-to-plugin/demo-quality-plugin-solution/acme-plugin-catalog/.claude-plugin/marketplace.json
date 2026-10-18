@@ -1,0 +1,21 @@
+{
+  "name": "acme-plugin-catalog",
+  "owner": {
+    "name": "Acme Corp"
+  },
+  "metadata": {
+    "description": "Internal plugin catalog for Acme Corp engineering teams."
+  },
+  "plugins": [
+    {
+      "name": "quality-review-plugin",
+      "version": "1.0.0",
+      "source": {
+        "source": "github",
+        "repo": "acme-corp/quality-review-plugin",
+        "ref": "quality-review-plugin--v1.0.0"
+      },
+      "description": "Bundles a /create-docs command, a brand-voice skill, a code-reviewer skill, and a PostToolUse metrics hook into one installable Code-Quality package."
+    }
+  ]
+}

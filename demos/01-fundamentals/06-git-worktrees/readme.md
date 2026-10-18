@@ -211,7 +211,7 @@ Only files that match a pattern and are also gitignored are copied, so tracked f
 - [Claude Code Checkpointing](https://code.claude.com/docs/en/checkpointing): How session checkpoints are created, stored, and restored
 - [Claude Code Hooks](https://code.claude.com/docs/en/hooks): `PreToolUse` hooks complement checkpoints by blocking dangerous commands before they run
 - [Claude Code Settings](https://code.claude.com/docs/en/settings): Session safety configuration and permission model
-- [Module 2: 06 Hooks and Mods](../../02-harness/06-hooks-mods/readme.md): Event-driven guardrails that work alongside the checkpoint system
+- [Module 2: 04 Hooks and Mods](../../02-harness/04-hooks-mods/readme.md): Event-driven guardrails that work alongside the checkpoint system
 - [git-worktree: official reference](https://git-scm.com/docs/git-worktree)
 - [Claude Code: worktrees](https://code.claude.com/docs/en/worktrees)
 - [Claude Code: sub-agents and worktree isolation](https://code.claude.com/docs/en/sub-agents)

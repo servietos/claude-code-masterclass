@@ -15,7 +15,7 @@ claude
 
 If you start Claude Code with the Claude Terminal extension (`Ctrl+F1` / `Cmd+F1`), it opens in the VS Code workspace folder and reuses an already-open terminal, so it will not follow the `cd` above. Open the repository clone as the workspace folder (**File > Open Folder**) before pressing the shortcut, or run the commands above in a plain terminal.
 
-If a step here has you write a harness file, put it in the lab's own folder, never in the repository's `.claude/`.
+If a step here has you write a harness file, put it in the lab's own folder and leave the repository's `.claude/` untouched.
 
 Work through the install track that matches your operating system first, because the command above only runs once the CLI is on your PATH.
 
@@ -186,7 +186,7 @@ A browser window will attempt to open. If no browser is available in the devcont
 
 ### Step 5: Install Claude Desktop App
 
-Download and install the Claude desktop application on your host machine (not in the devcontainer). This provides a native desktop interface for interacting with Claude outside of VS Code.
+Download and install the Claude desktop application on your host machine, outside the devcontainer. This provides a native desktop interface for interacting with Claude outside of VS Code.
 
 1. Go to [claude.ai](https://claude.ai) in your browser.
 2. Look for the download option in the bottom-left corner or the menu.
@@ -203,7 +203,7 @@ Run the following command in your terminal (PowerShell on Windows, Terminal on m
 claude --version
 ```
 
-You should see a version string such as `1.x.x`. This confirms the CLI is installed and accessible from any directory.
+You should see a version string such as `2.1.302 (Claude Code)`. This confirms the CLI is installed and accessible from any directory.
 
 ---
 
@@ -250,11 +250,10 @@ Hello! What is this project about?
 
 Claude reads your workspace and responds with a summary.
 
-### Inline suggestion
+### Selection and inline diff
 
 1. Open any source file.
-2. Place the cursor at the end of a function or class.
-3. Press `Ctrl+I` / `Cmd+I` to open the inline prompt.
-4. Type `Add a docstring to this function` and press Enter.
+2. Select a function or class. The Claude panel footer shows how many lines are selected, because Claude reads the selection automatically.
+3. In the Claude panel, type `Add a docstring to the selected function` and press Enter.
 
-Claude writes the docstring inline; accept it with Tab.
+Claude shows the docstring as an inline diff in the editor; accept it to apply the change.

@@ -1,0 +1,11 @@
+ticket,date,product,channel,rating,comment
+APAC-301,2026-10-05,Mobile app,app store,2,Push notifications for approvals arrive hours after the request
+APAC-302,2026-10-05,Mobile app,app store,1,No push notifications at all on iOS since the last update
+APAC-303,2026-10-06,Reports,email,3,Dashboard loading is slow from Singapore during business hours
+APAC-304,2026-10-06,Mobile app,chat,2,Approval reminders on the phone come the next morning
+APAC-305,2026-10-07,Support,phone,5,Support called back within the hour and solved the issue
+APAC-306,2026-10-07,Mobile app,app store,2,Notification badge count is wrong after reading messages
+APAC-307,2026-10-08,Billing,email,3,Invoice currency shows USD for our AUD contract
+APAC-308,2026-10-08,Mobile app,chat,1,Missed an urgent approval because the push notification never came
+APAC-309,2026-10-09,Reports,email,3,Weekly report shows last week's numbers until noon
+APAC-310,2026-10-10,Mobile app,app store,4,The new widget is useful but notifications still lag

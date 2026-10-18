@@ -1,0 +1,5 @@
+{
+  "skillOverrides": {
+    "data-aggregator": "user-invocable-only"
+  }
+}

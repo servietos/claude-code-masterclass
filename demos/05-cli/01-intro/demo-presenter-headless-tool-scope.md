@@ -1,16 +1,16 @@
 ---
 presents: demo-headless-tool-scope.md
 budget: 4 min
-beats: 4
+beats: 3
 ---
 
 # Present: Run a Headless Agent and Prove Its Tool Scope
 
-A headless run is a program with an envelope and an exit code, and the flag that sounds like a whitelist restricts nothing. Four beats: the JSON envelope, the same write request under `--allowed-tools` then under `--tools`, and the three-flag comparison.
+A headless run is a program with an envelope and an exit code, and the flag that sounds like a whitelist restricts nothing. Three beats: the JSON envelope, and the same write request under `--allowed-tools` then under `--tools`.
 
 ------
 
-**Setup:** no starter and no solution folder. All four commands run in this topic folder against its own [`readme.md`](readme.md), and the only file created is `scoped.txt`, deleted at the end.
+**Setup:** no starter and no solution folder. Every command runs in this topic folder against its own [`readme.md`](readme.md), and the only file created is `scoped.txt`, deleted at the end.
 
 ## Beats
 
@@ -54,9 +54,9 @@ claude -p "Create a file named scoped.txt in this folder containing the word hel
 ls scoped.txt
 ```
 
-**Gotcha:** a viewer whose `settings.json` forbids writing sees a refusal instead. Same lesson: the outcome came from settings, not from the flag.
+**Gotcha:** a viewer whose `settings.json` forbids writing sees a refusal instead. Same lesson: the settings decided the outcome.
 
-### Beat 3: `--tools` withdraws the capability, and the missing file is the proof (1 min)
+### Beat 3: `--tools` withdraws the capability, and the missing file is the proof (2 min)
 
 **Open:** [`readme.md`](readme.md#the-agent-harness-mental-model)
 **Say:** A capability the run does not have is the only restriction a prompt cannot argue with. A model saying it cannot do something is a sentence; a missing file is a fact.
@@ -74,29 +74,10 @@ local tools available to me here are read-only: Read, Glob, and Grep.
 
 **Gotcha:** the refusal wording varies between runs; the absent file does not. Same prompt as beat 2, one flag changed, opposite outcome.
 
-### Beat 4: three flags, three different jobs (1 min)
-
-**Open:** [`readme.md`](readme.md#least-privilege-tool-scoping) · the flag comparison table
-**Say:** Not three strengths of one setting. Permission, denial and existence are separable concerns, and picking by how strict a name sounds is how the wrong one gets used.
-
-**Result:** beats 2 and 3 ran rows one and three; row two is the one the demo never runs
-
-```markdown
-| Flag                               | Effect                                           | Use it for                                          |
-| ---------------------------------- | ------------------------------------------------ | --------------------------------------------------- |
-| `--allowed-tools "Read,Glob,Grep"` | Pre-approves those tools so they never prompt    | Removing confirmation friction in an unattended run |
-| `--disallowed-tools "Bash(rm *)"`  | Denies matching calls, leaves the tool available | Surgical bans on a specific dangerous command       |
-| `--tools "Read,Glob,Grep"`         | Makes those the only built-in tools that exist   | A genuinely read-only audit                         |
-```
-
-**Gotcha:** all three govern built-in tools only. A run that must not reach MCP servers still needs `--disallowed-tools "mcp__*"` or `--strict-mcp-config`.
-
 ## If the room asks
 
 | Question | Answer |
 |---|---|
 | Then what is `--allowed-tools` for? | Removing confirmation friction, so a scheduled job does not wait on a prompt nobody will answer. |
 | Does `--tools ""` disable everything? | Only the built-ins. MCP tools sit outside the flag. |
-| If I deny `Write`, is the run read-only? | No. With `Bash` available the agent writes with a shell redirect. |
-| Why `--max-turns` on such a small task? | A hard cost ceiling, budgeted against the tool set: a read-only audit spends a turn per file. |
 | Where does the exit code come from? | The `claude` process: 0 on success, non-zero on error. |

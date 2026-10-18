@@ -14,7 +14,7 @@ Work in [`lab-03-users-api/`](lab-03-users-api/readme.md); the finished result i
 
 ## Where to Open Claude Code
 
-This lab builds its own harness, so open Claude Code inside the lab project rather than at the repo root. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
+This lab builds its own harness, so open Claude Code inside the lab project. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
 
 The starter is already in this repo, so there is nothing to scaffold: change into it and start the session there. Run this from the repo root; both commands work unchanged in PowerShell.
 
@@ -23,7 +23,7 @@ cd labs/02-harness/lab-03-users-api
 claude
 ```
 
-If you start Claude Code with the Claude Terminal extension (`Ctrl+F1` / `Cmd+F1`), it opens in the VS Code workspace folder and reuses an already-open terminal, so it will not follow the `cd` above. Open `users-api` as the workspace folder (**File > Open Folder**) before pressing the shortcut, or run the commands above in a plain terminal.
+If you start Claude Code with the Claude Terminal extension (`Ctrl+F1` / `Cmd+F1`), it opens in the VS Code workspace folder and reuses an already-open terminal, so it will not follow the `cd` above. Open `lab-03-users-api` as the workspace folder (**File > Open Folder**) before pressing the shortcut, or run the commands above in a plain terminal.
 
 > Note: you can also skip the folder switch entirely and name the path in the prompt instead, working from a session opened anywhere in the repo:
 
@@ -31,11 +31,11 @@ If you start Claude Code with the Claude Terminal extension (`Ctrl+F1` / `Cmd+F1
 In labs/02-harness/lab-03-users-api add a DELETE /users/:id endpoint to api/index.ts ....
 ```
 
-That works for any step whose result is just files. It does not work for the harness steps: `CLAUDE.md`, `.claude/commands/state-tick.md` and `.claude/settings.json` load from the directory the session was launched in, so a root session writes them into the lab folder and then ignores them. Launch inside `users-api` from Step 1 onward.
+That works for any step whose result is just files. It does not work for the harness steps: `CLAUDE.md`, `.claude/commands/state-tick.md` and `.claude/settings.json` load from the directory the session was launched in, so a root session writes them into the lab folder and then ignores them. Launch inside `lab-03-users-api` from Step 1 onward.
 
 Restart the session with `/exit` then `claude` after any edit to `.claude/settings.json`, because settings are read at startup.
 
-Launching inside the starter is what makes the repository a monorepo to this lab rather than the project: the repo's own `/CLAUDE.md`, `/.claude/` and `/.mcp.json` stay out of the session. You read them from the repo root without ever writing into them, and every path in the prompts below is relative to the lab folder.
+Launching inside the starter is what makes the repository a monorepo to this lab, with the starter as the project: the repo's own `/CLAUDE.md`, `/.claude/` and `/.mcp.json` stay out of the session. You read them from the repo root without ever writing into them, and every path in the prompts below is relative to the lab folder.
 
 ---
 
@@ -117,7 +117,7 @@ Confirm both files exist and the rule is in CLAUDE.md.
 
 ## Step 2: Anchors
 
-**Goal:** Add stable section IDs to `CLAUDE.md` so prompts can reference rules by anchor (`see §arch-2`) instead of re-pasting paragraphs.
+**Goal:** Add stable section IDs to `CLAUDE.md` so prompts can reference rules by anchor (`see §arch-2`) and stop re-pasting paragraphs.
 
 **Prompt:**
 
@@ -138,13 +138,13 @@ The anchor format is `{#short-id}` immediately after the heading text. Anchors a
 Then add a rule to CLAUDE.md: "When you cite a rule from this file, cite it as `see §<anchor-id>`."
 ```
 
-**Expected result:** All eight headings in `CLAUDE.md` now carry an anchor, and the citation rule sits next to the STATE rule at the top of the file. Ask Claude anything that touches a convention and it answers with "per §conv-1 ..." instead of pasting the rule back at you. Rule conflicts get much easier to diagnose once every rule has an address.
+**Expected result:** All eight headings in `CLAUDE.md` now carry an anchor, and the citation rule sits next to the STATE rule at the top of the file. Ask Claude anything that touches a convention and it answers with "per §conv-1 ...", citing the rule by its address. Rule conflicts get much easier to diagnose once every rule has an address.
 
 ---
 
 ## Step 3: `@`-Mention Discipline
 
-**Goal:** Replace pasted code with `@path/to/file.ts` references so the harness pulls fresh content on every turn instead of using stale snapshots from earlier in the conversation.
+**Goal:** Replace pasted code with `@path/to/file.ts` references so the harness pulls fresh content on every turn and no stale snapshot from earlier in the conversation stays in play.
 
 **Prompt:**
 
@@ -160,7 +160,7 @@ Constraints:
 Do not paste any code into this prompt. Use only @-mentions for file references.
 ```
 
-**Expected result:** Claude reads both files fresh, infers the patterns, and adds the endpoint plus its tests. `npx tsc --noEmit` stays clean and `npx vitest run` stays green with the new cases. Against a running server the behaviour is `DELETE /users/2` returning `204` with an empty body, and `DELETE /users/99` returning `{"error":"not_found"}`. `STATE.md` shows DELETE as `[x]`, and the transcript contains file references only, no pasted code.
+**Expected result:** Claude reads both files fresh, infers the patterns, and adds the endpoint plus its tests. `npx tsc --noEmit` stays clean and `npx vitest run` stays green with the new cases. Against a running server the behaviour is `DELETE /users/2` returning `204` with an empty body, and `DELETE /users/99` returning `{"error":"not_found"}`. `STATE.md` shows DELETE as `[x]`, and the transcript contains file references only.
 
 After it finishes, ask:
 
@@ -168,7 +168,7 @@ After it finishes, ask:
 Compare this turn against a hypothetical turn where I pasted the full contents of @api/index.ts and @api/index.test.ts into the prompt. Where does the @-mention actually save context, and where does it save nothing?
 ```
 
-The saving is not in the first turn: the file content gets loaded either way, and in this project that is only about 5.8 KB across both files. The saving is in every turn after it, because the mention re-reads the file as it is now instead of forcing you to re-paste, and it never leaves a stale copy of the code sitting in the transcript. Check the estimate Claude gives against the real file sizes; the numbers models guess here are usually too high.
+The first turn saves nothing: the file content gets loaded either way, and in this project that is only about 5.8 KB across both files. The saving comes in every turn after it, because the mention re-reads the file as it is now with no re-paste from you, and it never leaves a stale copy of the code sitting in the transcript. Check the estimate Claude gives against the real file sizes; the numbers models guess here are usually too high.
 
 ---
 
@@ -205,7 +205,7 @@ Apply this exact shape to GET /users in @api/index.ts. Reject page < 1 and non-n
 
 In @api/index.test.ts:
   - Add an it.each test covering page=1, page=2 and page=3 against buildApp(seedUsers(25)).
-  - Also update the existing GET /users test: the endpoint now returns the envelope, not a bare array.
+  - Also update the existing GET /users test: the endpoint now returns the envelope where it used to return a bare array.
 
 Do not touch STATE.md in this step.
 ```
@@ -274,7 +274,7 @@ Settings are read at startup, so restart with `/exit` then `claude` before testi
 Three details worth knowing:
 
 - `/permissions` opens the same list in the UI, and the "Yes, and don't ask again" option on any approval dialog appends to it for you. Both write to `.claude/settings.local.json`, which is git-ignored and personal to you; `.claude/settings.json` is the shared, committed version for a team.
-- `Shift+Tab` cycles the session's permission mode. `accept edits on` stops the prompts for file writes without touching the allowlist, and it resets when the session ends. Reach for it when you are supervising a long edit run, not as a permanent setting.
+- `Shift+Tab` cycles the session's permission mode. `accept edits on` stops the prompts for file writes without touching the allowlist, and it resets when the session ends. Reach for it when you are supervising a long edit run, and leave it off as a standing setting.
 - The `/fewer-permission-prompts` command does this step automatically: it reads your own transcripts, finds the calls you keep approving, and proposes the allowlist entries for them.
 
 The thing to resist is `claude --dangerously-skip-permissions`, which approves everything for the whole session. An allowlist is the same convenience with a boundary still in place: you decided in advance which commands are safe here, and this file scopes that decision to this project.

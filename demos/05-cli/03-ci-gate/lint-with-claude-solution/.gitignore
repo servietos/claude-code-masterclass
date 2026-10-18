@@ -6,3 +6,4 @@ obj/
 bin/
 dist/
 .env
+package-lock.json

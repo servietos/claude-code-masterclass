@@ -1,0 +1,157 @@
+@baseUrl = http://localhost:5000
+
+### Config Controller Tests
+
+### Get Config
+GET {{baseUrl}}/config
+Content-Type: application/json
+
+### Get Environment Variables
+GET {{baseUrl}}/config/getEnvVars
+Content-Type: application/json
+
+### Get Feature Flags
+GET {{baseUrl}}/config/getFeatureFlags
+Content-Type: application/json
+
+### Food Controller Tests
+
+### Get All Food Items
+GET {{baseUrl}}/food
+Content-Type: application/json
+
+### Get Food by ID (e.g., ID 1)
+GET {{baseUrl}}/food/1
+Content-Type: application/json
+
+### Create Food Item
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "Pizza",
+  "description": "Delicious cheese pizza",
+  "price": 12.99
+}
+
+### Update Food Item
+PUT {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Margherita Pizza",
+  "description": "Classic Italian pizza with fresh mozzarella",
+  "price": 14.99
+}
+
+### Delete Food Item (e.g., ID 1)
+DELETE {{baseUrl}}/food/1
+Content-Type: application/json
+
+### Create Food Item Valid Body
+# Expected status: 201
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "Pizza",
+  "description": "Delicious cheese pizza",
+  "price": 12.99,
+  "inStock": 10
+}
+
+### Create Food Item Empty Name
+# Expected status: 400
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "",
+  "description": "Delicious cheese pizza",
+  "price": 12.99,
+  "inStock": 10
+}
+
+### Create Food Item Negative Price
+# Expected status: 400
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "Pizza",
+  "description": "Delicious cheese pizza",
+  "price": -1,
+  "inStock": 10
+}
+
+### Create Food Item Negative InStock
+# Expected status: 400
+POST {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 0,
+  "name": "Pizza",
+  "description": "Delicious cheese pizza",
+  "price": 12.99,
+  "inStock": -1
+}
+
+### Update Food Item Valid Body
+# Expected status: 200
+PUT {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Margherita Pizza",
+  "description": "Classic Italian pizza with fresh mozzarella",
+  "price": 14.99,
+  "inStock": 10
+}
+
+### Update Food Item Whitespace Name
+# Expected status: 400
+PUT {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "   ",
+  "description": "Classic Italian pizza with fresh mozzarella",
+  "price": 14.99,
+  "inStock": 10
+}
+
+### Update Food Item Unknown ID
+# Expected status: 404
+PUT {{baseUrl}}/food
+Content-Type: application/json
+
+{
+  "id": 9999,
+  "name": "Margherita Pizza",
+  "description": "Classic Italian pizza with fresh mozzarella",
+  "price": 14.99,
+  "inStock": 10
+}
+
+### Delete Food Item Unknown ID
+# Expected status: 404
+DELETE {{baseUrl}}/food/9999
+Content-Type: application/json
+
+### Delete Food Item Existing ID
+# Expected status: 204
+DELETE {{baseUrl}}/food/1
+Content-Type: application/json
+
+### Get Food Item Unknown ID
+# Expected status: 404
+GET {{baseUrl}}/food/9999
+Content-Type: application/json

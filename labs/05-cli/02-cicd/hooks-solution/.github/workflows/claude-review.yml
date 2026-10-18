@@ -31,7 +31,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          claude -p --max-turns 3 --allowed-tools "Read,Bash(git:*)" "Review the diff at /tmp/pr.diff. Focus on: type safety, missing tests, unsafe error handling. Output a brief markdown review with 'Issues' and 'Suggestions' sections. End with a one-line verdict: APPROVE, REQUEST_CHANGES, or COMMENT." > /tmp/review.md
+          claude -p "Review the diff at /tmp/pr.diff. Focus on: type safety, missing tests, unsafe error handling. Output a brief markdown review with 'Issues' and 'Suggestions' sections. End with a one-line verdict: APPROVE, REQUEST_CHANGES, or COMMENT." --max-turns 3 --allowed-tools "Read,Bash(git:*)" > /tmp/review.md
 
       - name: Post review comment
         if: steps.diff.outputs.diff_size != '0'

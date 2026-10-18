@@ -18,7 +18,7 @@ Each step contains:
 
 ## Where to Open Claude Code
 
-This lab builds its own harness, so open Claude Code inside the lab project rather than at the repo root. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
+This lab builds its own harness, so open Claude Code inside the lab project. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
 
 The project lives outside this course checkout, for the reason Lab 01's Setup gives, so it is not a folder you will find in this repo. Labs 01 and 02 created it; start the session inside it. Both commands work unchanged in PowerShell.
 
@@ -118,12 +118,12 @@ DATE=$(date +%Y-%m-%d)
 OUT=~/cli-utils-cron/logs/summary-$DATE.md
 mkdir -p "$(dirname "$OUT")"
 
-claude -p --max-turns 4 --allowed-tools "Read,Write,Bash(git:*)" "Summarise the last 24 hours of git activity on this repo (commits, branches, file changes). Append the summary as a new dated section to $OUT. Be terse, bullet points only." >> ~/cli-utils-cron/logs/cron.log 2>&1
+claude -p "Summarise the last 24 hours of git activity on this repo (commits, branches, file changes). Append the summary as a new dated section to $OUT. Be terse, bullet points only." --max-turns 4 --allowed-tools "Read,Write,Bash(git:*)" >> ~/cli-utils-cron/logs/cron.log 2>&1
 SH
 chmod +x ~/cli-utils-cron/hourly-summary.sh
 ```
 
-`--allowed-tools` matters here: an unattended run has nobody to answer a permission prompt, so the agent must be pre-approved for the Write it is being asked to perform.
+`--allowed-tools` matters here: an unattended run has nobody to answer a permission prompt, so the agent must be pre-approved for the Write it is being asked to perform. The prompt sits before that variadic flag, per the Lab 01 Step 1 rule.
 
 Test it manually first:
 
@@ -140,7 +140,7 @@ crontab -l > /tmp/crontab.bak 2>/dev/null || true
 crontab -l | tail -3
 ```
 
-**Register it, Windows:** there is no cron daemon and no `crontab` command on Windows, not even inside Git Bash (`which crontab` comes back empty). Use Task Scheduler instead, pointing it at Git Bash as the interpreter. Run these two from **PowerShell**, not from Git Bash:
+**Register it, Windows:** there is no cron daemon and no `crontab` command on Windows, Git Bash included (`which crontab` comes back empty). Use Task Scheduler instead, pointing it at Git Bash as the interpreter. Run these two from **PowerShell**:
 
 ```powershell
 schtasks /Create /TN cli-utils-hourly /SC HOURLY /TR '"C:\Program Files\Git\bin\bash.exe" -lc "~/cli-utils-cron/hourly-summary.sh"'
@@ -194,7 +194,7 @@ When everything above is true, end your response with the literal token: TASK_CO
 MD
 
 for i in $(seq 1 10); do
-  RESPONSE=$(claude -p --max-turns 8 --max-budget-usd 2 "$(cat PROMPT.md)" 2>&1)
+  RESPONSE=$(claude -p "$(cat PROMPT.md)" --max-turns 8 --max-budget-usd 2 --permission-mode acceptEdits --allowed-tools "Read,Edit,Write,Bash(npm *),Bash(npx *)" 2>&1)
   echo "--- iteration $i ($(date +%H:%M:%S)) ---"
   echo "$RESPONSE" | tail -20
   if echo "$RESPONSE" | grep -q "TASK_COMPLETE"; then
@@ -207,13 +207,13 @@ done
 cd ..
 ```
 
-`--max-turns` caps the turns inside one iteration and `--max-budget-usd` caps the spend of that iteration; the `for` loop caps how many iterations you pay for at all. `--max-turns` is a real, documented flag ([CLI reference](https://code.claude.com/docs/en/cli-reference)) even though it is currently missing from `claude --help` output, so do not assume it is a typo.
+`--max-turns` caps the turns inside one iteration and `--max-budget-usd` caps the spend of that iteration; the `for` loop caps how many iterations you pay for at all. `--max-turns` is a real, documented flag ([CLI reference](https://code.claude.com/docs/en/cli-reference)) even though it is currently missing from `claude --help` output, so do not assume it is a typo. `--permission-mode acceptEdits` and `--allowed-tools` let each iteration write files and run npm, which print mode otherwise denies (Lab 01, Step 1).
 
 **Expected result:** The same prompt is fed in repeatedly. Each iteration Claude sees the previous iteration's files in the working tree and improves on them. The loop terminates when Claude writes `TASK_COMPLETE`, or after ten iterations, whichever comes first. Typical completion is 3 to 6 iterations. Cancel early at any time with `Ctrl+C`.
 
 ### 3b: The official `ralph-wiggum` plugin (in-session)
 
-The Anthropic plugin uses a `Stop` hook to keep the session alive instead of an external bash loop. Searching the default marketplace for `ralph-wiggum` finds nothing, it lives in a different marketplace than the one configured out of the box. Add it first, from inside Claude Code:
+The Anthropic plugin keeps the session alive with a `Stop` hook, so it needs no external bash loop. Searching the default marketplace for `ralph-wiggum` finds nothing, it lives in a different marketplace than the one configured out of the box. Add it first, from inside Claude Code:
 
 ```text
 /plugin marketplace add anthropics/claude-code
@@ -271,14 +271,14 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          claude -p --max-turns 6 --allowed-tools "Read,Bash(git:*),Bash(npm:*),Bash(gh issue *)" "
+          claude -p "
             Check the repo for housekeeping items:
               - Open issues older than 60 days with no activity: list them with their numbers and ages.
               - Stale branches (no commits in 30 days): list them.
               - Direct dependencies whose latest version is more than one major behind: list them.
 
             Open ONE issue titled 'Weekly housekeeping report ($(date +%Y-%m-%d))' with the findings as a structured markdown body. Use gh issue create.
-          "
+          " --max-turns 6 --allowed-tools "Read,Bash(git:*),Bash(npm:*),Bash(gh issue *)"
         # Note: gh CLI is preinstalled on ubuntu-latest runners.
 YML
 
@@ -291,9 +291,9 @@ Three details in that `run:` block are easy to get wrong and all three fail sile
 
 - The prompt is **double-quoted**, so backticks inside it would be command substitution. Writing ``Use `gh issue create`.`` makes the runner execute `gh issue create` while building the string and splice its empty output in, leaving the agent with `Use .` and no instruction. Plain `Use gh issue create.` is correct. `$(date +%Y-%m-%d)` is deliberate substitution and does expand as intended.
 - `gh` is preinstalled on the runner but refuses to run without a token, hence `GH_TOKEN`. The job already declares `issues: write`, which is the scope `gh issue create` needs.
-- `--allowed-tools` must pre-approve `Bash(gh issue *)`, otherwise the agent has no way to run the command it was asked to run.
+- `--allowed-tools` must pre-approve `Bash(gh issue *)`, otherwise the agent has no way to run the command it was asked to run. It follows the closing quote of the prompt because the flag is variadic.
 
-Trigger it once manually instead of waiting until Monday:
+Trigger it once by hand now:
 
 ```bash
 gh workflow run "Weekly house-keeping"
@@ -337,7 +337,7 @@ done < fleet-runs/tasks.txt
 git worktree list
 ```
 
-The runner script assumes its worktree already exists and refuses to continue if it does not, rather than silently working in the wrong directory:
+The runner script assumes its worktree already exists and refuses to continue if it does not, so it can never work silently in the wrong directory:
 
 ```bash
 cat > fleet-runs/run-one.sh <<'SH'
@@ -351,11 +351,14 @@ REPO=$(git rev-parse --show-toplevel)
 WORKTREE="$REPO/../cli-utils-$NAME"
 
 cd "$WORKTREE" || { echo "missing worktree: $WORKTREE" >&2; exit 1; }
-claude -p --max-turns 5 --max-budget-usd 1 "$DESC. Run \`npm test\` to confirm. Commit with message 'feat: $NAME'." > "$REPO/fleet-runs/log-$NAME.txt" 2>&1
+npm install --silent
+claude -p "$DESC. Run \`npm test\` to confirm. Commit with message 'feat: $NAME'." --max-turns 5 --max-budget-usd 1 --permission-mode acceptEdits --allowed-tools "Read,Edit,Write,Bash(npm *),Bash(git *)" > "$REPO/fleet-runs/log-$NAME.txt" 2>&1
 echo "done: $NAME"
 SH
 chmod +x fleet-runs/run-one.sh
 ```
+
+A fresh worktree has no `node_modules/` (Lab 01, Step 3), and the two permission flags let each worker edit, test and commit, which print mode otherwise denies.
 
 Run the fleet, five parallel workers:
 
@@ -363,7 +366,7 @@ Run the fleet, five parallel workers:
 xargs -P 5 -I {} ./fleet-runs/run-one.sh "{}" < fleet-runs/tasks.txt
 ```
 
-`xargs -P` with `-I` really does run the workers concurrently in Git Bash on Windows as well as on macOS and Linux: five three-second workers finish in about four seconds of wall clock, not fifteen.
+`xargs -P` with `-I` really does run the workers concurrently in Git Bash on Windows as well as on macOS and Linux: five three-second workers finish in about four seconds of wall clock, where a serial run takes fifteen.
 
 When all five finish:
 
@@ -379,7 +382,7 @@ Inspect a log:
 tail -20 fleet-runs/log-add-uppercase.txt
 ```
 
-**Expected result:** Five log files, one per worker, and five `feat/add-*` branches. Each worker that got its tests passing within its turn budget leaves one commit on its branch; any worker that ran out of turns leaves its branch at the base commit and says so in its log, so read the logs rather than assuming five commits. All five ran concurrently, so total wall-clock time is roughly the slowest single worker, not the sum.
+**Expected result:** Five log files, one per worker, and five `feat/add-*` branches. Each worker that got its tests passing within its turn budget leaves one commit on its branch; any worker that ran out of turns leaves its branch at the base commit and says so in its log, so read the logs before you count on five commits. All five ran concurrently, so total wall-clock time is roughly the slowest single worker, well below the sum.
 
 Clean up:
 

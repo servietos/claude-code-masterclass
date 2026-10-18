@@ -126,6 +126,38 @@ How the result should be presented: tables, summaries, file diffs, etc.
 
 Supporting sections (troubleshooting tables, rule references, architecture notes) go after the core three. The body is Claude's instruction set for this skill, written in the imperative, scoped to one responsibility, and free of prose comments or explanatory asides.
 
+## Popular Skill Repositories
+
+Skills are shared as Git repositories or zip archives. The table lists the most widely used sources.
+
+| Repository / Source | Distribution Point | Install Method |
+|---------------------|--------------------|----------------|
+| [anthropics/skills](https://github.com/anthropics/skills) | GitHub | Copy the skill folder into `.claude/skills/` |
+| Anthropic Skills Catalog (claude.ai) | Claude.ai web UI → Skills tab | One-click install from the catalog |
+| [skills.sh](https://skills.sh) | Open agent skills directory (Vercel, open source) | `npx skills add <owner>/<repo>@<skill-name>` |
+| [obra/superpowers](https://github.com/obra/superpowers) | Claude Code plugin marketplace | `/plugin install superpowers@claude-plugins-official` |
+| [azure-samples/claude-skills-azure](https://github.com/Azure-Samples) | GitHub | Copy the skill folder into `.claude/skills/` |
+| Team / private repo | Self-hosted Git (HTTPS or SSH) | Copy the skill folder into `.claude/skills/` |
+| Local folder | Filesystem | Copy the skill folder into `.claude/skills/` |
+
+To discover available skills from within a session, use the `/find-skills` command, which queries the catalog and presents matching results with install instructions.
+
+```text
+/find-skills Azure deployment
+```
+
+```text
+/find-skills security review
+```
+
+## What an Install Changes
+
+Installing a skill drops a folder and changes nothing else: no `settings.json` entry and no `CLAUDE.md` edit. Deleting that directory is the entire uninstall. The file must be named `SKILL.md` with that exact case, because a lowercase `skill.md` is not discovered on Linux or in CI and fails where you cannot see it.
+
+## Hands-On Demo
+
+[Use a DOCX Skill to create an Invoice Generator](demo-docx-invoice.md) searches the catalog for a DOCX skill, installs it, reads back the `SKILL.md` that landed on disk, and then lets the skill drive a TypeScript program that renders a sample invoice as a `.docx` file.
+
 ## Helpful Claude Slash Commands
 
 | Command        | Usage                                                                   |

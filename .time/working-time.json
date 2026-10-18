@@ -825,6 +825,235 @@
    "catalogue": {
     "action": "none"
    }
+  },
+  {
+   "date": "2026-10-16",
+   "from": "12:42",
+   "to": "14:00",
+   "sessionId": "fdd8e395-1d88-4494-8b99-89d59271b621",
+   "branch": "v2",
+   "commits": [],
+   "surfaces": [
+    "demos"
+   ],
+   "files": [
+    "demos/02-harness/readme.md",
+    "demos/02-harness/01-harness-elements/readme.md",
+    "demos/04-mcp/01-intro/readme.md",
+    "demos/03-skills/01-intro/readme.md",
+    "demos/06-subagents/01-introduction/readme.md"
+   ],
+   "mechanism": {
+    "takes": "a course module whose topics repeat material that later modules teach in depth",
+    "does": "inventories each duplicated topic heading by heading against the owning module, moves only the uncovered sections, demos and starters into the owning module's intro topic, opens the module with an overview topic, renumbers the remaining topics and repairs every link, deck and index that pointed at the old layout",
+    "returns": "a shorter module with an overview topic and no duplicated teaching, with zero broken internal links"
+   },
+   "portsAsIs": [
+    "per-heading overlap inventory before a topic move",
+    "move-the-delta-only restructure with link and deck repair"
+   ],
+   "perCustomer": [
+    "the course modules and their decks",
+    "which module owns each subject"
+   ],
+   "evidence": [
+    "link-check broken=0 after the restructure",
+    "git status: 150 R, 29 RM, 12 D, 54 M under the working tree"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-class",
+     "create-module-pptx",
+     "create-pptx",
+     "brand-voice-code",
+     "windows-project-rename",
+     "plugin-authoring",
+     "report",
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "microsoft-learn"
+    ],
+    "agents": [
+     "fact-gatherer",
+     "docs-agent",
+     "fork"
+    ]
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-16",
+   "from": "14:08",
+   "to": "14:19",
+   "sessionId": "fdd8e395-1d88-4494-8b99-89d59271b621",
+   "branch": "v2",
+   "commits": [],
+   "surfaces": [
+    "demos"
+   ],
+   "files": [
+    "demos/02-harness/pptx/02-harness.pptx",
+    "demos/03-skills/pptx/03-skills.pptx",
+    "demos/04-mcp/pptx/04-mcp.pptx",
+    "demos/pptx/00-claude-code-masterclass.pptx",
+    "demos/pptx/modules.json"
+   ],
+   "mechanism": {
+    "takes": "finished, themed slide decks of a course whose topics moved between modules",
+    "does": "moves the affected slides between decks, drops the ones that now repeat, redraws the module path diagram, rebuilds topic overviews, dividers and speaker notes locally and republishes decks and PDFs to the shared class folder without regenerating a single slide",
+    "returns": "decks that match the new module layout, delivered as PPTX and PDF at no generation cost"
+   },
+   "portsAsIs": [
+    "cross-deck slide move without regeneration",
+    "locally rebuilt topic overview and dividers"
+   ],
+   "perCustomer": [
+    "the course decks and their theme",
+    "the class delivery folder"
+   ],
+   "evidence": [
+    "topics: overview=1 dividers=5 missing=0 on all three module decks",
+    "notes: unmatched=0 missing=0 on all three module decks",
+    "four decks and PDFs delivered 14:18 to 14:19"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-pptx",
+     "create-class"
+    ],
+    "mcpServers": [],
+    "agents": []
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-17",
+   "from": "18:56",
+   "to": "22:16",
+   "sessionId": "e560882f-9af1-4939-be16-46c4dd0b565d",
+   "branch": "v2",
+   "commits": [
+    "aab77d7"
+   ],
+   "surfaces": [
+    "demos",
+    "labs"
+   ],
+   "files": [
+    "labs/readme.md",
+    "labs/03-skills/lab-03-install-a-catalog-skill.md",
+    "labs/01-fundamentals/04-permission-settings/readme.md",
+    "demos/03-skills/02-creating/skill-from-conversation/.claude/settings.json",
+    "demos/01-fundamentals/05-permissions/demo-permission-settings.md"
+   ],
+   "mechanism": {
+    "takes": "a course repository whose demo and lab guides were shortened, plus a cap on how many cheap model runners may work on it",
+    "does": "deletes every reference solution, replays each guide's prompts verbatim through headless Claude Code in a fresh copy of its starter, rebuilds the solution from what the run wrote, fixes the guide lines and starter assets the run contradicted, checks every slide deck against its topic pages, and writes and executes new labs for capabilities no lab practised",
+    "returns": "per-step receipts marked verified, not executed or restored, rebuilt solution folders, corrected guides, refreshed decks and new runnable labs, in one pull request"
+   },
+   "portsAsIs": [
+    "headless replay of guide prompts in one resumed session",
+    "runner fleet brief rules",
+    "per-step receipt with denials"
+   ],
+   "perCustomer": [
+    "the course modules and their starters",
+    "which steps need live accounts or boxes"
+   ],
+   "evidence": [
+    "demo steps: 209 verified, 75 not executed, 18 restored, 13 failed then 6 fixed and re-run",
+    "catalog-skill lab re-run: steps=5 ran=5 errored=0, inspect tables: 1",
+    "permissions lab Step 8 re-run: 8 of 8 rows with the expected outcome",
+    "link check demos: broken=0",
+    "pull request 930"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-class",
+     "workflow-authoring",
+     "report",
+     "update-config",
+     "plugin-authoring",
+     "commit-pull-request",
+     "claude-learn",
+     "create-pptx",
+     "brand-voice-code"
+    ],
+    "mcpServers": [
+     "subagent-delegation-plugin",
+     "claude_ai_Claude_Docs"
+    ],
+    "agents": [
+     "fork"
+    ]
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-17",
+   "from": "22:37",
+   "to": "22:42",
+   "sessionId": "e560882f-9af1-4939-be16-46c4dd0b565d",
+   "branch": "v2",
+   "commits": [],
+   "surfaces": [
+    "tasks",
+    "global house rules",
+    "create-class runbook"
+   ],
+   "files": [
+    "tasks/lessons.md",
+    "~/.claude/CLAUDE.md",
+    "~/.claude/skills/context-engineering/references/literal-requirements.md",
+    "~/.claude/skills/create-class/references/verify-by-execution.md"
+   ],
+   "mechanism": {
+    "takes": "the corrections and misses of a finished multi-agent course run",
+    "does": "turns each into a one-line house rule with its incident, adds it to the runbook a runner fleet is briefed from, and skips anything an earlier pass already captured",
+    "returns": "three new runbook rules and lessons with their incidents"
+   },
+   "portsAsIs": [
+    "second-pass delta capture that never duplicates the first pass"
+   ],
+   "perCustomer": [
+    "the corrections a given session produced"
+   ],
+   "evidence": [
+    "three new lessons appended, status lesson amended",
+    "two runner-fleet rules added to verify-by-execution"
+   ],
+   "toolchain": {
+    "skills": [
+     "claude-learn",
+     "claude-learn-worktime"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": [
+     "fork"
+    ]
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
   }
  ]
 }

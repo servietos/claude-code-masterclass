@@ -1,0 +1,46 @@
+{
+  "facts": [
+    "Target framework is net10.0 (catalog-service.csproj:3).",
+    "TreatWarningsAsErrors is set to false (catalog-service.csproj:4).",
+    "NoWarn is set to NU1605 (catalog-service.csproj:5).",
+    "The csproj sets no Nullable property (catalog-service.csproj:2-6).",
+    "The project uses the Microsoft.NET.Sdk.Web SDK (catalog-service.csproj:1).",
+    "The active database is SQLite: App.UseSQLite is true in appsettings.json and Program.cs:21-23 registers FoodDBContext with UseSqlite.",
+    "The SQL Server branch in Program.cs:25-28 is inactive while UseSQLite is true.",
+    "SQLite connection string is Data Source=./food.db (appsettings.json, App.ConnectionStrings.SQLiteDBConnection).",
+    "Authentication is disabled: App.AuthEnabled is false in appsettings.json, so Program.cs:51 registers plain AddControllers without the auth filter.",
+    "FoodDBContext configures Price as decimal(18,4) (Infrastructure/FoodDBContext.cs:26-27).",
+    "FoodDBContext seeds five CatalogItem rows with IDs 1 to 5 via HasData (Infrastructure/FoodDBContext.cs:29-37).",
+    "CatalogItem.ID is int, Price is decimal, InStock is int (Domain/CatalogItem.cs:5-8).",
+    "Common/AppBuilder.cs AddConfig reads App:UseAppConfig, which is false in appsettings.json, so the Azure App Configuration provider is not loaded.",
+    "Common/AppBuilder.cs registers Swagger (AddEndpointsApiExplorer and AddSwaggerGen), Application Insights with AILogger, feature management, and an AllowAll CORS policy.",
+    "Program.cs calls AddConfig, AddApplicationInsights, AddFeatureManagement, AddEndpointsApiExplorer and AddNoCors, and calls UseAzureAppConfiguration, UseSwaggerUI and UseNoCors on the app (Program.cs:13-60).",
+    "test-controllers.http has requests for config and food reads, and a valid create and update body. It has no request for a 400 or 404 case (test-controllers.http:19-51)."
+  ],
+  "seen": {
+    "create-food-client-supplied-id-conflict-500": {
+      "verdict": "accept",
+      "reason": "Controllers/FoodController.cs:42 adds the client body without resetting ID. SQLite is active (Program.cs:21-23, appsettings.json UseSQLite true) and seeds IDs 1 to 5 (Infrastructure/FoodDBContext.cs:31-35), so a valid body with id 1 fails the primary key insert and returns 500. contract.md row POST /food valid expects 201, and its validity rule (contract.md:14) does not mention IDs."
+    },
+    "update-food-delete-race-500": {
+      "verdict": "defer",
+      "reason": "Needs a concurrent delete between the existence check and SaveChangesAsync (Controllers/FoodController.cs:56-61 and 69-75). contract.md is silent on concurrency. Choosing 404 or 409 on DbUpdateConcurrencyException is a design decision."
+    },
+    "valid-price-overflow-500": {
+      "verdict": "defer",
+      "reason": "Only reachable when UseSQLite is false, because the decimal(18,4) column type is set in Infrastructure/FoodDBContext.cs:26-27 and SQLite is active in Program.cs:21-23. contract.md does not define a maximum Price, so whether validation should cap it is open."
+    },
+    "get-food-id-nonint-400": {
+      "verdict": "reject",
+      "reason": "Domain/CatalogItem.cs:5 types ID as int, so /food/abc is not a request for an ID. The 400 is the ASP.NET [ApiController] binding response. contract.md rows cover only IDs that exist or do not exist."
+    },
+    "http-file-no-contract-cases": {
+      "verdict": "reject",
+      "reason": "The contract constrains controller behaviour, and contract.md does not mention test-controllers.http. The finding is a coverage gap in sample requests, not a contract violation."
+    }
+  },
+  "rounds": [
+    { "round": 2, "findings": 5, "dry": false },
+    { "round": 4, "findings": 0, "dry": true }
+  ]
+}

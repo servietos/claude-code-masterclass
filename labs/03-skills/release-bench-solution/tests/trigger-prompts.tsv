@@ -1,0 +1,8 @@
+fire	Write the release notes for this version from the commit list.
+fire	What should I tell our users about what shipped since the last release?
+fire	Turn data/commits.txt into a changelog entry for customers.
+fire	Draft the announcement of what changed in this version for the customer newsletter.
+no-fire	Bump the version in package.json to 2.5.0.
+no-fire	Explain what semantic versioning means for the major number of this package.
+no-fire	Write a one-line commit message for a fix to the CSV export.
+no-fire	Explain the difference between a git tag and a git branch.

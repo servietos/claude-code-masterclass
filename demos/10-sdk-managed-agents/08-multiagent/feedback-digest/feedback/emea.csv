@@ -1,0 +1,11 @@
+ticket,date,product,channel,rating,comment
+EMEA-101,2026-10-05,Billing,email,2,Invoice PDF export fails with a timeout when the invoice has more than 40 lines
+EMEA-102,2026-10-05,Billing,chat,1,Cannot download last month's invoice as PDF; the button spins and nothing happens
+EMEA-103,2026-10-06,Reports,email,3,Dashboard takes about 20 seconds to load in the morning
+EMEA-104,2026-10-06,Billing,phone,2,VAT number missing on exported invoices for our German entity
+EMEA-105,2026-10-07,Mobile app,app store,4,Love the new dark mode on the mobile app
+EMEA-106,2026-10-07,Billing,email,1,Invoice export to PDF broken again; our finance team is blocked at month end
+EMEA-107,2026-10-08,Reports,chat,3,Scheduled report email arrived twice
+EMEA-108,2026-10-09,Billing,email,2,Exported invoice totals do not match the screen when a discount applies
+EMEA-109,2026-10-09,Support,phone,5,Support agent fixed our SSO setup in ten minutes
+EMEA-110,2026-10-10,Billing,chat,2,PDF invoice export works on small invoices only

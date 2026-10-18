@@ -3,7 +3,7 @@
 ## Replace 01-fundamentals topic 05 with prompt caching
 
 Rationale: `05-prompting-techniques` duplicated four of its five sections from
-`04-constitution`, `02-harness/02-commands` and `08-optimize/04-memory-architectures`.
+`04-constitution`, `02-harness/03-commands` and `08-optimize/04-memory-architectures`.
 Prompt caching was taught nowhere in the course. Topic 06 stays: model choice is a
 day-one decision and a model switch is one of the main cache invalidators.
 
@@ -51,3 +51,14 @@ readme. The prompt caching topic is not in the approved slash-command table in
 Not done: `labs/01-fundamentals/lab-03-prompting-techniques-and-plugins.md` still teaches the
 five prompting techniques. It is self-contained, scaffolds its own project, and depends on
 nothing that was deleted, so it was left in place.
+
+## Move 07 topic 02 and lab-01 token counts to count_tokens
+
+Blocked on a working `ANTHROPIC_API_KEY`: the four keys in the repo's `.env` files return 401.
+
+- [ ] Swap `js-tiktoken` for `@anthropic-ai/sdk` 0.135.0 in both `count-tokens.ts` and `package.json` files of `02-caveman-compression`, counting against `claude-opus-5-5`
+- [ ] Swap `tiktoken` for `anthropic` 1.15.0 in the lab's `tokens.py`
+- [ ] Re-measure every demo and lab file and regenerate both `baseline.txt` files
+- [ ] Update the counts in the topic readme bar table, demo, presenter guide, lab Steps 1 and 3, solution readme and the caveman `SKILL.md` band
+- [ ] Add `ANTHROPIC_API_KEY` to the guides' prerequisites and a Module 07 row in `labs/readme.md`
+- [ ] Update the caveman slides in `demos/07-optimize-observability/pptx/`

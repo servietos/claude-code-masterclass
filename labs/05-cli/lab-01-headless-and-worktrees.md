@@ -16,7 +16,7 @@ Each step contains:
 
 ## Where to Open Claude Code
 
-This lab builds its own harness, so open Claude Code inside the lab project rather than at the repo root. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
+This lab builds its own harness, so open Claude Code inside the lab project. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
 
 The project lives outside this course checkout, for the reason Setup gives, so it is not a folder you will find in this repo. Setup below creates it; start the session inside it. Both commands work unchanged in PowerShell.
 
@@ -71,7 +71,7 @@ Then `git init && git add . && git commit -m "initial scaffold"`.
 
 **Expected result:** A `cli-utils/` folder with both source files, `npm test` green (Vitest runs the `.ts` sources directly, no build step) and `npm run typecheck` exit 0. Note that `npm test` alone never enforces strict mode: Vitest transpiles without type-checking, so `npm run typecheck` is the step that actually exercises the strict `tsconfig.json`.
 
-The finished project is checked in at [01-headless/cli-utils-solution/](01-headless/cli-utils-solution/) as the completed reference (it deliberately ships no `.git`, so copy it out before running Step 3).
+The finished project is checked in at [01-headless/cli-utils-solution/](01-headless/cli-utils-solution) as the completed reference (it deliberately ships no `.git`, so copy it out before running Step 3).
 
 ## Step 1: Headless Print Mode
 
@@ -112,7 +112,7 @@ cat > scripts/lint-with-claude.sh <<'SH'
 #!/usr/bin/env bash
 set -euo pipefail
 
-OUT=$(claude -p "Read src/slugify.ts and src/kebab-to-camel.ts. Look for: (1) unused exports, (2) missing JSDoc on exported functions, (3) any function over 30 lines. If you find ANY issue, end your response with the exact token: LINT_FAIL. If everything is clean, end with LINT_PASS." --output-format text)
+OUT=$(claude -p "Read src/slugify.ts and src/kebab-to-camel.ts. Look for: (1) unused exports, (2) missing JSDoc on exported functions, (3) any function over 30 lines. If you find ANY issue, end your response with the exact token: LINT_FAIL. If everything is clean, end with LINT_PASS." --tools "Read,Glob,Grep" --max-turns 10 --output-format text)
 
 echo "$OUT"
 
@@ -152,7 +152,9 @@ Roll the change back:
 git checkout src/slugify.ts
 ```
 
-**Expected result:** The first run ends with `LINT_PASS` and exits `0`, but only because the Setup prompt asked for JSDoc on every exported function; drop that requirement and criterion (2) fails the gate on a pristine scaffold. The deliberate-issue run prints `claude-lint: issues found` on stderr and exits `1`. The third exit code, `2`, is your safety net: a model that answers with neither token is a broken gate, not a passing one. The exit code is now a real signal you can plug into CI.
+**Expected result:** The first run ends with `LINT_PASS` and exits `0`, but only because the Setup prompt asked for JSDoc on every exported function; drop that requirement and criterion (2) fails the gate on a pristine scaffold. The deliberate-issue run prints `claude-lint: issues found` on stderr and exits `1`. The third exit code, `2`, is your safety net: a model that answers with neither token is a broken gate, and the script refuses to call it a pass. The exit code is now a real signal you can plug into CI.
+
+`--tools "Read,Glob,Grep"` makes those three the only built-in tools the run has, so the audit cannot edit the files it judges whatever your `settings.json` permits. `--allowed-tools` with the same list would only pre-approve them and withdraw nothing.
 
 ## Step 3: Parallel Worktrees
 
@@ -237,7 +239,7 @@ echo "done. ARCHITECTURE.md size: $(wc -c < ARCHITECTURE.md) bytes"
 
 **Commands:**
 
-`--add-dir` loads a directory's `.claude/skills/` and `.claude/agents/`, not arbitrary `SKILL.md` files lying around in it. A skill at `<added-dir>/json-summarize/SKILL.md` is never discovered; it has to sit at `<added-dir>/.claude/skills/<name>/SKILL.md`. Create exactly that layout:
+`--add-dir` loads a directory's `.claude/skills/` and `.claude/agents/` and ignores any `SKILL.md` file lying loose in it. A skill at `<added-dir>/json-summarize/SKILL.md` is never discovered; it has to sit at `<added-dir>/.claude/skills/<name>/SKILL.md`. Create exactly that layout:
 
 ```bash
 mkdir -p /tmp/ephemeral-skills/.claude/skills/json-summarize
@@ -281,8 +283,9 @@ Point `--add-dir` at the folder without the `.claude/` layer and the same comman
 |---|---|---|
 | `claude -p "..."` headless one-shot | 1 | Any non-interactive invocation |
 | `--output-format json` | 1 | Anything piped to `jq` or another script |
-| Prompt before variadic flags | 1 | Every command that also passes `--add-dir` or `--allowed-tools` |
+| Prompt before variadic flags | 1 | Every command that also passes `--add-dir`, `--allowed-tools` or `--tools` |
 | Exit-code wrapping with sentinel tokens | 2 | CI gates, pre-commit hooks |
+| `--tools` read-only tool set + `--max-turns` | 2 | Audits and gates that must never write |
 | `--permission-mode` + `--allowed-tools` | 3, 4 | Any headless run that writes, edits or shells out |
 | Parallel `git worktree` | 3 | Independent feature branches running concurrently |
 | `nohup … &` background launch + poll | 4 | Long-running documentation, large refactors |

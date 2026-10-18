@@ -852,3 +852,149 @@
 
 **Pattern:** reviewers briefed to "write exactly one file" still wrote fetch caches: one into `$HOME/.bp_tmp_check.md`, another 21 pages into the scratchpad, and left both because their rules forbid deleting.
 **Rule:** a brief that limits outputs also names a scratch subfolder for incidental downloads ("cache fetched pages under <scratchpad>/<agent>/"), so nothing lands outside it.
+
+## Moving a topic into the module that owns it moves only the delta
+
+**Pattern (2026-10-16):** Planning to dissolve `02-harness` topics 03-mcp, 04-skills and 05-subagents into modules 04, 03 and 06, the useful inventory was a per-heading overlap table: each source heading against the target file and heading that already teaches it. Most of 05-subagents and the MCP architecture part of 03-mcp were already taught in depth; only the server table, server discovery, the use cases, the two demos and one subagent section were not. References to the moving folders also sat outside readmes: `source:` lines in `pptx/*.md`, an SVG caption, `topics.json`, `.devcontainer/readme.md`, the root schedule row's topic and demo counts, and stale dashboard paths.
+
+**Rule:** Before moving a topic to cut redundancy, build that overlap table and move only the rows marked not found; present it with the plan and wait for approval. Sweep slide specs, SVGs, `topics.json`, the devcontainer readme and the root schedule row along with the readmes. Recorded in the global `create-class` leaf `restructure-execute.md` (Step 2 table, Step 5 coordinator list).
+
+## "Present your understanding" is not a request for questions
+
+**Pattern (2026-10-16):** Asked to present my understanding of the `02-harness` refactor before acting, I closed with three open decisions (where the moved content lands, whether to renumber 02-harness, whether to re-render the decks). The user's stated goal, cutting redundancy to save time with labs to follow, already settled all three: merge into each target module's intro topic, renumber, update the decks now.
+
+**Rule:** When the stated goal settles a choice, state the choice as part of the understanding and proceed once it is approved. Ask only about a choice the goal leaves genuinely open.
+
+## A delete an approved restructure implies is part of the task
+
+**Pattern (2026-10-16):** During the approved `02-harness` restructure I asked for confirmation before each delete of a merged-away readme or a duplicate slide. The user answered: "Don't ask for each delete, it is part of the task".
+
+**Rule:** Once a restructure plan is approved, the deletes it implies (readmes of dissolved topics, slides that now duplicate the target deck, emptied folders) run without a separate confirmation. The house rule against unasked deletes covers files outside the approved plan, not the plan's own consequences.
+
+## A Windows git mv can fail with Permission denied while nothing holds the folder
+
+**Pattern (2026-10-16):** `git mv` of a `02-harness` topic folder failed with `Permission denied`, yet Restart Manager reported 0 holders and every subfolder could be renamed on its own. The usual bin/obj recovery did not apply.
+
+**Rule:** Create the destination folder, `git mv` each child of the source into it one by one, then `rmdir` the emptied source. Recorded in the global `create-class` leaf `restructure-execute.md`, Step 4.
+
+
+## A finished deck change is local unless the skill says otherwise
+
+**Pattern (2026-10-16):** After the `02-harness` restructure I rebuilt only the local `module-NN.pptx` decks, then told the user the delivered Gamma decks needed a Gamma run and listed ten slides "to regenerate". The user answered "Most could be moved" and "Topic overviews and dividers were created using /create-pptx". Everything was done locally: cards moved with `gamma_deck.py insert`, duplicates dropped, the module-path diagram redrawn and swapped, `topics`, `notes`, `clean`, then `deliver` to OneDrive, no credits.
+
+**Rule:** In this repo the delivered decks are the Gamma `NN-<module>.pptx` in the OneDrive class folder, so a topic change updates them too. Before claiming a deck change costs Gamma credits, read the `create-pptx` leaf `finished-deck-edits.md`; overview and dividers always come from `gamma_deck.py topics`. Recorded there as "Move cards to another module's deck" and in `create-class` `restructure-execute.md` Step 5.
+
+## A picture meant to persuade is planned with marketing-psychology
+
+**Pattern (2026-10-16):** Planning a promotional photo mock (phone in hand at a tyre change, "life is easier when work gets done on your phone"), I wrote the plan from composition alone; the user added "Use /marketing-psychology" mid-plan.
+
+**Rule:** For any image whose job is to persuade (social post, promo mock), load `marketing-psychology` before presenting the plan and name the principle each element serves. Recorded in the global `image-producer` agent rules; the head-free crop method for editing a real person's photo is in the global `media-generation` skill.
+
+## A creative brief and its agreed plan are an acceptance checklist
+
+**Pattern (2026-10-16):** The photo mock brief said "put a phone in my hand while showing one of the screens at least partly", "life is easier when getting work done on your phone while waiting for your car tires" and "use 2-3 images". My approved plan named three images, but the ÖAMTC photo with the doors TOR 01 to 03 was used only as a style reference and never appeared; "getting work done" became a phone held out to the camera with an unreadable screen. Three corrections followed, then: "You never stick to the brief and agreement." My briefs to the image agent paraphrased the owner instead of quoting him.
+
+**Rule:** List every noun and verb of the brief and of the agreed plan as acceptance items; an input the plan uses appears in the result; the action named is the action shown; a delegate's brief quotes the owner verbatim; before delivering, tick each item and state any deviation. Recorded in the global `~/.claude/CLAUDE.md` (Requirements are literal), its leaf `literal-requirements.md`, and the rules of `image-producer`, `video-producer`, `content-writer` and `article-writer`.
+
+## No trainer or course framing unless asked
+
+**Pattern (2026-10-16):** Asked for a short off-to-the-weekend post about the tyre-change photo, I briefed a content agent with "trainer of the Claude Code masterclass" and wrote "moves my course slides". The owner: "get the trainer focus off. You are not allowed to use it unless requested", and dictated "While Claude creates and moves my decks".
+
+**Rule:** A post, caption or mock about the owner describes what the brief names, in the owner's words; his trainer role, the course or the class enter only when he asks for them. A short social post is written on the main thread with `humanizer`, no content agent, within the stated length and hashtag count.
+
+## Guide edits run through /create-class
+
+**Pattern (2026-10-17):** Aligning `labs/02-harness` to ready-made skills (skills.sh, anthropics/skills) and public MCP servers (github.com/mcp), I started rewriting the lab guides with an ad-hoc Python replace script; the owner: "use /create-class for edits".
+
+**Rule:** Any edit to a demo, presenter or lab guide starts by invoking `create-class`, running its first two commands (`ls .claude/agents/`, `ls <skill>/scripts/`), reading the `create-guide` leaf, and closing with its scripts (`fence-lang.py`, `link-rot.sh`) plus `brand-voice-code`.
+
+## A merge stays inside the merged module
+
+**Pattern (2026-10-17):** Merging `06-subagents` and `07-agent-teams` into `06-subagents-agent-teams`, I also renumbered every later module's decks, generator YAML and icons while a second session was restructuring 07 onward; my renames landed inside that session's folders. The owner: "work with the folder you are targeted with ... higher folders are not your business".
+
+**Rule:** A module merge edits only the merged module and the folders it absorbs. Before any step outside it, re-list `demos/` and stop if another session has changed the tree; folders above the target belong to whoever is working there.
+
+## A retired tool's CLAUDE.md line is deleted, not repointed
+
+**Pattern (2026-10-17):** Retiring `create-module-pptx`, I rewrote its `CLAUDE.md` deck line and skill pointer to name `/create-pptx` instead; the owner: "we dont need the pptx route in claude.md at all".
+
+**Rule:** When a tool or route is removed, delete the `CLAUDE.md` lines that described it. Never write its replacement into `CLAUDE.md` unless asked; a global skill that routes itself needs no pointer there.
+
+## Combining modules means shortening them
+
+**Pattern (2026-10-17):** Asked to combine `07-optimize` and `08-observability` and propose deletions and updates from the docs, I proposed 13 topics: every docs gap became a new topic (sandboxing, managed settings, `/insights`, split OpenTelemetry and debugging). The owner: "i want to shorten not make it longer .... max 8 topics".
+
+**Rule:** A merge proposal ends with fewer topics than the modules it combines. Docs findings correct or replace existing content; a new capability becomes a topic only when it replaces one being cut, and a stated topic count is a ceiling.
+
+## CLAUDE.md points at the harness, it never lists it
+
+**Pattern (2026-10-17):** `CLAUDE.md` carried agent routing tables and per-skill bullets (synced, project-specific, demo harness) plus a layout section; the owner: "skills and agents should point to local and global skills and agents and not explicitly list harness items".
+
+**Rule:** `CLAUDE.md` is a very short where-map, then one pointer each to the repo and global skill and agent roots, then the house rules that apply to this repo. Never write a skill or agent inventory into it; the description of each skill and agent does the routing.
+
+## An agent count in the request is a total
+
+**Pattern (2026-10-17):** Asked to "run demo guides using up to 10 haiku agents", "up to 4 agents" for decks and "up to 3 agents for labs", I built a workflow pool capped at 10 concurrent runners and handed out one agent per demo unit: 49 demo runners and 35 lab agents ran. The owner: "of course I meant 10 ... 10 means 10 not 50".
+
+**Rule:** "Up to N agents" caps the agents spawned for that part of the job in total. Batch the work units onto N agents (49 units on 10 agents is about 5 units each) and state the per-agent split in the plan before launching.
+
+## A status line never shows a started total against a cap
+
+**Pattern (2026-10-17):** A five-minute status tick reported `run: started 28, finished 18`, and the owner read 28 as a breach of the 10-agent limit.
+
+**Rule:** Report "N running now, M done of T" for a capped pool. A started count belongs only in a debug view. T comes from the work list in the script, never from memory: 49 units were reported as 50 for an hour.
+
+## A lab never depends on the presenter's personal skills
+
+**Pattern (2026-10-17):** A new lab told learners to type `/find-skills`, a skill that exists only in the owner's `~/.claude/skills/`. The Haiku run found no such command and searched local folders; the owner: "this is not acceptable - fix it".
+
+**Rule:** A learner-facing step uses only what the starter, the repo harness or a pinned public CLI provides. For skill discovery that is `npx -y skills@1.7.2 find <query>` and `npx -y skills@1.7.2 add <owner/repo@skill> -a claude-code -y --copy`, which writes `.claude/skills/<skill>/` plus `skills-lock.json` and leaves the home folder alone. Without `-a`, `-y` installs for every supported agent and adds `.agents/` and other folders. A proprietary catalog skill (Anthropic's `docx` licence forbids copies) is git-ignored in the solution; the lockfile records how to reinstall it.
+
+## A CLAUDE.md rule can pre-empt the mechanism a demo shows
+
+**Pattern (2026-10-17):** The permissions demo and lab starters carry a `CLAUDE.md` line that forbids reading the secrets file. Asked to `cat` it, Haiku refused before any tool call, `permission_denials` stayed empty and the deny rule under test never fired.
+
+**Rule:** When a demo proves a harness control, the prompt lifts the competing instruction for that one action ("Permission test: I lift the CLAUDE.md secrets rule for this command, so only a settings rule can stop it"). Verify with `permission_denials` in the `claude -p --output-format json` reply, on Haiku and Sonnet.
+
+## A hosted reference skill outcompetes the learner's skill
+
+**Pattern (2026-10-17):** The skill-from-conversation demo keeps the finished `data-aggregator` in the repo's `.claude/skills/` beside the learner's `my-data-aggregator`. The trigger test fired the reference skill, because its description lists the exact trigger phrase.
+
+**Rule:** A starter whose demo trigger-tests a new skill ships `.claude/settings.json` with `"skillOverrides": {"<reference-skill>": "user-invocable-only"}`. The reference leaves automatic triggering and `/<reference-skill>` still works when typed.
+
+## Headless verification runs inside a trusted folder
+
+**Pattern (2026-10-17):** A verification copy in the scratchpad printed "Ignoring 1 permissions.allow entry ... this workspace has not been trusted", so allow rules vanished and the run reported denials a learner never sees.
+
+**Rule:** Run `claude -p` verification copies inside the trusted repo (a `<starter>-run-tmp/` beside the starter, deleted afterwards). A scratch folder only fits steps that need no allow rule.
+
+## A runner brief checks whether a box is local
+
+**Pattern (2026-10-17):** The runner brief listed "SSH box" among remote systems, so Module 09's deploy steps went unrun, although that box is a local Docker container on port 2222.
+
+**Rule:** Before a brief marks a target remote, read the topic's setup: a `docker-compose.yml` or `127.0.0.1` target is local and runs in the verification pass.
+
+## Run copies never keep a nested git repository
+
+**Pattern (2026-10-17):** A lab-exec agent left `release-desk-run/` beside the reference solution with its own `.git`; the owner's next commit captured it as a gitlink with no `.gitmodules`.
+
+**Rule:** A run that needs its own repository builds it outside the course tree, or deletes the copy before it reports. After any fan-out, `git ls-files -s | grep ^160000` must print nothing.
+
+## A complaint about a guard asks for a narrower guard
+
+**Pattern (2026-10-17):** The owner wrote "Stop prompting for test permissions ... I fully grant"; I disabled the intent-guard plugin for the project. The owner: "I asked to update the intend guard that when these actions are related to the task then to permit them".
+
+**Rule:** Change the guard's rule the complaint describes (here a task-scoped grant for test runs, with tests) and keep the guard on. Switching a guard off removes protections nobody asked to drop.
+
+## A step with a documented fallback fails only after the fallback ran
+
+**Pattern (2026-10-17):** The guardrails runner reported Run 1 failed because Haiku used `find build -mindepth 1 -delete`, which no hook pattern matches. The demo readme already tells the presenter to paste `Run: rm -rf build/` in exactly that case, and the hook denies it.
+
+**Rule:** Before a runner marks a step failed, it runs the fallback the guide gives for that step and reports both outcomes.
+
+## A fan-out can edit files no unit owned
+
+**Pattern (2026-10-17):** In the team-catalog lab run, Haiku's Step 9 edit landed in the checked-in `release-desk-solution` marketplace file instead of the run copy, adding a `sha` the lab says the reference must not carry. The unit report did not mention it.
+
+**Rule:** After a fan-out, run `git status` on every path outside the units' own folders and revert or report each change there before calling the pass done.
+

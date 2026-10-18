@@ -43,16 +43,16 @@ fi
 echo "Installing Claude Code CLI..."
 npm install -g @anthropic-ai/claude-code
 
-echo "Installing uv (Python MCP servers in demos/04-mcp, demos/12-managed-agents, src)..."
+echo "Installing uv (Python MCP servers in demos/04-mcp, demos/10-sdk-managed-agents, src)..."
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-echo "Installing Hugo Extended (labs/11-agentic-devops)..."
+echo "Installing Hugo Extended (labs/09-agentic-devops)..."
 HUGO_VERSION=0.128.0
 curl -sSL -o /tmp/hugo.deb "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
 sudo dpkg -i /tmp/hugo.deb
 rm -f /tmp/hugo.deb
 
-echo "Installing Bicep CLI (demos/11-agentic-devops)..."
+echo "Installing Bicep CLI (demos/09-agentic-devops)..."
 az bicep install
 
 echo "Installing a browser for the Playwright and Chrome DevTools MCP servers..."

@@ -1,0 +1,6 @@
+bin/
+obj/
+*.user
+.vs/
+food.db-shm
+food.db-wal

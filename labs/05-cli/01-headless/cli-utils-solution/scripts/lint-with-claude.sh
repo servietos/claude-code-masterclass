@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-OUT=$(claude -p "Read src/slugify.ts and src/kebab-to-camel.ts. Look for: (1) unused exports, (2) missing JSDoc on exported functions, (3) any function over 30 lines. If you find ANY issue, end your response with the exact token: LINT_FAIL. If everything is clean, end with LINT_PASS." --output-format text)
+OUT=$(claude -p "Read src/slugify.ts and src/kebab-to-camel.ts. Look for: (1) unused exports, (2) missing JSDoc on exported functions, (3) any function over 30 lines. If you find ANY issue, end your response with the exact token: LINT_FAIL. If everything is clean, end with LINT_PASS." --tools "Read,Glob,Grep" --max-turns 10 --output-format text)
 
 echo "$OUT"
 

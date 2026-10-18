@@ -1,7 +1,7 @@
 ---
 name: review-security-agent
 description: >-
-  Security lens of the parallel review team in demos/07-agent-teams/02-parallel-review.
+  Security lens of the parallel review team in demos/06-subagents-agent-teams/06-parallel-review.
   Reviews controllers, configuration binding, appsettings and Program.cs for authentication,
   input validation, secret handling, and anything an anonymous caller can reach.
   Apply when the task is "review this API for security", "what can an anonymous caller reach",

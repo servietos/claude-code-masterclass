@@ -24,4 +24,4 @@ plus a "Data as of" line filled from the time of the call.
 
 **Result:** an approval naming the connector, a URL, a "Data as of" stamp that moves on refresh, and a Share control with no public link.
 
-**Gotcha:** hand the link to someone in the room and they see their own inbox, not yours.
+**Gotcha:** hand the link to someone in the room and they see the emails in their own inbox.

@@ -10,16 +10,16 @@ The table maps each runtime to the code in the repository that requires it, incl
 
 | Runtime or tool                  | Provided by                | Used by                                                                                                                                                                                                                                  |
 | -------------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| .NET 10 SDK                      | base image                 | `demos/01-fundamentals/04-model-selection/model-routing-api`, `demos/04-mcp/02-mcp/hr-mcp-server`, `demos/04-mcp/03-mcp-apps/qr-mcp-app-cs`, `demos/06-subagents/**/catalog-service-cs*`, `src/food-app/catalog-api/catalog-service-cs*` |
-| Node.js 22                       | `node` feature             | `demos/02-harness`, `demos/05-cli`, `demos/08-optimize`, `demos/13-claude-sdk`, `labs/04-mcp/03-mcp-app`, `labs/05-cli`, `labs/11-agentic-devops/react-devops`, `src/food-app/shop-ui`                                                   |
+| .NET 10 SDK                      | base image                 | `demos/01-fundamentals/04-model-selection/model-routing-api`, `demos/04-mcp/02-mcp/hr-mcp-server`, `demos/04-mcp/03-mcp-apps/qr-mcp-app-cs`, `demos/06-subagents-agent-teams/**/catalog-service-cs*`, `src/food-app/catalog-api/catalog-service-cs*` |
+| Node.js 22                       | `node` feature             | `demos/02-harness`, `demos/05-cli`, `demos/07-optimize-observability`, `demos/10-sdk-managed-agents`, `labs/04-mcp/03-mcp-app`, `labs/05-cli`, `labs/09-agentic-devops/react-devops`, `src/food-app/shop-ui`                                                   |
 | Angular 21 CLI                   | via project `package.json` | `labs/04-mcp/01-using/food-shop-ng`, `src/food-app/shop-ui/food-shop-ng`                                                                                                                                                                 |
-| Python 3.12                      | `python` feature           | `demos/02-harness/03-mcp/maf-migration`, `demos/14-planning/**/notes-cli`, `demos/12-managed-agents/**`, `labs/14-planning`, `src/qr-mcp-app-py`, `src/uuid-mcp-app-py-solution`                                                         |
+| Python 3.12                      | `python` feature           | `demos/04-mcp/01-intro/maf-migration`, `demos/11-planning/**/notes-cli`, `demos/10-sdk-managed-agents/**`, `labs/11-planning`, `src/qr-mcp-app-py`, `src/uuid-mcp-app-py-solution`                                                         |
 | uv                               | post-create                | Python MCP servers started with `uv run server.py`, see `labs/03-skills` and `labs/04-mcp`                                                                                                                                               |
 | Java 21 and Maven                | `java` feature             | `src/food-app/catalog-api/catalog-service-java`                                                                                                                                                                                          |
 | Docker (docker-in-docker)        | `docker-in-docker` feature | `demos/04-mcp/02-mcp/hr-mcp-server/Dockerfile`, `demos/04-mcp/03-mcp-apps/qr-mcp-app-cs/Dockerfile`                                                                                                                                      |
-| Azure CLI, azd, Bicep, Terraform | features plus post-create  | `demos/11-agentic-devops` (Azure deployment, IaC, Web Vitals)                                                                                                                                                                            |
-| GitHub CLI                       | `github-cli` feature       | `demos/05-cli`, `demos/11-agentic-devops`, PR and workflow demos                                                                                                                                                                         |
-| Hugo Extended 0.128.0            | post-create                | `labs/11-agentic-devops/publish-blog` (design reference only; the module's Hugo lab builds the site inside a Docker container)                                                                                                           |
+| Azure CLI, azd, Bicep, Terraform | features plus post-create  | `demos/09-agentic-devops` (Azure deployment, IaC, Web Vitals)                                                                                                                                                                            |
+| GitHub CLI                       | `github-cli` feature       | `demos/05-cli`, `demos/09-agentic-devops`, PR and workflow demos                                                                                                                                                                         |
+| Hugo Extended 0.128.0            | post-create                | `labs/09-agentic-devops/publish-blog` (design reference only; the module's Hugo lab builds the site inside a Docker container)                                                                                                           |
 | Chrome for MCP browsing          | post-create                | `chrome-devtools` and `playwright` MCP servers in `/.mcp.json`                                                                                                                                                                           |
 | PowerShell                       | `powershell` feature       | scripting demos and Windows-parity commands                                                                                                                                                                                              |
 | Claude Code CLI                  | post-create                | every module                                                                                                                                                                                                                             |
@@ -57,7 +57,7 @@ Runs once after the container is first created:
 
 ### Authentication and State
 
-`ANTHROPIC_API_KEY` is passed through from the host environment when set, which the `demos/13-claude-sdk` projects read. A named volume is mounted at `/home/vscode/.claude`, so a Claude Code login survives container rebuilds.
+`ANTHROPIC_API_KEY` is passed through from the host environment when set, which the `demos/10-sdk-managed-agents` projects read. A named volume is mounted at `/home/vscode/.claude`, so a Claude Code login survives container rebuilds.
 
 ### Forwarded Ports
 
@@ -158,7 +158,7 @@ Runnable project folders are starters and stay pristine, with no `node_modules`,
 ### Node and Angular projects
 
 ```bash
-cd demos/13-claude-sdk/02-api-surface/sdk-basics-solution
+cd demos/10-sdk-managed-agents/01-api-surface/sdk-basics-solution
 npm install
 npm start
 ```

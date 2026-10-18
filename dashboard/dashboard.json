@@ -173,8 +173,8 @@
     },
     {
       "num": "06",
-      "name": "Scale task execution with sub-agents",
-      "path": "demos/06-subagents",
+      "name": "Scale task execution with sub-agents and agent teams",
+      "path": "demos/06-subagents-agent-teams",
       "assignee": "alexander-kastil",
       "issueNumber": 672,
       "subItems": [
@@ -206,8 +206,8 @@
     },
     {
       "num": "07",
-      "name": "Coordinate a team of Claude Code sessions",
-      "path": "demos/07-agent-teams",
+      "name": "Optimize, Secure and Observe the Agentic Harness",
+      "path": "demos/07-optimize-observability",
       "assignee": "alexander-kastil",
       "issueNumber": 677,
       "subItems": [
@@ -239,8 +239,8 @@
     },
     {
       "num": "08",
-      "name": "Optimize the Agentic Harness for Cost and Continuous Learning",
-      "path": "demos/08-optimize",
+      "name": "Bundle and Distribute Your Config as a Plugin",
+      "path": "demos/08-distribution",
       "assignee": "alexander-kastil",
       "issueNumber": null,
       "theory": "done",
@@ -272,8 +272,8 @@
     },
     {
       "num": "09",
-      "name": "Security, Hardening & Observability",
-      "path": "demos/09-observability",
+      "name": "Agentic DevOps & Automation",
+      "path": "demos/09-agentic-devops",
       "assignee": "alexander-kastil",
       "issueNumber": 682,
       "subItems": [
@@ -305,8 +305,8 @@
     },
     {
       "num": "10",
-      "name": "Bundle and Distribute Your Config as a Plugin",
-      "path": "demos/10-distribution",
+      "name": "Build and host agents with the Agent SDK and Managed Agents",
+      "path": "demos/10-sdk-managed-agents",
       "assignee": "alexander-kastil",
       "issueNumber": 692,
       "subItems": [
@@ -338,41 +338,8 @@
     },
     {
       "num": "11",
-      "name": "Agentic DevOps & Automation",
-      "path": "demos/11-agentic-devops",
-      "assignee": "alexander-kastil",
-      "issueNumber": 702,
-      "subItems": [
-        {
-          "key": "theory",
-          "label": "Theory",
-          "issueNumber": 703
-        },
-        {
-          "key": "demos",
-          "label": "Code Demos",
-          "issueNumber": 704
-        },
-        {
-          "key": "labs",
-          "label": "Labs",
-          "issueNumber": 705
-        },
-        {
-          "key": "slides",
-          "label": "Slides",
-          "issueNumber": 706
-        }
-      ],
-      "theory": "done",
-      "demos": "done",
-      "labs": "done",
-      "slides": "planned"
-    },
-    {
-      "num": "12",
-      "name": "Deploy autonomous action using Managed Agents",
-      "path": "demos/12-managed-agents",
+      "name": "Plan and decompose for maximum agentic effectiveness (Optional)",
+      "path": "demos/11-planning",
       "assignee": "alexander-kastil",
       "issueNumber": 707,
       "subItems": [
@@ -430,10 +397,10 @@
           "issueNumber": 691
         }
       ],
-      "theory": "done",
-      "demos": "done",
-      "labs": "done",
-      "slides": "done"
+      "theory": "planned",
+      "demos": "planned",
+      "labs": "planned",
+      "slides": "planned"
     },
     {
       "num": "14",
@@ -463,10 +430,10 @@
           "issueNumber": 701
         }
       ],
-      "theory": "done",
-      "demos": "done",
-      "labs": "done",
-      "slides": "done"
+      "theory": "planned",
+      "demos": "planned",
+      "labs": "planned",
+      "slides": "planned"
     }
   ]
 }

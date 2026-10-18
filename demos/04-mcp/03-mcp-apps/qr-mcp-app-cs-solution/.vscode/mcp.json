@@ -3,7 +3,7 @@
     "qr-code-cs": {
       "type": "stdio",
       "command": "dotnet",
-      "args": ["run", "--project", "${workspaceFolder}/demos/04-mcp/03-mcp-apps/qr-mcp-app-cs-solution", "--", "--stdio"]
+      "args": ["run", "--project", "${workspaceFolder}/demos/04-mcp/03-mcp-apps/qr-mcp-app-cs", "--", "--stdio"]
     }
   }
 }

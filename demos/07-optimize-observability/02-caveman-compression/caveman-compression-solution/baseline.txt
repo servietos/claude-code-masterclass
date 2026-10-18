@@ -1,0 +1,4 @@
+File:   CLAUDE.verbose.md
+Tokens: 1726
+File:   CLAUDE.caveman.md
+Tokens: 766

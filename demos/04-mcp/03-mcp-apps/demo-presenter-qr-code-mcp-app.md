@@ -1,18 +1,18 @@
 ---
 presents: demo-qr-code-mcp-app.md
-budget: 5 min
-beats: 5
+budget: 4 min
+beats: 4
 ---
 
 # Present: Serve QR Codes from a C# MCP Server
 
-A tool that returns a picture is not an MCP App: the difference is one content block type plus a `ui://` resource this C# server never declares. Five beats: the image return type, the three keys the host receives, one assembly on two transports, arguments clamped rather than rejected, the proof that the view resource is absent.
+A tool that returns a picture is not an MCP App: the difference is one content block type plus a `ui://` resource this C# server never declares. Four beats: the image return type, the three keys the host receives, one assembly on two transports, arguments clamped, never rejected.
 
 ------
 
 ## Beats
 
-### Beat 1: returning an image is a return type, not a protocol feature (1 min)
+### Beat 1: returning an image is only a return type (1 min)
 
 **Open:** [`qr-mcp-app-cs/Tools/QrTools.cs`](qr-mcp-app-cs/Tools/QrTools.cs) · [`../02-mcp/hr-mcp-server/Tools/HRTools.cs`](../02-mcp/hr-mcp-server/Tools/HRTools.cs) · the string-returning tools this is compared against
 **Say:** The natural assumption is that a server whose output a person looks at is a different category of thing. It is the same server: registration, discovery and transport are untouched.
@@ -43,11 +43,11 @@ A tool that returns a picture is not an MCP App: the difference is one content b
 
 ### Beat 2: what the host receives is three keys (1 min)
 
-**Open:** [`qr-mcp-app-cs/Tools/QrTools.cs`](qr-mcp-app-cs/Tools/QrTools.cs) · the `ImageContentBlock` these keys serialize from · [Step 5: Generate a QR code and read the content block](demo-qr-code-mcp-app.md#step-5-generate-a-qr-code-and-read-the-content-block)
-**Say:** The protocol has no concept of pictures, only of typed content blocks, and the type is what tells a host to render rather than to read. Rich output is agreed in a single field.
+**Open:** [`qr-mcp-app-cs/Tools/QrTools.cs`](qr-mcp-app-cs/Tools/QrTools.cs) · the `ImageContentBlock` these keys serialize from · [Step 3: Generate a QR code and read the content block](demo-qr-code-mcp-app.md#step-3-generate-a-qr-code-and-read-the-content-block)
+**Say:** The protocol has no concept of pictures, only of typed content blocks, and the type is what tells a host to render the block as a picture. Rich output is agreed in a single field.
 
 ```bash
-npx @modelcontextprotocol/inspector --config inspector.config.json --cli --method tools/call --tool-name generate_qr --tool-arg text=https://modelcontextprotocol.io
+npx @modelcontextprotocol/inspector --cli --config inspector.config.json --method tools/call --tool-name generate_qr --tool-arg text=https://modelcontextprotocol.io
 ```
 
 **Result:** no file written; `data` opens with `iVBORw0KGgo`, the base64 PNG magic number, so the block is a real image before anything decodes it
@@ -69,7 +69,7 @@ npx @modelcontextprotocol/inspector --config inspector.config.json --cli --metho
 ### Beat 3: one assembly, two transports, one flag, and stdout stays sacred (1 min)
 
 **Open:** [`qr-mcp-app-cs/Program.cs`](qr-mcp-app-cs/Program.cs) · the `--stdio` branch · [`qr-mcp-app-cs/.vscode/mcp.json`](qr-mcp-app-cs/.vscode/mcp.json)
-**Say:** Transport is a hosting decision, not a rewrite. The catch with stdio is that the process's own stdout becomes the wire, so anything printed for a human corrupts the protocol.
+**Say:** Transport is a hosting decision, and the tools stay the same. The catch with stdio is that the process's own stdout becomes the wire, so anything printed for a human corrupts the protocol.
 
 ```csharp
 	hostBuilder.Logging.AddConsole(options =>
@@ -91,7 +91,7 @@ info: Microsoft.Hosting.Lifetime[0]
       Application started. Press Ctrl+C to shut down.
 ```
 
-**Gotcha:** below `if (args.Contains("--stdio"))` the only difference is `WithStdioServerTransport()` where the HTTP branch has `WithHttpTransport()`.
+**Gotcha:** below `if (args.Contains("--stdio"))` the MCP registration differs in one call only: `WithStdioServerTransport()` where the HTTP branch has `WithHttpTransport()`.
 
 ### Beat 4: arguments are clamped, never rejected (1 min)
 
@@ -111,33 +111,14 @@ info: Microsoft.Hosting.Lifetime[0]
         };
 ```
 
-**Result:** no file written; the defaults give 29 modules at 5 pixels plus a 4 module quiet zone, so 185 by 185, while `error_correction=H` with `box_size=10` and `border=2` gives 33 modules at 370 by 370.
+**Result:** no file written; the defaults give 29 modules at 5 pixels plus a 4 module quiet zone, so 185 by 185.
 
 **Gotcha:** the model is never told that its `box_size` was clamped or its `error_correction` letter unrecognised.
-
-### Beat 5: a tool-only server is not an MCP App, and you prove the absence (1 min)
-
-**Open:** [`src/qr-mcp-app-py/server.py`](../../../src/qr-mcp-app-py/server.py) · the paired decorators that add the missing half · [Step 7: Check what this server does not expose](demo-qr-code-mcp-app.md#step-7-check-what-this-server-does-not-expose)
-**Say:** An App needs a view the host can fetch and a tool that points at it, and either half alone is still just a tool. A capability never declared at handshake is genuinely missing, so the absence can be proved rather than asserted.
-
-```bash
-npx @modelcontextprotocol/inspector --config inspector.config.json --cli --method resources/list
-```
-
-**Result:** no file written; the string `ui://` appears nowhere under [`qr-mcp-app-cs/`](qr-mcp-app-cs/), and the server rejects a method it never declared
-
-```text
-Failed to list resources: MCP error -32601: Method 'resources/list' is not available.
-```
-
-**Gotcha:** the `-32601` is not a bug: this demo ships the image half of an App and nothing more.
 
 ## If the room asks
 
 | Question | Answer |
 |---|---|
-| What would make it a real App? | The Python sibling pairs `@mcp.tool(meta={"ui/resourceUri": VIEW_URI})` with `@mcp.resource(VIEW_URI)` where `VIEW_URI` is `ui://qr-server/view.html`. |
-| What does the run change on disk? | Only paths pointing at themselves: `.vscode/mcp.json` and `readme.md` differ between starter and solution, and `types.txt` exists in the starter alone. |
 | The inspector printed the right JSON and then crashed. | Known libuv teardown bug in the inspector CLI on Windows (`UV_HANDLE_CLOSING`, exit code `3221226505`); read the JSON printed above the assertion. |
 | Port 3002 is already taken. | `PORT=3010 dotnet run`, or `$env:PORT=3010; dotnet run` in PowerShell; update the client URL to match. |
 | Is it registered for Claude Code in this repo? | Yes, HTTP mode is in the project-level [.mcp.json](../../../.mcp.json) as `qr-code` on `http://localhost:3002`. |

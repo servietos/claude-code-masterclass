@@ -1,6 +1,6 @@
 # Gate tools with PreToolUse hooks and review pull requests in CI
 
-Build a PreToolUse hook that gates dangerous commands, wire Claude into a GitHub Actions workflow that comments on pull requests, then run the same task through OpenAI Codex CLI and Aider so you have a felt sense of the agent-CLI landscape, not just Claude Code.
+Build a PreToolUse hook that gates dangerous commands, wire Claude into a GitHub Actions workflow that comments on pull requests, then run the same task through OpenAI Codex CLI and Aider so you have a felt sense of the agent-CLI landscape beyond Claude Code.
 
 Each step contains:
 - **Goal**: what you are building
@@ -10,17 +10,17 @@ Each step contains:
 > **Prerequisites**
 > - Complete Lab 01 (you should have a working `cli-utils/` project).
 > - `jq` on your PATH. Both hook scripts parse their stdin with it (`winget install jqlang.jq` on Windows, `brew install jq` on macOS, `apt install jq` on Linux).
-> - **Shell:** every command block in this lab is bash. On Windows run them in **Git Bash**, not PowerShell. Where a PowerShell equivalent matters, it is given inline.
+> - **Shell:** every command block in this lab is bash. On Windows run them in **Git Bash**. Where a PowerShell equivalent matters, it is given inline.
 > - Steps 3, 4 and 7 need a **GitHub account** and the `gh` CLI authenticated (`gh auth status`) against a user that can create public repos. Without one, read those steps and skip the pushes.
 > - Steps 3 and 4 need an **Anthropic API key** stored as a repo secret. Steps 5 and 6 need an **OpenAI (or other model provider) key** of your own. These are billed to you.
 
-> **Completed reference:** the finished hook scripts, settings and workflow files live in [02-cicd/hooks-solution/](02-cicd/hooks-solution/), together with `test-hooks.sh`, a stdin harness that feeds both hooks real PreToolUse payloads. Build your own first, compare afterwards.
+> **Completed reference:** the finished hook scripts, settings and workflow files live in [02-cicd/hooks-solution/](02-cicd/hooks-solution), together with `test-hooks.sh`, a stdin harness that feeds both hooks real PreToolUse payloads. Build your own first, compare afterwards.
 
 ---
 
 ## Where to Open Claude Code
 
-This lab builds its own harness, so open Claude Code inside the lab project rather than at the repo root. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
+This lab builds its own harness, so open Claude Code inside the lab project. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
 
 The project lives outside this course checkout, for the reason Lab 01's Setup gives, so it is not a folder you will find in this repo. Lab 01 created it; start the session inside it. Both commands work unchanged in PowerShell.
 
@@ -143,8 +143,8 @@ chmod +x .claude/hooks/policy-gate.sh .claude/hooks/scope-gate.sh
 Three details in `scope-gate.sh` are load-bearing, and each one is a bug the first draft of this lab shipped:
 
 - `TARGET=${TARGET//\\//}` rewrites backslashes to forward slashes. Claude passes the Write tool an **absolute** path, and on Windows that path looks like `C:\repo\cli-utils\src\slugify.ts`. Without this line no pattern matches, control falls to the deny branch, and the gate blocks every legitimate write while looking like it works.
-- The allow patterns start with `*`, not `*/`, so both `/repo/src/a.ts` and a bare relative `src/a.ts` match.
-- The empty case is tested first so a payload with no path is allowed through rather than denied.
+- The allow patterns start with a bare `*` and no slash after it, so both `/repo/src/a.ts` and a bare relative `src/a.ts` match.
+- The empty case is tested first so a payload with no path is allowed through before the deny branch sees it.
 
 A policy gate that silently fails open (or, as here, fails closed on every write) is worse than no gate at all. Test it before you trust it.
 
@@ -196,7 +196,7 @@ Add a JSDoc comment to the slugify function in src/slugify.ts.
 
 This succeeds. The scope-gate receives the **absolute** path Claude resolved (`/repo/cli-utils/src/slugify.ts`, or `C:\repo\cli-utils\src\slugify.ts` on Windows), the separator normalization turns the Windows form into `C:/repo/cli-utils/src/slugify.ts`, `*src/*` matches, and the hook exits 0.
 
-To exercise the gate without burning tokens, feed it a PreToolUse payload directly. Build the JSON with `jq -n` rather than `echo`, so the backslashes in a Windows path survive intact:
+To exercise the gate without burning tokens, feed it a PreToolUse payload directly. Build the JSON with `jq -n` so the backslashes in a Windows path survive intact:
 
 ```bash
 jq -n '{tool_name:"Write",tool_input:{file_path:"C:\\repo\\src\\a.ts",content:"x"}}' | ./.claude/hooks/scope-gate.sh; echo "exit=$?"
@@ -252,7 +252,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          claude -p --max-turns 3 --allowed-tools "Read,Bash(git:*)" "Review the diff at /tmp/pr.diff. Focus on: type safety, missing tests, unsafe error handling. Output a brief markdown review with 'Issues' and 'Suggestions' sections. End with a one-line verdict: APPROVE, REQUEST_CHANGES, or COMMENT." > /tmp/review.md
+          claude -p "Review the diff at /tmp/pr.diff. Focus on: type safety, missing tests, unsafe error handling. Output a brief markdown review with 'Issues' and 'Suggestions' sections. End with a one-line verdict: APPROVE, REQUEST_CHANGES, or COMMENT." --max-turns 3 --allowed-tools "Read,Bash(git:*)" > /tmp/review.md
 
       - name: Post review comment
         if: steps.diff.outputs.diff_size != '0'
@@ -262,7 +262,7 @@ jobs:
 YML
 ```
 
-`gh` is preinstalled on `ubuntu-latest` runners, but it only authenticates when `GH_TOKEN` is present, which is why the comment step sets it. `pull-requests: write` is exactly the scope `gh pr comment` needs.
+`gh` is preinstalled on `ubuntu-latest` runners, but it only authenticates when `GH_TOKEN` is present, which is why the comment step sets it. `pull-requests: write` is exactly the scope `gh pr comment` needs. The review prompt sits before the variadic `--allowed-tools`, per the Lab 01 Step 1 rule.
 
 Add the `ANTHROPIC_API_KEY` secret (this needs a GitHub account and a key you pay for):
 
@@ -391,7 +391,7 @@ aider --no-auto-commits --message "Review the changes in this branch versus main
 cat /tmp/review-aider.md
 ```
 
-**Expected result:** Aider's review, billed to whichever provider key it picked up. Aider is unusual in that it loads the whole repo's diff versus the default branch rather than a flat diff file, so its review tends to be more contextual but slower.
+**Expected result:** Aider's review, billed to whichever provider key it picked up. Aider is unusual in that it computes the whole repo's diff versus the default branch itself, so its review tends to be more contextual but slower.
 
 ---
 
@@ -423,7 +423,7 @@ Produce comparison.md at the repo root with this table:
 Then write a "When I'd reach for each" section with one sentence per agent.
 ```
 
-**Expected result:** A `comparison.md` filled in with concrete observations from the three runs. The pattern that usually emerges: Claude Code is strongest at structured prompts with tools, Codex is faster and more terse, and Aider shines when you actually want it to make the changes interactively rather than act as a one-shot CI reviewer.
+**Expected result:** A `comparison.md` filled in with concrete observations from the three runs. The pattern that usually emerges: Claude Code is strongest at structured prompts with tools, Codex is faster and more terse, and Aider shines when you actually want it to make the changes interactively, and fits the one-shot CI reviewer role less well.
 
 ---
 
@@ -433,11 +433,11 @@ Then write a "When I'd reach for each" section with one sentence per agent.
 |---|---|---|
 | `PreToolUse` hook for Bash | 1, 2 | Block destructive commands before they run |
 | `PreToolUse` hook for Write/Edit | 1, 2 | Scope writes to allowed directories |
-| Path normalization in a hook | 1, 2 | A gate that holds on Windows instead of denying everything |
+| Path normalization in a hook | 1, 2 | A gate that holds on Windows and still lets legitimate writes through |
 | GitHub Actions running `claude -p` | 3 | First-pass review on every PR |
 | `--max-turns` and `--allowed-tools` | 3 | Cost cap and no permission prompts in CI |
 | Headless agent-CLI comparison | 5, 6, 7 | Honest read on when Claude is or is not the right tool |
 
-`--allowed-tools` pre-approves tools so CI never blocks on a prompt; it does not restrict which tools exist. The flags that actually restrict are `--tools` (limits the available set) and `--permission-mode dontAsk` (denies anything not pre-approved instead of asking). Reach for those when the runner is untrusted.
+`--allowed-tools` pre-approves tools so CI never blocks on a prompt; it does not restrict which tools exist. The flags that actually restrict are `--tools` (limits the available set) and `--permission-mode dontAsk` (denies anything not pre-approved, with no prompt). Reach for those when the runner is untrusted.
 
 [Lab 03](lab-03-always-on-and-fleet.md) takes the agentic-CLI mechanics further into always-on territory: persistent sessions, OS schedulers, Ralph Wiggum loops, scheduled GitHub Actions, and a parallel-worktree fleet.

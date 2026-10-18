@@ -8,9 +8,7 @@ Every script ships in a Bash and a PowerShell form. The two are behaviourally eq
 |---|---|
 | `.claude/settings.json` | The `PreToolUse` hook registration that runs the gate on every Bash call |
 | `.claude/hooks/policy-gate.sh` | The gate itself: exit 2 on `rm -rf`, exit 0 otherwise |
-| `.claude/hooks/policy-gate.ps1` | The same gate in PowerShell, parsing stdin with `ConvertFrom-Json` instead of `jq` |
-| `verify-policy-gate.sh` | Feeds the gate both payloads without spending a Claude turn |
-| `verify-policy-gate.ps1` | The same two payloads fed to the PowerShell gate |
+| `.claude/hooks/policy-gate.ps1` | The same gate in PowerShell, parsing stdin with `ConvertFrom-Json`, where the Bash gate uses `jq` |
 | `worktree-parallel.sh` | The fixed two-agent script the policy-gate demo runs and the orchestrator generalizes |
 | `worktree-parallel.ps1` | The same two-agent script using `Start-Job` and `Receive-Job -Wait` |
 | `scripts/worktree-run.sh` | The generalized orchestrator: one worktree per line of `tasks.txt`, per-agent exit codes, merge or abort |
@@ -22,7 +20,6 @@ Every script ships in a Bash and a PowerShell form. The two are behaviourally eq
 ```bash
 cd demos/05-cli/04-parallel-hooks/parallel-worktrees-solution
 npm install
-bash verify-policy-gate.sh
 ./scripts/worktree-run.sh tasks.txt
 ```
 
@@ -31,7 +28,6 @@ PowerShell:
 ```powershell
 cd demos/05-cli/04-parallel-hooks/parallel-worktrees-solution
 npm install
-./verify-policy-gate.ps1
 ./scripts/worktree-run.ps1 tasks.txt
 ```
 

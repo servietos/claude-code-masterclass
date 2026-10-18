@@ -1,0 +1,6 @@
+id,customer,amount,status
+1001,Acme,1200.00,open
+1002,Acme,300.50,paid
+1003,Borealis,87.25,open
+1004,Citrine,640.00,open
+1005,Borealis,410.00,open

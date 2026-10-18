@@ -1,0 +1,11 @@
+ticket,date,product,channel,rating,comment
+AMER-201,2026-10-05,Login,email,1,SSO login loops back to the sign-in page after the Okta redirect
+AMER-202,2026-10-05,Login,chat,1,Half our team cannot sign in through SSO since Monday
+AMER-203,2026-10-06,Reports,email,2,Usage dashboard is very slow for accounts with more than 50 users
+AMER-204,2026-10-06,Login,phone,2,SSO session expires every hour even with remember me checked
+AMER-205,2026-10-07,Mobile app,app store,3,Push notifications arrive an hour late on Android
+AMER-206,2026-10-07,Login,email,1,After the SSO redirect we land on a blank page in Safari
+AMER-207,2026-10-08,Support,chat,5,Quick and friendly answer about seat pricing
+AMER-208,2026-10-08,Reports,email,2,Dashboard export to CSV drops the last column
+AMER-209,2026-10-09,Login,chat,2,SSO works in Chrome but loops in Edge
+AMER-210,2026-10-10,Billing,email,3,Would like invoices in Spanish

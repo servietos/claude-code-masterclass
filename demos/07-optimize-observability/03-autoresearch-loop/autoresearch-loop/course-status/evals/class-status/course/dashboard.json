@@ -1,0 +1,472 @@
+{
+  "project": {
+    "title": "Agentic Software Engineering with Claude Code",
+    "repo": "alexander-kastil/masterclass-claude-code",
+    "projectUrl": "https://github.com/users/alexander-kastil/projects/24",
+    "pagesUrl": "https://alexander-kastil.github.io/masterclass-claude-code/"
+  },
+  "modules": [
+    {
+      "num": "01",
+      "name": "Claude Code Fundamentals",
+      "path": "demos/01-fundamentals",
+      "assignee": "alexander-kastil",
+      "issueNumber": 647,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 648
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 649
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 650
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 651
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "02",
+      "name": "Claude Code Configure Harness",
+      "path": "demos/02-harness",
+      "assignee": "alexander-kastil",
+      "issueNumber": 652,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 653
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 654
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 655
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 656
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "03",
+      "name": "Creating & Managing Skills",
+      "path": "demos/03-skills",
+      "assignee": "alexander-kastil",
+      "issueNumber": 657,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 658
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 659
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 660
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 661
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "04",
+      "name": "Consuming & Designing MCP Tools",
+      "path": "demos/04-mcp",
+      "assignee": "alexander-kastil",
+      "issueNumber": 713,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 714
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 715
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 716
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 717
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "05",
+      "name": "Automate Claude Code from the Command Line",
+      "path": "demos/05-cli",
+      "assignee": "alexander-kastil",
+      "issueNumber": 667,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 668
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 669
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 670
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 671
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "06",
+      "name": "Scale task execution with sub-agents",
+      "path": "demos/06-subagents",
+      "assignee": "alexander-kastil",
+      "issueNumber": 672,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 673
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 674
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 675
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 676
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "07",
+      "name": "Coordinate a team of Claude Code sessions",
+      "path": "demos/07-agent-teams",
+      "assignee": "alexander-kastil",
+      "issueNumber": 677,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 678
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 679
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 680
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 681
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "08",
+      "name": "Optimize the Agentic Harness for Cost and Continuous Learning",
+      "path": "demos/08-optimize",
+      "assignee": "alexander-kastil",
+      "issueNumber": null,
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done",
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": null
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": null
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": null
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": null
+        }
+      ]
+    },
+    {
+      "num": "09",
+      "name": "Security, Hardening & Observability",
+      "path": "demos/09-observability",
+      "assignee": "alexander-kastil",
+      "issueNumber": 682,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 683
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 684
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 685
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 686
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "10",
+      "name": "Bundle and Distribute Your Config as a Plugin",
+      "path": "demos/10-distribution",
+      "assignee": "alexander-kastil",
+      "issueNumber": 692,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 693
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 694
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 695
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 696
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "11",
+      "name": "Agentic DevOps & Automation",
+      "path": "demos/11-agentic-devops",
+      "assignee": "alexander-kastil",
+      "issueNumber": 702,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 703
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 704
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 705
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 706
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "planned"
+    },
+    {
+      "num": "12",
+      "name": "Deploy autonomous action using Managed Agents",
+      "path": "demos/12-managed-agents",
+      "assignee": "alexander-kastil",
+      "issueNumber": 707,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 708
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 709
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 710
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 711
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "13",
+      "name": "Build multi-agent pipelines using the Agent SDK",
+      "path": "demos/13-claude-sdk",
+      "assignee": "alexander-kastil",
+      "issueNumber": 687,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 688
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 689
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 690
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 691
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "14",
+      "name": "Plan and decompose for maximum agentic effectiveness (Optional)",
+      "path": "demos/14-planning",
+      "assignee": "alexander-kastil",
+      "issueNumber": 697,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 698
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 699
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 700
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 701
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "acme",
+  "owner": { "name": "Acme Corp" },
+  "metadata": { "description": "Internal plugin catalog for Acme Corp engineering teams." },
+  "plugins": [
+    {
+      "name": "notes-toolkit",
+      "version": "0.1.0",
+      "description": "Extract, prioritise, and report on TODO/FIXME/NOTE comments.",
+      "source": {
+        "source": "github",
+        "repo": "acme-corp/notes-toolkit",
+        "ref": "notes-toolkit--v0.1.0"
+      }
+    }
+  ]
+}

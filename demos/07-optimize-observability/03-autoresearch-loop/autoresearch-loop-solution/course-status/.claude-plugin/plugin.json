@@ -1,0 +1,5 @@
+{
+  "name": "course-status",
+  "version": "1.0.0",
+  "description": "Report module completeness for this class from the evaluator's output"
+}

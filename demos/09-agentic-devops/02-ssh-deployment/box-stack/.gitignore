@@ -1,0 +1,7 @@
+target-box/keys/*
+!target-box/keys/.gitkeep
+*.env
+env/
+.claude/
+deploy-manifest.json
+agent-compose.yml

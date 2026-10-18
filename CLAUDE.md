@@ -1,90 +1,55 @@
 # CLAUDE.md
 
-Masterclass repo: **Agentic Software Engineering with Claude Code**. 14 sequential modules, mostly teaching markdown, a few runnable projects.
+Masterclass repo **Agentic Software Engineering with Claude Code**: 12 modules, numbered in learning order.
 
-## Layout
+```text
+demos/NN-<module>/   module readme, pptx/, numbered topic folders (theory readme, demo and presenter guides, pristine starter beside its <starter>-solution/)
+labs/NN-<module>/    lab guides and their starters
+src/                 standalone runnable projects the modules reference
+exam-prep/           CCA-F practice question bank
+dashboard/           module progress dashboard
+tasks/               lessons.md, todo.md
+```
 
-- `demos/01-` … `demos/14-` = modules. Number = learning order. Never reorder.
-- Module root: `readme.md` (indexes its demos in a `| Topic | Description |` table), numbered topic folders, `lab-NN-<slug>.md` guides, `pptx/`.
-- Topic folder owns: `readme.md` (theory), `demo-<slug>.md`, `demo-presenter-<slug>.md`, its runnable starter.
-- Starter stays pristine: no deps, no lockfile, no build output. Finished copy beside it as `<starter>-solution/`. Install and run in the solution only.
-- Topics in one module own disjoint material. New topic: re-read siblings, delete what moved.
-- Deck: `pptx/module-NN.yaml` + `module-NN.pptx`, rendered by the generator in `.claude/skills/create-module-pptx/build/`.
-- A demo's finished skill lives at `.claude/skills/<name>/`, never in a demo or solution folder. Anchor paths with `${CLAUDE_PROJECT_DIR}`.
-- `src/` = standalone runnable projects referenced by modules.
+## Harness
 
-## Rules
+- **YOU MUST search both skill roots and follow the matching skill before any action**, investigation included: `.claude/skills/` (repo, including each demo's finished skill) and `~/.claude/skills/` (global).
+- **YOU MUST delegate domain work to the owning agent**, investigation included: `.claude/agents/` (repo) and `~/.claude/agents/` (global).
 
-- Never commit or push unless told in that message. Never delete files unless asked. Never handle or propose git issues unless asked.
-- No unrequested content: no extra table, section, framing paragraph, takeaway. A rewrite is re-derived from the request, never from the previous draft.
-- No em dashes. Relative internal links, `#anchors`. Every code fence declares a language.
-- Quality check fails: fix the cause. Never `--no-verify`.
-- Code carries no comments. Exception: `.sh`, `.ps1` and hooks under `demos/` get one short comment above each line a reader cannot decode (regex, exit codes, shell machinery, derived values, outcome-changing flags). Guide quotes match the file byte for byte.
-- No error handling in scripts unless asked.
-- Plan mode for 3+ steps or architectural work. Going sideways: stop and re-plan.
-- Verify before done: run it, show the evidence. Minimal diff, simplest change that works.
-- Checker is suspect, not witness. Open the file at the reported line. Confirm the defect is real before reporting. Never report an unreproduced finding. Never report a no-effect finding: fix it silently or drop it. A false positive means the checker measured the wrong thing: a link inside a code fence belongs to the quoted file, a CRLF-normalizing harness tests a phantom file.
-- Never re-read files just written, never echo large blocks, batch edits.
-- After a user correction: record the pattern in `tasks/lessons.md`.
+## Hard Rules
 
-## Skills own the detail
+- **YOU MUST NOT** commit or push without an explicit, in-the-moment user request. Never offer to. Git is none of your business unless asked.
+- **YOU MUST NOT delete files** unless explicitly asked. "Clear" means edit content, not remove.
+- **YOU MUST NOT write documentation unless explicitly asked.** No README, no doc under `docs/`, no
+  guide, no doc section appended to a code change. Finishing a feature does not earn a doc. A plan, an issue or a Done when step that asks for a doc does not count as asking: skip that step and say so in the report.
+- **YOU MUST NOT overstep the task.** Scope is exactly the folders, files and artifacts the user's message names. A sibling tree (labs beside demos, a neighbouring module, a related doc, a slide deck) stays unread, uncompared and unchanged until the user names it, and every delegate brief carries the same scope. When adjacent work looks useful, offer it in one clause and stop.
+- **Browser inspection** - always `chrome-devtools` MCP. Never Playwright for UI checks. If the
+  MCP fails, fix it; do not fall back.
+- Write clean code with no noise: no inline comments, no placeholder notes, no error handling in
+  scripts unless asked. Exception: `.sh`, `.ps1` and hooks under `demos/` get one short comment above each line a reader cannot decode.
+- No experimental or test files in the repo root.
+- **YOU MUST NOT run Vitest or Playwright E2E unless the user explicitly asks in that message.**
+  Authoring, editing and type-checking specs is always allowed; executing them is not. This covers
+  `ng test`, `npm test`, `npx vitest`, `npx playwright test` and every wrapper around them, in the
+  main thread and in every subagent. When a change needs test execution to be verified, say so and
+  wait. Never run a suite to "just confirm" at the end of a task.
+- Internal links are relative; anchors are `#heading-name`; every code fence declares a language.
+- If a quality check fails, fix the cause. Never bypass with `--no-verify`.
+- No em dashes in generated prose: use a colon, comma, semicolon, or parentheses.
+- **Never write negative parallelism.** `X, nicht Y`, `nicht nur X sondern auch Y`, `X statt Y`,
+  `not from`, `rather than`, `instead of`, `not just X but Y`. It reads as a fixed-it-for-you
+  boast and is the most recognisable AI tell in this house's copy. State what is true and stop.
+  Grep the finished text for it before saving.
 
-- **Authoring gate.** Before writing or editing any demo, presenter or lab guide, read `~/.claude/skills/create-class/references/create-guide.md`. It owns Setup rules, self-contained starters, shell-parity twins, intro separator, and the `diff` of starter against solution.
-- **brand-voice-code** after any `demos/` readme edit. Rules in `.claude/skills/brand-voice-code/references/rules.md`.
-- **mermaid-expert** before writing, editing or reviewing any Mermaid block. Verify by rendering, not by regex.
-- **create-module-pptx** for decks. **class-dashboard** for module status.
-- Browser work: `mcp__chrome-devtools__*` only. Playwright only when devtools is unavailable.
+## Working Method
 
-## Harness and delegation
-
-Route domain work to the owning expert. Default, not fallback. Parallelize independent subtasks in one message. Subagents keep the main context clean.
-
-| Task                                          | Agent                 |
-| --------------------------------------------- | --------------------- |
-| Angular components / services / state         | `angular-expert`      |
-| .NET API / EF Core / migrations               | `dotnet-expert`       |
-| SSH deploy to Ubuntu, GitHub Actions          | `github-devops-agent` |
-| QA, screenshots, Lighthouse (only on request) | `playwright-expert`   |
-
-Parallel review team for `demos/07-agent-teams/02-parallel-review`, one lens each, read-only:
-
-| Lens                                          | Agent                       |
-| --------------------------------------------- | --------------------------- |
-| Auth, input validation, secrets, anon reach    | `review-security-agent`     |
-| Query shape, tracking, un-awaited tasks        | `review-performance-agent`  |
-| Existing coverage, what a first test asserts   | `review-tests-agent`        |
-
-Every agent definition carries behaviors, a strict delegation table into its skill's reference leaves, and rules. Code patterns live in the skill, never in the agent: a pattern written from memory instead of read from the leaf is the defect the tables exist to prevent.
-
-Repo-local commands in `.claude/commands/`: `/create-teaching` (enrich a module readme), `/create-lab` (scaffold a lab guide), `/scaffold-module-folders` (create topic folders).
-
-## Skills (`.claude/skills/`)
-
-<!-- SKILLS:BEGIN -->
-
-Synced from the global library (`~/.claude/skills`) — 10:
-
-- **angular-conventions** — Consolidated Angular conventions for components, dependency injection, forms, HTTP, routing, signals, MSAL
-- **azure** — One Azure skill covering CLI conventions, GitHub Actions OIDC and Azure DevOps WIF, Bicep app registrations, Static Web Apps / App Service / Container Apps / ACR deploys, Azure SQL provisioning with Managed Identity auth, EF Core migration and .bacpac publish, PostgreSQL Entra passwordless auth, and customer-tenant administration
-- **code-reviewer** — Review code. It supports both local changes (staged or working tree) and remote Pull Requests (by ID or URL)
-- **compliance** — Compliance assessment routed to leaves: EU AI Act risk tiers and Article 50 transparency, DSGVO / GDPR personal data, accessibility (EAA, WCAG 2.1 AA)
-- **dotnet-conventions** — .NET/C# coding conventions for ASP.NET Core controllers, EF Core models and migrations, unit testing
-- **hook-caveman-compression** — Install, tune or remove the `UserPromptSubmit` hook that puts each turn in caveman mode, with the exclusion list that keeps finished prose untouched
-- **mermaid-expert** — Mermaid diagram syntax and styling for every diagram type, verified by rendering
-- **microsoft-agent-framework** — Microsoft Agent Framework (Python) development
-- **track-time** — Customer-billable work log of AI machine hours for a git repo, appended to `.time/working-time.md`, with a billing-sheet leaf
-- **ui-ux-pro-max** — UI/UX design intelligence: searchable database of styles, palettes, font pairings, UX guidelines and chart types across 22 stacks
-
-Project-specific, kept only in this repo — 4:
-
-- **agentic-seo** — SEO auditing, optimization, and Core Web Vitals tracking on any web project
-- **brand-voice-code** — Audit and fix Markdown files for brand-voice quality in the Claude Code class (developer audience): em dashes
-- **class-dashboard** — Evaluate module completeness and render the static progress dashboard in `dashboard/`; ships its own `templates/dashboard/` copies of the evaluator, renderer, web app and Pages workflow
-- **create-module-pptx** — Distil a module's topic readmes and presenter guides into an essentials-only deck, written as generator YAML in that module's `pptx/` folder and rendered to `.pptx` by the generator the skill bundles in its own `build/`
-
-Demo harness skills, the finished reference for a demo guide — 3:
-
-- **data-aggregator** — Result of `demos/03-skills/02-creating/demo-skill-from-conversation.md`
-- **my-order-brief** — Dynamic context injection, from `demos/03-skills/04-live-data-and-subagents/demo-live-context-and-fork.md`
-- **my-order-audit** — The same evidence forked to an Explore subagent, from the same demo
-<!-- SKILLS:END -->
+- **Plan first** for anything non-trivial (3+ steps or an architectural decision): check in on the
+  plan before writing. The check-in is the shape plus the decisions the user has NOT made, one line
+  each. An adjacent surface you noticed is a clause in the reply, never a question in the plan.
+- **YOU MUST verify before reporting done.** Run the check, show the command and its output. A claim
+  is not a receipt. Where the feature's output is DATA (a log, a history, an import, an export), the
+  receipt is rows produced by real traffic, never a green build or a passing suite.
+- **Capture corrections** with `claude-learn`; nothing else edits this file or the skills.
+- **Parallelize** independent tool calls and agent dispatches in a single message.
+- **Simplicity first**: minimal diff, root causes over patches, no rewrite to fix a typo.
+- **Ship only what was asked for**: no unrequested labels, hint text, status captions, or sections.

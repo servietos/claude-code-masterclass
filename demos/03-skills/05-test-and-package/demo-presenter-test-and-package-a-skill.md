@@ -1,12 +1,12 @@
 ---
 presents: demo-test-and-package-a-skill.md
-budget: 5 min
-beats: 5
+budget: 4 min
+beats: 4
 ---
 
 # Present: Test and Package a Skill for Distribution
 
-Every failure a skill test exposes belongs to exactly one layer of `SKILL.md`, and a measurement you could not take is reported as absent rather than estimated. Five beats: the measured trigger sweep, the untracked file the gather step misses, the unmeasured baseline, the layer assignment, the packaging boundary.
+Every failure a skill test exposes belongs to exactly one layer of `SKILL.md`, and a measurement you could not take is reported as absent. Four beats: the measured trigger sweep, the untracked file the gather step misses, the layer assignment, the packaging boundary.
 
 ------
 
@@ -28,12 +28,12 @@ bash trigger-test.sh
 ```markdown
 | # | Expected | Fires | Observed | Verdict | Prompt |
 |---|---|---|---|---|---|
-| 1 | fire | 2/3 | fire | pass | Review my changes in ... |
-| 2 | fire | 1/2 | unstable | **FAIL** | Can you go through my diff in ... before I push? ... |
-| 3 | fire | 1/1 | fire | pass | Anything risky in what I just added under ...? |
+| 1 | fire | 0/3 | no-fire | **FAIL** | Review my changes in demos/03-skills/05-test-and-package/test-and-package-a-skill. |
+| 2 | fire | 0/3 | no-fire | **FAIL** | Can you go through my diff in demos/03-skills/05-test-and-package/test-and-package-a-skill before I push? I do not want to break anything. |
+| 3 | fire | 0/3 | no-fire | **FAIL** | Anything risky in what I just added under demos/03-skills/05-test-and-package/test-and-package-a-skill? |
 ```
 
-**Gotcha:** row 1 is the one to stop on. Three identical sessions, two loads: the skill misses the phrasing it was written for one time in three, so a trigger row is a rate and a boolean table would have hidden it.
+**Gotcha:** row 1 is the one to stop on. Three identical sessions and zero loads: the skill never fired on the phrasing it was written for. A trigger row is a rate, so the 0/3 is the finding, and a boolean table would have shown only FAIL.
 
 ### Beat 2: a brand-new file is invisible to the documented gather step (1 min)
 
@@ -49,48 +49,15 @@ bash trigger-test.sh
    never appears in git diff.
 ```
 
-**Result:** [`tests/review-run-01.md`](test-and-package-a-skill-solution/tests/review-run-01.md) records both diffs returning zero lines, logged as property F0
+**Result:** [`tests/review-run-01.md`](test-and-package-a-skill-solution/tests/review-run-01.md) records that the fixture path was already tracked in git HEAD, so the file shows as ` M` and `git diff` surfaces it; property F0 is not graded
 
 ```markdown
-git status --porcelain
-git diff -- demos/03-skills/05-test-and-package | wc -l        # 0
-git diff --staged -- demos/03-skills/05-test-and-package | wc -l # 0
-...
-`git status` listed the folder as `??`; both diff commands returned zero lines, so the file content had to be read directly. That gap is recorded in `functional-results.md` as property F0.
+Its path is tracked in git HEAD from an earlier commit of this folder, so `git status` reports ` M` for it, not `??`, and `git diff` shows the change. The premise that a brand-new file is invisible to both diffs does not hold for this path.
 ```
 
-**Gotcha:** the fixture had to stay uncommitted for the local-changes workflow to have anything to look at, and being uncommitted is exactly what makes `git diff` return nothing.
+**Gotcha:** the fixture had to stay uncommitted for the local-changes workflow to have anything to look at, and being uncommitted is exactly what makes `git diff` return nothing. In this repo the path was committed earlier, so the blind spot shows only with a path that was never committed.
 
-### Beat 3: a measurement you could not take is a result (1 min)
-
-**Open:** [readme.md](readme.md#proving-it-is-worth-adopting) · [`dist/README.md`](test-and-package-a-skill-solution/dist/README.md)
-**Say:** The loud failure is a weak control, asking a model to pretend a loaded skill is not there. The quiet one is filling a metrics table with figures that merely sound right.
-
-```text
-Run A (no skill): in a second terminal at the repository root, start `claude --disallowedTools Skill`.
-That flag removes the Skill tool for the session, so no skill can load and nothing on disk has to move.
-Prompt "Review my changes and flag anything risky before I push."
-...
-Report measured numbers only. Do not estimate any figure you did not observe; write "not measured"
-in any cell you could not capture.
-```
-
-**Result:** [`tests/baseline-comparison.md`](test-and-package-a-skill-solution/tests/baseline-comparison.md), four rows carrying no number at all
-
-```markdown
-Status: NOT MEASURED in this run.
-...
-| Metric | Without skill (Run A) | With skill (Run B) |
-|---|---|---|
-| Defects found of 3 planted | not measured | not measured |
-| User messages to reach a verdict | not measured | not measured |
-| Critical / Improvements split present | not measured | not measured |
-| Token total from `/cost` | not measured | not measured |
-```
-
-**Gotcha:** the file closes on the rule that pays for the empty cells: until those two captures exist, no distribution claim in `dist/README.md` may quote a number.
-
-### Beat 4: map each failure to one layer before editing anything (1 min)
+### Beat 3: map each failure to one layer before editing anything (1 min)
 
 **Open:** [`tests/trigger-cases.md`](test-and-package-a-skill-solution/tests/trigger-cases.md) · [`code-reviewer/SKILL.md`](../../../.claude/skills/code-reviewer/SKILL.md)
 **Say:** A `SKILL.md` is several layers consulted at different moments, and an observed failure belongs to exactly one. Getting that wrong produces edits that feel productive and change nothing.
@@ -105,25 +72,23 @@ For every failing row across those files, map it to exactly one layer:
 Present the mapping as a table: Failure | Layer | One-line justification.
 ```
 
-**Result:** [`tests/functional-results.md`](test-and-package-a-skill-solution/tests/functional-results.md); three recorded failures, three hunks in the patch, nothing else touched
+**Result:** [`tests/functional-results.md`](test-and-package-a-skill-solution/tests/functional-results.md); the one failure this run measured, and the skill did not load in that run, so D3 has no layer yet
 
 ```markdown
 | Failure | Layer | One-line justification |
 |---|---|---|
-| Row 2 of `trigger-cases.md` (diff before push) does not load reliably | description frontmatter | The words a developer actually types, "diff" and "push", are absent from the only text loaded before the skill fires. |
-| F0: new files are invisible to the documented gather commands | workflow steps | Section 2 controls what gets gathered; `git diff` never shows untracked content. |
-| D3: no coverage statement in the output | feedback structure | The Testability pillar already notices coverage, but the Findings structure never forces it to be reported, so it silently drops. |
+| Trigger rows 1 to 3 never load the skill (see `trigger-cases.md`) | description frontmatter | The words a developer actually types, "review", "diff" and "push", must match the only text loaded before the skill fires. |
 ```
 
 **Gotcha:** adding trigger keywords to the body changes nothing, because the body is not read until the skill has already loaded.
 
-### Beat 5: packaging is a boundary, and the README sits outside it (1 min)
+### Beat 4: packaging is a boundary, and the README sits outside it (1 min)
 
 **Open:** [`dist/code-reviewer`](test-and-package-a-skill-solution/dist/code-reviewer) · [`tests/`](test-and-package-a-skill-solution/tests)
 **Say:** Packaging decides what a stranger receives, and the material that helped you build the skill is not part of it. Anything inside the skill folder is text Claude loads and pays for on every use.
 
 ```text
-3. Write demos/03-skills/05-test-and-package/dist/README.md for a human installing it, containing: what the
+3. Write dist/README.md for a human installing it, containing: what the
    skill does in two outcome sentences, install steps for both Claude Code (copy into .claude/skills/)
    and Claude.ai (zip and upload via Settings), one worked example prompt, and the measured
    before/after figures from tests/baseline-comparison.md.
@@ -132,12 +97,9 @@ Present the mapping as a table: Failure | Layer | One-line justification.
 **Result:** [`dist/README.md`](test-and-package-a-skill-solution/dist/README.md) opens on outcomes, and the `dist/code-reviewer.zip` built beside it holds exactly one entry, `code-reviewer/SKILL.md` (the archive is gitignored, so it exists only after you run the packaging step)
 
 ```markdown
-# Code Reviewer
+# code-reviewer skill
 
-Ask for a second opinion on your changes in plain language and get back a merge decision you can act
-on: blocking problems separated from suggestions, every finding pinned to a file and line, and an
-explicit statement of what the change is missing in tests. It works on what you have not committed
-yet, on a whole branch, and on a Pull Request someone else opened.
+The code-reviewer skill gives you a structured review of your local changes (staged or working tree) or of a GitHub pull request, covering correctness, maintainability, readability, efficiency, security, edge cases, testability, and project conventions. You get back a summary, findings sorted into Critical, Improvements, and Nitpicks, and a clear Approved or Request Changes verdict with `file_path:line_number` references.
 ```
 
 **Gotcha:** `tests/` and the project's own `src/` stayed outside the archive, and the README sits one level up because a stray `README.md` inside a skill folder is not part of the contract and only adds tokens.
@@ -146,8 +108,6 @@ yet, on a whole branch, and on a Pull Request someone else opened.
 
 | Question | Answer |
 |---|---|
-| How did the patch close F0? | The patched `SKILL.md` names `git ls-files --others --exclude-standard` and `git diff --no-index -- /dev/null <file>`. |
-| Is it fair to give the no-skill run no instructions at all? | No, that is rigged. Run A gets what a developer would really type, something like "review my changes and flag anything risky before I push". |
+| Did the patch close F0? | Not in this run: the patched `SKILL.md` changed only the description, so the `git ls-files --others --exclude-standard` line is still missing. |
 | Which distribution route should a five-person team use? | A GitHub repository they clone into `.claude/skills/`; this skill shells out to `git` and `gh`, so the API sandbox is the most constrained route. |
 | Why not commit the fixture? | Once committed, `git status` is clean and both diffs return nothing, so the local-changes workflow has no change left to examine. |
-| The review cited a line number from a hunk header. Is that a finding? | Yes. Hunk headers give offsets, not final line numbers, so the file has to be read to resolve the real line. |

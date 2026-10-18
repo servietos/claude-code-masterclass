@@ -19,7 +19,6 @@ slides/notes/_probe.*
 
 .claude/worktrees/
 
-demos/12-managed-agents/.env
-labs/12-managed-agents/.env
-demos/13-claude-sdk/.env
-labs/13-claude-sdk/**/.env
+demos/10-sdk-managed-agents/.env
+labs/10-sdk-managed-agents/.env
+labs/10-sdk-managed-agents/**/.env

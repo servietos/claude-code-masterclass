@@ -1,0 +1,5 @@
+{
+  "name": "release-notes",
+  "version": "1.0.0",
+  "description": "Generate release notes from recent git commits"
+}

@@ -2,7 +2,7 @@
 name: review-tests-agent
 color: green
 description: >-
-  Test coverage lens of the parallel review team in demos/07-agent-teams/02-parallel-review.
+  Test coverage lens of the parallel review team in demos/06-subagents-agent-teams/06-parallel-review.
   Reviews the whole project for what coverage exists and what a first test file would have to
   assert to catch the security and performance lenses' findings.
   Apply when the task is "what test coverage does this project have", "what would a first test file

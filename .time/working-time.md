@@ -61,4 +61,12 @@ Machine hours spent on this repository, one row per working day.
 
 | 2026-10-11 | 0.38 | 10:49 | 11:12 | Sub-agents module: note on keeping a waiting sub-agent's cache warm for an hour |
 
-**Total: 36.24 hours**
+| 2026-10-16 | 1.30 | 12:42 | 14:00 | Harness module restructured: new overview topic first, MCP, skills and sub-agent material moved into their own modules |
+
+| 2026-10-16 | 0.18 | 14:08 | 14:19 | Course slides updated for the restructured harness module and published to OneDrive |
+
+| 2026-10-17 | 3.33 | 18:56 | 22:16 | Course demos re-run end to end with rebuilt reference solutions, slides refreshed, labs aligned and 16 new labs added |
+
+| 2026-10-17 | 0.08 | 22:37 | 22:42 | Course verification runbook extended with three more rules from the session's corrections |
+
+**Total: 41.13 hours**

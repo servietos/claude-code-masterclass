@@ -117,7 +117,7 @@
     47002
   ],
   "portsAttributes": {
-    "1313": { "label": "Hugo dev server (labs/11-agentic-devops)" },
+    "1313": { "label": "Hugo dev server (labs/09-agentic-devops)" },
     "3000": { "label": "Node demo servers" },
     "3002": { "label": "QR MCP server (.mcp.json)" },
     "3003": { "label": "Map MCP server (labs/04-mcp/03-mcp-app)" },

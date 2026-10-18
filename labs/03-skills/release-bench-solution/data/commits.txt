@@ -1,0 +1,12 @@
+a1f3c9e feat: add CSV export to the orders report
+b72d0c4 fix: stop duplicate order rows when a filter is cleared
+c93e5a1 chore: bump eslint to 9.12
+d04b7f2 feat!: require Node 18 or newer (BREAKING CHANGE: Node 16 is no longer supported)
+e5518a3 ci: cache npm install in the build workflow
+f6629b8 docs: fix typo in the install section
+0a77d14 fix: show the correct total for orders with a 100 percent discount
+1b88e25 feat: add --since flag to the list command
+2c99f36 refactor: split the report formatter into two modules
+3daa047 chore: update lockfile
+4ebb158 fix: handle empty customer names in the export
+5fcc269 test: add coverage for the discount rounding

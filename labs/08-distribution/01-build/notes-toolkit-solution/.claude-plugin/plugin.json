@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "notes-toolkit",
+  "version": "0.1.0",
+  "description": "Extract, prioritise, and report on TODO/FIXME/NOTE comments across a codebase.",
+  "author": {
+    "name": "Claude Code Masterclass"
+  },
+  "license": "MIT",
+  "keywords": ["notes", "todo", "triage"]
+}

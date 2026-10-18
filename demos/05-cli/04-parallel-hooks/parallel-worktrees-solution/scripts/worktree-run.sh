@@ -1,83 +1,56 @@
 #!/usr/bin/env bash
 
-# first argument, or tasks.txt when the script is called without one
-TASKS_FILE="${1:-tasks.txt}"
+# repository root and this folder's path inside it, so every agent starts in the same folder of its worktree
 REPO=$(git rev-parse --show-toplevel)
-# the path of this folder inside the repository, so each worktree can cd to the same place
 DEMO_DIR=$(git rev-parse --show-prefix)
-LOGS="$PWD/logs"
-
-mkdir -p "$LOGS"
-
-slugs=()
+TASKS_FILE=$1
 pids=()
+slugs=()
 
-# IFS='|' splits each task line into a slug and a task description
+mkdir -p logs
+
 while IFS='|' read -r slug desc; do
-  [ -z "$slug" ] && continue
-
-  WORKTREE="$REPO/../wt-$slug"
-  echo "Creating worktree $WORKTREE on feat/$slug"
-  git worktree add "$WORKTREE" -b "feat/$slug"
-
-  # 2>&1 folds stderr into the per-agent log, & starts the session in the background
-  (
-    cd "$WORKTREE/$DEMO_DIR"
-    claude -p "$desc" \
-      --allowed-tools "Read,Edit,Bash(npm:*),Bash(git:*)" \
-      --max-turns 8
-  ) > "$LOGS/log-$slug.txt" 2>&1 &
-
   slugs+=("$slug")
-  # $! is the process id of the background job just started
+  # one worktree and one feat/<slug> branch per task, created beside the repository
+  git worktree add "$REPO/../wt-$slug" -b "feat/$slug"
+  # the agent runs in the background; stdin comes from /dev/null so claude never reads the tasks file
+  (
+    cd "$REPO/../wt-$slug/$DEMO_DIR"
+    claude -p "$desc. Add tests. Commit the result." \
+      --allowed-tools "Read,Edit,Bash(npm:*),Bash(git:*)" --max-turns 10
+  ) > "logs/log-$slug.txt" 2>&1 < /dev/null &
+  # $! is the PID of the background agent, kept so the script can wait on each one
   pids+=($!)
 done < "$TASKS_FILE"
 
-echo "Launched ${#pids[@]} agents, waiting..."
-
-failed=()
-for i in "${!pids[@]}"; do
-  # waiting on a known pid yields that agent's exit code instead of the last one to finish
-  wait "${pids[$i]}"
-  code=$?
-  if [ "$code" -ne 0 ]; then
-    failed+=("${slugs[$i]} (exit $code)")
-  fi
+failed=0
+for pid in "${pids[@]}"; do
+  # wait returns the agent's exit code; any non-zero marks the whole run as failed
+  wait "$pid" || failed=1
 done
 
 remove_worktrees() {
   for slug in "${slugs[@]}"; do
-    git worktree remove "$REPO/../wt-$slug" --force
+    git worktree remove --force "$REPO/../wt-$slug"
   done
-  git worktree prune
 }
 
-# one failed agent stops the merge, so a half-finished fan-out never lands on the branch
-if [ "${#failed[@]}" -ne 0 ]; then
-  echo "Agents failed, skipping merge:"
-  printf '  %s\n' "${failed[@]}"
+if [ "$failed" -ne 0 ]; then
   remove_worktrees
-  echo "Branches kept for inspection: $(printf 'feat/%s ' "${slugs[@]}")"
   exit 1
 fi
 
-echo "All agents succeeded, merging..."
 for slug in "${slugs[@]}"; do
-  # --no-ff keeps one merge commit per agent, so each lane stays visible in the history
-  if ! git merge --no-ff "feat/$slug" -m "Merge feat/$slug"; then
-    echo "Conflict merging feat/$slug, aborting"
+  # --no-ff keeps one merge commit per task, so each feature stays visible in history
+  if ! git merge --no-ff "feat/$slug"; then
     git merge --abort
     remove_worktrees
-    echo "Branches kept for inspection: $(printf 'feat/%s ' "${slugs[@]}")"
     exit 1
   fi
 done
 
-echo "Cleaning up..."
 remove_worktrees
 for slug in "${slugs[@]}"; do
-  # lowercase -d refuses to delete a branch that was never merged
+  # -d refuses to delete a branch that is not merged, so only merged feature branches go
   git branch -d "feat/$slug"
 done
-
-git log --oneline --graph -10

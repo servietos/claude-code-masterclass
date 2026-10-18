@@ -81,7 +81,7 @@ The fourth one is the one people miss. A triage board with a "Copy as prompt" bu
 
 ## Make the Page Look Like Your Product
 
-Claude applies a built-in design skill when it builds an artifact, so pages arrive with a deliberate palette, typography, and layout without being asked (v2.1.182 or later). That skill looks for an existing design system in your project first. Record your tokens where Claude already reads, such as [`CLAUDE.md`](../../02-harness/01-intro-constitution/readme.md) or a theme file in the repository:
+Claude applies a built-in design skill when it builds an artifact, so pages arrive with a deliberate palette, typography, and layout without being asked (v2.1.182 or later). That skill looks for an existing design system in your project first. Record your tokens where Claude already reads, such as [`CLAUDE.md`](../../02-harness/02-constitution/readme.md) or a theme file in the repository:
 
 ```markdown
 ## Design system

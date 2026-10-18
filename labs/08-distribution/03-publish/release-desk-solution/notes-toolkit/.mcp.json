@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "notes-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--with-requirements",
+        "${CLAUDE_PLUGIN_ROOT}/mcp-server/requirements.txt",
+        "${CLAUDE_PLUGIN_ROOT}/mcp-server/server.py"
+      ]
+    }
+  }
+}

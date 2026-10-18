@@ -1,0 +1,26 @@
+date,service,stage,error,duration_min,triggered_by
+2026-07-06,checkout-api,integration-tests,timeout waiting for payment-stub,14,merge
+2026-07-06,search-indexer,build,out of memory in bundler,7,merge
+2026-07-07,checkout-api,integration-tests,timeout waiting for payment-stub,16,retry
+2026-07-07,billing-worker,migration,duplicate key on invoices_pkey,3,merge
+2026-07-07,web-shell,lighthouse-gate,performance score 71 below threshold 80,9,pull-request
+2026-07-08,checkout-api,smoke,502 from gateway after rollout,11,scheduled
+2026-07-08,search-indexer,build,out of memory in bundler,8,retry
+2026-07-09,notification-svc,integration-tests,flaky assertion on retry backoff,12,merge
+2026-07-09,web-shell,lighthouse-gate,performance score 74 below threshold 80,9,pull-request
+2026-07-10,billing-worker,migration,duplicate key on invoices_pkey,4,retry
+2026-07-10,checkout-api,integration-tests,timeout waiting for payment-stub,15,merge
+2026-07-13,search-indexer,build,out of memory in bundler,7,merge
+2026-07-13,notification-svc,smoke,queue consumer never reached ready state,21,scheduled
+2026-07-14,web-shell,lighthouse-gate,performance score 69 below threshold 80,10,merge
+2026-07-14,checkout-api,smoke,502 from gateway after rollout,13,merge
+2026-07-15,billing-worker,integration-tests,connection pool exhausted,18,merge
+2026-07-15,search-indexer,build,out of memory in bundler,8,merge
+2026-07-16,notification-svc,integration-tests,flaky assertion on retry backoff,11,retry
+2026-07-16,checkout-api,integration-tests,timeout waiting for payment-stub,17,merge
+2026-07-17,web-shell,lighthouse-gate,performance score 72 below threshold 80,9,pull-request
+2026-07-17,billing-worker,migration,duplicate key on invoices_pkey,3,merge
+2026-07-17,search-indexer,smoke,index warmup exceeded 20 minute budget,24,scheduled
+2026-07-20,checkout-api,integration-tests,timeout waiting for payment-stub,18,merge
+2026-07-20,search-indexer,build,out of memory in bundler,9,merge
+2026-07-21,billing-worker,migration,duplicate key on invoices_pkey,4,retry

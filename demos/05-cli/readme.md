@@ -27,7 +27,7 @@ Claude Code is not only an interactive assistant. Run with `-p`, it becomes a pr
 | [01: Introduction](01-intro/demo-headless-tool-scope.md) | Run `claude -p` for the first time, read the JSON envelope it returns, and prove that `--allowed-tools` grants permission while only `--tools` produces a read-only run. |
 | [03: CI Gates](03-ci-gate/demo-ci-gates.md) | Wire Claude headless into a CI pipeline using sentinel tokens, confirm deterministic exit codes, and block a build on a failing audit. |
 | [04: Parallel Worktrees and Policy Hooks](04-parallel-hooks/demo-parallel-hooks.md) | Prove the shipped `rm -rf` policy gate with one piped payload, then spawn two isolated agents in separate Git worktrees and see the same gate block the command in each lane. |
-| [04: Parallel Worktrees and Policy Hooks](04-parallel-hooks/demo-worktree-orchestration.md) | Design a task-queue script that drives the full worktree lifecycle (create, dispatch, merge, clean up) for a list of tasks. |
+| [04: Parallel Worktrees and Policy Hooks](04-parallel-hooks/demo-worktree-orchestration.md) | Optional. Design a task-queue script that drives the full worktree lifecycle (create, dispatch, merge, clean up) for a list of tasks. |
 | [05: Always-On and Goal Patterns](05-always-on/demo-always-on.md) | Set a measurable end-state condition, launch an autonomous agent with `claude -p --max-turns`, and watch it loop until the condition validates or the turn limit is reached. |
 
 Every demo has a presenter guide beside it (`demo-presenter-<slug>.md`) holding the same

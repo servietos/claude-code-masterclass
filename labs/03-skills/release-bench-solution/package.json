@@ -1,0 +1,6 @@
+{
+  "name": "orders-cli",
+  "version": "2.4.0",
+  "private": true,
+  "description": "Command line tool for listing and exporting customer orders; the project whose release notes the skill under test writes"
+}

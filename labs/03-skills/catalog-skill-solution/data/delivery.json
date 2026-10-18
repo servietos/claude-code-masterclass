@@ -1,0 +1,19 @@
+{
+  "noteNumber": "DN-2026-0142",
+  "date": "2026-10-12",
+  "supplier": {
+    "name": "Alpenwerk Metallbau GmbH",
+    "address": "Industriestrasse 14, 5020 Salzburg"
+  },
+  "recipient": {
+    "name": "Nordwind Handels GmbH",
+    "address": "Hafenstrasse 3, 4020 Linz",
+    "contact": "Eva Berger"
+  },
+  "items": [
+    { "sku": "AL-2040", "description": "Aluminium profile 20x40, 3 m", "quantity": 120, "unit": "pcs" },
+    { "sku": "FX-M8", "description": "Fixing bracket M8, zinc plated", "quantity": 480, "unit": "pcs" },
+    { "sku": "CT-RAL", "description": "Powder coating RAL 7016", "quantity": 12, "unit": "kg" }
+  ],
+  "remarks": "Deliver to loading dock 2 between 07:00 and 11:00."
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CI failures, three week view</title>
+<style>
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color: #14201b;
+    background: #f4f7f5;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+    line-height: 1.5;
+  }
+  h1 { font-size: 1.75rem; margin: 0 0 24px; }
+  h2 { font-size: 1.2rem; margin: 40px 0 16px; }
+  svg { width: 100%; height: auto; display: block; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: left; padding: 8px 16px; border-bottom: 1px solid #14201b33; }
+  th { font-weight: 600; }
+  td.num, th.num { text-align: right; }
+  td.num { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+  p { margin: 0; }
+  .callout { border-left: 4px solid #0b6e4f; padding: 8px 16px; margin: 0 0 24px; }
+</style>
+</head>
+<body>
+
+<p class="callout"><strong>Top error this week:</strong> timeout waiting for payment-stub (18 min)</p>
+
+<h1>CI failures, three week view</h1>
+
+<h2>Failures and lost minutes per service</h2>
+
+<svg viewBox="0 0 800 230" role="img" aria-label="Bar chart of lost minutes per service: checkout-api 104 min, 7 failures; search-indexer 63 min, 6 failures; notification-svc 44 min, 3 failures; web-shell 37 min, 4 failures; billing-worker 32 min, 5 failures">
+  <g font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif" font-size="14" fill="#14201b">
+    <text x="140" y="28" text-anchor="end">checkout-api</text>
+    <text x="140" y="68" text-anchor="end">search-indexer</text>
+    <text x="140" y="108" text-anchor="end">notification-svc</text>
+    <text x="140" y="148" text-anchor="end">web-shell</text>
+    <text x="140" y="188" text-anchor="end">billing-worker</text>
+  </g>
+  <g fill="#0b6e4f">
+    <rect x="150" y="10" width="480" height="26" rx="4" fill="#d9480f"/>
+    <rect x="150" y="50" width="291" height="26" rx="4"/>
+    <rect x="150" y="90" width="203" height="26" rx="4"/>
+    <rect x="150" y="130" width="171" height="26" rx="4"/>
+    <rect x="150" y="170" width="148" height="26" rx="4"/>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#14201b">
+    <text x="638" y="28">104 min, 7 failures</text>
+    <text x="449" y="68">63 min, 6 failures</text>
+    <text x="361" y="108">44 min, 3 failures</text>
+    <text x="329" y="148">37 min, 4 failures</text>
+    <text x="306" y="188">32 min, 5 failures</text>
+  </g>
+</svg>
+
+<h2>Failures per week per service</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Service</th>
+      <th class="num">Week of 2026-07-06</th>
+      <th class="num">Week of 2026-07-13</th>
+      <th class="num">Week of 2026-07-20</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>checkout-api</td><td class="num">4</td><td class="num">2</td><td class="num">1</td></tr>
+    <tr><td>search-indexer</td><td class="num">2</td><td class="num">3</td><td class="num">1</td></tr>
+    <tr><td>notification-svc</td><td class="num">1</td><td class="num">2</td><td class="num">0</td></tr>
+    <tr><td>web-shell</td><td class="num">2</td><td class="num">2</td><td class="num">0</td></tr>
+    <tr><td>billing-worker</td><td class="num">2</td><td class="num">2</td><td class="num">1</td></tr>
+    <tr><td><strong>Total</strong></td><td class="num"><strong>11</strong></td><td class="num"><strong>11</strong></td><td class="num"><strong>3</strong></td></tr>
+  </tbody>
+</table>
+
+<p>The last week (from 2026-07-20) had 3 failures, 8 fewer than the first week (from 2026-07-06), which had 11.</p>
+
+<h2>Five error strings with the most lost minutes</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Error</th>
+      <th class="num">Failures</th>
+      <th class="num">Total minutes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>timeout waiting for payment-stub</td><td class="num">5</td><td class="num">80</td></tr>
+    <tr><td>out of memory in bundler</td><td class="num">5</td><td class="num">39</td></tr>
+    <tr><td>502 from gateway after rollout</td><td class="num">2</td><td class="num">24</td></tr>
+    <tr><td>index warmup exceeded 20 minute budget</td><td class="num">1</td><td class="num">24</td></tr>
+    <tr><td>flaky assertion on retry backoff</td><td class="num">2</td><td class="num">23</td></tr>
+  </tbody>
+</table>
+
+<h2>Costliest single error</h2>
+
+<p>The error that costs the most minutes is <strong>timeout waiting for payment-stub</strong>. It failed five times, always in the checkout-api integration-tests stage: 14 + 16 + 15 + 17 + 18 = 80 minutes. Across all 25 failures, 280 minutes were lost, so this error accounts for 80 / 280, about 29%.</p>
+
+</body>
+</html>

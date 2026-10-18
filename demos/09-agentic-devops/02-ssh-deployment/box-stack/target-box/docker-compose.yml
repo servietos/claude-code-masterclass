@@ -1,0 +1,29 @@
+name: target-box
+
+services:
+  box:
+    build: .
+    image: target-box-box
+    container_name: box-target
+    hostname: box-target
+    # an init system has to own the container, which is why this box runs unconfined
+    privileged: true
+    cgroup: host
+    # systemd shuts down on SIGRTMIN+3, it ignores the SIGTERM compose sends by default
+    stop_signal: SIGRTMIN+3
+    ports:
+      - "2222:22"
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      # systemd writes to the cgroup tree, so it is mounted read-write rather than read-only
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+      - box-docker:/var/lib/docker
+      - box-containerd:/var/lib/containerd
+    tmpfs:
+      - /run
+      - /run/lock
+
+volumes:
+  box-docker: {}
+  box-containerd: {}

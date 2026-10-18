@@ -6,18 +6,18 @@ beats: 4
 
 # Present: Drive an agent to keep fixing code until tests go green
 
-What separates a goal condition from a wish, and why an unattended loop is bounded by a turn ceiling rather than by the model's sense of being finished. Four beats: the condition as a specification, the assertion that makes it checkable, the three flags, and the envelope read against the prose.
+What separates a goal condition from a wish, and why an unattended loop ends at a turn ceiling whatever the model thinks of its own progress. Four beats: the condition as a specification, the assertion that makes it checkable, the three flags, and the envelope read against the prose.
 
 ------
 
-**Shell:** beats 3 and 4 quote Bash; [`goal-demo.ps1`](goal-demo/goal-demo.ps1) carries the identical flag list, with `ConvertFrom-Json` standing in for `jq`. Say that in beat 3: the flags belong to `claude`, the parsing belongs to the shell. The `< /dev/null` is Windows-fatal, and the `.ps1` needs no stdin redirect since the goal arrives as an argument.
+**Shell:** beats 3 and 4 quote Bash; [`goal-demo.ps1`](goal-demo/goal-demo.ps1) carries the identical flag list, with `ConvertFrom-Json` standing in for `jq`. Say that in beat 3: the flags belong to `claude`, the parsing belongs to the shell. The `< /dev/null` is a POSIX redirect that PowerShell rejects, so the `.ps1` has none: the goal arrives as an argument.
 
 ## Beats
 
 ### Beat 1: a goal condition is a checkable claim, kept out of the script (1 min)
 
 **Open:** [`goal-condition.txt`](goal-demo/goal-condition.txt) · [`src/slugify.ts`](goal-demo/src/slugify.ts)
-**Say:** What separates a goal from a wish is not tone but whether running something answers it yes or no. "Fix the bug" leaves an unattended agent no way to know it is finished.
+**Say:** What separates a goal from a wish is whether running something answers it yes or no. "Fix the bug" leaves an unattended agent no way to know it is finished.
 
 ```text
 All of the following must hold:
@@ -72,34 +72,31 @@ $GOAL" \
   --output-format json < /dev/null | jq '{result: .result, turns: .num_turns, cost: .total_cost_usd}'
 ```
 
-**Result:** the recorded run came back at 6 turns and $0.517722, well inside the ceiling
+**Result:** the recorded run came back at 6 turns and $0.6529706, well inside the ceiling
 
-**Gotcha:** `--max-turns 15` is the only reason the loop is guaranteed to terminate. Budget it as cost per turn times the ceiling, not as optimism.
+**Gotcha:** `--max-turns 15` is the only reason the loop is guaranteed to terminate. Budget it as cost per turn times the ceiling.
 
-### Beat 4: read the fields, not the prose (1 min)
+### Beat 4: check the envelope's fields against the prose (1 min)
 
 **Open:** [`readme.md`](readme.md#permission-modes-and-turn-controls) · [`goal-demo-solution/src/slugify.ts`](goal-demo-solution/src/slugify.ts), the line the loop restored
 **Say:** An agent's closing summary is generated text like everything else it produced. The envelope around it is measured by the harness.
 
-**Result:** a real recorded run whose two numbers disagree. The prose claims turn 1; the measured `turns` is 6
+**Result:** a real recorded run. The prose says the goal was met and names no turn count; the measured `turns` is 6
 
 ```json
 {
-  "result": "Goal met on turn 1. Added .replace(/^-+|-+$/g, '') to strip leading and trailing hyphens.",
+  "result": "I've met the goal. I added `.replace(/^-+|-+$/g, '')` as the last step in `src/slugify.ts`, so `slugify('--hello--')` now returns `'hello'`. `npm test` exits 0 with both tests passing and none skipped.\n\nI changed nothing outside `src/`. Git does show `.gitignore`, `goal-demo.ps1`, `goal-demo.sh` and `package-lock.json` as modified, but they already were before I started.",
   "turns": 6,
-  "cost": 0.517722
+  "cost": 0.6529706
 }
 ```
 
-**Gotcha:** a run reporting 15 has almost certainly hit the limit rather than finished, which usually means the goal condition and the test file disagree about the function under repair.
+**Gotcha:** a run reporting 15 has almost certainly hit the limit without finishing, which usually means the goal condition and the test file disagree about the function under repair.
 
 ## If the room asks
 
 | Question | Answer |
 |---|---|
-| What makes a condition unverifiable? | Anything the agent cannot test from the shell. "Improve readability" has no exit code. |
-| Who decides the goal is met? | Here the executing model does, against a real test run. The stronger variant is a separate evaluation step. |
 | Is `--max-turns` a soft target? | A hard cap. The run stops there whether or not the condition holds. |
 | Why `acceptEdits` as well as `--allowed-tools`? | One pre-approves the tool set, the other covers the per-edit confirmation. Either one missing stalls the run. |
-| Can the agent cheat by editing the test? | The third clause forbids it. A deterministic evaluator reading `git status` enforces it rather than requesting it. |
-| What does the solution folder hold? | The same source as the starter. The payload of this demo is a run, not a file. |
+| Can the agent cheat by editing the test? | The third clause forbids it, and a deterministic evaluator reading `git status` can enforce that clause. |

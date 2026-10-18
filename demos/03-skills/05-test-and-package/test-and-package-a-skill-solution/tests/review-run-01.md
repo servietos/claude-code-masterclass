@@ -1,39 +1,15 @@
-# Review Run 01 (pre-patch skill)
+# Review Run 01 (fixture run, pre-patch skill)
 
-Target: `fixtures/discount.ts`, a new untracked file in the working tree.
+Fixture run: one headless session with the prompt from Step 1 of the demo guide, started in this folder with `--permission-mode bypassPermissions` on `claude-haiku-5-5`. Session `98f4d891-d213-4abf-b167-9808aed602b8`.
 
-Gathering step actually executed, following `SKILL.md` section 2 "For Local Changes":
+The session wrote `src/discount.ts` itself, because the working copy did not exist before the run. Its path is tracked in git HEAD from an earlier commit of this folder, so `git status` reports ` M` for it, not `??`, and `git diff` shows the change. The premise that a brand-new file is invisible to both diffs does not hold for this path.
 
-```bash
-git status --porcelain
-git diff -- demos/03-skills/05-test-and-package | wc -l        # 0
-git diff --staged -- demos/03-skills/05-test-and-package | wc -l # 0
-```
+The session did not invoke the `code-reviewer` skill, so zero `Skill` calls appear in its transcript. It gathered with `git status` and `cat`, and wrote its own findings.
 
-`git status` listed the folder as `??`; both diff commands returned zero lines, so the file content had to be read directly. That gap is recorded in `functional-results.md` as property F0.
+Planted defects, as the session reported them:
 
-## Review output produced by the skill
+- Unguarded division: flagged, `percent = 0` gives `Infinity` and the function returns `0` for `applyDiscount(100, 0)`.
+- Hardcoded token: flagged on line 1.
+- Missing test file: not mentioned in any finding.
 
-### Summary
-
-One new file introduces a percentage discount helper and a sync call that talks to a remote endpoint. The math is compact but unguarded, and the file carries a live-looking credential.
-
-### Findings
-
-**Critical**
-
-- `fixtures/discount.ts:1` - a bearer token is hardcoded as a module constant (`sk-live-4f9c21ab7d0e`). Anything importing this module ships the secret into the bundle, and rotating it means a code change plus a redeploy. Move it to an injected config value or an environment variable.
-- `fixtures/discount.ts:4` - `100 / percent` is unguarded. `percent = 0` does not throw in TypeScript; it yields `Infinity`, so `applyDiscount(100, 0)` returns `0` and the caller silently charges nothing. Verified by running the function: `applyDiscount(100, 0) = 0`. Validate the input range before dividing.
-
-**Improvements**
-
-- `fixtures/discount.ts:3` - the name says "apply discount" but the function returns the discount amount, not the discounted price: `applyDiscount(100, 10)` returns `10`. Rename it or return `price - amount`, because a caller reading the signature will get this backwards.
-- `fixtures/discount.ts:8` - `syncDiscounts` returns the raw `Response` without checking `response.ok`, so a 401 from an expired token reaches the caller as a resolved promise.
-
-**Nitpicks**
-
-- `fixtures/discount.ts:4` - `factor` is an indirection over `percent / 100`; dividing by a reciprocal makes the intent harder to read than multiplying.
-
-### Conclusion
-
-Request Changes. The hardcoded credential alone blocks merge.
+The session's own conclusion: "The fixture did not produce the condition the test depends on, so the run is not a valid test of the "miss the new file" property."

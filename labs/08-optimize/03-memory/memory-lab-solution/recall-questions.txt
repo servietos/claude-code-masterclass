@@ -1,3 +1,0 @@
-Recall Q1: "Who owns the alert-routing area and what is their on-call rotation?"
-Recall Q2: "Summarise the root cause of the 2026-Q1 incident that affected the dashboards service."
-Recall Q3: "Which integration has the highest data volume and what does the team consider its main risk?"

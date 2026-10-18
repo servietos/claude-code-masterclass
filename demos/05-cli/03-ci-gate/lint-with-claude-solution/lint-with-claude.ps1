@@ -1,23 +1,22 @@
 #!/usr/bin/env pwsh
-# run from the script's own folder, so prompt.txt and src/ resolve wherever CI calls it from
+# Run from this script's folder so src/, test/ and prompt.txt resolve
 Set-Location $PSScriptRoot
-
-Write-Output "Running Claude headless..."
-# Out-String joins the streamed output lines into one string the checks below can search
-$Output = claude -p (Get-Content prompt.txt -Raw) --tools "Read,Glob,Grep" --max-turns 10 | Out-String
-Write-Output $Output
-
-# -cmatch is case sensitive, so a lowercase mention of the marker cannot trip the gate
-# the exit code is the CI contract: 1 fails the build, 0 passes it, 2 says the run was unusable
-if ($Output -cmatch 'LINT_FAIL') {
-    Write-Output "LINT_FAIL found. Build blocked."
-    exit 1
-}
-elseif ($Output -cmatch 'LINT_PASS') {
-    Write-Output "LINT_PASS found. Build approved."
-    exit 0
-}
-else {
-    Write-Output "Indeterminate outcome."
+# Headless audit with read-only tools; the response is captured so the verdict token can be matched
+$output = claude -p (Get-Content prompt.txt -Raw) --tools "Read,Glob,Grep" --max-turns 10 | Out-String
+$status = $LASTEXITCODE
+Write-Output $output
+# A non-zero exit (including hitting the turn cap) means the run produced no verdict
+if ($status -ne 0) {
     exit 2
 }
+# Match verdict tokens case-sensitively anywhere in the response
+$pass = $output -cmatch 'LINT_PASS'
+$fail = $output -cmatch 'LINT_FAIL'
+# Exactly one token is a verdict; zero or both is an outcome the gate cannot act on
+if ($pass -and -not $fail) {
+    exit 0
+}
+if ($fail -and -not $pass) {
+    exit 1
+}
+exit 2

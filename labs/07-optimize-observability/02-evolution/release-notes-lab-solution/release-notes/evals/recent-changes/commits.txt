@@ -1,0 +1,7 @@
+649d596 fix: ignore virtualenv and caches
+fb084d1 Merge branch 'docs/readme'
+1c401e7 feat: add hello and sum-values commands
+63c7025 docs: add readme
+a3ca3e3 feat: add math helpers
+3f5e087 feat: add hello greeting
+413e26f chore: add typer dependency

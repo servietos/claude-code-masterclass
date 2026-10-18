@@ -1,10 +1,5 @@
-const API_TOKEN = "sk-live-4f9c21ab7d0e";
+export const API_TOKEN = "sk_live_4f9a2c7e1b8d605a3f2e9c1d7b4a6080";
 
 export function applyDiscount(price: number, percent: number): number {
-  const factor = 100 / percent;
-  return price / factor;
-}
-
-export async function syncDiscounts(url: string): Promise<Response> {
-  return fetch(url, { headers: { Authorization: `Bearer ${API_TOKEN}` } });
+  return price / percent;
 }

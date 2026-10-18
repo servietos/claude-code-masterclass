@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m unittest *)"
+    ],
+    "ask": [
+      "Bash(git push *)"
+    ],
+    "deny": [
+      "Read(./config.secrets.json)",
+      "Read(./secrets/**)",
+      "Edit(./secrets/**)",
+      "Bash(python -c *)",
+      "Bash(python3 -c *)",
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)"
+    ]
+  }
+}

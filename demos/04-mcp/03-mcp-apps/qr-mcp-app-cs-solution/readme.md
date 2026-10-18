@@ -24,7 +24,7 @@ Kestrel logs `Now listening on: http://0.0.0.0:3002`. The MCP endpoint is the si
 dotnet run -- --stdio
 ```
 
-Use this mode from `.vscode/mcp.json`, which starts the project with `dotnet run --project ... -- --stdio`. Logging goes to stderr so stdout carries JSON-RPC only.
+Use this mode from `.vscode/mcp.json`, which starts the project with `dotnet run --project ... -- --stdio`. Logging goes to stderr so the server's stdout carries JSON-RPC only; `dotnet run` prints its own two status lines (`Using launch settings`, `Building...`) to stdout before the server starts.
 
 ## Tool reference
 

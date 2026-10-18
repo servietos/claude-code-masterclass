@@ -15,7 +15,7 @@
 
 | Topic | Description |
 |-------|-------------|
-| [01: Intro](01-intro/readme.md) | MCP architecture essentials: client-server model, stdio vs. HTTP transports, and how hosts connect to compliant servers without bespoke integration code. |
+| [01: Intro](01-intro/readme.md) | MCP architecture essentials: client-server model, stdio vs. HTTP transports, and the eight servers in this repo's `.mcp.json`. Includes a demo that migrates a Microsoft Agent Framework starter with the Microsoft Learn MCP server. |
 | [02: MCP Server](02-mcp/readme.md) | Building a production-style MCP server in C# .NET 10 with ASP.NET Core, Streamable HTTP transport, EF Core SQLite persistence, and six HR management tools. |
 | [03: MCP Apps](03-mcp-apps/readme.md) | The MCP Apps extension that renders interactive interfaces inline in compliant hosts, plus a C# QR code MCP server that returns a generated PNG. |
 | [04: Artifact Connectors](04-artifact-connectors/readme.md) | Published artifact pages that call MCP connectors at view time: why a local `.mcp.json` server cannot be reached from a page, the connector declaration made at publish time, calls running as the viewer rather than the author, and the sharing limits that follow. |
@@ -25,6 +25,7 @@
 
 | Topic | Description |
 |-------|-------------|
+| [01: Intro](01-intro/demo-maf-foundry-migration.md) | Points Claude at the Microsoft Learn MCP server, compares a deliberately outdated Microsoft Agent Framework starter against the current API, and migrates it to run on a Microsoft Foundry project. |
 | [02: MCP Server](02-mcp/demo-hr-mcp-server.md) | Starts the C# HR MCP server on port 47002, verifies its six snake-case tools with the MCP Inspector CLI, calls two of them against seeded SQLite data, and registers the endpoint in `.mcp.json`. |
 | [03: MCP Apps](03-mcp-apps/demo-qr-code-mcp-app.md) | Runs the C# QR code server over Streamable HTTP and stdio, reads the `type: image` content block `generate_qr` returns, and proves the server exposes no `ui://` view resource. |
 | [04: Artifact Connectors](04-artifact-connectors/demo-last-two-emails.md) | Publishes a page that fetches your two most recent emails through the claude.ai Microsoft 365 connector on every open. |

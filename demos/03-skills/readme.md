@@ -19,7 +19,7 @@
 
 | Topic | Description |
 |-------|-------------|
-| [01: Intro](01-intro/readme.md) | Skills vs. slash commands side-by-side: location, invocation, YAML frontmatter anatomy, body structure, and when to choose each approach. |
+| [01: Intro](01-intro/readme.md) | Skills vs. slash commands side-by-side: location, invocation, YAML frontmatter anatomy, body structure, and when to choose each approach. Also where skills come from, `/find-skills` discovery, and what an install changes. |
 | [02: Creating](02-creating/readme.md) | The `SKILL.md` file itself: directory placement, the full frontmatter field reference, body structure, argument substitutions, and extracting a proven conversational workflow. |
 | [03: Composite](03-composite/readme.md) | Bundling `scripts/`, `references/`, and `assets/` into one portable folder: progressive disclosure, reference files versus playbooks, stacking, precedence, and cross-skill delegation. |
 | [04: Live Data and Subagents](04-live-data-and-subagents/readme.md) | Injecting live command output into a skill prompt with `` !`command` ``, and running a skill in an isolated subagent with `context: fork`, `agent`, and `background`. |
@@ -31,6 +31,7 @@ Each runnable folder inside a topic is the starter and stays pristine. Its compl
 
 | Topic | Description |
 |-------|-------------|
+| [01: Intro](01-intro/demo-docx-invoice.md) | Installs a DOCX skill from the catalog, reads back the `SKILL.md` it dropped, and lets the skill drive a TypeScript program that renders an invoice as a `.docx` file. |
 | [02: Creating](02-creating/demo-skill-from-conversation.md) | Prompts Claude to build a JavaScript sales-revenue calculator, then encodes the proven interaction pattern into a reusable skill. |
 | [04: Live Data and Subagents](04-live-data-and-subagents/demo-live-context-and-fork.md) | Inlines a project's file listing and open TODO markers with `` !`command` ``, then forks the same evidence to an Explore subagent and compares what each leaves in context. |
 | [05: Test and Package](05-test-and-package/demo-test-and-package-a-skill.md) | Builds a trigger and functional test matrix for the `code-reviewer` skill, patches the failures it exposes, and packages the result as an installable folder. |

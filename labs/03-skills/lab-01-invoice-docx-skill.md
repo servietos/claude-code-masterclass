@@ -1,6 +1,6 @@
 # Package Invoice Generation Into a Skill Claude Fires on Its Own
 
-Turn a one-off document script into a composite skill: frontmatter that makes it trigger, a reference file that holds the layout contract, a script that owns the rendering, restricted tools, and a live value injected at load time. You finish with a skill that answers "invoice Nordwind for two days of training" with a real Word document.
+Turn a one-off document script into a composite skill: frontmatter that makes it trigger, a reference file that holds the layout contract, a script that owns the rendering, pre-approved tools, and a live value injected at load time. You finish with a skill that answers "invoice Nordwind for two days of training" with a real Word document.
 
 Each step follows the same pattern:
 
@@ -10,13 +10,13 @@ Each step follows the same pattern:
 - **Recipe**: a complete implementation prompt you can use as-is or adapt from your own findings
 - **Expected Outcome**: observable artefacts that confirm success
 
-The completed reference lives in [invoice-skill-solution/](invoice-skill-solution/). Work in the pristine starter [invoice-skill/](invoice-skill/) and open the solution only when you want to compare.
+The completed reference lives in [invoice-skill-solution/](invoice-skill-solution). Work in the pristine starter [invoice-skill/](invoice-skill) and open the solution only when you want to compare.
 
 ---
 
 ## Where to Open Claude Code
 
-This lab builds a project-scoped skill, so open Claude Code inside the lab folder rather than at the repository root. `.claude/skills/` loads from the directory the session was launched in, and a session opened at the repo root leaves everything you write here inert with no error to tell you.
+This lab builds a project-scoped skill, so open Claude Code inside the lab folder. `.claude/skills/` loads from the directory the session was launched in, and a session opened at the repo root leaves everything you write here inert with no error to tell you.
 
 The starter is already in this repo, so there is nothing to scaffold: change into it and start the session there. Run this from the repo root; both commands work unchanged in PowerShell.
 
@@ -35,7 +35,7 @@ In labs/03-skills/invoice-skill write the scope document for an invoice-docx ski
 
 That works for any step whose result is just files, such as the scope document in Step 1 and the reference and renderer in Step 3. It does not work for the skill itself: `.claude/skills/invoice-docx/` loads from the directory the session was launched in, so a root session writes the skill into the lab folder and then ignores it, and neither the load-time injection in Step 4 nor the trigger test in Step 5 can fire. Launch inside the starter from Step 1 onward.
 
-Launching inside the starter is what makes the repository a monorepo to this lab rather than the project: the repo's own `/CLAUDE.md`, `/.claude/` and `/.mcp.json` stay out of the session and are read from the repo root. You read from them without ever writing into them, and every path in the prompts below is relative to the lab folder.
+Launching inside the starter is what makes the repository a monorepo to this lab, with the starter as the project: the repo's own `/CLAUDE.md`, `/.claude/` and `/.mcp.json` stay out of the session and are read from the repo root. You read from them without ever writing into them, and every path in the prompts below is relative to the lab folder.
 
 Every `.claude/skills/invoice-docx/` path below is relative to `labs/03-skills/invoice-skill/`.
 
@@ -51,11 +51,11 @@ npm install
 
 `data/invoice-sample.json` carries a realistic Austrian invoice: two parties with VAT IDs, three line items, and a 20% rate expressed as `"taxRate": 0.2`. Nothing renders it yet; that is what you build.
 
-Two document skills already ship with Claude Code, and Step 1 uses them as the thing you narrow against rather than the thing you copy: `docx` (general-purpose reading, editing, tracked changes, find-and-replace) and `create-docx` (programmatic generation via docx-js). List what you have with `/skills`.
+Step 1 narrows the new skill against two general document skills: `docx` (general-purpose reading, editing, tracked changes, find-and-replace) and `create-docx` (programmatic generation via docx-js). Neither ships with Claude Code; install a DOCX skill from the catalog with `/find-skills`, the way [Topic 01](../../demos/03-skills/01-intro/readme.md) does, and list what you have with `/skills`.
 
 ---
 
-## Step 1: Draw the Scope Line Against the Shipped Skills
+## Step 1: Draw the Scope Line Against the General Document Skills
 
 **Overview:** A skill earns its place by being narrower than what already exists. Before writing a line of it, establish what an invoice skill knows that a general document skill cannot.
 
@@ -73,7 +73,7 @@ invoices for my company.
    skill calls? Argue both sides, then recommend one.
 ```
 
-**Finding:** A strong answer separates document mechanics (tables, bold runs, page setup, which the shipped skills cover) from domain rules (which fields an invoice must carry, VAT as a fraction, net versus gross, due-date defaults, that a missing VAT ID is a question to ask rather than a value to invent). On the third question it should land on the script: a model that recomputes totals in prose will eventually produce a document and a reply that disagree, and only one of them is the invoice. If the answer wants the arithmetic in `SKILL.md`, push back with that failure case.
+**Finding:** A strong answer separates document mechanics (tables, bold runs, page setup, which the general document skills cover) from domain rules (which fields an invoice must carry, VAT as a fraction, net versus gross, due-date defaults, that a missing VAT ID is a question for the user). On the third question it should land on the script: a model that recomputes totals in prose will eventually produce a document and a reply that disagree, and only one of them is the invoice. If the answer wants the arithmetic in `SKILL.md`, push back with that failure case.
 
 **Recipe:**
 
@@ -87,13 +87,13 @@ Write a scope document for a skill named invoice-docx, under 40 lines, with thes
   which it must ask for
 ```
 
-**Expected Outcome:** A scope document whose In-scope list is about invoices, not about Word. The trigger phrases are things a person actually types ("invoice Nordwind for two days of training"), not descriptions of the skill.
+**Expected Outcome:** A scope document whose In-scope list is about invoices and leaves Word mechanics to the Out-of-scope list. The trigger phrases are things a person actually types, such as "invoice Nordwind for two days of training".
 
 ---
 
-## Step 2: Write the Skill and Restrict Its Tools
+## Step 2: Write the Skill and Pre-Approve Its Tools
 
-**Overview:** Author `SKILL.md` with frontmatter that triggers reliably and an `allowed-tools` line that makes the skill incapable of wandering.
+**Overview:** Author `SKILL.md` with frontmatter that triggers reliably and an `allowed-tools` line that pre-approves the three tools the skill runs, so a triggered invoice does not stall on permission prompts.
 
 **Research / Planning / Discussion:**
 
@@ -105,10 +105,11 @@ For the invoice-docx skill, propose the frontmatter:
 2. An allowed-tools value. The skill needs to read data, write a JSON file and a document,
    and run a Node script. What is the minimum set, and what does each entry let through?
 3. Explain the difference between a skill that lists allowed-tools and one that does not,
-   in terms of what the session can do while the skill is active.
+   in terms of what the session can do while the skill is active. Which frontmatter field
+   takes a tool away?
 ```
 
-**Finding:** The description should carry the trigger phrases verbatim and an explicit exclusion, because a description that only says what the skill does will also match every other Word request. On tools, `Read, Write, Bash(node:*)` is the honest minimum; watch for an answer that adds `Bash(*)` or `Edit` without justifying them. The third answer should be clear that `allowed-tools` narrows what the skill may use, so a skill that needs only three tools should not inherit the whole session's reach.
+**Finding:** The description should carry the trigger phrases verbatim and an explicit exclusion, because a description that only says what the skill does will also match every other Word request. On tools, `Read, Write, Bash(node:*)` is the honest minimum; watch for an answer that adds `Bash(*)` or `Edit` without justifying them, because every entry runs without a prompt. The third answer should be clear that `allowed-tools` is a pre-approval: the listed tools run without a permission prompt for the turn that invokes the skill, every other tool stays callable under your normal permission rules, and only `disallowed-tools` takes a tool away while the skill is active. Push back if Claude describes `allowed-tools` as a sandbox.
 
 **Recipe:**
 
@@ -141,8 +142,8 @@ in references/, or in scripts/, and justify the move on two grounds: is it long 
 bloat the file Claude loads on every trigger, and is it static enough that it does not get
 rewritten per invoice?
 
-Then: what exactly should a reference file for this skill contain, given that a script,
-not the model, does the rendering?
+Then: what exactly should a reference file for this skill contain, given that a script
+does the rendering and the model only supplies the data?
 ```
 
 **Finding:** The data shape, the block-by-block document layout, and the arithmetic rules are static and belong in `references/`. Decision points (what to ask for, what may be defaulted, when to refuse) stay in `SKILL.md`. The useful insight for the second question is that the reference is the contract between the model and the script: the model writes JSON, the script consumes it, and the reference is what keeps them agreeing.
@@ -161,7 +162,7 @@ Refactor .claude/skills/invoice-docx/:
      seller block, buyer block, a four-column table with a bold header row and
      right-aligned numeric columns, then right-aligned Net, VAT and Total with Total bold
    - Export the document builder as a function as well, so it can be reused later
-3. Trim SKILL.md so it links to the reference instead of restating the layout.
+3. Trim SKILL.md so it links to the reference and no longer restates the layout.
 
 Then render the sample: node .claude/skills/invoice-docx/scripts/render.mjs \
   data/invoice-sample.json out/invoice-sample.docx
@@ -185,7 +186,7 @@ My invoice skill defaults the issue date to today. Right now nothing tells it wh
 3. What would go wrong if I injected the entire data/ directory listing this way instead?
 ```
 
-**Finding:** The answer should be precise that the backtick-bang block runs when the skill is loaded and its stdout is substituted into the body before the model reads it, which is what makes it current rather than remembered. On the third question, look for the cost argument: injection happens on every trigger, so a large or slow command is paid for every time, and directory listings grow without bound.
+**Finding:** The answer should be precise that the backtick-bang block runs when the skill is loaded and its stdout is substituted into the body before the model reads it, which is what makes it current on every load. On the third question, look for the cost argument: injection happens on every trigger, so a large or slow command is paid for every time, and directory listings grow without bound.
 
 **Recipe:**
 
@@ -198,7 +199,7 @@ Then verify the injection: start a fresh session, trigger the skill, and have it
 which date it will put on the invoice without rendering anything.
 ```
 
-**Expected Outcome:** The skill reports the real current date, not a guess and not a date from its training. Editing the line to an invalid command and re-triggering shows the failure surfacing at load time, which is worth seeing once.
+**Expected Outcome:** The skill reports the real current date, the one `date` printed when the skill loaded. Editing the line to an invalid command and re-triggering shows the failure surfacing at load time, which is worth seeing once.
 
 ---
 
@@ -221,7 +222,7 @@ Should not trigger:
 4. "Fix the heading styles in report.docx."
 ```
 
-**Finding:** Prompt 2 is the interesting one: it fires the skill but is missing the rate and the buyer's VAT ID, so the right behaviour is to ask rather than to render. If the prediction says the skill would happily invent a rate, tighten the Inputs table before continuing.
+**Finding:** Prompt 2 is the interesting one: it fires the skill but is missing the rate and the buyer's VAT ID, so the right behaviour is to ask for both before rendering. If the prediction says the skill would happily invent a rate, tighten the Inputs table before continuing.
 
 **Recipe:**
 
@@ -231,4 +232,4 @@ and 8 hours of follow-up support at 125 per hour. Use my details from
 data/invoice-sample.json as the seller. 20% VAT, payable in 14 days.
 ```
 
-**Expected Outcome:** Claude triggers `invoice-docx` without being told to, writes a new JSON file under `data/`, runs the renderer, and reports the output path with net, VAT and gross taken from the script's output. The document opens in Word and the totals match the JSON. Ask for the same invoice at 10% VAT and only the JSON and the document change, never the skill.
+**Expected Outcome:** Claude triggers `invoice-docx` without being told to, writes a new JSON file under `data/`, runs the renderer, and reports the output path with net, VAT and gross taken from the script's output. The document opens in Word and the totals match the JSON. Ask for the same invoice at 10% VAT and only the JSON and the document change; the skill stays as it is.

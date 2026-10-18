@@ -23,7 +23,7 @@ Each task follows the same pattern:
 
 ## Where to Open Claude Code
 
-This lab builds its own harness, so open Claude Code inside the lab project rather than at the repo root. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
+This lab builds its own harness, so open Claude Code inside the lab project. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
 
 The starter is already in this repo, so there is nothing to scaffold: change into the React app inside it and start the session there. Run this from the repo root; both commands work unchanged in PowerShell.
 
@@ -44,7 +44,7 @@ That works for any step whose result is just files, such as the fixes in Tasks 5
 
 Restart the session with `/exit` then `claude` after any edit to `.claude/settings.json` or `.mcp.json`, because both are read at startup.
 
-That launch directory is not a detail, it is the lesson, and it is what makes the repository a monorepo to this lab rather than the project: the repo's own `/CLAUDE.md`, `/.claude/` and `/.mcp.json` stay out of the session and are read from the repo root. You read from them without ever writing into them, and every prompt below uses paths relative to the React app.
+That launch directory is the lesson, and it is what makes the repository a monorepo to this lab, with the React app as the project: the repo's own `/CLAUDE.md`, `/.claude/` and `/.mcp.json` stay out of the session and are read from the repo root. You read from them without ever writing into them, and every prompt below uses paths relative to the React app.
 
 ---
 
@@ -94,9 +94,9 @@ npm start
 
 `npm install` pulls roughly 1300 packages and takes a minute or two on a cold cache. `npm start` prints `Compiled successfully!` followed by `Local: http://localhost:3000`, and the app opens there.
 
-Do not skip the catalog API. When the fetch fails, `FoodShopContainer` returns early with an error panel and renders nothing else: you get `Error loading catalog`, `Failed to fetch` and a `Retry` button, with no cart sidebar and no Checkout button at all. Tasks 6 and 7 are impossible in that state.
+Do not skip the catalog API. When the fetch fails, `FoodShopContainer` returns early with an error panel and renders nothing else: you get `Error loading catalog`, `Failed to fetch` and a `Retry` button, with no cart sidebar and no Checkout button at all. Tasks 5 and 6 are impossible in that state.
 
-The dependency set in `package.json` is pinned so the toolchain is coherent: React and React DOM at `^18.2.0` are paired with `@types/react` `^18.3.12` and `@types/react-dom` `^18.3.1`, and `typescript` `^4.9.5` is declared explicitly rather than being inherited as an optional peer of `react-scripts`. Every source file is `.tsx`, so an undeclared compiler is a trap waiting for the first person who installs with `--legacy-peer-deps`, pnpm or yarn.
+The dependency set in `package.json` is pinned so the toolchain is coherent: React and React DOM at `^18.2.0` are paired with `@types/react` `^18.3.12` and `@types/react-dom` `^18.3.1`, and `typescript` `^4.9.5` is declared explicitly as a direct dependency, where `react-scripts` lists it only as an optional peer. Every source file is `.tsx`, so an undeclared compiler is a trap waiting for the first person who installs with `--legacy-peer-deps`, pnpm or yarn.
 
 ---
 
@@ -109,14 +109,14 @@ The dependency set in `package.json` is pinned so the toolchain is coherent: Rea
 ```text
 You started in labs/02-harness/lab-02-food-shop/shop-ui/food-shop-react, so no CLAUDE.md was auto-loaded for this
 session. Read /CLAUDE.md, the repository's own file at the repo root. What are
-the rules that apply when working in this repository, covering code style, commits, brand
-voice, and workflow? Also tell me which of them Claude Code would have applied automatically
+the rules that apply when working in this repository, covering code style, commits,
+writing, and workflow? Also tell me which of them Claude Code would have applied automatically
 had I launched at the repo root instead.
 ```
 
-**Finding:** Claude should surface the hard rules (no commits without explicit request, relative internal links, language-declared code fences), the brand voice rules (no em dashes, Mermaid label format, 4-sentence paragraph cap), and the workflow rules (plan mode for non-trivial tasks, subagent strategy, verification before done). A good response quotes the relevant sections rather than paraphrasing vaguely.
+**Finding:** Claude should surface the hard rules (no commits without explicit request, relative internal links, language-declared code fences), the writing rules (no em dashes, no negative parallelism), and the workflow rules (plan first for non-trivial tasks, delegate domain work to the owning agent, verify before reporting done). A good response quotes the relevant sections word for word.
 
-It should also be honest about the second question: none of those rules loaded on their own here, because memory files are discovered from the launch directory upward through parent directories only when they are part of the same project tree, and a session rooted in the React app treats that app as the project. Reading the file explicitly is what put the rules into context. Push back if Claude gives a generic summary without citing specific rules, and push back if it claims the repository's CLAUDE.md was already active. Note that the brand voice section is scoped to `readme.md` files under `demos/`, so a precise answer says so rather than claiming those rules govern every file.
+It should also be honest about the second question: none of those rules loaded on their own here, because memory files are discovered from the launch directory upward through parent directories only when they are part of the same project tree, and a session rooted in the React app treats that app as the project. Reading the file explicitly is what put the rules into context. Push back if Claude gives a generic summary without citing specific rules, and push back if it claims the repository's CLAUDE.md was already active. Note that the one exception to the no-comments rule is scoped to `.sh`, `.ps1` and hook files under `demos/`, so a precise answer names that scope and keeps the rule for every other file.
 
 **Recipe:**
 
@@ -126,7 +126,7 @@ them by category: code style, writing style, workflow, and hard constraints. For
 which paths it applies to, expressed relative to this React app.
 ```
 
-**Expected Outcome:** Claude produces a grouped list of rules drawn directly from the repository's CLAUDE.md, with the scope of each group made explicit, and states plainly that the file was read on request rather than loaded automatically. Keep this response visible: it is the reference for every task that follows.
+**Expected Outcome:** Claude produces a grouped list of rules drawn directly from the repository's CLAUDE.md, with the scope of each group made explicit, and states plainly that the file was read on request. Keep this response visible: it is the reference for every task that follows.
 
 > The recipe above is one possible prompt based on typical findings from the research above. If your conversation led to different conclusions, use those instead.
 
@@ -134,31 +134,36 @@ which paths it applies to, expressed relative to this React app.
 
 ## Task 2: Register Both MCP Servers in One File
 
-**Overview:** Two MCPs carry the rest of this lab: Context7 fetches version-accurate library documentation, and Chrome DevTools drives a browser so Claude can screenshot its own work. The repository registers both in its own `.mcp.json`, which a session launched in the React app never loads, so you reproduce them in the app's own file. Doing both at once is deliberate: `context7` is an HTTP server and `chrome-devtools` is a stdio server, and seeing the two shapes in one file is the clearest way to learn the difference.
+**Overview:** Two MCPs carry the rest of this lab: Context7 fetches version-accurate library documentation, and Chrome DevTools drives a browser so Claude can screenshot its own work. Both are public servers listed on the [GitHub MCP Registry](https://github.com/mcp), so you register them from their registry pages in the app's own `.mcp.json`. Doing both at once is deliberate: `context7` is an HTTP server and `chrome-devtools` is a stdio server, and seeing the two shapes in one file is the clearest way to learn the difference.
 
 **Research / Planning / Discussion:**
 
 ```text
-Read /.mcp.json, the repository's own file at the repo root, and show me the context7 and chrome-devtools
-entries side by side. Then answer:
+Open the GitHub MCP Registry pages https://github.com/mcp/upstash/context7 and
+https://github.com/mcp/ChromeDevTools/chrome-devtools-mcp and show me the configuration each one
+gives, side by side. Then answer:
 
 1. One is an HTTP server and one is stdio. Which is which, and what does that mean for what
    actually runs on my machine?
 2. Context7 needs a two-step call to be useful. What are the two tools, and in what order?
 3. Which browser does the chrome-devtools invocation drive: does it launch its own Chrome, or
    attach to one I already have open? What flag changes that, and what must I start Chrome with?
-4. Why is neither server active in this session right now, given that the file exists?
+4. The repository registers its own servers in /.mcp.json at the repo root. Why would none of
+   them be active in this session, and where must this project's file go instead?
 ```
 
-**Finding:** Claude should quote both real entries: `"context7": { "type": "http", "url": "https://mcp.context7.com/mcp" }` and `"chrome-devtools": { "command": "npx", "args": ["-y", "chrome-devtools-mcp@latest"], "type": "stdio" }`. An HTTP server is a hosted endpoint with nothing to install; a stdio server is a local process launched from `command` and `args`. The Context7 workflow is `resolve-library-id` first for a stable ID, then `query-docs` with that ID and a topic.
+**Finding:** Claude should quote both registry entries: Context7 is a remote server at `https://mcp.context7.com/mcp`, which becomes `"context7": { "type": "http", "url": "https://mcp.context7.com/mcp" }`, and Chrome DevTools gives `"chrome-devtools": { "command": "npx", "args": ["-y", "chrome-devtools-mcp@latest"] }`, which runs as `"type": "stdio"`. An HTTP server is a hosted endpoint with nothing to install; a stdio server is a local process launched from `command` and `args`. The Context7 workflow is `resolve-library-id` first for a stable ID, then `query-docs` with that ID and a topic.
 
-On browsers, the default invocation **launches and reuses its own Chrome** with its own profile; attaching to yours is opt-in via `--browser-url=http://127.0.0.1:9222` in `args`, with Chrome started using `--remote-debugging-port=9222`. On the last question it should say `.mcp.json` is read from the launch directory, so the repository's file is inert here. Push back if Claude skips the resolve step, claims the default config attaches to an existing tab, or says the servers are already available because a file with that name exists up the tree.
+On browsers, the default invocation **launches and reuses its own Chrome** with its own profile; attaching to yours is opt-in via `--browser-url=http://127.0.0.1:9222` in `args`, with Chrome started using `--remote-debugging-port=9222`. On the last question it should say `.mcp.json` is read from the launch directory, so the repository's file is inert here and this project's file goes in the React app. Push back if Claude skips the resolve step, claims the default config attaches to an existing tab, or says the servers are already available because a file with that name exists up the tree.
 
 **Recipe:**
 
 ```text
-Create .mcp.json in this project, the React app, containing BOTH the context7 and chrome-devtools
-entries copied from /.mcp.json at the repo root. Do not edit the repository's file.
+Create .mcp.json in this project, the React app, containing BOTH servers from the GitHub MCP
+Registry: a context7 entry of type http for the remote URL listed at
+https://github.com/mcp/upstash/context7, and a chrome-devtools entry of type stdio with the npx
+command listed at https://github.com/mcp/ChromeDevTools/chrome-devtools-mcp. Do not edit the
+repository's /.mcp.json at the repo root.
 
 Then show me, as a separate snippet and without putting it in the file, the edited args array that
 would make chrome-devtools attach to my own Chrome on the remote debugging port, plus the command
@@ -173,7 +178,7 @@ useState hook. I am about to implement a checkout form modal with controlled inp
 validation, so pull the docs that are most relevant to that pattern.
 ```
 
-**Expected Outcome:** A `.mcp.json` appears at `labs/02-harness/lab-02-food-shop/shop-ui/food-shop-react/.mcp.json` carrying both entries, and after one restart `/mcp` lists `context7` and `chrome-devtools`. Claude returns focused React documentation sourced live from Context7 rather than from training data, and states plainly that the default `npx -y chrome-devtools-mcp@latest` invocation launches its own Chrome, showing the `--browser-url` variant beside the `chrome --remote-debugging-port=9222` command.
+**Expected Outcome:** A `.mcp.json` appears at `labs/02-harness/lab-02-food-shop/shop-ui/food-shop-react/.mcp.json` carrying both entries, and after one restart `/mcp` lists `context7` and `chrome-devtools`. Claude returns focused React documentation sourced live from Context7, and states plainly that the default `npx -y chrome-devtools-mcp@latest` invocation launches its own Chrome, showing the `--browser-url` variant beside the `chrome --remote-debugging-port=9222` command.
 
 Confirm the browser half now, so Tasks 5 and 6 do not stall on it: ask Claude to screenshot `http://localhost:3000`. With the catalog API running you see the shop catalog and the cart sidebar, and with it stopped you see only the `Error loading catalog` panel.
 
@@ -183,7 +188,7 @@ Confirm the browser half now, so Tasks 5 and 6 do not stall on it: ask Claude to
 
 ## Task 3: PostToolUse Hook for a Tool Interaction Log
 
-**Overview:** Add a PostToolUse hook that records every tool call Claude makes, so you can watch its actions unfold instead of waiting for an end-of-turn summary: which files it reads, what it writes, what shell commands it runs. This is the fastest way to build intuition for how Claude actually works inside a session, and it is also a lesson in reading a hook contract carefully before writing one.
+**Overview:** Add a PostToolUse hook that records every tool call Claude makes, so you can watch its actions unfold as they happen: which files it reads, what it writes, what shell commands it runs. This is the fastest way to build intuition for how Claude actually works inside a session, and it is also a lesson in reading a hook contract carefully before writing one.
 
 **Research / Planning / Discussion:**
 
@@ -195,7 +200,7 @@ stdin, which environment variables does it get, and where does a PostToolUse hoo
 actually go?
 ```
 
-**Finding:** Claude should identify the `PostToolUse` hook type and get three things right. First, the tool name and its inputs arrive as JSON on **stdin**, with fields `tool_name`, `tool_input` and `tool_output`; parse them with `jq`. Second, the only environment variables a hook receives are `CLAUDE_PROJECT_DIR`, `CLAUDE_PLUGIN_ROOT`, `CLAUDE_PLUGIN_DATA`, `CLAUDE_EFFORT`, `CLAUDE_CODE_REMOTE` and `CLAUDE_CODE_BRIDGE_SESSION_ID`; there is no `CLAUDE_TOOL_NAME`.
+**Finding:** Claude should identify the `PostToolUse` hook type and get three things right. First, the tool name and its inputs arrive as JSON on **stdin**, with fields `tool_name`, `tool_input` and `tool_response`; parse them with `jq`. Second, the only environment variables a hook receives are `CLAUDE_PROJECT_DIR`, `CLAUDE_PLUGIN_ROOT`, `CLAUDE_PLUGIN_DATA`, `CLAUDE_EFFORT`, `CLAUDE_CODE_REMOTE` and `CLAUDE_CODE_BRIDGE_SESSION_ID`; there is no `CLAUDE_TOOL_NAME`.
 
 Third, plain stdout from a PostToolUse hook is written to the debug log and is not shown in the transcript (only `UserPromptSubmit`, `UserPromptExpansion` and `SessionStart` are exceptions). So a bare `echo` is invisible. To surface a line to the user, emit JSON with a top-level `systemMessage` field; to keep a durable trace, append to a log file and tail it in a second terminal. Push back hard if Claude claims an environment variable carries the tool name, and push back if it logs only the tool name without any input: the file path or command is what makes the output meaningful.
 
@@ -215,7 +220,7 @@ Use jq for the JSON parsing.
 
 Then restart the session with `/exit` followed by `claude`. Hook configuration is read at startup, so an unrestarted session runs the old, hookless config and you will conclude the hook is broken when it is only unloaded.
 
-**Expected Outcome:** `labs/02-harness/lab-02-food-shop/shop-ui/food-shop-react/.claude/settings.json` gains a `PostToolUse` entry whose command reads stdin rather than environment variables. After the restart, ask Claude to read any file in the app, then run `tail -f .claude/tool-log.txt` in a second terminal opened in the same folder: a line like `[Read] src/components/ShopItem.tsx` appears there, and the `systemMessage` variant shows up in the session. This is the sharpest proof of project scope in the lab: put the same hook in the repository's `.claude/settings.json` instead and nothing would ever fire here. In Tasks 6 and 7 the log grows into a full trace of every file Claude reads and writes as the React fixes unfold.
+**Expected Outcome:** `labs/02-harness/lab-02-food-shop/shop-ui/food-shop-react/.claude/settings.json` gains a `PostToolUse` entry whose command reads its payload from stdin. After the restart, ask Claude to read any file in the app, then run `tail -f .claude/tool-log.txt` in a second terminal opened in the same folder: a line like `[Read] src/components/ShopItem.tsx` appears there, and the `systemMessage` variant shows up in the session. This is the sharpest proof of project scope in the lab: put the same hook in the repository's `.claude/settings.json` instead and nothing would ever fire here. In Tasks 5 and 6 the log grows into a full trace of every file Claude reads and writes as the React fixes unfold.
 
 > The recipe above is one possible prompt based on typical findings from the research above. If your conversation led to different conclusions, use those instead.
 
@@ -223,7 +228,7 @@ Then restart the session with `/exit` followed by `claude`. Hook configuration i
 
 ## Task 4: Custom Slash Command for `/write-docs`
 
-**Overview:** Create a project-level slash command that generates documentation for a React component. Instead of writing the same documentation prompt every time, type `/write-docs` followed by a component path and get structured docs back instantly. This is the first harness element that gives you something reusable to invoke yourself, and a template for any repeatable task you want to encode as a command.
+**Overview:** Create a project-level slash command that generates documentation for a React component. Type `/write-docs` followed by a component path and get structured docs back instantly, with no documentation prompt to retype. This is the first harness element that gives you something reusable to invoke yourself, and a template for any repeatable task you want to encode as a command.
 
 **Research / Planning / Discussion:**
 
@@ -233,7 +238,7 @@ format do they use, how does Claude receive arguments passed to the command, and
 frontmatter fields does a command file support?
 ```
 
-**Finding:** Claude should explain that project-level commands live in `.claude/commands/` as markdown files, that the filename becomes the command name (`write-docs.md` becomes `/write-docs`), that `$ARGUMENTS` in the file body receives anything typed after the command name, and that the file body is the instruction Claude executes. If the command declares tools in frontmatter, the field is `allowed-tools`, not `tools`.
+**Finding:** Claude should explain that project-level commands live in `.claude/commands/` as markdown files, that the filename becomes the command name (`write-docs.md` becomes `/write-docs`), that `$ARGUMENTS` in the file body receives anything typed after the command name, and that the file body is the instruction Claude executes. If the command declares tools in frontmatter, the field is `allowed-tools`; there is no `tools` field.
 
 A good answer shows the file path, the `$ARGUMENTS` placeholder, and a minimal example. "Project-level" means the project the session was launched in, so here the command belongs in the React app and Claude creates the `.claude/commands/` directory on the way. The repository has its own `.claude/commands/` five levels up holding the three course-authoring commands; those are invisible from this session and stay untouched. Push back if Claude describes user-level commands, and push back if it proposes writing into the repository's directory because one already exists there.
 
@@ -288,7 +293,7 @@ The tool log from Task 3 shows exactly one `[Edit]` line for the component that 
 
 ## Task 6: Checkpoint, Then Add the Checkout Form
 
-**Overview:** The checkout form is the largest change in this lab. Before starting, create a checkpoint so the conversation and file state can be restored if something goes wrong. This introduces checkpoints as a standard habit before significant changes, not a recovery tool of last resort.
+**Overview:** The checkout form is the largest change in this lab. Before starting, create a checkpoint so the conversation and file state can be restored if something goes wrong. This introduces checkpoints as a standard habit before significant changes.
 
 **Research / Planning / Discussion:**
 

@@ -1,0 +1,10 @@
+{
+  "name": "receipt-shop",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Small receipt module with a green node:test suite, used for the checkpoint and worktree lab",
+  "scripts": {
+    "test": "node --test"
+  }
+}

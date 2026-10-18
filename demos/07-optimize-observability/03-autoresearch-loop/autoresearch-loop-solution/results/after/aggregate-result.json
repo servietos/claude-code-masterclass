@@ -1,0 +1,464 @@
+{
+  "schemaVersion": 1,
+  "claudeVersion": "2.1.302",
+  "startedAt": "2026-10-17T17:28:05.151Z",
+  "durationSeconds": 89,
+  "costUsd": 0.5233444,
+  "partial": false,
+  "suite": {
+    "root": "D:\\git-customers\\claude-code-masterclass\\demos\\07-optimize-observability\\03-autoresearch-loop\\autoresearch-loop-solution\\course-status",
+    "ablation": "with-without",
+    "threshold": 1,
+    "concurrency": 1,
+    "plugins": [
+      {
+        "name": "course-status",
+        "version": "1.0.0",
+        "path": "D:\\git-customers\\claude-code-masterclass\\demos\\07-optimize-observability\\03-autoresearch-loop\\autoresearch-loop-solution\\course-status"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "class-status",
+      "dir": "evals\\class-status",
+      "source": "mixed",
+      "promptMarkdown": "Use the course-status skill to answer: what is the current status of the class?",
+      "runsPerCase": 3,
+      "timeoutSeconds": 300,
+      "maxTurns": 10,
+      "graders": [
+        {
+          "name": "completion",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "last_message",
+            "pattern": "\\b\\d{1,3}\\s?%",
+            "flags": "",
+            "match": "contains"
+          }
+        },
+        {
+          "name": "gaps",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "last_message",
+            "pattern": "\\b(planned|doing)\\b",
+            "flags": "i",
+            "match": "contains"
+          }
+        },
+        {
+          "name": "quotes-log",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "last_message",
+            "pattern": "Evaluated 14 modules -> course/dashboard\\.json",
+            "flags": "",
+            "match": "contains"
+          }
+        },
+        {
+          "name": "read-log",
+          "type": "tool_used",
+          "weight": 1,
+          "config": {
+            "tool": "Read",
+            "input_match": "evaluate\\.log"
+          }
+        },
+        {
+          "name": "skill-fired",
+          "type": "tool_used",
+          "weight": 1,
+          "config": {
+            "tool": "Skill",
+            "input_match": "\"skill\"\\s*:\\s*\"(?:[\\w-]+:)?course-status\""
+          }
+        },
+        {
+          "name": "status-table",
+          "type": "regex",
+          "weight": 1,
+          "config": {
+            "target": "last_message",
+            "pattern": "^\\s*\\|.*\\bmodule\\b",
+            "flags": "im",
+            "match": "contains"
+          }
+        }
+      ],
+      "arms": {
+        "with": [
+          {
+            "score": 1,
+            "passed": true,
+            "turns": 5,
+            "costUsd": 0.12116180000000001,
+            "judgeCostUsd": 0,
+            "durationSeconds": 15,
+            "startedAt": "2026-10-17T17:28:05.279Z",
+            "error": null,
+            "tracePath": "C:\\Users\\AlexanderKastil\\AppData\\Local\\Temp\\claude-eval-vBGWiL\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "completion",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \\b\\d{1,3}\\s?%",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "gaps",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \\b(planned|doing)\\b",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "quotes-log",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched Evaluated 14 modules -> course/dashboard\\.json",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "read-log",
+                "passed": true,
+                "weight": 1,
+                "explanation": "Read called 1x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "skill-fired",
+                "passed": true,
+                "weight": 1,
+                "explanation": "Skill called 1x (expected 1..∞)",
+                "withOnly": true,
+                "scored": false
+              },
+              {
+                "name": "status-table",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched ^\\s*\\|.*\\bmodule\\b",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          },
+          {
+            "score": 1,
+            "passed": true,
+            "turns": 5,
+            "costUsd": 0.1207606,
+            "judgeCostUsd": 0,
+            "durationSeconds": 15,
+            "startedAt": "2026-10-17T17:28:20.688Z",
+            "error": null,
+            "tracePath": "C:\\Users\\AlexanderKastil\\AppData\\Local\\Temp\\claude-eval-RmTyTe\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "completion",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \\b\\d{1,3}\\s?%",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "gaps",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \\b(planned|doing)\\b",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "quotes-log",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched Evaluated 14 modules -> course/dashboard\\.json",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "read-log",
+                "passed": true,
+                "weight": 1,
+                "explanation": "Read called 1x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "skill-fired",
+                "passed": true,
+                "weight": 1,
+                "explanation": "Skill called 1x (expected 1..∞)",
+                "withOnly": true,
+                "scored": false
+              },
+              {
+                "name": "status-table",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched ^\\s*\\|.*\\bmodule\\b",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          },
+          {
+            "score": 1,
+            "passed": true,
+            "turns": 5,
+            "costUsd": 0.11822060000000001,
+            "judgeCostUsd": 0,
+            "durationSeconds": 27,
+            "startedAt": "2026-10-17T17:28:35.875Z",
+            "error": null,
+            "tracePath": "C:\\Users\\AlexanderKastil\\AppData\\Local\\Temp\\claude-eval-PIVwwO\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "completion",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \\b\\d{1,3}\\s?%",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "gaps",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched \\b(planned|doing)\\b",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "quotes-log",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched Evaluated 14 modules -> course/dashboard\\.json",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "read-log",
+                "passed": true,
+                "weight": 1,
+                "explanation": "Read called 1x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "skill-fired",
+                "passed": true,
+                "weight": 1,
+                "explanation": "Skill called 1x (expected 1..∞)",
+                "withOnly": true,
+                "scored": false
+              },
+              {
+                "name": "status-table",
+                "passed": true,
+                "weight": 1,
+                "explanation": "matched ^\\s*\\|.*\\bmodule\\b",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          }
+        ],
+        "without": [
+          {
+            "score": 0,
+            "passed": false,
+            "turns": 2,
+            "costUsd": 0.0528408,
+            "judgeCostUsd": 0,
+            "durationSeconds": 8,
+            "startedAt": "2026-10-17T17:29:02.542Z",
+            "error": null,
+            "tracePath": "C:\\Users\\AlexanderKastil\\AppData\\Local\\Temp\\claude-eval-9rgkLv\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "completion",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "gaps",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "quotes-log",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "read-log",
+                "passed": false,
+                "weight": 1,
+                "explanation": "Read called 0x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "status-table",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          },
+          {
+            "score": 0,
+            "passed": false,
+            "turns": 2,
+            "costUsd": 0.0527254,
+            "judgeCostUsd": 0,
+            "durationSeconds": 14,
+            "startedAt": "2026-10-17T17:29:10.589Z",
+            "error": null,
+            "tracePath": "C:\\Users\\AlexanderKastil\\AppData\\Local\\Temp\\claude-eval-Kx2pNI\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "completion",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "gaps",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "quotes-log",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "read-log",
+                "passed": false,
+                "weight": 1,
+                "explanation": "Read called 0x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "status-table",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          },
+          {
+            "score": 0,
+            "passed": false,
+            "turns": 3,
+            "costUsd": 0.057635200000000004,
+            "judgeCostUsd": 0,
+            "durationSeconds": 10,
+            "startedAt": "2026-10-17T17:29:24.539Z",
+            "error": null,
+            "tracePath": "C:\\Users\\AlexanderKastil\\AppData\\Local\\Temp\\claude-eval-N0vum8\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "completion",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "gaps",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "quotes-log",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "read-log",
+                "passed": false,
+                "weight": 1,
+                "explanation": "Read called 0x (expected 1..∞)",
+                "withOnly": false,
+                "scored": true
+              },
+              {
+                "name": "status-table",
+                "passed": false,
+                "weight": 1,
+                "explanation": "pattern not found in last_message",
+                "withOnly": false,
+                "scored": true
+              }
+            ]
+          }
+        ]
+      },
+      "aggregates": {
+        "score": 1,
+        "passRate": 1,
+        "scoreWithout": 0,
+        "passRateWithout": 0,
+        "delta": 1
+      }
+    }
+  ],
+  "aggregates": {
+    "casesTotal": 1,
+    "casesPassed": 1,
+    "overallScore": 1,
+    "overallPassRate": 1,
+    "meanDelta": 1
+  }
+}

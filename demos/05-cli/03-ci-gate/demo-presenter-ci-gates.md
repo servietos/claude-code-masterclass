@@ -16,7 +16,7 @@ How a model judgement becomes a deterministic exit code, and why the third exit 
 
 ### Beat 1: the prompt is a file, and the run that reads it cannot write (1 min)
 
-**Open:** [`prompt.txt`](lint-with-claude-solution/prompt.txt) · [`src/`](lint-with-claude-solution/src/) · [`test/`](lint-with-claude-solution/test/)
+**Open:** [`prompt.txt`](lint-with-claude-solution/prompt.txt) · [`src/`](lint-with-claude-solution/src) · [`test/`](lint-with-claude-solution/test)
 **Say:** The criteria live in a file the team reviews in a pull request. An audit that can edit the code it grades is not an audit.
 
 ```text
@@ -28,13 +28,12 @@ If it is perfectly clean, end with LINT_PASS.
 **Result:** [`lint-with-claude.sh`](lint-with-claude-solution/lint-with-claude.sh), grown from a bare shebang
 
 ```bash
-echo "Running Claude headless..."
-# < /dev/null keeps claude from waiting on stdin when nobody is at the terminal
-OUTPUT=$(claude -p "$(cat prompt.txt)" --tools "Read,Glob,Grep" --max-turns 10 < /dev/null)
-echo "$OUTPUT"
+output=$(claude -p "$(cat prompt.txt)" --tools "Read,Glob,Grep" --max-turns 10)
+status=$?
+printf '%s\n' "$output"
 ```
 
-**Gotcha:** `--tools`, not `--allowed-tools`. `< /dev/null` stops the step hanging in a runner.
+**Gotcha:** the flag is `--tools`, which replaces the built-in tool set. Add `< /dev/null` to the `claude` call when a runner step hangs waiting on stdin.
 
 ### Beat 2: three exit codes, because ambiguous output is neither pass nor fail (1 min)
 
@@ -46,23 +45,25 @@ The script must grep the output for LINT_PASS and LINT_FAIL.
 Exit 0 for LINT_PASS, exit 1 for LINT_FAIL, exit 2 for any other outcome.
 ```
 
-**Result:** `LINT_FAIL` ended up tested first
+**Result:** a token counts as a verdict only when exactly one of the two appears
 
 ```bash
-# the exit code is the CI contract: 1 fails the build, 0 passes it, 2 says the run was unusable
-if echo "$OUTPUT" | grep -q "LINT_FAIL"; then
-  echo "LINT_FAIL found. Build blocked."
-  exit 1
-elif echo "$OUTPUT" | grep -q "LINT_PASS"; then
-  echo "LINT_PASS found. Build approved."
+pass=0
+fail=0
+# Match each verdict token anywhere in the response
+printf '%s' "$output" | grep -q 'LINT_PASS' && pass=1
+printf '%s' "$output" | grep -q 'LINT_FAIL' && fail=1
+# Exactly one token is a verdict; zero or both is an outcome the gate cannot act on
+if [ "$pass$fail" = "10" ]; then
   exit 0
-else
-  echo "Indeterminate outcome."
-  exit 2
 fi
+if [ "$pass$fail" = "01" ]; then
+  exit 1
+fi
+exit 2
 ```
 
-**Gotcha:** the order is load-bearing. A response naming both tokens must block, and `else` exits 2 so a timeout is never read as a verdict.
+**Gotcha:** a response naming both tokens exits 2, so it never passes. A non-zero exit from `claude` (timeout, turn cap) also returns 2 before any grep runs.
 
 ### Beat 3: the failing run is the only proof the gate works (1 min)
 
@@ -79,15 +80,14 @@ bash lint-with-claude.sh
 echo "Exit code: $?"
 ```
 
-**Result:** exit 1, the finding became a guard, plus three tests the starter did not have
+**Result:** exit 1, and the audit's reply ends with the verdict token
 
-```diff
--    .replace(/-+/g, '-');
-+    .replace(/-+/g, '-')
-+    .replace(/^-+|-+$/g, '');
+```text
+LINT_FAIL
+Exit code: 1
 ```
 
-**Gotcha:** exit 2 means the grep and the prompt disagree on token casing, not a failed audit.
+**Gotcha:** exit 2 means the output carried no single verdict token: check the token casing, or whether `claude` finished before it wrote one.
 
 ### Beat 4: CI needs nothing new, only an exit code in the right position (1 min)
 
@@ -116,8 +116,6 @@ The audit step must fail the workflow if the script exits non-zero.
 
 | Question | Answer |
 |---|---|
-| Why a sentinel token, not the prose? | Phrasing changes between model versions; a token you specified is a protocol. |
+| Why match a sentinel token at all? | Phrasing changes between model versions; a token you specified is a protocol. |
 | Does the audit write files or reach the network? | No. `--tools` replaces the built-in set. Add `--disallowed-tools "mcp__*"` when MCP servers are connected. |
 | What if it flags a nit on clean code? | Expected on a first run. Address it, or narrow the prompt; never weaken the grep. |
-| How do I keep CI cost predictable? | `--max-turns` is the ceiling, and the envelope reports `total_cost_usd` per run. |
-| Where did the second fix come from? | The same audit caught a digit bug in [`kebab-to-camel.ts`](lint-with-claude-solution/src/kebab-to-camel.ts); no human read the code. |

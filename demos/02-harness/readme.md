@@ -3,9 +3,6 @@
 - Settings hierarchy and CLAUDE.md injection
 - CLAUDE.md constitution and `@`-file mentions
 - Built-in and custom slash commands
-- MCP transports and `.mcp.json` configuration
-- Installable skills: folders and sources
-- Sub-agents under `.claude/agents/`
 - Hooks: PreToolUse, PostToolUse, Stop
 - Mods: extend and customize the harness
 - Auto-memory: `MEMORY.md` index and files
@@ -14,26 +11,22 @@
 
 | Topic | Description |
 |-------|-------------|
-| [01: Intro Constitution](01-intro-constitution/readme.md) | Harness overview, settings hierarchy (global, project, session), and how `CLAUDE.md` injects rules and context into every turn; context engineering with the multi-layer `CLAUDE.md` hierarchy (global, project, subfolder), `@`-file mentions, and examples that pin the output shape. |
-| [02: Commands](02-commands/readme.md) | Built-in and custom slash commands, argument patterns, and authoring reusable workflows under `.claude/commands/`. |
-| [03: MCP](03-mcp/readme.md) | Model Context Protocol servers (stdio, HTTP, WebSocket), `.mcp.json` configuration, and developer use cases like Playwright, Azure Deploy, GitHub, and Microsoft Learn. |
-| [04: Skills](04-skills/readme.md) | What a skill folder is and where skills come from: the catalog, `/find-skills`, and what an install actually changes. [Module 3](../03-skills/readme.md) owns anatomy, frontmatter, and forked execution. |
-| [05: Subagents](05-subagents/readme.md) | Sub-agents as a harness file type under `.claude/agents/`, discovered alongside commands, hooks, and skills. [Module 6](../06-subagents/readme.md) owns frontmatter, orchestration, and contracts. |
-| [06: Hooks and Mods](06-hooks-mods/readme.md) | Event-driven shell hooks for `PreToolUse`, `PostToolUse`, `Notification`, and `Stop`, wired in `settings.json` and proven through the exit-code contract, and mods that extend and customize the harness itself: they watch or rewrite any event, hold a tool call for a person, and add panes, bands, and commands. [Module 9: 02](../09-observability/02-guardrails/readme.md) owns destructive-command guardrails. |
-| [07: Memory](07-memory/readme.md) | The auto-memory system: the `MEMORY.md` index and the `user`, `feedback`, `project`, and `reference` file types. [Module 8: 04](../08-optimize/04-memory-architectures/readme.md) benchmarks whole memory architectures. |
+| [01: Explore the Harness Elements](01-harness-elements/readme.md) | The harness as a set of files: what each element does, where harness files live (user, project, session, managed), global versus repo-specific scope, and team and enterprise management. Each element links to the module or topic that owns it. |
+| [02: Write the CLAUDE.md Constitution](02-constitution/readme.md) | Multi-layer `CLAUDE.md` (global, project, subfolder) that injects rules and context into every turn, `@`-file mentions, examples that pin the output shape, include, exclude and compress, path-scoped rules, and output styles. |
+| [03: Build Custom Slash Commands](03-commands/readme.md) | Built-in and custom slash commands, argument patterns, and authoring reusable workflows under `.claude/commands/`. |
+| [04: Automate Workflows with Hooks and Mods](04-hooks-mods/readme.md) | Event-driven shell hooks for `PreToolUse`, `PostToolUse`, `Notification`, and `Stop`, wired in `settings.json` and proven through the exit-code contract, and mods that extend and customize the harness itself: they watch or rewrite any event, hold a tool call for a person, and add panes, bands, and commands. [Module 7: 05](../07-optimize-observability/05-guardrails/readme.md) owns destructive-command guardrails. |
+| [05: Persist Corrections in Memory Files](05-memory/readme.md) | The auto-memory system: the `MEMORY.md` index and the `user`, `feedback`, `project`, and `reference` file types. |
 
 ## Demos
 
 | Topic | Description |
 |-------|-------------|
-| [01: Intro Constitution](01-intro-constitution/demo-claude-md-constitution.md) | Builds a three-layer CLAUDE.md (global, project, subfolder) from a real project map, then replaces pasted code with `@`-mentions and separates durable rules from `/memory` notes. |
-| [02: Commands](02-commands/demo-slash-command-toolkit.md) | Turns a dependency-free changelog CLI into a four-command toolkit, covering frontmatter fields, zero-based positional arguments, the `` !`command` `` bash injection, and project versus personal command scope. |
-| [03: MCP](03-mcp/demo-maf-foundry-migration.md) | Connects the Microsoft Agent Framework starter to a live Azure AI Foundry project and migrates it to the current API using Microsoft Learn MCP lookups. |
-| [04: Skills](04-skills/demo-docx-invoice.md) | Installs a DOCX skill and uses it to generate a TypeScript program that renders a sample invoice as a `.docx` file. |
-| [06: Hooks and Mods](06-hooks-mods/demo-hook-pipeline.md) | Builds a `PreToolUse`, `PostToolUse`, and `Stop` pipeline in stdlib Python, teaching the `settings.json` wiring shape, the stdin payload contract, and the exit-code semantics with 15 passing tests. |
-| [06: Hooks and Mods](06-hooks-mods/demo-skill-guard.md) | Guards the master-skill folder convention with two hooks: a `PreToolUse` blocker that refuses a nested `SKILL.md` before it lands, and a `PostToolUse` bash linter that sweeps `.claude/skills/` and `.claude/agents/` for defects the blocker cannot see. |
-| [06: Hooks and Mods](06-hooks-mods/demo-cache-meter.md) | Installs a prompt-cache meter mod from a template gallery, reviews what it can reach with `claude plugin validate` and its tests, watches a model switch rewrite the cache in its `/cache` pane, and pins its options under the full plugin id in a `--settings` file. |
-| [06: Hooks and Mods](06-hooks-mods/demo-intent-guard.md) | Loads a guard mod with `--plugin-dir` that holds a destructive git command you never asked for and passes it once a prompt asks for its effect, then adds a package-publish family with two tests. |
+| [02: Write the CLAUDE.md Constitution](02-constitution/demo-claude-md-constitution.md) | Builds a three-layer CLAUDE.md (global, project, subfolder) from a real project map, then replaces pasted code with `@`-mentions and separates durable rules from `/memory` notes. |
+| [03: Build Custom Slash Commands](03-commands/demo-slash-command-toolkit.md) | Turns a dependency-free changelog CLI into a four-command toolkit, covering frontmatter fields, zero-based positional arguments, the `` !`command` `` bash injection, and project versus personal command scope. |
+| [04: Automate Workflows with Hooks and Mods](04-hooks-mods/demo-hook-pipeline.md) | Builds a `PreToolUse`, `PostToolUse`, and `Stop` pipeline in stdlib Python, teaching the `settings.json` wiring shape, the stdin payload contract, and the exit-code semantics with 15 passing tests. |
+| [04: Automate Workflows with Hooks and Mods](04-hooks-mods/demo-skill-guard.md) | Optional. Guards the master-skill folder convention with two hooks: a `PreToolUse` blocker that refuses a nested `SKILL.md` before it lands, and a `PostToolUse` bash linter that sweeps `.claude/skills/` and `.claude/agents/` for defects the blocker cannot see. |
+| [04: Automate Workflows with Hooks and Mods](04-hooks-mods/demo-cache-meter.md) | Optional. Installs a prompt-cache meter mod from a template gallery, reviews what it can reach with `claude plugin validate` and its tests, watches a model switch rewrite the cache in its `/cache` pane, and pins its options under the full plugin id in a `--settings` file. |
+| [04: Automate Workflows with Hooks and Mods](04-hooks-mods/demo-intent-guard.md) | Loads a guard mod with `--plugin-dir` that holds a destructive git command you never asked for and passes it once a prompt asks for its effect, then adds a package-publish family with two tests. |
 
 Every demo has a presenter guide beside it (`demo-presenter-<slug>.md`) holding the same
 teaching in timed beats, for delivery without running the demo live.

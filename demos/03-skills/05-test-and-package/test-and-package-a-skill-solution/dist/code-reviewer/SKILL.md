@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Use this skill to review code before it merges, including phrasings that never say "review", such as checking a diff before pushing or asking what looks risky in the current changes. It supports local changes (untracked, working tree, or staged) and remote Pull Requests (by ID or URL). It focuses on correctness, maintainability, and adherence to project standards.
+description: Use this skill to review code, including requests that never say "review", such as going through my diff, checking my changes before I push, or asking whether what I changed could break anything. It supports both local changes (staged or working tree) and remote Pull Requests (by ID or URL). It focuses on correctness, maintainability, and adherence to project standards.
 ---
 
 # Code Reviewer
@@ -32,12 +32,6 @@ This skill guides Claude Code in conducting professional and thorough code revie
 1. **Identify Changes**:
    - Check status: `git status`
    - Read diffs: `git diff` (working tree) and `git diff --staged` (staged).
-   - List new files: `git ls-files --others --exclude-standard`. Untracked files never appear in
-     either diff, so read each one, or diff it read-only with
-     `git diff --no-index -- /dev/null <file>`.
-   - If the work is already committed on a branch, diff against its base instead:
-     `git diff <base-branch>...HEAD`. On a committed branch `git status` is clean and both plain
-     diffs are empty, so this is the only command that surfaces the change.
 2. **Preflight (Optional)**: If the changes are substantial, ask the user if they want to run the project's verification command before reviewing.
 
 ### 3. In-Depth Analysis
@@ -62,13 +56,9 @@ Analyze the code changes based on the following pillars:
   - **Critical**: Bugs, security issues, or breaking changes that block merge.
   - **Improvements**: Suggestions for better code quality, performance, or design.
   - **Nitpicks**: Formatting or minor style issues (optional).
-- **Test Coverage**: One explicit sentence per changed file stating whether tests cover it, and naming
-  the missing cases when they do not. Say so even when the answer is "no tests were added".
 - **Conclusion**: Clear recommendation (Approved / Request Changes).
 
 Reference specific code with `file_path:line_number` so the user can jump directly to each finding.
-Every finding carries a line number. Diff hunk headers give offsets, not final line numbers, so read
-the file to resolve the real line before citing it.
 
 #### Tone
 

@@ -1,47 +1,34 @@
-# Code Reviewer
+# code-reviewer skill
 
-Ask for a second opinion on your changes in plain language and get back a merge decision you can act
-on: blocking problems separated from suggestions, every finding pinned to a file and line, and an
-explicit statement of what the change is missing in tests. It works on what you have not committed
-yet, on a whole branch, and on a Pull Request someone else opened.
+The code-reviewer skill gives you a structured review of your local changes (staged or working tree) or of a GitHub pull request, covering correctness, maintainability, readability, efficiency, security, edge cases, testability, and project conventions. You get back a summary, findings sorted into Critical, Improvements, and Nitpicks, and a clear Approved or Request Changes verdict with `file_path:line_number` references.
 
 ## Install in Claude Code
 
-1. Copy the `code-reviewer/` folder into `.claude/skills/` in your project, or into
-   `~/.claude/skills/` to have it everywhere.
-2. Start Claude Code in that project. The skill loads itself when a request matches; nothing to enable.
+Pick one location:
+
+- For every project on your machine, copy the `code-reviewer` folder to `~/.claude/skills/code-reviewer/`.
+- For one project, copy the `code-reviewer` folder to `<project>/.claude/skills/code-reviewer/`.
+
+The folder must contain `SKILL.md` at its top level. Start a new Claude Code session, type `/`, and check that `code-reviewer` appears in the list.
 
 ## Install in Claude.ai
 
-1. Zip the `code-reviewer/` folder so the archive contains the folder, not a loose `SKILL.md`.
+1. Unzip `code-reviewer.zip`, or keep the archive as it is.
+2. Open Customize, then Skills, and add a skill from the zip file.
+3. Confirm that `code-reviewer` appears in your skill list.
 
-   ```powershell
-   Compress-Archive -Path code-reviewer -DestinationPath code-reviewer.zip
-   ```
+Custom skills need a plan that supports them and code execution turned on.
 
-   ```bash
-   zip -r code-reviewer.zip code-reviewer
-   ```
+## Worked example
 
-2. Open Settings > Capabilities > Skills and upload the zip.
-3. Toggle the skill on.
-
-## Try it
+Start a session in a repository with uncommitted changes and type:
 
 ```text
-Can you go through my diff before I push? I do not want to break anything.
+Review my changes before I push. I want to know if anything could break.
 ```
 
-You get a Summary, a Critical / Improvements / Nitpicks split, a Test Coverage line, and either
-Approved or Request Changes.
+When the skill loads, Claude reads `git status`, `git diff`, and `git diff --staged`, and replies with the Summary, Findings, and Conclusion sections.
 
-## Requirements
+## Measured figures
 
-`git` on the PATH. Pull Request review additionally needs the GitHub CLI (`gh`) authenticated; local
-and branch review work without it.
-
-## Measured impact
-
-Not yet measured. The comparison protocol and the reason this run could not execute it are recorded in
-the skill's own `tests/baseline-comparison.md`. No before and after figures are quoted here until two
-real sessions have been captured.
+The baseline sessions (`claude --disallowedTools Skill` against plain `claude` on the planted fixture) were never captured, so this package quotes no figures.

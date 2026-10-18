@@ -2,7 +2,7 @@
 
 | Lab | Topic | Title | Track | Level | Time | Description |
 |-----|-------|-------|-------|-------|------|-------------|
-| 01 | Skills | [Install a React Agent Skill](lab-01-react-skill.md) | Optional | Beginner | 30m | Install the react-best-practices skill from vercel-labs/agent-skills into the React app's own .claude/skills/vercel-react-best-practices and confirm it is active before the harness lab uses it. |
+| 01 | Harness Elements | [Install a React Agent Skill](lab-01-react-skill.md) | Optional | Beginner | 30m | Install the ready-made vercel-react-best-practices skill from skills.sh into the React app's own .claude/skills/vercel-react-best-practices and confirm it is active before the harness lab uses it. |
 | 02 | Harness Configuration | [Configure the Harness on a Broken React App](lab-02-fix-the-react-food-shop.md) | Core | Intermediate | 1h 15m | Configure the Claude Code harness piece by piece, then watch everything work together as Claude fixes a broken React app. |
 | 03 | Prompting | [Apply Prompting Techniques](lab-03-prompting-techniques.md) | Optional | Intermediate | 50m | Apply five prompting techniques to your harness: statefile maintenance, anchors, @-mentions, few-shot examples in `CLAUDE.md`, and slash-command promotion. |
 | 04 | Mods | [Build an Ask-Check Mod Test-First](lab-04-ask-check.md) | Optional | Advanced | 1h 20m | Build a mod that spots a question you already answered, shows your earlier sentence in a band above the prompt and sends it back on one key, growing it step by step until its six tests pass. |
@@ -26,7 +26,7 @@ Lab 02 Tasks 5 and 6 invoke the React skill that Lab 01 installs. The two labs a
 
 ## Where to Open Claude Code
 
-All four labs build their own harness, so open Claude Code inside the lab project rather than at the repo root. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
+All four labs build their own harness, so open Claude Code inside the lab project. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
 
 The starters are already in this repo, so there is nothing to scaffold: change into the one your lab uses and start the session there. Run this from the repo root; both commands work unchanged in PowerShell.
 
@@ -62,4 +62,4 @@ That works for any step whose result is just files. It does not work for the har
 
 Restart the session with `/exit` then `claude` after any edit to `.claude/settings.json` or `.mcp.json`, because both are read at startup.
 
-Launching inside the starter is what makes the repository a monorepo to these labs rather than the project: the repo's own `/CLAUDE.md`, `/.claude/` and `/.mcp.json` stay out of the session and are read from the repo root. Both labs read from them and neither writes into them.
+Launching inside the starter is what makes the repository a monorepo to these labs, with each starter as the project: the repo's own `/CLAUDE.md`, `/.claude/` and `/.mcp.json` stay out of the session and are read from the repo root. All four labs read from them and none writes into them.

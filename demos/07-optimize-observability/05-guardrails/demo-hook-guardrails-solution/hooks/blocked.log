@@ -1,0 +1,33 @@
+2026-10-17T19:22:56+02:00 BLOCKED (recursive forced rm): rm -rf /
+2026-10-17T19:22:56+02:00 BLOCKED (recursive forced rm): rm -fr /
+2026-10-17T19:22:56+02:00 BLOCKED (recursive forced rm): rm -rf .
+2026-10-17T19:22:57+02:00 BLOCKED (recursive forced rm): rm -rf build/
+2026-10-17T19:22:57+02:00 BLOCKED (recursive forced rm): rm  -rf  /
+2026-10-17T19:22:57+02:00 BLOCKED (git push --force): git push --force origin main
+2026-10-17T19:22:58+02:00 BLOCKED (git push --force): git push origin main --force
+2026-10-17T19:22:58+02:00 BLOCKED (git push -f): git push -f origin main
+2026-10-17T19:22:58+02:00 BLOCKED (git reset --hard): git reset --hard HEAD~1
+2026-10-17T19:22:59+02:00 BLOCKED (fork bomb signature): :(){ :|:& };:
+2026-10-17T19:23:01+02:00 BLOCKED (recursive forced Remove-Item): Remove-Item build -Recurse -Force
+2026-10-17T19:23:01+02:00 BLOCKED (recursive forced Remove-Item): Remove-Item -Force -Recurse build
+2026-10-17T19:23:01+02:00 BLOCKED (git push --force): git push --force origin main
+2026-10-17T19:23:02+02:00 BLOCKED (git push -f): git push -f origin main
+2026-10-17T19:23:02+02:00 BLOCKED (git reset --hard): git reset --hard HEAD~1
+2026-10-17T19:23:03+02:00 BLOCKED (recursive forced rm): rm -rf build/
+2026-10-17T19:23:59+02:00 BLOCKED (recursive forced rm): cd "D:/git-customers/claude-code-masterclass/demos/07-optimize-observability/05-guardrails/demo-hook-guardrails-solution" && rm -rf build/ && ls -la build/ 2>&1; echo "exit=$?"
+2026-10-17T19:26:24+02:00 BLOCKED (recursive forced rm): rm -rf /
+2026-10-17T19:26:46+02:00 BLOCKED (recursive forced rm): rm -rf /
+2026-10-17T19:26:47+02:00 BLOCKED (recursive forced rm): rm -fr /
+2026-10-17T19:26:47+02:00 BLOCKED (recursive forced rm): rm -rf .
+2026-10-17T19:26:48+02:00 BLOCKED (recursive forced rm): rm -rf build/
+2026-10-17T19:26:48+02:00 BLOCKED (recursive forced rm): rm  -rf  /
+2026-10-17T19:26:49+02:00 BLOCKED (recursive forced Remove-Item): Remove-Item build -Recurse -Force
+2026-10-17T19:26:49+02:00 BLOCKED (recursive forced Remove-Item): Remove-Item -Force -Recurse build
+2026-10-17T19:26:50+02:00 BLOCKED (git push --force): git push --force origin main
+2026-10-17T19:26:50+02:00 BLOCKED (git push --force): git push origin main --force
+2026-10-17T19:26:50+02:00 BLOCKED (git push -f): git push -f origin main
+2026-10-17T19:26:51+02:00 BLOCKED (git reset --hard): git reset --hard HEAD~1
+2026-10-17T19:26:51+02:00 BLOCKED (fork bomb signature): :(){ :|:& };:
+2026-10-17T19:26:53+02:00 BLOCKED (recursive forced rm): rm -rf /
+2026-10-17T19:27:08+02:00 BLOCKED (recursive forced Remove-Item): Remove-Item build -Recurse -Force
+2026-10-17T19:27:08+02:00 BLOCKED (recursive forced Remove-Item): Remove-Item -Force -Recurse build

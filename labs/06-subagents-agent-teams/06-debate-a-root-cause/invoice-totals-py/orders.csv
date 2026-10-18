@@ -1,0 +1,8 @@
+customer,sku,qty,unit_price,note
+Globex,BOLT-M8,500,0.10,"standard run"
+Globex,WASH-8,400,0.03,
+Acme,BOLT-M8,1000,0.12,"rush, call ahead"
+Acme,NUT-M8,800,0.05,
+acme ,WASH-8,300,0.03,
+Initech,NUT-M8,250,0.05,
+Initech,BOLT-M8,100,0.12,

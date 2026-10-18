@@ -69,7 +69,7 @@ Build your server in this (empty) starter folder:
 labs/04-mcp/02-implementing/event-registration-mcp/
 ```
 
-All generated files go inside that folder, which is also the folder you launched Claude Code in. Open a second terminal there for the `uv` commands before starting Step 1. The finished server lives beside the starter in [`02-implementing/event-registration-mcp-solution/`](02-implementing/event-registration-mcp-solution/) as the completed reference: use it only to compare against once you are done, or to unblock yourself.
+All generated files go inside that folder, which is also the folder you launched Claude Code in. Open a second terminal there for the `uv` commands before starting Step 1. The finished server lives beside the starter in [`02-implementing/event-registration-mcp-solution/`](02-implementing/event-registration-mcp-solution) as the completed reference: use it only to compare against once you are done, or to unblock yourself.
 
 `uv` must be on your PATH before you start. Check with `uv --version`; if it is missing, follow the setup at [astral.sh/uv](https://astral.sh/uv).
 

@@ -34,7 +34,7 @@ Each matching project root counts as one code demo.
 
 ## Labs
 
-Labs live at the repo root under `labs/<module-name>/`, not inside the module's demo folder. The `<module-name>` matches the demo folder slug (e.g. `12-managed-agents`).
+Labs live at the repo root under `labs/<module-name>/`, not inside the module's demo folder. The `<module-name>` matches the demo folder slug (e.g. `10-managed-agents`).
 
 Find lab entries:
 ```

@@ -10,7 +10,7 @@ Each step follows the same pattern:
 - **Recipe**: a complete implementation prompt you can use as-is or adapt from your own findings
 - **Expected Outcome**: observable artefacts that confirm success
 
-The completed reference lives in [invoice-api-solution/](invoice-api-solution/). Work in the pristine starter [invoice-api/](invoice-api/) and open the solution only when you want to compare.
+The completed reference lives in [invoice-api-solution/](invoice-api-solution). Work in the pristine starter [invoice-api/](invoice-api) and open the solution only when you want to compare.
 
 ---
 
