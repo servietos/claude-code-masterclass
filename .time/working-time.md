@@ -69,4 +69,6 @@ Machine hours spent on this repository, one row per working day.
 
 | 2026-10-17 | 0.08 | 22:37 | 22:42 | Course verification runbook extended with three more rules from the session's corrections |
 
-**Total: 41.13 hours**
+| 2026-10-20 | 1.98 | 17:14 | 19:13 | Rules teaching, optional lab, deck updates and shorter topic lists |
+
+**Total: 43.11 hours**

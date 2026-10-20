@@ -998,3 +998,33 @@
 
 **Rule:** After a fan-out, run `git status` on every path outside the units' own folders and revert or report each change there before calling the pass done.
 
+
+## Topic labels: four to five words that name the topic
+
+**Pattern (2026-10-20):** Labels I added ran to 7 to 9 words ("Repo facts for a global skill: rules file contract"), and a shortened one lost its meaning ("Sample case: brief to tasks"). The owner: "you broke the max 4-5 words rule ... correct that in all sources" and "nobody will know what this is about".
+
+**Rule:** A topic label has at most 5 words and says what the topic does ("Spec-driven feature, end to end"). The same label goes into every source in one pass: the class page `content` and `content_de` in integrations.at, `demos/readme.md` and the module readme's head list.
+
+## Topic lists: at most 10 regular items, the rest optional
+
+**Pattern (2026-10-20):** The owner shortened every module's description to 9 or 10 items and kept every topic in the class: "all stays in the class - max 9 to 10 items in the demos\details mark others as optional".
+
+**Rule:** The class page lists at most 10 items per module. `demos/readme.md` and each module readme keep every bullet, with at most 10 regular ones; the others end in `(optional)`, chosen from the bullets the description does not name or merges into another item. Which topics stay is decided on data (market-research step 0, market-demand evidence); a row without a number is the owner's call.
+
+## A contract fact is read from the code before it goes into a brief
+
+**Pattern (2026-10-20):** My teaching contract said the demo's `src/pricing.ts` keeps money as integer cents, and my slide spec drew two invented repositories with different money types. The docs-agent found that the code uses plain numbers; the diagram had to be redrawn.
+
+**Rule:** Every fact in a fan-out contract or a slide spec comes from a file read in this session, quoted with its path. A diagram shows only names the `source:` readme states.
+
+## Repo skills: a dollar before a digit is replaced at load
+
+**Pattern (2026-10-20):** The Skill tool substitutes positional arguments (`$0`, `$1`, ...) in a `SKILL.md` body, which garbled every price example in the global marketing-psychology skill. `.claude/skills/data-aggregator/SKILL.md` shows sample output `Revenue: $2450.00`, which reaches the model as `Revenue: 450.00`.
+
+**Rule:** No `$` followed by a digit in a repo `SKILL.md`; `grep -nE '\$[0-9]' .claude/skills/*/SKILL.md` must print nothing. The data-aggregator sample output still carries it and needs the owner's choice of wording, since the demo script prints the dollar sign.
+
+## Deck delivery: a differing OneDrive copy is compared before it is overwritten
+
+**Pattern (2026-10-20):** `02-harness.pptx` in the repo differed from the OneDrive copy. Slide text showed only the topic overview and dividers changed, from the "decks refreshed" commit of 2026-10-18, and the OneDrive file time matched the earlier delivery, so the repo deck was newer and safe to deliver.
+
+**Rule:** Before overwriting, diff slide text and notes of both decks with python-pptx and compare the OneDrive file time with the last delivery. Owner edits win; a repo deck that is only newer is delivered.

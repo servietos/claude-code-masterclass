@@ -1054,6 +1054,76 @@
    "catalogue": {
     "action": "none"
    }
+  },
+  {
+   "date": "2026-10-20",
+   "from": "17:14",
+   "to": "19:13",
+   "sessionId": "2c2638f2-5627-4948-9e28-565e83ae1856",
+   "branch": "master",
+   "commits": [
+    "66a0267"
+   ],
+   "surfaces": [
+    "demos",
+    "labs",
+    "decks",
+    "class page",
+    "create-pptx",
+    "market-research",
+    "photo-mix-guard mod"
+   ],
+   "files": [
+    "demos/03-skills/05-test-and-package/readme.md",
+    "labs/03-skills/lab-06-give-a-skill-repo-facts.md",
+    "demos/readme.md",
+    "~/.claude/skills/create-pptx/scripts/gamma_deck.py",
+    "~/.claude/skills/market-research/SKILL.md"
+   ],
+   "mechanism": {
+    "takes": "a class's per-module topic lists, the module readmes and the owner's limits (items per module, words per label)",
+    "does": "fans out one small model per module to gather job-posting, survey, vendor and search evidence, proposes a shortened list with a number and source behind every row, publishes the proposal as one page, waits for the owner's go, then applies the approved labels to the public class page in two languages and marks the remaining topics optional in the course readmes",
+    "returns": "a data-backed, shorter course outline in every source, with nothing removed from the course"
+   },
+   "portsAsIs": [
+    "evidence-per-row proposal table with an owner go gate",
+    "one research agent per module with a shared brief",
+    "optional marking above a per-module cap"
+   ],
+   "perCustomer": [
+    "the class, its modules and the owner's caps"
+   ],
+   "evidence": [
+    "ten module proposals with sources that all resolved",
+    "class page lists at 4 to 10 items of at most 5 words",
+    "lab and demo step run headless with InstructionsLoaded logs"
+   ],
+   "toolchain": {
+    "skills": [
+     "market-research",
+     "create-pptx",
+     "claude-learn",
+     "claude-learn-worktime"
+    ],
+    "mcpServers": [
+     "Media Creator",
+     "Gamma",
+     "worktime-mcp"
+    ],
+    "agents": [
+     "content-writer",
+     "docs-agent",
+     "image-producer",
+     "fact-gatherer",
+     "azure-expert",
+     "fork"
+    ]
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
   }
  ]
 }
