@@ -1,16 +1,16 @@
 ---
 presents: demo-test-and-package-a-skill.md
-budget: 4 min
-beats: 4
+budget: 9 min
+beats: 5
 ---
 
 # Present: Test and Package a Skill for Distribution
 
-Every failure a skill test exposes belongs to exactly one layer of `SKILL.md`, and a measurement you could not take is reported as absent. Four beats: the measured trigger sweep, the untracked file the gather step misses, the layer assignment, the packaging boundary.
+Every failure a skill test exposes belongs to exactly one layer of `SKILL.md`, and a measurement you could not take is reported as absent. Five beats: the measured trigger sweep, the untracked file the gather step misses, the layer assignment, the repo facts in a rules file, the packaging boundary.
 
 ------
 
-**Shell:** the sweep ships as `trigger-test.sh` and `trigger-test.ps1`; run whichever matches your terminal. The Bash version needs `< /dev/null` on the inner call and the PowerShell version needs `$null |` in front of it, both for the same reason: `claude -p` otherwise inherits the caller's stdin and either hangs or eats the prompt file. Run the sweep before the session, since three repeats of six prompts is around a minute per session.
+**Shell:** the sweep ships as `trigger-test.sh` and `trigger-test.ps1`; run whichever matches your terminal. The Bash version needs `< /dev/null` on the inner call and the PowerShell version needs `$null |` in front of it, both for the same reason: `claude -p` otherwise inherits the caller's stdin and either hangs or eats the prompt file. Beat 4 uses the same split: `< /dev/null` in Bash, `$null |` in front of `claude -p` in PowerShell. Run the sweep before the session, since three repeats of six prompts is around a minute per session.
 
 ## Beats
 
@@ -44,7 +44,7 @@ bash trigger-test.sh
 2. Leave it uncommitted. Do not create a branch and do not commit it: once the file is committed,
    git status is clean and git diff and git diff --staged both return nothing, so the skill's Local
    Changes workflow has no change left to look at.
-3. Invoke the skill by typing row 1 of trigger-prompts.tsv verbatim, instead of naming the skill.
+3. Invoke the skill by typing row 1 of trigger-prompts.tsv verbatim and leave the skill's name out.
 4. Expect the review to miss the file, because a brand-new file shows only as ?? in git status and
    never appears in git diff.
 ```
@@ -82,7 +82,21 @@ Present the mapping as a table: Failure | Layer | One-line justification.
 
 **Gotcha:** adding trigger keywords to the body changes nothing, because the body is not read until the skill has already loaded.
 
-### Beat 4: packaging is a boundary, and the README sits outside it (1 min)
+### Beat 4: the rules file carries the repo facts, and it loads only on a match (5 min)
+
+**Open:** [`.claude/rules/code-review.md`](test-and-package-a-skill-solution/.claude/rules/code-review.md) · step 1 of [`code-reviewer/SKILL.md`](test-and-package-a-skill-solution/code-reviewer/SKILL.md) · [Step 3 of the guide](demo-test-and-package-a-skill.md#step-3-give-the-skill-your-repos-facts)
+**Say:** A global skill ships without this repo's facts, so the repo keeps them in one rules file the skill names. The rule has `paths:`, so Claude loads it only once it touches a file under `src/`, which is why the skill's first step reads it explicitly.
+
+```bash
+claude -p "Reply with the single word ready. Do not read any file." < /dev/null
+claude -p "Read src/pricing.ts and tell me the return shape of quote()." < /dev/null
+```
+
+**Result:** `.claude/instructions-loaded.jsonl` in the working folder. The first session logs no rules file; the second logs `.claude/rules/code-review.md` with load reason `path_glob_match` and `globs` set to `src/**/*.ts`. Session-start lines for `CLAUDE.md` files appear in both and are not part of the check.
+
+**Gotcha:** A rule that never matches never loads, so a skill that depends on one must name the file in its first step and say what it does when the file is missing.
+
+### Beat 5: packaging is a boundary, and the README sits outside it (1 min)
 
 **Open:** [`dist/code-reviewer`](test-and-package-a-skill-solution/dist/code-reviewer) · [`tests/`](test-and-package-a-skill-solution/tests)
 **Say:** Packaging decides what a stranger receives, and the material that helped you build the skill is not part of it. Anything inside the skill folder is text Claude loads and pays for on every use.
@@ -102,7 +116,7 @@ Present the mapping as a table: Failure | Layer | One-line justification.
 The code-reviewer skill gives you a structured review of your local changes (staged or working tree) or of a GitHub pull request, covering correctness, maintainability, readability, efficiency, security, edge cases, testability, and project conventions. You get back a summary, findings sorted into Critical, Improvements, and Nitpicks, and a clear Approved or Request Changes verdict with `file_path:line_number` references.
 ```
 
-**Gotcha:** `tests/` and the project's own `src/` stayed outside the archive, and the README sits one level up because a stray `README.md` inside a skill folder is not part of the contract and only adds tokens.
+**Gotcha:** `tests/` and the project's own `src/` stayed outside the archive, `.claude/rules/` holds the repo facts outside it too, and the README sits one level up because a stray `README.md` inside a skill folder is not part of the contract and only adds tokens.
 
 ## If the room asks
 

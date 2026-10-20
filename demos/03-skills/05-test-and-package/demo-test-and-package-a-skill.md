@@ -25,7 +25,7 @@ Create a functional test fixture and run it.
    guarding against zero, reads an API token from a hardcoded string constant, and has no test file.
 2. Leave it uncommitted: once committed, git status is clean and both diffs return nothing, so the
    skill's Local Changes workflow has no change left to look at.
-3. Invoke the skill by typing row 1 of trigger-prompts.tsv verbatim, instead of naming the skill.
+3. Invoke the skill by typing row 1 of trigger-prompts.tsv verbatim and leave the skill's name out.
 4. Expect the review to miss the file, because a brand-new file shows only as ?? in git status and
    never appears in git diff.
 Report which properties failed, including anything the skill could not even gather. Do not fix the
@@ -48,13 +48,50 @@ Then re-run the trigger test and append the new table to trigger-cases.md under 
 heading, leaving the first table in place so the delta is readable.
 ```
 
-**Expected Outcome:** The shipped [`baseline-comparison.md`](test-and-package-a-skill-solution/tests/baseline-comparison.md) reads `not measured` in every cell, and the [solution's `SKILL.md`](test-and-package-a-skill-solution/code-reviewer/SKILL.md) differs in three hunks: the description gains "checking a diff before pushing", section 2 gains `git ls-files --others --exclude-standard`, and section 4 gains a Test Coverage line.
+**Expected Outcome:** The shipped [`baseline-comparison.md`](test-and-package-a-skill-solution/tests/baseline-comparison.md) reads `not measured` in every cell, and the [solution's `SKILL.md`](test-and-package-a-skill-solution/code-reviewer/SKILL.md) differs in three hunks: the description gains "checking a diff before pushing", section 2 gains `git ls-files --others --exclude-standard`, and section 4 gains a Test Coverage line. Step 3 adds a fourth hunk, the rules-file read in step 1.
 
 Adding trigger keywords to the body changes nothing, because the body is not read until the skill has already loaded.
 
-## Step 3: Package the Skill for Another Team
+## Step 3: Give the Skill Your Repo's Facts
 
-A skill becomes a product the moment someone else has to install it: a folder plus install documentation for a human who has never seen your repo. Everything the tests produced stays behind, and so does the README, which sits one level up.
+A global skill cannot know this repository's folders, prices or test command, so it names a rules file that each repository provides. This step moves those facts into `.claude/rules/code-review.md`, scoped to the source files, and points the skill's first step at that file.
+
+```text
+Give the code-reviewer skill this repository's facts without putting any of them in SKILL.md.
+1. Create .claude/rules/code-review.md in test-and-package-a-skill with paths: ["src/**/*.ts"] in its frontmatter. Its body states that source lives in src/, that the tests run with npm test, that prices are plain number values in src/cart.ts, and that quote() in src/pricing.ts returns { subtotal, currency } with the currency defaulting to EUR.
+2. Edit .claude/skills/code-reviewer/SKILL.md so the first line of step 1 reads: "Read .claude/rules/code-review.md first; if it is missing, review against the general checklist only and say so."
+3. Change no other line in SKILL.md, and confirm it names no folder, file or command from this repository.
+```
+
+Add the load log to `.claude/settings.json` in the working folder, then run two headless sessions from that folder. The first reads no source file and the second reads `src/pricing.ts`, so the rule should load in the second session only.
+
+```json
+{
+  "hooks": {
+    "InstructionsLoaded": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat >> .claude/instructions-loaded.jsonl"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+```bash
+claude -p "Reply with the single word ready. Do not read any file." < /dev/null
+claude -p "Read src/pricing.ts and tell me the return shape of quote()." < /dev/null
+```
+
+**Expected Outcome:** `.claude/instructions-loaded.jsonl` holds a `path_glob_match` line for `.claude/rules/code-review.md` with `globs` set to `src/**/*.ts`, written by the second session only. Session-start lines for `CLAUDE.md` files appear in both sessions and are not part of the check.
+
+## Step 4: Package the Skill for Another Team
+
+A skill becomes a product the moment someone else has to install it: a folder plus install documentation for a human who has never seen your repo. Everything the tests produced stays behind, and so does the README, which sits one level up. The repo facts from Step 3 stay behind too, because they live in `.claude/rules/`, outside the skill folder.
 
 ```text
 Package the code-reviewer skill for external distribution.

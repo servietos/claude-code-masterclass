@@ -64,7 +64,7 @@ The project root CLAUDE.md is the most commonly used layer. The global file is t
 
 ## File Mentions
 
-File mentions are the inline way to pull specific files into the active context window. Type `@` followed by a path to attach any file to your message; Claude will read it as part of the prompt rather than having to discover it through tool calls.
+File mentions are the inline way to pull specific files into the active context window. Type `@` followed by a path to attach any file to your message; Claude reads it as part of the prompt, with no tool calls spent finding it.
 
 ```text
 @src/services/auth.ts Why does this function re-fetch the user on every request?
@@ -76,7 +76,7 @@ File mentions work for source files, config files, logs, and even images. They a
 
 Prose rules describe intent; examples remove ambiguity. When a project has a recurring output shape (a pagination envelope, a log line, a commit message format), two complete input/output pairs in CLAUDE.md do more than a paragraph describing it. Without them Claude will invent a plausible variant, and plausible variants differ between sessions and between teammates.
 
-The examples belong under `## Conventions` and must use the exact field names and types the real code uses, because Claude copies what it sees rather than what the surrounding sentence claims.
+The examples belong under `## Conventions` and must use the exact field names and types the real code uses, because Claude copies what it sees in the examples.
 
 ```markdown
 ## Conventions
@@ -126,16 +126,19 @@ The glob is matched against the file path, so scope by whatever the naming conve
 | Applies to the whole project | Root `CLAUDE.md` |
 | Applies to one subtree | Nested `CLAUDE.md` in that directory |
 | Applies to files matching a pattern, wherever they live | `.claude/rules/<name>.md` with `paths:` frontmatter |
+| Facts a global skill or agent reads | `.claude/rules/<area>.md`, named in the skill |
 
 There is no `exclude:` counterpart, so express the scope positively. Naming the paths that should carry the rule is both more precise and cheaper than loading it everywhere and asking Claude to check the filename before applying it.
 
 A rule without `paths:` frontmatter loads at session start, exactly like `.claude/CLAUDE.md`. That makes `.claude/rules/` the place to split a long `CLAUDE.md` into topic files such as `testing.md` or `deploy.md`. Personal rules go in `~/.claude/rules/` and apply to every project on your machine.
 
+A skill cannot assume a path-scoped rule is in context when it starts, because the rule loads only once Claude reads, writes or edits a matching file. So the skill's first step reads its `.claude/rules/<area>.md` explicitly, as [Give a Global Skill Your Repo's Facts](../../03-skills/05-test-and-package/readme.md#give-a-global-skill-your-repos-facts) shows.
+
 When a path-scoped rule never seems to apply, register an `InstructionsLoaded` hook. It logs every `CLAUDE.md` and rules file as Claude Code loads it, with when and why, so you can see whether the glob ever matched.
 
 ## Output Styles
 
-`CLAUDE.md` and rules change what Claude knows. An output style changes how it answers, and it is the only harness file that edits the system prompt itself rather than adding a message after it. Reach for one when you keep re-prompting for the same voice or format every turn: replies that lead with a diagram, replies that never speculate, replies that stop at what changed.
+`CLAUDE.md` and rules change what Claude knows. An output style changes how it answers, and it is the only harness file that edits the system prompt itself; the others add a message after it. Reach for one when you keep re-prompting for the same voice or format every turn: replies that lead with a diagram, replies that never speculate, replies that stop at what changed.
 
 A style is a Markdown file with frontmatter, saved at user scope in `~/.claude/output-styles/`, at project scope in `.claude/output-styles/`, or shipped by a plugin.
 
@@ -171,7 +174,7 @@ Activate a style with `/config`, which writes `outputStyle` into `.claude/settin
 
 The system prompt is read once at session start, so a new style or an edit to an active one takes effect after `/clear` or in the next session, never mid-conversation. Styles apply to the main conversation only: a subagent runs its own system prompt and is unaffected, while a fork inherits the parent's.
 
-Four built-in styles ship with Claude Code. **Default** is the standard engineering prompt. **Proactive** executes immediately and makes reasonable assumptions instead of pausing on routine decisions. **Explanatory** adds educational insights alongside the work, and **Learning** goes further by leaving `TODO(human)` markers for you to implement.
+Four built-in styles ship with Claude Code. **Default** is the standard engineering prompt. **Proactive** executes immediately and makes reasonable assumptions on routine decisions and keeps going. **Explanatory** adds educational insights alongside the work, and **Learning** goes further by leaving `TODO(human)` markers for you to implement.
 
 | Mechanism | How it reaches the model | Use it when |
 |---|---|---|

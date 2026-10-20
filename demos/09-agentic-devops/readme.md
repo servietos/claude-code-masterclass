@@ -6,17 +6,17 @@ SSH is also the sharpest place to learn agentic operations. There is no `what-if
 
 - Deployment sub-agent frontmatter and scope
 - Shell allowlist scoped to deploy verbs
-- Manifest as the source of truth
+- Manifest as source of truth (optional)
 - The deploy-then-prove contract
 - Access first, then bootstrap
 - Non-root deploy user, key-only SSH
-- Firewall and unattended upgrades
+- Firewall and unattended upgrades (optional)
 - Docker Engine with Compose plugin
 - Caddy edge and its TLS certificate
 - DNS before the first ACME attempt
 - Core Web Vitals on every deploy
 - The `agentic-seo` audit skill
-- Fix-verify loop without manual intervention
+- Fix-verify loop without manual intervention (optional)
 
 ## Topics
 

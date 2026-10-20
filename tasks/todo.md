@@ -1,5 +1,53 @@
 # Todo
 
+## Teach `.claude/rules/` as the repo-facts contract of global skills
+
+Rationale: the course teaches rule mechanics (`02-constitution`) and the global sub-agent case
+(`06/01-introduction:113`), never the global-skill side that the estate runs on: a skill names a
+fixed rules file (`seo.md`, `content.md`, `docs.md`) and reads it first, because a path-scoped rule
+is absent until Claude touches a matching file. Core class time about 10 min, lab optional.
+
+### 1. Image hosting for Gamma (global skill `create-pptx`)
+
+- [x] Prove the route with one 1-card Gamma call whose image URL carries a SAS token (2026-10-20: Gamma embedded the 04-01 diagram, 26 credits)
+- [x] Storage account `integrationsmediacreator`, named by the owner
+- [x] Private container `slide-production`, upload `<class>/<module>` per run, read-only user delegation SAS valid 4h, lifecycle rule deletes after 7 days
+- [x] `gamma_deck.py prompt`: new `--url-suffix` appends the SAS query to every image URL
+- [x] `gamma-deck.md:119-120`: private repos use the Azure route; raw GitHub stays for public repos
+- Gamma reads the pictures while it generates and the exported PPTX embeds them, so the URLs die after 4h and nothing stays public
+- This task spends no Gamma credits: the new cards go into the finished decks locally (`finished-deck-edits`)
+
+### 2. Slide variety (global skill `create-pptx`)
+
+Cause: every spec is bullets plus one side image, and `normalize_cards.py` restacks every card
+into one of two layouts (diagram card, photo card).
+
+- [x] Spec `layout:` archetypes: `diagram-full` (full-width diagram, one-line caption), `split-code` (file or code panel beside a diagram), `statement` (one sentence beside a supporting image)
+- [x] `add_spec_slide.py` builds each archetype on the deck's own master (theme, Montserrat, Poppins)
+- [x] `normalize_cards.py` leaves archetype cards as built
+- [x] The Gamma prompt builder maps each archetype to a layout line for future decks
+- [x] `check_specs.py` accepts a 1920-wide viewBox of any height for `diagram-full`
+
+### 3. Teaching
+
+- [x] `demos/02-harness/02-constitution/readme.md:124-132`: table row "Facts a global skill or agent reads" plus the load-timing sentence
+- [x] `demos/03-skills/05-test-and-package/readme.md`: section "Give a Global Skill Your Repo's Facts" after "What Ships and What Stays Behind", Key Topics list
+- [x] `demo-test-and-package-a-skill.md` and its presenter guide: 5-minute segment where the starter's skill moves its repo facts into `.claude/rules/`, starter and solution updated
+- [x] `labs/03-skills/lab-06-*.md` with starter and solution, Optional, Advanced, about 20m: a repo-agnostic skill reads `.claude/rules/<area>.md` with `paths:`, an `InstructionsLoaded` hook shows it loads only on a match, the same skill runs against a second rules file
+- [x] Row in `labs/03-skills/readme.md`; Topics and Demos tables in `demos/03-skills/readme.md` where affected
+- [x] `brand-voice-code` pass on every changed file; grep for em dashes and negative parallelism
+
+### 4. Slides (`finished-deck-edits`, no Gamma)
+
+- [x] `02-harness`: spec `02-01` bullets and SVG get the fourth table row; `swap-image`, run-level text edit
+- [x] `03-skills`: new spec `05-04` in a non-default archetype, SVG drawn by `image-producer`; `add_spec_slide.py`; renumber `99-01`
+- [x] Per deck: `notes`, `clean` twice, `sheet`, look at every changed page; `cmp` against OneDrive, then `deliver` (2026-10-20, both decks identical to OneDrive after delivery)
+
+### 5. Verify
+
+- [x] Run the demo segment and the lab in a real session: the `InstructionsLoaded` log shows the rule loading only on a match (`path_glob_match` with `trigger_file_path` src/pricing.ts, absent in the run that read no src file)
+- [x] Contact sheets of both decks, every changed slide checked
+
 ## Replace 01-fundamentals topic 05 with prompt caching
 
 Rationale: `05-prompting-techniques` duplicated four of its five sections from

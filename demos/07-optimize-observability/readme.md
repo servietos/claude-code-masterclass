@@ -3,7 +3,7 @@
 - /doctor prompt-audit: dated instructions
 - Caveman Compression: shorter CLAUDE.md
 - Plugin Eval: graded skill experiments
-- Prompt Injection: quarantine, MCP rewrites
+- Prompt Injection: quarantine, MCP responses
 - Hook Guardrails: PreToolUse hard stops
 - OpenTelemetry: tracing, cost, failure diagnosis
 

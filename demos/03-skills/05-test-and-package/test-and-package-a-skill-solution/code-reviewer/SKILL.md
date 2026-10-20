@@ -11,6 +11,8 @@ This skill guides Claude Code in conducting professional and thorough code revie
 
 ### 1. Determine Review Target
 
+Read `.claude/rules/code-review.md` first; if it is missing, review against the general checklist only and say so.
+
 - **Remote PR**: If the user provides a PR number or URL (e.g., "Review PR #123"), target that remote PR.
 - **Local Changes**: If no specific PR is mentioned, or if the user asks to "review my changes", target the current local file system state (staged and unstaged changes).
 
@@ -63,7 +65,7 @@ Reference specific code with `file_path:line_number` so the user can jump direct
 #### Tone
 
 - Be constructive, professional, and friendly.
-- Explain *why* a change is requested, not just *what* to change.
+- Explain *why* a change is requested along with *what* to change.
 - For approvals, acknowledge the specific value of the contribution.
 
 ### 5. Cleanup (Remote PRs only)

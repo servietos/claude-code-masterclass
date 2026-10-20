@@ -26,7 +26,7 @@ The class also covers everything required to pass the [Claude Certified Architec
 ## Module 2: Claude Code Configure Harness
 
 - Settings Hierarchy: Global, Project
-- CLAUDE.md constitution
+- CLAUDE.md and path-scoped rules
 - @-mentioning files
 - Slash Commands
 - MCP Servers & Tools
@@ -45,10 +45,11 @@ The class also covers everything required to pass the [Claude Certified Architec
 - Allowed-tools and disallowed-tools fields
 - Composite skills: scripts, references, assets
 - Cross-skill references and delegation patterns
-- Dynamic context injection: command preprocessing
-- Forked execution: agent and background
+- Dynamic context injection: command preprocessing (optional)
+- Forked execution: agent and background (optional)
 - Testing: triggers and measurement
 - Distribution: portable folder and skills API
+- Repo facts: rules file contract
 
 ## Module 4: Consuming & Designing MCP Tools
 
@@ -56,9 +57,9 @@ The class also covers everything required to pass the [Claude Certified Architec
 - Session lifecycle and exposed capabilities
 - Remote auth: tokens, keys, OAuth
 - Building a server in C#
-- Inspection with the MCP Inspector
+- Inspection with the MCP Inspector (optional)
 - MCP Apps: interfaces inside the host
-- Artifact connectors calling MCP live
+- Artifact connectors calling MCP live (optional)
 - Tool design: granularity, descriptions, resources
 - Error and deferred-loading contract
 
@@ -76,9 +77,9 @@ The class also covers everything required to pass the [Claude Certified Architec
 
 ## Module 6: Scale task execution with sub-agents and agent teams
 
-- Where single-agent sequential hits a ceiling
+- Single-agent limits (optional)
 - Frontmatter: name, model, tools, permission mode
-- Restricting tools and permissions per agent
+- Per-agent tool restrictions (optional)
 - Backend agent: .NET and Learn MCP
 - Frontend agent: Angular and DevTools MCPs
 - QA agent: Playwright, no implementation authority
@@ -88,20 +89,20 @@ The class also covers everything required to pass the [Claude Certified Architec
 - Where a team beats sub-agents
 - Lead, teammates, shared task list, mailbox
 - Enabling teams and session state
-- Spawning teammates: names and models
-- Display modes, agent panel, steering keys
-- Task states, dependencies, and self-claiming
-- Messaging between lead and teammates
-- Competing hypotheses: teammates disproving each other
-- Plan approval and lifecycle hooks
-- Team sizing, conflicts, and cost
+- Spawning teammates: names and models (optional)
+- Display modes and steering keys (optional)
+- Task states, dependencies, and self-claiming (optional)
+- Messaging between lead and teammates (optional)
+- Competing hypotheses in a team (optional)
+- Plan approval and lifecycle hooks (optional)
+- Team sizing, conflicts, and cost (optional)
 
 ## Module 7: Optimize, Secure and Observe the Agentic Harness
 
 - /doctor prompt-audit: dated instructions
 - Caveman Compression: shorter CLAUDE.md
 - Plugin Eval: graded skill experiments
-- Prompt Injection: quarantine, MCP response validation
+- Prompt Injection: quarantine, MCP responses
 - Hook Guardrails: PreToolUse hard stops
 - OpenTelemetry: tracing, cost, failure diagnosis
 
@@ -147,7 +148,7 @@ The class also covers everything required to pass the [Claude Certified Architec
 - Defining and validating done criteria
 - Why spec-driven development
 - GitHub Spec Kit pipeline
-- Sample case: a feature from brief to tasks
+- Spec-driven feature, end to end
 
 ## Schedule
 
@@ -156,10 +157,10 @@ The class also covers everything required to pass the [Claude Certified Architec
 | 1   | 09:00 to 10:00 | 1h 00m | [Claude Code Fundamentals](01-fundamentals/readme.md)                                                              | Setup and editors, model selection, prompt caching and cost, permissions, checkpoints, git worktrees, agents view, artifacts (8 topics, 4 demos, 3 optional)                                                                                                                          |
 | 1   | 10:00 to 10:10 | 10m    | Break                                                                                                              |                                                                                                                                                                                                                                                                           |
 | 1   | 10:10 to 10:55 | 45m    | [Lab: Build a Task Tracking REST API](../labs/01-fundamentals/02-hello-claude/readme.md)                           | Build a Python REST API for task management entirely through prompts, one step at a time. Every step gives you the prompt to paste and the result to expect.                                                                                                              |
-| 1   | 10:55 to 11:45 | 50m    | [Claude Code Configure Harness](02-harness/readme.md)                                                              | Harness elements and settings hierarchy, CLAUDE.md constitution, slash commands, hooks and mods, memory (5 topics, 4 demos, 2 optional)                                                                                                                                               |
+| 1   | 10:55 to 11:45 | 50m    | [Claude Code Configure Harness](02-harness/readme.md)                                                              | Harness elements and settings hierarchy, CLAUDE.md constitution and path-scoped rules, slash commands, hooks and mods, memory (5 topics, 4 demos, 2 optional)                                                                                                                                               |
 | 1   | 11:45 to 12:45 | 1h 00m | Lunch                                                                                                              |                                                                                                                                                                                                                                                                           |
 | 1   | 12:45 to 14:10 | 1h 25m | [Lab: Configure the Harness on a Broken React App](../labs/02-harness/lab-02-fix-the-react-food-shop.md)           | Configure the harness piece by piece (CLAUDE.md, MCP servers, a PostToolUse hook, a slash command, a skill, checkpoints) on a broken React app. The app is the use case; the harness is the lesson.                                                                       |
-| 1   | 14:10 to 14:55 | 45m    | [Creating & Managing Skills](03-skills/readme.md)                                                                  | Skills versus slash commands, installing skills, authoring and frontmatter, composite skills, dynamic context and forked execution, testing and packaging (5 topics, 4 demos)                                                                                             |
+| 1   | 14:10 to 14:55 | 45m    | [Creating & Managing Skills](03-skills/readme.md)                                                                  | Skills versus slash commands, installing skills, authoring and frontmatter, composite skills, dynamic context and forked execution, testing, packaging, and repo facts for global skills (5 topics, 4 demos)                                                                                             |
 | 1   | 14:55 to 15:05 | 10m    | Break                                                                                                              |                                                                                                                                                                                                                                                                           |
 | 1   | 15:05 to 16:25 | 1h 20m | [Lab: Package Invoice Generation Into a Skill](../labs/03-skills/lab-01-invoice-docx-skill.md)                     | Turn a one-off document script into a composite skill with frontmatter, a reference file, a rendering script, restricted tools and a value injected at load time. It answers "invoice Nordwind for two days of training" with a real Word document.                       |
 | 2   | 09:00 to 09:30 | 30m    | [Consuming & Designing MCP Tools](04-mcp/readme.md)                                                                | MCP architecture and transports, developer servers, building a server in C#, MCP apps, artifact connectors, tool design (5 topics, 4 demos)                                                                                                                               |

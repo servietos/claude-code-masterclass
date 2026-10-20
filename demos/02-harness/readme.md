@@ -1,7 +1,7 @@
 # Module 2: Claude Code Configure Harness
 
 - Settings hierarchy and CLAUDE.md injection
-- CLAUDE.md constitution and `@`-file mentions
+- CLAUDE.md, path-scoped rules, `@`-mentions
 - Built-in and custom slash commands
 - Hooks: PreToolUse, PostToolUse, Stop
 - Mods: extend and customize the harness

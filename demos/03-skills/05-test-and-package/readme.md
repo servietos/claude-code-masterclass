@@ -6,9 +6,9 @@ A skill that works on your machine is not yet a product. Publishing turns a loca
 
 Only the `description` frontmatter field is in context before a skill loads. The body, the references, and the scripts cost nothing and influence nothing until the decision has already been made, which is why adding trigger keywords to the body changes exactly nothing.
 
-The decision is observable. When a skill loads, the transcript contains a tool call named `Skill`, so a headless run plus a search for that name is a yes-or-no answer rather than an impression. Both directions matter: a skill that fires on unrelated work gets switched off as fast as one that never fires at all.
+The decision is observable. When a skill loads, the transcript contains a tool call named `Skill`, so a headless run plus a search for that name is a yes-or-no answer. Both directions matter: a skill that fires on unrelated work gets switched off as fast as one that never fires at all.
 
-## Measuring It Instead of Predicting
+## Measure It Before You Predict It
 
 Reading a description and predicting which prompts will match it is a reasonable first pass and a poor test. Run the prompt instead:
 
@@ -25,7 +25,7 @@ claude -p "Review my changes." --output-format stream-json --verbose \
 
 Two traps live in that command. `--allowedTools` is an auto-approve list and not a restriction, so a sweep that names it still edits files; only `--disallowedTools` removes a tool. And denying *every* tool biases the answer upward, because it leaves loading the skill as the only move the session has left.
 
-Loading is a model decision, not a lookup, so the same prompt can load on one run and not the next. A trigger row is therefore a count over several runs, and a row that comes back 2 of 3 is a finding in its own right rather than a pass.
+Loading is a model decision, so the same prompt can load on one run and not the next. A trigger row is therefore a count over several runs, and a row that comes back 2 of 3 is a finding in its own right.
 
 ## The Four Layers of a SKILL.md
 
@@ -44,7 +44,7 @@ A workflow step that names specific commands inherits everything those commands 
 
 ## Proving It Is Worth Adopting
 
-Adoption arguments are won with numbers, and the control run has to be honest. Asking a model to ignore a skill it has already loaded is not a control; starting the session with `claude --disallowedTools Skill` removes the tool so nothing on disk has to move. `/cost` prints to the terminal and writes nothing to disk, so its totals are copied across by hand, and a figure nobody captured is written as "not measured" rather than estimated.
+Adoption arguments are won with numbers, and the control run has to be honest. Asking a model to ignore a skill it has already loaded is not a control; starting the session with `claude --disallowedTools Skill` removes the tool so nothing on disk has to move. `/cost` prints to the terminal and writes nothing to disk, so its totals are copied across by hand, and a figure nobody captured is written as "not measured".
 
 ## Distribution Model
 
@@ -58,13 +58,33 @@ The package is the skill folder and nothing else. Test matrices, fixtures, run r
 
 The install README stays outside the folder too. A `README.md` inside a skill folder is not part of the skill contract and only adds tokens to what Claude loads, so host it one level up, next to the folder you ship.
 
+## Give a Global Skill Your Repo's Facts
+
+A skill shipped to `~/.claude/skills/` or in a plugin carries no repo facts, because the same folder serves every repository it lands in. Each repository keeps its facts in one rules file, `.claude/rules/<area>.md`, and the skill names that path. That path is the contract between the skill and every repository that uses it.
+
+A rule with no `paths:` loads at launch. A rule with `paths:` loads only when Claude uses Read, Write or Edit on a matching file, or `cat` or `head` on one. Scope follows the area: facts for one app get `paths:`, and facts that span areas, such as deploy or docs, get none.
+
+```markdown
+---
+paths: ["src/**/*.ts"]
+---
+
+# Code Review Facts
+
+- Source lives in `src/`; the tests run with `npm test`, which runs `node --test`
+- Prices are plain `number` values in `src/cart.ts` (`unitPrice`), and nothing rounds them
+- `quote()` in `src/pricing.ts` returns `{ subtotal, currency }`, with the currency defaulting to EUR
+```
+
+The skill's first step reads the file explicitly, because a path-scoped rule may not be in context when the skill starts: `Read .claude/rules/code-review.md first; if it is missing, review against the general checklist only and say so.`
+
 ## Using Skills via the API
 
 For programmatic use such as applications, agents, or automated pipelines, the skills API gives direct control over skill management and execution. Add skills to Messages API requests via the `container.skills` parameter and manage versions through the Claude Console. Skills in the API require the Code Execution Tool beta, which provides the sandbox they run in, so a skill that shells out to `git` or `gh` is the common surprise on this route: check what it actually invokes before promising it.
 
 ## Positioning Your Skill
 
-How you describe the skill decides whether anyone tries it. Focus on the outcome the user gets, not the mechanism.
+How you describe the skill decides whether anyone tries it. Focus on the outcome the user gets.
 
 Good:
 > "The ProjectHub skill enables teams to set up complete project workspaces in seconds, including pages, databases, and templates, instead of spending 30 minutes on manual setup."
@@ -91,3 +111,4 @@ Bad:
 - [Claude Code CLI reference](https://code.claude.com/docs/en/cli-reference): the `-p`, `--output-format`, `--strict-mcp-config`, and `--disallowedTools` flags the trigger sweep is built on
 - [Anthropic Skills GitHub repository](https://github.com/anthropics/skills): published skills to examine for structure, testing patterns, and distribution conventions
 - [Claude Messages API](https://platform.claude.com/docs/en/api/messages): API reference for using skills programmatically via the `container.skills` parameter
+- [How Claude remembers your project](https://code.claude.com/docs/en/memory#path-specific-rules): path-specific rules, which load only when Claude reads, writes or edits a matching file

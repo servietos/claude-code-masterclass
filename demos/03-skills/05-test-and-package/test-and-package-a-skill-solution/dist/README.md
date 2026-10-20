@@ -11,6 +11,10 @@ Pick one location:
 
 The folder must contain `SKILL.md` at its top level. Start a new Claude Code session, type `/`, and check that `code-reviewer` appears in the list.
 
+## Give It Your Repository's Facts
+
+The skill first reads `.claude/rules/code-review.md` in the repository it reviews. Put your source folder, test command and conventions there, with `paths:` frontmatter for the files they cover. Without that file the skill reviews against its general checklist only and says so.
+
 ## Install in Claude.ai
 
 1. Unzip `code-reviewer.zip`, or keep the archive as it is.

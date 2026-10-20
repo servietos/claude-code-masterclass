@@ -1,4 +1,4 @@
-# Masterclass: Agentic Software Engineering using Claude Code
+# Masterclass: Agentic Software Engineering with Claude Code
 
 Great software no longer has to cost a fortune or consume every hour of your day. With Claude Code, you get an engineering partner that plans, builds, tests, and ships alongside you at a fraction of the time and cost. This isn't about prompting an AI. It's about designing systems that multiply what you can deliver. Welcome to the new standard.
 

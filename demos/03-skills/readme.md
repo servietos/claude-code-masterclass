@@ -2,18 +2,19 @@
 
 - Skills vs. slash commands
 - Invocation model, anatomy, and body structure
-- Choosing the skill by failure mode
+- Choosing by failure mode (optional)
 - Manual authoring and conversation extraction
 - Front matter fields
 - Allowed-tools restrictions and metadata conventions
 - Composite skills: scripts, references, and assets
 - Cross-skill references and delegation patterns
-- Dynamic context injection with `` !`command` ``
-- Forked execution with `context: fork`
+- Dynamic context injection with `` !`command` `` (optional)
+- Forked execution with `context: fork` (optional)
 - Readiness, distribution, hosting, packaging
-- Positioning a skill as an outcome
+- Positioning as an outcome (optional)
 - Measurement: baselines, triggers, eval loop
-- Diagnosis: symptom to `SKILL.md` layer
+- Diagnosis: symptom to `SKILL.md` layer (optional)
+- Repo facts: rules file contract
 
 ## Topics
 
@@ -23,7 +24,7 @@
 | [02: Creating](02-creating/readme.md) | The `SKILL.md` file itself: directory placement, the full frontmatter field reference, body structure, argument substitutions, and extracting a proven conversational workflow. |
 | [03: Composite](03-composite/readme.md) | Bundling `scripts/`, `references/`, and `assets/` into one portable folder: progressive disclosure, reference files versus playbooks, stacking, precedence, and cross-skill delegation. |
 | [04: Live Data and Subagents](04-live-data-and-subagents/readme.md) | Injecting live command output into a skill prompt with `` !`command` ``, and running a skill in an isolated subagent with `context: fork`, `agent`, and `background`. |
-| [05: Test and Package](05-test-and-package/readme.md) | Getting a working skill into someone else's hands: the functional readiness gate, distribution as a portable folder, the skills API, hosting, packaging, and positioning. |
+| [05: Test and Package](05-test-and-package/readme.md) | Getting a working skill into someone else's hands: the functional readiness gate, distribution as a portable folder, giving a global skill its repo's facts, the skills API, hosting, packaging, and positioning. |
 
 ## Demos
 
@@ -34,7 +35,7 @@ Each runnable folder inside a topic is the starter and stays pristine. Its compl
 | [01: Intro](01-intro/demo-docx-invoice.md) | Installs a DOCX skill from the catalog, reads back the `SKILL.md` it dropped, and lets the skill drive a TypeScript program that renders an invoice as a `.docx` file. |
 | [02: Creating](02-creating/demo-skill-from-conversation.md) | Prompts Claude to build a JavaScript sales-revenue calculator, then encodes the proven interaction pattern into a reusable skill. |
 | [04: Live Data and Subagents](04-live-data-and-subagents/demo-live-context-and-fork.md) | Inlines a project's file listing and open TODO markers with `` !`command` ``, then forks the same evidence to an Explore subagent and compares what each leaves in context. |
-| [05: Test and Package](05-test-and-package/demo-test-and-package-a-skill.md) | Builds a trigger and functional test matrix for the `code-reviewer` skill, patches the failures it exposes, and packages the result as an installable folder. |
+| [05: Test and Package](05-test-and-package/demo-test-and-package-a-skill.md) | Builds a trigger and functional test matrix for the `code-reviewer` skill, patches the failures it exposes, gives the skill its repo's facts in `.claude/rules/`, and packages the result as an installable folder. |
 
 Every demo has a presenter guide beside it (`demo-presenter-<slug>.md`) holding the same
 teaching in timed beats, for delivery without running the demo live.
@@ -85,7 +86,7 @@ A skill exists, is well written, and is never selected. Which defect explains th
 
 **Answer: B**
 
-Skills surface to the model by their description, so that one field decides whether the skill is ever considered. A description that carries concrete trigger phrases matching how people actually phrase the request is the difference between a skill that fires and one that sits unused. Body length affects cost after selection, not selection itself.
+Skills surface to the model by their description, so that one field decides whether the skill is ever considered. A description that carries concrete trigger phrases matching how people actually phrase the request is the difference between a skill that fires and one that sits unused. Body length affects cost only after selection.
 
 ### CQ-04: Keeping a Master Skill Discoverable
 

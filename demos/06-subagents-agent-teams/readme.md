@@ -1,23 +1,24 @@
 # Scale task execution with sub-agents and agent teams
 
-- Why single-agent sequential hits a ceiling
+- Single-agent limits (optional)
 - Frontmatter: model, tools, permissionMode
 - Orchestrator and sub-agent decomposition patterns
-- Agent communication: contracts and schema validation
+- Agent contracts and schema validation (optional)
 - Domain agents: backend, frontend, QA
+- Evaluating agents with test cases
 - Context isolation between parallel agents
 - Retry and convergent loops
 - Workflow graphs: barriers versus pipelines
 - When a team beats sub-agents
 - Four parts: lead, teammates, tasks, mailbox
 - Enabling teams and session state
-- Spawning teammates and choosing models
-- Display modes and the agent panel
-- Task states, dependencies, and claiming
-- Direct and teammate-to-teammate messaging
-- Competing hypotheses between teammates
-- Plan approval and team hook gates
-- Team sizing, conflicts, and cost
+- Spawning teammates and choosing models (optional)
+- Display modes, agent panel (optional)
+- Task states, dependencies, and claiming (optional)
+- Direct and teammate-to-teammate messaging (optional)
+- Competing hypotheses between teammates (optional)
+- Plan approval, team hook gates (optional)
+- Team sizing, conflicts, and cost (optional)
 
 ## Topics
 

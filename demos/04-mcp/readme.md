@@ -8,7 +8,7 @@
 - Building MCP apps as agentic interfaces
 - Hosting and deploying for teams
 - Tool list caching with prompt caching
-- Connector-backed artifact pages
+- Connector-backed artifact pages (optional)
 - Tool design: granularity, descriptions, contracts
 
 ## Topics
