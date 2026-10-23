@@ -83,7 +83,7 @@ the rounding strategy was swapped from half-up to banker's rounding with an expl
 **Say:** Behaviour and file state are genuinely independent: a suite can pass with a stray file left behind, and a clean tree says nothing about behaviour. Neither alone supports "the folder is back where it started".
 
 ```text
-Verify the rollback of demos/01-fundamentals/06-git-worktrees/checkpoint-drill:
+Verify the rollback of demos/01-fundamentals/04-git-worktrees/checkpoint-drill:
 
 1. Run npm test in that folder and report pass and fail counts and the exit code.
 2. Run git status --short for that folder only and report every line.

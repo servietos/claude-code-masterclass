@@ -4,14 +4,14 @@ Checkpoints let you rewind a session to a known state after Claude takes a chang
 
 ---
 
-Work in `demos/01-fundamentals/06-git-worktrees/checkpoint-drill` with a terminal beside Claude Code for `npm test` (skip `npm install`, the folder must stay clean); the finished state sits in [checkpoint-drill-solution/](checkpoint-drill-solution/readme.md).
+Work in `demos/01-fundamentals/04-git-worktrees/checkpoint-drill` with a terminal beside Claude Code for `npm test` (skip `npm install`, the folder must stay clean); the finished state sits in [checkpoint-drill-solution/](checkpoint-drill-solution/readme.md).
 
 ## Step 1: Establish the Green Baseline and Anchor It
 
 A rollback is only meaningful if you can prove where you landed. Confirm the green suite, then anchor the session state with an explicit prompt before anything is touched.
 
 ```text
-Run npm test in demos/01-fundamentals/06-git-worktrees/checkpoint-drill and report the pass and fail
+Run npm test in demos/01-fundamentals/04-git-worktrees/checkpoint-drill and report the pass and fail
 counts and the exit code.
 
 Then anchor this state: I want to be able to return to exactly this point later. Confirm in one
@@ -33,7 +33,7 @@ Expected Outcome: the terminal reports a fully green suite, and Claude's turn is
 This is the deliberate mistake: a cross-cutting change that touches every layer at once, which is painful to unwind by hand and cheap to unwind with a checkpoint.
 
 ```text
-Change the rounding strategy of demos/01-fundamentals/06-git-worktrees/checkpoint-drill from half-up to
+Change the rounding strategy of demos/01-fundamentals/04-git-worktrees/checkpoint-drill from half-up to
 banker's rounding (round half to even). Apply it consistently: replace the implementation in
 src/money.js and thread an explicit rounding-mode parameter through src/discount.js, src/tax.js
 and src/pricing.js so every call site names the mode it wants.
@@ -62,7 +62,7 @@ The rewind restore replays a stored snapshot and is therefore byte-identical, wh
 Then verify with two independent checks, the suite and git:
 
 ```text
-Verify the rollback of demos/01-fundamentals/06-git-worktrees/checkpoint-drill:
+Verify the rollback of demos/01-fundamentals/04-git-worktrees/checkpoint-drill:
 
 1. Run npm test in that folder and report pass and fail counts and the exit code.
 2. Run git status --short for that folder only and report every line.

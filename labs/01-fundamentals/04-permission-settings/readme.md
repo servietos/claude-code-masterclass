@@ -6,7 +6,7 @@ What you practice here: decide in advance which commands run silently, which ask
 
 Duration: about 65 minutes.
 
-Teaching for this lab lives in [Configure the Permission Model](../../../demos/01-fundamentals/05-permissions/readme.md); the rule syntax is under [Writing Permission Rules](../../../demos/01-fundamentals/05-permissions/readme.md#writing-permission-rules) and the file precedence under [Where Permissions Are Stored](../../../demos/01-fundamentals/05-permissions/readme.md#where-permissions-are-stored).
+Teaching for this lab lives in [Configure the Permission Model](../../../demos/01-fundamentals/03-permissions/readme.md); the rule syntax is under [Writing Permission Rules](../../../demos/01-fundamentals/03-permissions/readme.md#writing-permission-rules) and the file precedence under [Where Permissions Are Stored](../../../demos/01-fundamentals/03-permissions/readme.md#where-permissions-are-stored).
 
 Each step contains:
 

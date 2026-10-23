@@ -1,5 +1,104 @@
 # Todo
 
+## Merge 01-fundamentals topics 01, 02 and 03 into one short topic
+
+Rationale: make room for advanced topics. Today `01-intro` (62 lines), `02-setup` (83) and
+`03-editors` (47) repeat the same surfaces, extensions and install command three times, and two
+claims are stale against code.claude.com/docs: npm with Node 18 is now an advanced option needing
+Node 22, the native installer is recommended, and the Desktop app includes Claude Code.
+
+Owner decisions (2026-10-23): keep the detail of the three master-TOC facets (Introduction,
+Setup & Installation, Editors), so the page has one H2 per facet; npm stays as an optional appendix;
+topics 04 to 08 renumber to 02 to 06.
+
+### 1. New topic `01-get-started/readme.md` (H1 "Get Started with Claude Code", 165 lines)
+
+- [x] "Introduction to Claude Code": the family as one table with the old per-product detail, why Claude Code, the `claude` examples
+- [x] "Setup & Installation": native installer per OS, Homebrew and WinGet, sign-in, both VS Code extensions, verify with `claude --version`, `claude doctor` and a first prompt
+- [x] "Editors: Terminal, Desktop App, VS Code": one H3 each plus Claude Code on the web; JetBrains and Cursor under VS Code
+- [x] Slash commands `/login`, `/status`, `/doctor`, `/help` checked against code.claude.com/docs/en/commands
+- [x] "Appendix: Install with npm (Optional)": Node.js 22 or later, npm install as a regular user on Windows
+- [x] `01-intro/` moved to `01-get-started/`; `02-setup/` and `03-editors/` removed
+
+### 2. Indexes
+
+- [x] Module `readme.md`: one Topics row for the merged topic, labels renumbered; master TOC unchanged (facets, not folders)
+- [x] 04..08 moved to 02..06 (`renumber-tree.sh`, then `git mv` by hand for the two .NET topics that held a lock)
+- [x] Links repointed with `rewrite-links.py` (14 files; its unrelated trailing-slash edits in 11 files of modules 07, 08, 10, 11 reversed); prose paths, link labels and slide-spec `topic:`, `source:`, `media-file:` lines shifted (77 lines, 30 files); `.devcontainer/readme.md` .NET row
+- [x] `dashboard/index.html` regenerated
+
+### 3. Verify
+
+- [x] `link-check.sh`: demos/01-fundamentals and labs/01-fundamentals 0 broken, 0 prefix defects
+- [x] `link-rot.sh`: 14 of 16 URLs 200; claude.ai and claude.ai/code answer curl with 403 (bot block)
+- [x] `fence-lang.py` 0 untagged; no em dashes or negative parallelism; brand-voice clean, the topic has no approved slash-command set in `rules.md`
+
+### 4. Deck (owner: "yes update the deck", then "publish the update to onedrive")
+
+- [x] OneDrive copy checked first: unchanged since the 2026-10-06 delivery, the repo deck only newer (notes on slides 3 and 5)
+- [x] Specs and images renumbered with `permute-topic-specs.py` (02-01, 03-01 to 01-03, 01-04; 04..08 to 02..06; 38 moves)
+- [x] Specs 00-02, 01-01, 01-03, 01-04: native installer, `claude doctor`, npm with Node 22 optional, Desktop includes Claude Code, six topics; SVGs 00-02, 01-03, 01-04 redrawn and swapped
+- [x] `topics.json` six topics; `topics` rebuilt the overview and 6 dividers (31 slides to 29); `notes` 19 of 19, unmatched=0
+- [x] `clean --skip 4` twice removed=0; `check_specs.py --legacy` problems=0 (9 pre-existing mix warnings); sheet and slides 10, 11 checked at full size
+- [x] Delivered to OneDrive; `cmp` PPTX and PDF identical
+
+Not touched: `labs/01-fundamentals/01-setup-claude` (still npm and Node 18), `pdf/handout.md`.
+
+## Teach the plugin side of `.claude/rules/` in 08-distribution
+
+Subject (owner, 2026-10-23): a plugin from a marketplace brings its own expert, and the expert gets
+each repo's details from a rule. Example: `copilot-work-iq` from `integrations-marketplace`, its
+`copilot-studio-expert`, and a repo's `.claude/rules/copilot-studio.md`. `02-harness` and `03-skills`
+rules teaching stay as they are.
+
+Owner decisions (2026-10-23): topic folder `05-repo-rules`; no demo, no lab; slides in the 08 deck;
+an animated opener built on the Copilot Studio plugin; diagrams carry only a fixed label list.
+
+- [x] Mechanism checked in the docs: no plugin component is a rules file, a plugin-root `CLAUDE.md`
+  is not loaded, `paths` is the only field a rule reads, plugin agents carry a namespaced name
+- [x] `05-repo-rules/readme.md`: expert from the marketplace, the repo's rule, the expert reads it first
+- [x] Module `readme.md` Topics row, opening bullet; `demos/readme.md` TOC bullet; demo removed
+- [x] `_images/plugin-repo-rules-overview.svg`: animated; Copilot Studio plugin with its agent and two skills installs into `~/.claude (global)`, the expert reads the real sections of `copilot-studio.md`
+- [x] Specs `05-01` to `05-03` (diagram, split-code, diagram), `topics.json`, `99-01` order 20
+- [x] SVGs and PNGs for `05-01` to `05-03`
+- [x] Deck: three slides and the opener GIF after the divider, `normalize_cards`, `clean`, `notes`,
+  `slide_quality.py` problems=0, delivered to OneDrive (pptx and PDF identical to the repo copies)
+- [x] `link-check.sh` broken=0, `fence-lang.py` 0 untagged, no em dashes or negative parallelism
+
+## 1. Verify the mechanism (official docs)
+
+- [x] Plugin component list has no rules; a plugin-root `CLAUDE.md` is not loaded (`plugins-reference.md:665`)
+- [x] `paths` is the only field a rule reads (`memory.md:246`); custom subagents load CLAUDE.md and project rules
+- [x] Plugin agents ignore `hooks`, `mcpServers`, `permissionMode`; plugin hooks get `CLAUDE_PROJECT_DIR` (`hooks.md:480`)
+
+### 2. Topic `05-plugins-and-repo-rules` (H1 "Give a Plugin Each Repo's Facts")
+
+- [x] `readme.md`: opener SVG under the H1, then concept sections: a plugin ships global components;
+  the repo half lives in `.claude/rules/<area>.md`; the `Owner agent:` line; a plugin agent reads its
+  rules file first; a fenced JSON block in a rules file as config for a plugin hook; a plugin that
+  scaffolds the area files; how our marketplace runs it. Slash-command table, Key Topics links
+- [ ] `_images/plugin-repo-rules-overview.svg`: 1920x1080, animated (SMIL, static first frame shows
+  every label), style from `pptx/images/03-01-what-moves.svg`, drawn by `image-producer`
+- [x] Demo `demo-repo-rules.md` + presenter guide; starter `demo-repo-rules/` and
+  `demo-repo-rules-solution/` (`acme-review-plugin` + `pricing-service`)
+- [x] Module `readme.md`: opening bullet, Topics and Demos rows; `demos/readme.md` TOC bullet
+
+### 3. Slides (`finished-deck-edits`, no Gamma)
+
+- [x] Specs `05-01` to `05-04` (diagram, split-code, diagram-full, diagram), `topics.json`, `99-01` order 21
+- [ ] SVGs drawn by `image-producer`, PNGs rendered
+- [ ] `add_spec_slide.py` x4 after slide 24, `topics --footer`, opener GIF via `svg-gif` + `image-slide`
+- [ ] `normalize_cards`, `clean` twice, `notes`, `sheet`, `slide_quality.py`, `deliver` (repo deck newer than OneDrive's)
+
+### 4. Verify
+
+- [x] Demo run headless (Claude Code 2.1.309): skill falls back without the file, scaffold writes
+  it, `review-lead` delegated by `subagent_type`, `path_glob_match` logged, `freeze-guard` denies;
+  PowerShell wiring gives the same deny and log; empty `frozen` lets the edit through
+- [x] `fence-lang.py` 0 untagged, doc links 200, no em dashes or negative parallelism, brand-voice
+  (`/agents` row replaced by `/plugin`, rule 7); topic has no approved slash-command set in `rules.md`
+- [ ] `link-check.sh` once the opener exists; render the opener and check every frame
+
 ## Teach `.claude/rules/` as the repo-facts contract of global skills
 
 Rationale: the course teaches rule mechanics (`02-constitution`) and the global sub-agent case

@@ -4,7 +4,7 @@ Model choice is a routing decision, and the only way to settle it is to measure.
 
 ---
 
-Work in `demos/01-fundamentals/04-model-selection/model-routing-api`; no solution folder ships, so your measured results table is `model-routing-api/MODEL-NOTES.md`.
+Work in `demos/01-fundamentals/02-model-selection/model-routing-api`; no solution folder ships, so your measured results table is `model-routing-api/MODEL-NOTES.md`.
 
 ## Step 1: Repeat the Task One Tier Up
 

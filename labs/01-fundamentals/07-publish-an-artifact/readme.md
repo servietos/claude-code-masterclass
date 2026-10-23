@@ -6,7 +6,7 @@ What you practice here: publish session output as a page, update the same URL fr
 
 Duration: about 70 minutes.
 
-Teaching for this lab lives in [Turn Session Output into a Shareable Page](../../../demos/01-fundamentals/08-artifacts/readme.md); the publish loop is walked through in [Publish, Revise and Share a Decision as an Artifact](../../../demos/01-fundamentals/08-artifacts/demo-artifact-publish-share.md). The design tokens in Step 5 follow [Make the Page Look Like Your Product](../../../demos/01-fundamentals/08-artifacts/readme.md#make-the-page-look-like-your-product), and the deny rule in Step 7 follows [Availability and Turning It Off](../../../demos/01-fundamentals/08-artifacts/readme.md#availability-and-turning-it-off). This lab needs Claude Code v2.1.183 or later and a session signed in with `/login` on a Pro, Max, Team or Enterprise plan.
+Teaching for this lab lives in [Turn Session Output into a Shareable Page](../../../demos/01-fundamentals/06-artifacts/readme.md); the publish loop is walked through in [Publish, Revise and Share a Decision as an Artifact](../../../demos/01-fundamentals/06-artifacts/demo-artifact-publish-share.md). The design tokens in Step 5 follow [Make the Page Look Like Your Product](../../../demos/01-fundamentals/06-artifacts/readme.md#make-the-page-look-like-your-product), and the deny rule in Step 7 follows [Availability and Turning It Off](../../../demos/01-fundamentals/06-artifacts/readme.md#availability-and-turning-it-off). This lab needs Claude Code v2.1.183 or later and a session signed in with `/login` on a Pro, Max, Team or Enterprise plan.
 
 Each step contains:
 

@@ -92,6 +92,7 @@ Every module README contains a "Helpful Claude Slash Commands" table. Commands i
 
 | Module topic | Preferred commands |
 |---|---|
+| Get started: product family, install, editors | `/login`, `/status`, `/doctor`, `/help` |
 | Harness intro / settings | `/init`, `/update-config`, `/memory`, `/config` |
 | Slash commands | `/review`, `/security-review`, `/cost`, `/help` |
 | Hooks | `/update-config`, `/fewer-permission-prompts`, `/doctor` |
@@ -163,7 +164,7 @@ Every documentation link is checked, not assumed. A plausible-looking nested pat
 curl -s -o /dev/null -w "%{http_code} %{url_effective}\n" -L "<url>"
 ```
 
-Treat anything that is not a direct 200 as a defect: rewrite it to the final URL and re-check.
+Treat anything that is not a direct 200 as a defect: rewrite it to the final URL and re-check. The one exception is a product page behind a bot wall: `https://claude.ai` and `https://claude.ai/code` answer curl and `link-rot.sh` with 403 and open in a browser, so they stay as written.
 
 ```text
 Before: https://docs.anthropic.com/en/docs/claude-code/hooks

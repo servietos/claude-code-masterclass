@@ -4,7 +4,7 @@ Permission rules decide what Claude Code will actually allow, independently of w
 
 ------
 
-Work in `demos/01-fundamentals/05-permissions/permissions-api`; no solution folder ships, so the policy you build lives in a new `permissions-api/.claude/` folder.
+Work in `demos/01-fundamentals/03-permissions/permissions-api`; no solution folder ships, so the policy you build lives in a new `permissions-api/.claude/` folder.
 
 ## Step 1: Make a secret genuinely unreachable
 

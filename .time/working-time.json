@@ -1124,6 +1124,158 @@
    "catalogue": {
     "action": "none"
    }
+  },
+  {
+   "date": "2026-10-23",
+   "from": "11:04",
+   "to": "11:35",
+   "sessionId": "99396526-5338-4a75-9e92-da2556e1c9af",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "demos/01-fundamentals",
+    "slide deck 01-fundamentals"
+   ],
+   "files": [
+    "demos/01-fundamentals/01-get-started/readme.md",
+    "demos/01-fundamentals/readme.md",
+    "demos/01-fundamentals/pptx/01-fundamentals.pptx",
+    "demos/01-fundamentals/pptx/topics.json",
+    "dashboard/index.html"
+   ],
+   "mechanism": {
+    "takes": "three overlapping course topics, the owner's ask to shorten without losing detail, and the vendor's current docs",
+    "does": "gathers the facts with a small read-only model, merges the topics into one page with a heading per table-of-contents facet, corrects claims the docs contradict, renumbers the remaining topic folders with history-preserving moves, repoints every link, label and slide spec, rebuilds the finished deck's overview and dividers locally and delivers it",
+    "returns": "a shorter module with no lost detail, consistent numbering across readmes, labs, dashboard and slides, and the deck in the class folder"
+   },
+   "portsAsIs": [
+    "merge-by-facet outline with duplicates removed",
+    "folder renumber with link repoint and cosmetic-edit reversal",
+    "local deck rebuild after a topic merge"
+   ],
+   "perCustomer": [
+    "the course, its modules and the vendor docs it cites"
+   ],
+   "evidence": [
+    "link check 0 broken in demos and labs of the module",
+    "deck 29 slides, notes 19 of 19 matched, OneDrive copy byte-identical"
+   ],
+   "toolchain": {
+    "skills": [
+     "create-class",
+     "brand-voice-code",
+     "create-pptx",
+     "report",
+     "claude-learn",
+     "claude-learn-worktime"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": [
+     "fact-gatherer",
+     "general-purpose",
+     "fork"
+    ]
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-23",
+   "from": "11:35",
+   "to": "11:41",
+   "sessionId": "99396526-5338-4a75-9e92-da2556e1c9af",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "global house rules",
+    "claude-learn closing report"
+   ],
+   "files": [
+    "tasks/lessons.md"
+   ],
+   "mechanism": {
+    "takes": "the owner's corrections to how answers are written",
+    "does": "turns each correction into a one-line house rule with its incident, checks the earlier run's rules landed, and narrows the learning loop's closing line to approvals it cannot proceed without",
+    "returns": "answers that explain in the owner's words and raise only the questions the asked task needs"
+   },
+   "portsAsIs": [
+    "correction-to-rule capture with incident"
+   ],
+   "perCustomer": [
+    "the owner's own answer preferences"
+   ],
+   "evidence": [
+    "rules present in the house rules, the lessons file and the learning-loop skill"
+   ],
+   "toolchain": {
+    "skills": [
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": [
+     "fork"
+    ]
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-23",
+   "from": "11:41",
+   "to": "12:10",
+   "sessionId": "99396526-5338-4a75-9e92-da2556e1c9af",
+   "branch": "master",
+   "commits": [],
+   "surfaces": [
+    "session transcript lookup",
+    "claude-learn closing run"
+   ],
+   "files": [
+    ".time/working-time.md",
+    ".time/working-time.json"
+   ],
+   "mechanism": {
+    "takes": "a request for the session's own transcript and a third learn-loop invocation",
+    "does": "locates the session record on disk and closes the learning loop with a single non-overlapping ledger row",
+    "returns": "the transcript location and a time ledger with no doubly billed minutes"
+   },
+   "portsAsIs": [
+    "append-only ledger row for minutes after an imported row"
+   ],
+   "perCustomer": [],
+   "evidence": [
+    "ledger row appended after the imported 11:35-11:41 row"
+   ],
+   "toolchain": {
+    "skills": [
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": [
+     "fork"
+    ]
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
   }
  ]
 }

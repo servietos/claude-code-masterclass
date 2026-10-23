@@ -79,7 +79,7 @@ Every one of these numbers comes from the two files in the solution folder: `cou
 | Tokens per sprint (5 devs x 20 turns x 20 sessions) | 3,450,000 | 1,118,000 | 2,332,000 saved |
 | Rules enforceable | 35 | 35 | none lost |
 
-The last two rows are the point of the technique: two thirds of the context disappears, and the rule-by-rule parity check still finds all 35 rules intact. The sprint row counts tokens processed, not dollars: after the first turn Claude Code reads CLAUDE.md from the prompt cache at a tenth of the input price or less, as [Keep the Prompt Cache Warm](../../01-fundamentals/04-model-selection/readme.md#keep-the-prompt-cache-warm) explains.
+The last two rows are the point of the technique: two thirds of the context disappears, and the rule-by-rule parity check still finds all 35 rules intact. The sprint row counts tokens processed, not dollars: after the first turn Claude Code reads CLAUDE.md from the prompt cache at a tenth of the input price or less, as [Keep the Prompt Cache Warm](../../01-fundamentals/02-model-selection/readme.md#keep-the-prompt-cache-warm) explains.
 
 ## Helpful Claude Slash Commands
 

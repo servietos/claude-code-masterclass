@@ -1,6 +1,6 @@
 # Serve Live MCP Data to Artifact Pages
 
-An [artifact](../../01-fundamentals/08-artifacts/readme.md) is a static page with no backend, which normally means it shows whatever the session knew when it was published. Connector calls are the single exception to that rule. A page can call MCP connectors each time someone opens it, so a status board that was published in July still shows today's numbers in September.
+An [artifact](../../01-fundamentals/06-artifacts/readme.md) is a static page with no backend, which normally means it shows whatever the session knew when it was published. Connector calls are the single exception to that rule. A page can call MCP connectors each time someone opens it, so a status board that was published in July still shows today's numbers in September.
 
 Hands-on demo: [Publish Your Last Two Emails as a Self-Refreshing Page](demo-last-two-emails.md).
 

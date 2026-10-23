@@ -69,7 +69,7 @@ A mod installed from a gallery is reviewed before it runs and draws from the tok
 
 ### Beat 3: a model switch rewrites the whole history (1.5 min)
 
-**Open:** [Step 2: Break the Cache on Purpose](demo-cache-meter.md#step-2-break-the-cache-on-purpose) · [Cache Lifetime](../../01-fundamentals/04-model-selection/readme.md#cache-lifetime)
+**Open:** [Step 2: Break the Cache on Purpose](demo-cache-meter.md#step-2-break-the-cache-on-purpose) · [Cache Lifetime](../../01-fundamentals/02-model-selection/readme.md#cache-lifetime)
 **Say:** Every model has its own cache. Claude Code warns you before the switch, and the pane prices it per turn.
 
 ```text

@@ -1028,3 +1028,51 @@
 **Pattern (2026-10-20):** `02-harness.pptx` in the repo differed from the OneDrive copy. Slide text showed only the topic overview and dividers changed, from the "decks refreshed" commit of 2026-10-18, and the OneDrive file time matched the earlier delivery, so the repo deck was newer and safe to deliver.
 
 **Rule:** Before overwriting, diff slide text and notes of both decks with python-pptx and compare the OneDrive file time with the last delivery. Owner edits win; a repo deck that is only newer is delivered.
+
+## The first look at a request is fact gathering and goes to the fact-gatherer
+
+**Pattern (2026-10-23):** Asked to merge topics 01 to 03 of module 01, I ran about ten Read, Grep and Bash lookups on the main thread (the folder tree, three topic readmes, the module readme, a repo-wide grep, two slide specs, the setup lab) until the owner stopped it: "facts in any case should be gathered by fact gatherer ... fact gatherer uses a cheaper model". The roster rule sat in the system prompt; I followed the generic "a handful of tool calls, do it yourself" default, and the delegation mod watched only Agent spawns. The same slip was logged the same day from a second session (presenter-tools). subagent-delegation-plugin 0.7.7 (source) now denies Grep, Glob and lookup shell commands from the 4th main-thread lookup in a turn.
+
+**Rule:** Everything the request names that I have not read yet (a folder, its files, who links to it, what the docs say) goes into one fact-gatherer brief before any other step. The main thread reads only skill, agent and instruction files and the files it is about to edit.
+
+## A delegate's report swallowed by a stop gate is asked for again
+
+**Pattern (2026-10-23):** The inventory fact-gatherer ended with a table of "Verified" and "Not executed" step labels and none of the facts. The class-authoring Stop hook (`hold()` in `class-authoring.mjs`) blocks any reply that calls a guide verified when the session ran no guide, and a read-only agent that had read guide files and said "verified" about its greps tripped it. One SendMessage naming the missing parts returned the full report in one tool call.
+
+**Rule:** When a delegate's final message lacks what the brief asked for, resume it with SendMessage and name the missing parts; the work is done, only the report is missing. A brief to a read-only agent in a class repo avoids the word "verified" for its own lookups.
+
+## Merging topics to shorten keeps each topic's detail under its own heading
+
+**Pattern (2026-10-23):** The first merged-topic concept for module 01 cut the eight product sections to table rows, the Node.js walkthrough and the editor sections to one table. The owner pasted the three master-TOC bullets and said "we still do not want to lose too much details". The accepted page has one H2 per TOC facet (Introduction, Setup & Installation, Editors) with the old per-item detail, and loses only the repeats (extensions described twice, three link lists, two command tables); npm moved to an optional appendix.
+
+**Rule:** "Shorten" in a merge means removing what two source topics both say. Each source topic keeps its own heading, named after its TOC facet, with its detail intact. In this repo `demos/readme.md` lists facets as unlinked bullets, so a merge of topic folders leaves it unchanged and `toc-sync.py` does not apply.
+
+## Git state and long status reports are not answers
+
+**Pattern (2026-10-23):** A status update on the mod guard counted the plugin folder's changed files and noted other sessions' uncommitted edits, and the relayed guard report opened with "nothing was committed". The owner: never report git state in an answer, git is not my business outside an explicit commit or push request, and a status question gets two to three lines, never a sectioned report.
+
+**Rule:** No committed, uncommitted, staged or other-session wording in a reply unless the message asked for a commit or push. A status answer is two or three lines: what runs or finished, and the one number that shows progress. Recorded in the global house rules and `~/.claude/CLAUDE.md`.
+
+## A delegate's open points are decided, not relayed
+
+**Pattern (2026-10-23):** The guard agent's report ended with two open points: whether reading a background task's output file counts as a lookup, and that the claude-learn delegation review did not list the new slip type. I relayed both as questions three times; the owner had to ask what they even meant.
+
+**Rule:** Open points a delegate raises that the owner never asked about are decided by the sensible default (here: the output file stays counted, the review leaf gets the row) or left, and say nothing. A question reaches the owner only when the task they asked for cannot finish without them. The one standing exception is claude-learn's closing line for a held-back write that would overwrite existing global or plugin content: one line, phrased as the yes or no it needs.
+
+## "Explain this" gets the owner's words, not the mechanism's
+
+**Pattern (2026-10-23):** Asked to explain a guard's open point, my first answer named the task output path, "lookup" and "the fact-gatherer reminder"; the owner replied "i still dont understand this". The plain version (peeking into a helper's working log counts as doing the research myself, and I should not peek anyway) landed at once. The owner also confirmed the three-line shape of finding, recommendation and at most one question as the answer format they want.
+
+**Rule:** An explanation says what happens and why it matters to the owner, without internal paths, tool names or mechanism vocabulary. Recorded in `~/.claude/CLAUDE.md` and the context-engineering house-rules leaf.
+
+## A diagram brief carries only the labels the owner asked for
+
+**Pattern (2026-10-23):** The owner pointed at `pr-fork-workflow.svg` (108 text elements, a step-by-step section, git commands) and at the topic 08/05 marketplace slide (five plugin boxes, three repo cards with three rows each, four arrow captions) as overloaded. Both came from my briefs: I listed every noun the readme had and the image agent drew all of them. The overload also made the drawing slow, because each label is placed, measured and fixed by hand.
+
+**Rule:** Write an SVG brief as a label budget: the few nouns the owner named, at most one or two words per arrow, and a total label count in the brief. Explanation text, commands, file contents, legends and step lists stay in the readme and the slide bullets, never in the picture.
+
+## Content production loses its grounding in the coordinator's briefs
+
+**Pattern (2026-10-23):** Topic 08/05 took about eight rework rounds. The owner's subject was one sentence: a plugin from a marketplace brings its own expert, and the expert gets each repo's details from a rule. The owner named the grounding: `copilot-studio-agents/.claude/rules/copilot-studio.md`, `integrations.at/.claude/rules`, `integrations-marketplace`. Each brief I wrote drifted away from that. I invented an acme demo with a freeze-guard hook and a scaffold skill, added plugins nobody named (learn-loop, harness), relabelled the plugin by its manifest id (`copilot-work-iq`) when the owner calls it the Copilot Studio plugin, drew the plugin installed into the repo when it installs globally, and filled the rule card with generic phrases taken from the agent file where the real rule file has concrete sections. Each image agent drew my brief faithfully, so every error was mine and came back looking finished. The coding parts of the same session (hooks, headless runs, deck scripts) needed no rework.
+
+**Rule:** For teaching prose, diagrams and slides, restate the owner's subject in one sentence and check every artifact against it before it is built. Every label and claim comes from a file or a sentence the owner gave, quoted or paraphrased in the owner's own terms (their product names, their scope words). A delegate brief carries the owner's messages verbatim plus the grounding files, never only my paraphrase, and the first deliverable is a label list for the owner to approve before anything is drawn.

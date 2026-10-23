@@ -72,7 +72,7 @@ Peeking is the habit worth building. From the peek panel you can type a reply an
 
 ## How File Edits Stay Isolated
 
-Parallel sessions would be useless if they overwrote each other, so before a background session edits any file, Claude moves it into an isolated git worktree under `.claude/worktrees/`. Every session reads the same repository history and writes to its own branch. This is the same mechanism covered in [06: Git Worktrees](../06-git-worktrees/readme.md), applied automatically rather than on request.
+Parallel sessions would be useless if they overwrote each other, so before a background session edits any file, Claude moves it into an isolated git worktree under `.claude/worktrees/`. Every session reads the same repository history and writes to its own branch. This is the same mechanism covered in [04: Git Worktrees](../04-git-worktrees/readme.md), applied automatically rather than on request.
 
 Claude skips the worktree in three cases: the session is already inside a linked worktree, the working directory is not a git repository, or the write lands outside the working directory. You can turn the behaviour off with `worktree.bgIsolation`, though doing so puts parallel sessions back in each other's way.
 

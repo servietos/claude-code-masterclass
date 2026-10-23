@@ -6,7 +6,7 @@ What you practice here: anchor a known-good state, undo a whole turn with `/rewi
 
 Duration: about 80 minutes.
 
-Teaching for this lab lives in [Rewind with Checkpoints and Run Parallel Agents with Git Worktrees](../../../demos/01-fundamentals/06-git-worktrees/readme.md); the rollback walk-through is [Anchor a Checkpoint and Roll Back a Runaway Refactor](../../../demos/01-fundamentals/06-git-worktrees/demo-anchor-and-roll-back-a-session.md) and the parallel sessions are shown in [Run Two Claude Sessions Without Them Colliding](../../../demos/01-fundamentals/06-git-worktrees/demo-worktrees-intro.md).
+Teaching for this lab lives in [Rewind with Checkpoints and Run Parallel Agents with Git Worktrees](../../../demos/01-fundamentals/04-git-worktrees/readme.md); the rollback walk-through is [Anchor a Checkpoint and Roll Back a Runaway Refactor](../../../demos/01-fundamentals/04-git-worktrees/demo-anchor-and-roll-back-a-session.md) and the parallel sessions are shown in [Run Two Claude Sessions Without Them Colliding](../../../demos/01-fundamentals/04-git-worktrees/demo-worktrees-intro.md).
 
 Each step contains:
 

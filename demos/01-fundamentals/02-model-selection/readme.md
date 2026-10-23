@@ -110,7 +110,7 @@ Claude Code picks the TTL from how you authenticate. On a Claude subscription it
 
 ## Cache Scope
 
-In Claude Code the cache is effectively scoped to one machine and one directory. The system prompt embeds the working directory, platform, shell, OS version and auto-memory paths, so two sessions in different directories build different prefixes and miss each other's cache. That includes worktrees of the same repository, which is a cost worth knowing before you read [06: Git Worktrees](../06-git-worktrees/readme.md).
+In Claude Code the cache is effectively scoped to one machine and one directory. The system prompt embeds the working directory, platform, shell, OS version and auto-memory paths, so two sessions in different directories build different prefixes and miss each other's cache. That includes worktrees of the same repository, which is a cost worth knowing before you read [04: Git Worktrees](../04-git-worktrees/readme.md).
 
 Sessions you run in parallel in the same directory build matching prefixes and read each other's cache. Sequential sessions share a prefix only when the git status snapshot taken at startup matches, since the system prompt also captures branch and recent commits.
 

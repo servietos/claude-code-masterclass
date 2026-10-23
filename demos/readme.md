@@ -117,6 +117,7 @@ The class also covers everything required to pass the [Claude Certified Architec
 - Converting `.claude/` configs into plugins
 - Publishing to official and team marketplaces
 - Plugins by Anthropic
+- Plugins and repo rules: `.claude/rules/`
 
 ## Module 9: Agentic DevOps & Automation
 

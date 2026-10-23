@@ -4,7 +4,7 @@ Prompt caching is what keeps a long session affordable, and the two counters in 
 
 ---
 
-Work in `demos/01-fundamentals/04-model-selection/cache-lab` from a fresh session (`/clear` first); no solution folder ships, so your measured results table is `cache-lab/CACHE-NOTES.md`.
+Work in `demos/01-fundamentals/02-model-selection/cache-lab` from a fresh session (`/clear` first); no solution folder ships, so your measured results table is `cache-lab/CACHE-NOTES.md`.
 
 ## Step 1: Break the Cache on Purpose
 

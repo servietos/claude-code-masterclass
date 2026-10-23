@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1920 1080" width="1920" height="1080" role="img" aria-labelledby="t d">
+  <title id="t">A marketplace plugin's expert reads the repo's rule first</title>
+  <desc id="d">The Copilot Studio plugin from integrations-marketplace installs globally into ~/.claude with its copilot-studio-expert agent and the copilot-studio and work-iq skills. The expert first reads the repo's .claude/rules/copilot-studio.md, scoped to src/cs-schema/agents, which says where the agents live, where cloned workflows go, which topic file is a proven example and where the CS- rebuilds sit.</desc>
+  <style>
+    svg{font-family:'Segoe UI',Helvetica,Arial,sans-serif;font-size:32px}
+    text{fill:#24292f;dominant-baseline:central}
+    .m{font-family:Consolas,monospace}
+    .b{font-weight:700}
+    .t{font-size:34px}
+    .a{font-size:30px}
+    .s{fill:#57606a}
+    .c{text-anchor:middle}
+    .box{stroke:#8c959f;stroke-width:2}
+    .ar{stroke:#57606a;stroke-width:3;fill:none;marker-end:url(#ah)}
+    .hl{fill:#c9ecd6;stroke:#2da44e;stroke-width:3}
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#57606a"/></marker>
+  </defs>
+  <rect width="1920" height="1080" fill="#ffffff"/>
+  <g transform="translate(-45,66)">
+
+  <g transform="translate(0,-260)">
+  <rect class="box" x="1068" y="568" width="820" height="590" rx="14" fill="#eaf2ff"/>
+  <rect class="box" x="1040" y="540" width="820" height="590" rx="14" fill="#eaf2ff"/>
+  <path class="box" d="M1094,628 L1784,628 L1820,664 L1820,1096 Q1820,1110 1806,1110 L1094,1110 Q1080,1110 1080,1096 L1080,642 Q1080,628 1094,628 Z" fill="#ffffff"/>
+  <path class="box" d="M1784,628 L1784,664 L1820,664" fill="#f6f8fa"/>
+  <g class="box" fill="#e9f7ef">
+    <rect x="1112" y="744" width="676" height="84" rx="10"/>
+    <rect x="1112" y="834" width="676" height="84" rx="10"/>
+    <rect x="1112" y="924" width="676" height="84" rx="10"/>
+    <rect x="1112" y="1014" width="676" height="84" rx="10"/>
+  </g>
+  <rect class="hl" x="1112" y="744" width="676" height="84" rx="10" opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.4636;0.4909;0.9364;0.9727;1" calcMode="spline" keySplines="0 0 1 1;0.42 0 0.58 1;0 0 1 1;0.42 0 0.58 1;0 0 1 1" dur="11s" repeatCount="indefinite"/>
+  </rect>
+  <rect class="hl" x="1112" y="834" width="676" height="84" rx="10" opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.5091;0.5364;0.9364;0.9727;1" calcMode="spline" keySplines="0 0 1 1;0.42 0 0.58 1;0 0 1 1;0.42 0 0.58 1;0 0 1 1" dur="11s" repeatCount="indefinite"/>
+  </rect>
+  <rect class="hl" x="1112" y="924" width="676" height="84" rx="10" opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.5545;0.5818;0.9364;0.9727;1" calcMode="spline" keySplines="0 0 1 1;0.42 0 0.58 1;0 0 1 1;0.42 0 0.58 1;0 0 1 1" dur="11s" repeatCount="indefinite"/>
+  </rect>
+  <rect class="hl" x="1112" y="1014" width="676" height="84" rx="10" opacity="0">
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.6;0.6273;0.9364;0.9727;1" calcMode="spline" keySplines="0 0 1 1;0.42 0 0.58 1;0 0 1 1;0.42 0 0.58 1;0 0 1 1" dur="11s" repeatCount="indefinite"/>
+  </rect>
+  <text x="1072" y="584" class="b t">repo</text>
+  <text x="1112" y="664" class="m b">.claude/rules/copilot-studio.md</text>
+  <text x="1112" y="710" class="m s" style="font-size:30px">paths: src/cs-schema/agents/**</text>
+  <text x="1140" y="769" class="s" style="font-size:30px">Where the agents live</text>
+  <text x="1140" y="804" class="m" style="font-size:30px">agents/&lt;Agent Name&gt;/</text>
+  <text x="1140" y="859" class="s" style="font-size:30px">Cloning more agents</text>
+  <text x="1140" y="894" class="m" style="font-size:30px">workflows/</text>
+  <text x="1140" y="949" class="s" style="font-size:30px">Proven examples to copy from</text>
+  <text x="1140" y="984" class="m" style="font-size:30px">Travel Agent/topics/BookTrip.mcs.yml</text>
+  <text x="1140" y="1039" class="s" style="font-size:30px">The CS- rebuilds</text>
+  <text x="1140" y="1074" class="m" style="font-size:30px">cs-agents/CS-&lt;Agent Name&gt;/</text>
+  </g>
+
+  <rect class="box" x="122" y="50" width="728" height="354" rx="14" fill="#f3edff"/>
+  <rect class="box" x="154" y="120" width="664" height="252" rx="14" fill="#ffffff"/>
+  <rect class="box" x="286" y="198" width="430" height="64" rx="32" fill="#f3edff"/>
+  <rect class="box" x="286" y="278" width="300" height="64" rx="32" fill="#fff6e5"/>
+  <rect class="box" x="604" y="278" width="177" height="64" rx="32" fill="#fff6e5"/>
+  <text x="154" y="88" class="m b">integrations-marketplace</text>
+  <text x="486" y="162" class="b t c">Copilot Studio plugin</text>
+  <text x="190" y="230" class="s a">agent</text>
+  <text x="501" y="230" class="m c">copilot-studio-expert</text>
+  <text x="190" y="310" class="s a">skills</text>
+  <text x="436" y="310" class="m c">copilot-studio</text>
+  <text x="692.5" y="310" class="m c">work-iq</text>
+
+  <rect class="box" x="122" y="484" width="728" height="354" rx="14" fill="#f3edff"/>
+  <rect class="box" x="154" y="554" width="664" height="252" rx="14" fill="#ffffff"/>
+  <rect class="box" x="286" y="632" width="430" height="64" rx="32" fill="#f3edff"/>
+  <rect class="box" x="286" y="712" width="300" height="64" rx="32" fill="#fff6e5"/>
+  <rect class="box" x="604" y="712" width="177" height="64" rx="32" fill="#fff6e5"/>
+  <text x="154" y="522" class="m b">~/.claude (global)</text>
+  <text x="486" y="596" class="b t c">Copilot Studio plugin</text>
+  <text x="190" y="664" class="s a">agent</text>
+  <text x="501" y="664" class="m c">copilot-studio-expert</text>
+  <text x="190" y="744" class="s a">skills</text>
+  <text x="436" y="744" class="m c">copilot-studio</text>
+  <text x="692.5" y="744" class="m c">work-iq</text>
+
+  <path class="ar" d="M486,372 L486,480"/>
+  <text x="510" y="444" class="s">installs</text>
+
+  <g id="copy" opacity="0">
+    <rect class="box" x="154" y="120" width="664" height="252" rx="14" fill="#ffffff"/>
+    <rect class="box" x="286" y="198" width="430" height="64" rx="32" fill="#f3edff"/>
+    <rect class="box" x="286" y="278" width="300" height="64" rx="32" fill="#fff6e5"/>
+    <rect class="box" x="604" y="278" width="177" height="64" rx="32" fill="#fff6e5"/>
+    <text x="486" y="162" class="b t c">Copilot Studio plugin</text>
+    <text x="190" y="230" class="s a">agent</text>
+    <text x="501" y="230" class="m c">copilot-studio-expert</text>
+    <text x="190" y="310" class="s a">skills</text>
+    <text x="436" y="310" class="m c">copilot-studio</text>
+    <text x="692.5" y="310" class="m c">work-iq</text>
+    <animateMotion path="M0,0 L0,434" keyPoints="0;0;1;1" keyTimes="0;0.0818;0.2545;1" calcMode="spline" keySplines="0 0 1 1;0.42 0 0.58 1;0 0 1 1" dur="11s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.0545;0.0818;0.9364;0.9727;1" calcMode="spline" keySplines="0 0 1 1;0.42 0 0.58 1;0 0 1 1;0.42 0 0.58 1;0 0 1 1" dur="11s" repeatCount="indefinite"/>
+  </g>
+
+  <path class="ar" d="M716,664 L1076,664"/>
+  <text x="945" y="622" class="s c">reads first</text>
+
+  <circle id="dot-read" cx="716" cy="664" r="13" fill="#8250df" opacity="0">
+    <animateMotion path="M0,0 L360,0" keyPoints="0;0;1;1" keyTimes="0;0.3;0.4455;1" calcMode="spline" keySplines="0 0 1 1;0.42 0 0.58 1;0 0 1 1" dur="11s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.2818;0.3;0.4455;0.4636;1" calcMode="spline" keySplines="0 0 1 1;0.42 0 0.58 1;0 0 1 1;0.42 0 0.58 1;0 0 1 1" dur="11s" repeatCount="indefinite"/>
+  </circle>
+  <circle id="dot-back" cx="1076" cy="664" r="13" fill="#2da44e" opacity="0">
+    <animateMotion path="M0,0 L-360,0" keyPoints="0;0;1;1" keyTimes="0;0.6545;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.42 0 0.58 1;0 0 1 1" dur="11s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.6364;0.6545;0.8;0.8182;1" calcMode="spline" keySplines="0 0 1 1;0.42 0 0.58 1;0 0 1 1;0.42 0 0.58 1;0 0 1 1" dur="11s" repeatCount="indefinite"/>
+  </circle>
+  </g>
+</svg>

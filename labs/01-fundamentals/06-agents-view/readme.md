@@ -6,7 +6,7 @@ What you practice here: dispatch background sessions with names, triage by state
 
 Duration: about 75 minutes.
 
-Teaching for this lab lives in [Supervise Background Sessions with the Agents View](../../../demos/01-fundamentals/07-agents-view/readme.md); the board walk-through is [Dispatch and Triage a Fleet of Background Sessions](../../../demos/01-fundamentals/07-agents-view/demo-agents-view.md). The worktree isolation behind each session is covered in [Rewind with Checkpoints and Run Parallel Agents with Git Worktrees](../../../demos/01-fundamentals/06-git-worktrees/readme.md). This lab needs Claude Code v2.1.139 or later.
+Teaching for this lab lives in [Supervise Background Sessions with the Agents View](../../../demos/01-fundamentals/05-agents-view/readme.md); the board walk-through is [Dispatch and Triage a Fleet of Background Sessions](../../../demos/01-fundamentals/05-agents-view/demo-agents-view.md). The worktree isolation behind each session is covered in [Rewind with Checkpoints and Run Parallel Agents with Git Worktrees](../../../demos/01-fundamentals/04-git-worktrees/readme.md). This lab needs Claude Code v2.1.139 or later.
 
 Each step contains:
 

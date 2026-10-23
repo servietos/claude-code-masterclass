@@ -6,7 +6,7 @@ What you practice here: measure first with `/usage` and `/context`, then write t
 
 Duration: about 70 minutes.
 
-Teaching for this lab lives in [Select the Right Model and Keep the Prompt Cache Warm](../../../demos/01-fundamentals/04-model-selection/readme.md); the cache mechanics are under [Keep the Prompt Cache Warm](../../../demos/01-fundamentals/04-model-selection/readme.md#keep-the-prompt-cache-warm).
+Teaching for this lab lives in [Select the Right Model and Keep the Prompt Cache Warm](../../../demos/01-fundamentals/02-model-selection/readme.md); the cache mechanics are under [Keep the Prompt Cache Warm](../../../demos/01-fundamentals/02-model-selection/readme.md#keep-the-prompt-cache-warm).
 
 Each step contains:
 

@@ -4,7 +4,7 @@ A git worktree gives each session its own checkout while both share one history,
 
 ------
 
-Run every command from the repository root; the sessions edit `demos/01-fundamentals/06-git-worktrees/worktree-sandbox/`, each result stays on its own `worktree-<name>` branch, and `<repo>` in the output stands for your clone.
+Run every command from the repository root; the sessions edit `demos/01-fundamentals/04-git-worktrees/worktree-sandbox/`, each result stays on its own `worktree-<name>` branch, and `<repo>` in the output stands for your clone.
 
 ## Step 1: Run two sessions in parallel and prove they cannot collide
 
@@ -16,19 +16,19 @@ claude --worktree hotfix-greet
 ```
 
 ```text
-In demos/01-fundamentals/06-git-worktrees/worktree-sandbox/, edit app.js so the greeting template ends with an exclamation mark. Do not commit.
+In demos/01-fundamentals/04-git-worktrees/worktree-sandbox/, edit app.js so the greeting template ends with an exclamation mark. Do not commit.
 ```
 
 Compare both copies of `app.js` from your checkout, in Bash or PowerShell:
 
 ```bash
-S=demos/01-fundamentals/06-git-worktrees/worktree-sandbox
+S=demos/01-fundamentals/04-git-worktrees/worktree-sandbox
 cat $S/app.js
 cat .claude/worktrees/hotfix-greet/$S/app.js
 ```
 
 ```powershell
-$S = "demos/01-fundamentals/06-git-worktrees/worktree-sandbox"
+$S = "demos/01-fundamentals/04-git-worktrees/worktree-sandbox"
 Get-Content "$S/app.js"
 Get-Content ".claude/worktrees/hotfix-greet/$S/app.js"
 ```
@@ -46,7 +46,7 @@ Your checkout still returns `Hello, ${name}` while the hotfix worktree carries t
 A background session creates a worktree on its own before it edits any file, which is what makes it safe to dispatch several at once. Dispatch from the repository root:
 
 ```bash
-claude --bg "In demos/01-fundamentals/06-git-worktrees/worktree-sandbox/, create NOTES.md with three bullet points about git worktrees. Commit it with the message 'docs: add NOTES.md'."
+claude --bg "In demos/01-fundamentals/04-git-worktrees/worktree-sandbox/, create NOTES.md with three bullet points about git worktrees. Commit it with the message 'docs: add NOTES.md'."
 ```
 
 Once it finishes, `git log --oneline --all` shows the commit:
@@ -64,11 +64,11 @@ Reviewing is ordinary git: you read the diff from where you are standing, even t
 
 ```bash
 git diff --stat master..worktree-notes-md
-git show worktree-notes-md:demos/01-fundamentals/06-git-worktrees/worktree-sandbox/NOTES.md
+git show worktree-notes-md:demos/01-fundamentals/04-git-worktrees/worktree-sandbox/NOTES.md
 ```
 
 ```text
- demos/01-fundamentals/06-git-worktrees/worktree-sandbox/NOTES.md | 7 +++++++
+ demos/01-fundamentals/04-git-worktrees/worktree-sandbox/NOTES.md | 7 +++++++
  1 file changed, 7 insertions(+)
 ```
 

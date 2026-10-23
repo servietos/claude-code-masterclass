@@ -38,7 +38,7 @@ claude --worktree feature-auth
 **Say:** Two sessions hold different contents for the same path at the same instant, neither aware of the other. That is not a merge, not a stash and not a race git will resolve later.
 
 ```text
-In demos/01-fundamentals/06-git-worktrees/worktree-sandbox/, edit app.js so the greeting template ends with an exclamation mark. Do not commit.
+In demos/01-fundamentals/04-git-worktrees/worktree-sandbox/, edit app.js so the greeting template ends with an exclamation mark. Do not commit.
 ```
 
 **Result:** one path, two contents; the right side lives only under `.claude/worktrees/hotfix-greet/`, and `git status --short` in the checkout prints nothing
@@ -58,7 +58,7 @@ In demos/01-fundamentals/06-git-worktrees/worktree-sandbox/, edit app.js so the 
 **Say:** Work nobody is watching cannot be allowed into the checkout you are still typing in, so the session moves itself first and edits second. It takes its branch name from the task, not from you.
 
 ```bash
-claude --bg "In demos/01-fundamentals/06-git-worktrees/worktree-sandbox/, create NOTES.md with three bullet points about git worktrees. Commit it with the message 'docs: add NOTES.md'."
+claude --bg "In demos/01-fundamentals/04-git-worktrees/worktree-sandbox/, create NOTES.md with three bullet points about git worktrees. Commit it with the message 'docs: add NOTES.md'."
 ```
 
 **Result:** the session named its own worktree `notes-md` and committed there, while `git status` in the checkout stayed empty
@@ -68,7 +68,7 @@ claude --bg "In demos/01-fundamentals/06-git-worktrees/worktree-sandbox/, create
 4e88f4c chore: update models and presentation materials
 ```
 
-**Gotcha:** supervising the session is [07: Agents View](../07-agents-view/readme.md); here the only claim is that the commit exists and the checkout did not move.
+**Gotcha:** supervising the session is [05: Agents View](../05-agents-view/readme.md); here the only claim is that the commit exists and the checkout did not move.
 
 ### Beat 4: Review a branch you never check out (1 min)
 
@@ -77,13 +77,13 @@ claude --bg "In demos/01-fundamentals/06-git-worktrees/worktree-sandbox/, create
 
 ```bash
 git diff --stat master..worktree-notes-md
-git show worktree-notes-md:demos/01-fundamentals/06-git-worktrees/worktree-sandbox/NOTES.md
+git show worktree-notes-md:demos/01-fundamentals/04-git-worktrees/worktree-sandbox/NOTES.md
 ```
 
 **Result:** a seven-line `NOTES.md` that exists on `worktree-notes-md` alone, read from a checkout standing on master
 
 ```text
- demos/01-fundamentals/06-git-worktrees/worktree-sandbox/NOTES.md | 7 +++++++
+ demos/01-fundamentals/04-git-worktrees/worktree-sandbox/NOTES.md | 7 +++++++
  1 file changed, 7 insertions(+)
 ```
 

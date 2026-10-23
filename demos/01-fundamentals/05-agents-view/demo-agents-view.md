@@ -4,21 +4,21 @@ The agents view is a board for supervising many background sessions at once. You
 
 ---
 
-Run every command from the repository root; the sessions work in `demos/01-fundamentals/07-agents-view/agents-sandbox/`, and each result lands on its own `worktree-<name>` branch.
+Run every command from the repository root; the sessions work in `demos/01-fundamentals/05-agents-view/agents-sandbox/`, and each result lands on its own `worktree-<name>` branch.
 
 ## Step 1: Dispatch the Fleet
 
 A background session returns your terminal immediately and keeps working in its own worktree. Run `claude` once in the sandbox and accept the workspace trust dialog, then dispatch the three chores from the repository root in Bash or PowerShell:
 
 ```bash
-S=demos/01-fundamentals/07-agents-view/agents-sandbox
+S=demos/01-fundamentals/05-agents-view/agents-sandbox
 claude --bg --name "jsdoc-greet" "Add JSDoc comments to every export in $S/src/greet.js. Commit with the message 'docs: document greet exports'."
 claude --bg --name "validate-parse" "Add input validation to parseDuration in $S/src/parse.js so malformed input throws a clear Error. Commit with the message 'fix: validate parseDuration input'."
 claude --bg --name "test-format" "Create $S/src/format.test.js with tests covering formatBytes. Commit with the message 'test: cover formatBytes'."
 ```
 
 ```powershell
-$S = "demos/01-fundamentals/07-agents-view/agents-sandbox"
+$S = "demos/01-fundamentals/05-agents-view/agents-sandbox"
 claude --bg --name "jsdoc-greet" "Add JSDoc comments to every export in $S/src/greet.js. Commit with the message 'docs: document greet exports'."
 claude --bg --name "validate-parse" "Add input validation to parseDuration in $S/src/parse.js so malformed input throws a clear Error. Commit with the message 'fix: validate parseDuration input'."
 claude --bg --name "test-format" "Create $S/src/format.test.js with tests covering formatBytes. Commit with the message 'test: cover formatBytes'."
@@ -70,4 +70,4 @@ git diff --stat master..worktree-validate-parse
 
 Expected Outcome: three branches listed, each carrying exactly one commit, and a diff that touches exactly one file. Read the validation change closely: it is the one chore of the three whose implementation is a judgement call, and the one most likely to have solved a slightly different problem than you asked for.
 
-Repeat the `git diff --stat` against the other two branches; if any of them touches a file another branch also touched, the chores were never independent, which is worth knowing before merge time. Reading a whole file straight out of a branch with `git show` is [06: Git Worktrees](../06-git-worktrees/demo-worktrees-intro.md#step-3-review-a-branch-without-checking-it-out) Step 3, and works here unchanged.
+Repeat the `git diff --stat` against the other two branches; if any of them touches a file another branch also touched, the chores were never independent, which is worth knowing before merge time. Reading a whole file straight out of a branch with `git show` is [04: Git Worktrees](../04-git-worktrees/demo-worktrees-intro.md#step-3-review-a-branch-without-checking-it-out) Step 3, and works here unchanged.

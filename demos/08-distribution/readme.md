@@ -13,6 +13,7 @@ This module covers the full plugin lifecycle: why plugins exist, what the manife
 - Converting `.claude/` configs into plugins
 - Release tags and version identity
 - Publishing to official and team marketplaces
+- Plugins and repo rules: `.claude/rules/`
 
 ## Topics
 
@@ -22,13 +23,13 @@ This module covers the full plugin lifecycle: why plugins exist, what the manife
 | [02: Plugin Anatomy](02-plugin-anatomy/readme.md) | The single required manifest file and the optional component tree around it: skills, hooks, MCP, LSP servers, monitors, default settings, and the two plugin-scoped environment variables. |
 | [03: From .claude/ Config to Published Plugin](03-config-to-plugin/readme.md) | What a working `.claude/` directory gains and loses on the way to becoming a plugin: the component mapping, the hook and `settings.json` rules that change form, the local-load inner loop, and the release tag read from `plugin.json` alone. |
 | [04: Marketplaces and Distribution](04-marketplaces/readme.md) | Catalog versus plugin source separation, `ref` versus `sha` pinning, enterprise controls in managed policy, reserved names, and the security posture every install should pass. |
+| [05: Plugins and Repo Rules](05-repo-rules/readme.md) | How a plugin from a team marketplace brings its own expert, and how that expert gets each repo's details from a rule, shown with the Copilot Studio plugin and its `.claude/rules/copilot-studio.md`. |
 
 ## Demos
 
 | Topic | Description |
 |-------|-------------|
 | [03: From .claude/ Config to Published Plugin](03-config-to-plugin/demo-config-to-plugin.md) | Convert a working `.claude/` directory into a versioned plugin, test it locally with `--plugin-dir`, inspect and validate the manifest, and publish it to a team marketplace catalog. |
-
 Every demo has a presenter guide beside it (`demo-presenter-<slug>.md`) holding the same
 teaching in timed beats, for delivery without running the demo live.
 

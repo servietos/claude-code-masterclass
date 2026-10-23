@@ -10,7 +10,7 @@ Three beats dispatch three background sessions, triage the board they land on, a
 
 ------
 
-**Shell:** beats quote Bash; in PowerShell the Beat 1 path variable is `$S = "demos/01-fundamentals/07-agents-view/agents-sandbox"`. A bare `S=...` assignment is a PowerShell parse error, and the demo guide carries both fences in full. No solution folder ships: the output lives on three branches and in the per-session worktrees, never in the checkout.
+**Shell:** beats quote Bash; in PowerShell the Beat 1 path variable is `$S = "demos/01-fundamentals/05-agents-view/agents-sandbox"`. A bare `S=...` assignment is a PowerShell parse error, and the demo guide carries both fences in full. No solution folder ships: the output lives on three branches and in the per-session worktrees, never in the checkout.
 
 ## Beats
 
@@ -20,7 +20,7 @@ Three beats dispatch three background sessions, triage the board they land on, a
 **Say:** A dispatch prompt is the entire brief a session will ever get, so it carries the scope and the finish line together. Work left uncommitted inside an isolated worktree survives only by luck.
 
 ```bash
-S=demos/01-fundamentals/07-agents-view/agents-sandbox
+S=demos/01-fundamentals/05-agents-view/agents-sandbox
 claude --bg --name "jsdoc-greet" "Add JSDoc comments to every export in $S/src/greet.js. Commit with the message 'docs: document greet exports'."
 claude --bg --name "validate-parse" "Add input validation to parseDuration in $S/src/parse.js so malformed input throws a clear Error. Commit with the message 'fix: validate parseDuration input'."
 claude --bg --name "test-format" "Create $S/src/format.test.js with tests covering formatBytes. Commit with the message 'test: cover formatBytes'."
@@ -65,7 +65,7 @@ claude agents --json
 ### Beat 3: Review three branches without checking one out (1 min)
 
 **Open:** [Step 3: Review Three Branches Without Checking Any Out](demo-agents-view.md#step-3-review-three-branches-without-checking-any-out) · [`agents-sandbox/src/parse.js`](agents-sandbox/src/parse.js) · `parseDuration`, the unguarded `match`
-**Say:** The diff here is the test of Beat 1's independence claim, so what matters is that no two branches touch one file. Reading a whole file out of a branch with `git show` is [06: Git Worktrees](../06-git-worktrees/demo-worktrees-intro.md#step-3-review-a-branch-without-checking-it-out) Step 3.
+**Say:** The diff here is the test of Beat 1's independence claim, so what matters is that no two branches touch one file. Reading a whole file out of a branch with `git show` is [04: Git Worktrees](../04-git-worktrees/demo-worktrees-intro.md#step-3-review-a-branch-without-checking-it-out) Step 3.
 
 ```bash
 git branch --list "worktree-*"

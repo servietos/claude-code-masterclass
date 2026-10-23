@@ -4,7 +4,7 @@ An artifact turns a result into a private hosted page a colleague can open, upda
 
 ---
 
-Work in `demos/01-fundamentals/08-artifacts/artifact-sandbox`, which holds `deploy-failures.csv`; no solution folder ships, so each page lands as an HTML file in that folder and at its own claude.ai URL.
+Work in `demos/01-fundamentals/06-artifacts/artifact-sandbox`, which holds `deploy-failures.csv`; no solution folder ships, so each page lands as an HTML file in that folder and at its own claude.ai URL.
 
 ## Step 1: Publish the First Page
 
