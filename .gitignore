@@ -22,3 +22,7 @@ slides/notes/_probe.*
 demos/10-sdk-managed-agents/.env
 labs/10-sdk-managed-agents/.env
 labs/10-sdk-managed-agents/**/.env
+
+agent-instructions/
+demos/*/pptx/
+exam-prep/
