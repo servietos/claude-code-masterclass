@@ -42,3 +42,16 @@ When a delegate flags the conflict instead of quietly picking a side, that is th
 working. Answer with the evidence, correct the contract, and tell them to rename rather than keep a
 mapping layer: an adapter that exists only to bridge a coordinator's mistake is noise once the
 mistake is fixed.
+
+## SSE and `IResult` bodies use a second options object
+
+`AddControllers().AddJsonOptions(...)` configures MVC only. `TypedResults.ServerSentEvents`,
+`Results.Json` and `WriteAsJsonAsync` serialize with `Microsoft.AspNetCore.Http.Json.JsonOptions`,
+whose default is `JsonSerializerDefaults.Web`: camelCase. An API that set
+`PropertyNamingPolicy = null` for MVC therefore ships `{"ISIN": ...}` from `GET /api/stocks/liquidity`
+and `{"isin": ...}` from `GET /api/stocks/liquidity/stream`, the same DTO in the same controller,
+and the SPA's second read comes back `undefined`.
+
+- Mirror the MVC setting: `builder.Services.ConfigureHttpJsonOptions(o => o.SerializerOptions.PropertyNamingPolicy = null)`.
+- It is global, so first list what else already writes through it: `grep -rn "WriteAsJsonAsync\|Results\.Json\|TypedResults\.\(Ok\|Json\)\|\.Map\(Get\|Post\)" src/<api>`. A body built with `JsonSerializer.Serialize(...)` and written as a string is unaffected.
+- Verify on the live process, not in a unit test: `curl -skN https://localhost:<port>/<route>/stream | head -2` next to `curl -sk https://localhost:<port>/<route> | head -c 200`; the keys must be cased identically.

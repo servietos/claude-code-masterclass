@@ -32,4 +32,25 @@ var payload = new ChatCompletionRequest
 serialize as `null` into a provider that rejects the key outright rather than treating it as "use the
 provider default".
 
+## Variant: the default lives on the agent, models are chosen by capability
+
+When several agents share one catalogue, a single `IsDefault` row stops fitting: a vision agent and
+a text agent need different defaults. Move the default from the model to the agent and resolve by
+capability:
+
+- Each agent declares its required capabilities in code (`Text`, `Vision`, `Image`), derived from
+  the model fields (`SupportsVision`, `TaskType`), never a new flag on the model.
+- A model is **eligible** for an agent only when it fulfils **every** required capability and its
+  provider has an API key. "At least one" lets a text-only model into a vision agent's picker.
+  Apply the same predicate in the UI filter and in the save endpoint's validation.
+- Each agent stores one default model or a set of defaults. At run time take the first default that
+  has the needed capability and a key, else fall back to the first catalogue model that does, else
+  throw.
+- When the per-agent defaults come from an upstream service that may not be deployed yet, fall back
+  to the agent's pre-existing single model column so the agent list never renders empty.
+
+Verify: a unit test where a Vision+Text agent's eligible list excludes a text-only model, an
+embeddings model and a model whose provider has no key; and a resolution test for default hit,
+capability fallback and throw.
+
 Back to the index: [dotnet-db-configured-ai-model](dotnet-db-configured-ai-model.md)

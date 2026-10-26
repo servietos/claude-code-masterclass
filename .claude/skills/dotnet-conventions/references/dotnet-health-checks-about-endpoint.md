@@ -16,6 +16,11 @@ in a portfolio so a single client can consume all of them:
 }
 ```
 
+A common shape for the health payload itself is `GET /api/health` with `status`, `service`, `version`,
+`environment`, `timestampUtc`, `durationMs` and a `checks[]` array that includes a `database` connectivity
+check, answering 200 when healthy and 503 when not. Keep a bare anonymous `GET /health` returning the string
+`Healthy` for the Docker `HEALTHCHECK` to probe.
+
 Values flow `docker build --build-arg` -> `ARG` -> `ENV Deployment__*` -> config binding -> DTO.
 
 ### The `"unknown"` sentinel trap

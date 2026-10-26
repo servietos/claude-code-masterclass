@@ -31,4 +31,8 @@ applying anywhere.
 Guard the whole script with a second check that `__EFMigrationsHistory` exists at all: its absence
 means the target is not the database you think it is.
 
+That guard belongs only to a repository that still carries `Migrations/` folders. Where every
+`Migrations/` folder is gone, do not copy an older delta's `__EFMigrationsHistory` existence check into a
+new script: guard on the object the delta itself touches.
+
 Back to the index: [sql-delta-scripts](sql-delta-scripts.md)

@@ -2,6 +2,10 @@
 
 ## Verifying an HTTP MCP server (dev)
 
+On SDK 2.x with the default stateless transport, one POST of `tools/list` answers with no session
+([dotnet-mcp-packages](dotnet-mcp-packages.md)). The session handshake below applies only to a server
+running stateful sessions.
+
 The transport is **streamable HTTP** — a session handshake, and responses come back as SSE (`data: {json}` lines), not plain JSON. Verify by hand with `curl` (more reliable than the Inspector for a quick check):
 
 ```bash
@@ -25,6 +29,33 @@ Gotchas that waste time:
 - A missing `Accept: application/json, text/event-stream` header, or forgetting the `Mcp-Session-Id` on follow-ups, yields opaque 400/406s — both are mandatory.
 - **`/mcp` is authorized even in dev.** With `RequireAuthorization("Mcp")` the handshake above 401s until every request carries auth. For the API-key path that is one extra header, `-H "X-Api-Key: <Mcp:ApiKey from appsettings.Development.json>"`, on the initialize call *and* on each follow-up.
 - **`tools/list` proves registration, not behaviour.** `WithToolsFromAssembly()` picking up a new `[McpServerTool]` says nothing about whether its query returns anything. Call each new tool and read the payload; an empty result set is a question, not a pass. If the rows needed to exercise a branch do not exist locally, set the field on an obviously-fake fixture row, call the tool, then revert and re-count to confirm the revert landed.
+
+## A smoke test per repo through the MCP Inspector CLI
+
+One `scripts/mcp-smoke.sh [server ...]` per repo proves every MCP server still starts and lists its
+tools after a package bump. Per server: build with `--artifacts-path` into a temp folder (never the
+project's own `bin`), start the built dll from the project folder on dev port + 10000 with
+`ASPNETCORE_ENVIRONMENT=Development`, wait for `/health` (or the endpoint), run
+`npx -y @modelcontextprotocol/inspector@<pinned> --cli http://127.0.0.1:<port>/mcp --transport http --method tools/list [--header "X-Api-Key: <key>"]`,
+assert `.tools | length` against the count the server has today, stop it, print
+`PASS <server> tools=<n>` or `FAIL <server> <reason>`. Read the key from `appsettings.Development.json`
+at run time; where Development has none, generate one per run and pass it as
+`Mcp__ApiKeys__0__*` environment variables, or start with auth off and print a NOTE saying so.
+
+- **Start it with `exec`, or the kill misses.** `(cd <dir> && dotnet <dll>) &` makes `$!` the subshell;
+  killing it on Windows leaves `dotnet.exe` listening on the smoke port. Write
+  `(cd <dir> && exec dotnet <dll>) &`, and on every failure path kill the PID before clearing it, or
+  a server that failed its health check stays up after the script exits.
+- **Confirm the port is free afterwards** (`netstat -ano | grep LISTENING | grep :<port>`). Agents
+  left orphan smoke servers three times before both rules held.
+- **Switch off side effects in the smoke instance only**: a scheduler or mailer that runs on start
+  (`Scheduler__Enabled=false`, a mail-disabled flag) gets an env override in the script, never a
+  config edit.
+- **Count tools live, not by grepping `[McpServerTool]`.** Per-tool authorization hides tools from an
+  anonymous `tools/list`, and grants decide what a key sees: one server listed 0 tools for a key
+  without grants and 36 with them.
+- **An HTTPS-only dev server** (a 307 from the http port) needs `NODE_TLS_REJECT_UNAUTHORIZED=0` for
+  the Inspector to accept the dev certificate; `NODE_OPTIONS=--use-system-ca` was not enough.
 
 ## Logging every tool call with a request filter
 

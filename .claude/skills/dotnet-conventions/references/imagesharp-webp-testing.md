@@ -2,22 +2,26 @@
 
 ## Testing without committing binary fixtures
 
-Generate the input in the test with ImageSharp itself. A repo that accumulates `.png` fixtures for
+Generate the input in the test with SkiaSharp itself. A repo that accumulates `.png` fixtures for
 image tests gets one per case and reviews none of them.
 
 ```csharp
-private static byte[] PngOf(int w, int h, Color fill)
+private static byte[] PngOf(int w, int h, SKColor fill)
 {
-    using var image = new Image<Rgba32>(w, h);
-    image.Mutate(ctx => ctx.Fill(fill));
-    using var ms = new MemoryStream();
-    image.SaveAsPng(ms);
-    return ms.ToArray();
+    using var bitmap = new SKBitmap(w, h);
+    bitmap.Erase(fill);
+    using var data = bitmap.Encode(SKEncodedImageFormat.Png, 100);
+    return data.ToArray();
 }
 ```
 
 Cover the four outcomes: a PNG converts, a PDF's bytes come back identical, garbage bytes come back
 identical, and a file whose WebP would be larger comes back identical.
+
+**Build expected bytes from the decoded image, never from the in-memory source.** A bitmap decoded
+from PNG bytes carries an sRGB colour profile that the in-memory bitmap lacks, so encoding each one
+to WebP gives files that differ by a few hundred bytes (482 on a 256x256 test image). An assertion
+like `result.Content.Should().Equal(expected)` needs `expected` encoded from `SKBitmap.Decode(original)`.
 
 ## Proof it still holds
 

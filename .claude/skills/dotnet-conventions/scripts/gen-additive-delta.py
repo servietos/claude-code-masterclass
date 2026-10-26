@@ -26,7 +26,7 @@ Manifest shape:
   "databases": ["app", "app-blue", "app_dev"],
   "requireTables": ["Parent", "Lookup"],
   "parent": {
-    "table": "CapabilityItems",
+    "table": "KnowledgeCatalogueItems",
     "idColumn": "ItemId",
     "keyColumn": "Slug",
     "columns": [{"name": "Slug", "type": "nvarchar(160)"}, {"name": "SortOrder", "type": "int"}],
@@ -35,11 +35,11 @@ Manifest shape:
   },
   "children": [
     {
-      "table": "CapabilityItemGroups",
+      "table": "KnowledgeCatalogueItemGroups",
       "parentFkColumn": "ItemId",
       "columns": [{"name": "SortOrder", "type": "int"}],
       "lookups": [
-        {"column": "GroupId", "table": "CapabilityGroups", "keyColumn": "Label",
+        {"column": "GroupId", "table": "KnowledgeCatalogueGroups", "keyColumn": "Label",
          "rowField": "GroupLabel", "type": "nvarchar(120)",
          "errorNumber": 50011, "errorText": "A row names a group label that does not exist."}
       ],

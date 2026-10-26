@@ -15,5 +15,6 @@ Hand-written SQL deltas as the schema workflow: rule, anatomy, seed rows, apply 
 | Fix `Msg 207, Invalid column name` for a just-added column | [new-column](sql-delta-scripts-new-column.md) |
 | Edit a delta that already ran, with per-phase guards | [extending-applied](sql-delta-scripts-extending-applied.md) |
 | Apply and deploy per slot, and the `sqlcmd` invocation | [apply-order](sql-delta-scripts-apply-order.md) |
+| Keep `create-schema.sql` in step with a new delta | [layout](sql-delta-scripts-layout.md) |
 | Prove idempotence and that the prohibition still holds | [verify](sql-delta-scripts-verify.md) |
 | Find multi-env scripting, sqlcmd traps, EF model conventions | [related](sql-delta-scripts-related.md) |

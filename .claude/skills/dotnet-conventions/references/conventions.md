@@ -25,6 +25,9 @@ applying SOLID/code-quality rules. The neighbouring concerns have their own refe
 - Implement the Command Handler pattern with generic base classes (e.g., `CommandHandler<TOptions>`)
 - Use interface segregation with clear naming conventions (prefix interfaces with 'I')
 - Follow the Factory pattern for complex object creation.
+- A derived class never re-maps a default interface member it inherits: when `Base : IFoo` leaves
+  `IFoo.M()` to its default body, a public `M()` declared in `Derived : Base` is not called through
+  `IFoo`. Declare `public virtual M()` in `Base` (forwarding to the default behaviour) and override it.
 
 See [`di-and-lifetimes`](di-and-lifetimes.md) for the full primary-constructor, dependency-injection,
 service-lifetime and disposal conventions.

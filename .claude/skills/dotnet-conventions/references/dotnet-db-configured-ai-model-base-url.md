@@ -25,4 +25,22 @@ providers ship), so treat this as "normalise the two common shapes", not "handle
 forever": check the concrete `BaseUrl` values in the `AiModels` table before trusting a new provider
 against it, and extend the helper's unit tests rather than special-casing it inline in the call site.
 
+## Microsoft Foundry: the project URL is not a chat endpoint
+
+A Foundry provider is usually configured with its project endpoint,
+`https://<resource>.services.ai.azure.com/api/projects/<project>`. Posting `{BaseUrl}/chat/completions`
+to it fails with `Missing required query parameter: api-version`. The OpenAI-compatible route is the
+v1 path under the same base, and the key goes in an `api-key` header, not `Authorization: Bearer`:
+
+```csharp
+if (string.Equals(model.Provider, "microsoft-foundry", StringComparison.OrdinalIgnoreCase)
+    && !baseUrl.EndsWith("/openai/v1", StringComparison.OrdinalIgnoreCase))
+    baseUrl += "/openai/v1";
+var url = $"{baseUrl}/chat/completions";
+```
+
+GPT-5.x deployments there reject `max_tokens` (`unsupported_parameter`); drop it on that error and
+retry. Verify with one `curl` of that exact URL and header returning 200, plus a unit test that
+builds the URL from the project endpoint and from one already ending in `/openai/v1`.
+
 Back to the index: [dotnet-db-configured-ai-model](dotnet-db-configured-ai-model.md)

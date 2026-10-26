@@ -10,6 +10,9 @@ Uploaded files come in three physical shapes; branch on content type:
 | text-layer PDF | **UglyToad.PdfPig** — `PdfDocument.Open`, bucket words into rows by rounded `BoundingBox.Bottom`, emit `\t` when the x-gap exceeds a threshold to preserve columns. |
 | image / scanned PDF | Pass raw bytes to a **vision model** (`image_url` data-URI content part). Files with no text layer need OCR via the vision model, not PdfPig. |
 
+EPPlus 5 and later refuses to read a workbook until `ExcelPackage.LicenseContext = LicenseContext.NonCommercial`
+(or the licensed equivalent) is set once at startup, before the first `ExcelPackage` is created.
+
 Then hand the reconstructed text (or image) to the AI with a **strict JSON-schema system prompt** and `response_format = { type: "json_object" }`, and deserialize case-insensitively into a POCO:
 
 ```csharp

@@ -25,4 +25,15 @@ Rules:
 - The plain tool must carry the **full domain shape**, not the demo shape the form happened to collect. A form-backed `save_*` written for a walkthrough tends to hardcode things (a zero VAT rate, a default account, no document reference) that make it wrong for real data.
 - "Listed but not found on invoke" is a client-side client-type restriction, never a server fault. Prove the server first — a direct `tools/call` over curl (see *Verifying an HTTP MCP server*) will return the tool's payload happily.
 
+## The typed package and its traps (ModelContextProtocol.Extensions.Apps 2.3.0, read 2026-10-24)
+
+`ModelContextProtocol.Extensions.Apps` replaces the hand-written `[McpMeta("ui", ...)]`: `[McpAppUi(ResourceUri = "ui://app/view.html", Visibility = [...])]` on the tool, `.WithMcpApps()` on the builder, `McpApps.HtmlMimeType` (`text/html;profile=mcp-app`) on the resource. Every type is `[Experimental("MCPEXP003")]`. Read from the SDK source, four traps:
+
+- **Two typed classes serialize names the spec does not use.** `McpUiResourceCsp.BaseUris` writes `baseUris` (spec: `baseUriDomains`) and `McpUiResourcePermissions` writes an `allow` array (spec: keyed `camera`, `microphone`, `geolocation`, `clipboardWrite` objects). Write those two as raw JSON; `connectDomains` and `resourceDomains` are safe typed.
+- **`[McpMeta]` on a resource reaches `resources/list` only** (csharp-sdk #1228). For `resources/read`, return a `ReadResourceResult` whose content carries `Meta`; hosts check the UI metadata on both.
+- **`McpApps.GetUiCapability` returns null on a stateless server** for a client still on the `initialize` handshake, because each request gets a fresh server without capabilities. Attach the tool's `_meta.ui` unconditionally and always return text `content` that answers on its own; the spec requires that fallback anyway.
+- **`visibility: ["app"]` hides a tool from the model only.** Anyone can still `tools/call` it on an anonymous endpoint, so validation and rate limits stay server-side.
+
+Proves it still holds: `resources/read` on the `ui://` URI over curl shows `_meta.ui` on the content, and a grep of the response for `baseUris` or `"allow"` prints nothing.
+
 Back to the index: [dotnet-mcp-tool-design](dotnet-mcp-tool-design.md)

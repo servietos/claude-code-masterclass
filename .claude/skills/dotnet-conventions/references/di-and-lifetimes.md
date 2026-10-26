@@ -52,6 +52,12 @@ grep -rn "public .*DbContext .* { get; set; }" --include=*.cs .
   `bin/<config>/<tfm>/<app>.exe`. Stop the process first; see
   [app-lifecycle-and-watch.md](app-lifecycle-and-watch.md).
 
+## Data access layer
+
+- Use a `Repositories/` folder. The repository is the only type that injects the `DbContext`;
+  controllers, MCP tools and services consume repositories, registered scoped.
+- Repositories return entities, not DTOs. No generic `IRepository<T>`, no unit of work.
+
 ## Disposal
 
 - Implement proper disposal patterns (`IDisposable` / `IAsyncDisposable`) for all resources.

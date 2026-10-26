@@ -32,5 +32,26 @@ On a local Windows dev instance the invocation is `sqlcmd -S localhost -E -C -b 
 "<backslash Windows path>"`. `-C` is required for the self-signed certificate. Where an agent harness
 classifies shell commands, a `sqlcmd -i` against a live database may be blocked in the POSIX shell and
 permitted through the PowerShell tool; try the other interpreter before treating the denial as a wall.
+`scripts/apply-dev-delta.py --database <db> --script <delta.sql>` runs it twice that way and exits 1
+unless the second run writes nothing and prints the same verification block.
+
+## A fallback that reads the new table is the same outage
+
+Degrading onto a table the delta has not created yet is not a fallback. A settings aggregate that
+500'd because an upstream service was unreachable was fixed by caching the upstream's data in a new
+table and reading that table inside the `catch`. It shipped and deployed, and the endpoint 500'd
+exactly as before: the table did not exist in production, so `Invalid object name` came out of the
+catch block instead of the original exception. The ledger row for the delta said `not yet applied`
+in every column, and had been read while the entry was written.
+
+Two checks, both before the code ships, not after: the delta is applied in every environment the
+build will reach, proven by its ledger row rather than by the plan; and every I/O inside a catch
+block carries its own catch, because a fallback that can throw turns one outage into a different one
+with a less informative error. Neither a green build nor a green unit suite can see this, for the
+same reason given above: only a live query can. Where the ordering cannot be honoured, the code has
+to tolerate the table's absence on purpose, and a test has to prove it by dropping the table (a
+SQLite context with `EnsureCreated()` then `DROP TABLE` reproduces `no such table`, the same shape
+as `Invalid object name`).
+
 
 Back to the index: [sql-delta-scripts](sql-delta-scripts.md)

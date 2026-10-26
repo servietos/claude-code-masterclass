@@ -8,6 +8,10 @@ migrations in the tree, `SELECT COUNT(*) FROM __EFMigrationsHistory WHERE Migrat
 migration id>'` must return 1, not 2. If the counts move or the history row duplicates, the script is
 not idempotent and the guards described above are missing or misplaced.
 
+A parse-only check (`SET PARSEONLY ON`, `SET NOEXEC ON`) is not a proof: it cannot fail on a SET
+option, a missing object or a permission, so a script it passed failed on its first real apply with
+`Msg 1934` at a filtered index. Only the apply to the first database, twice, counts.
+
 Prove the prohibition itself the same way, from the repository root:
 
 ```bash

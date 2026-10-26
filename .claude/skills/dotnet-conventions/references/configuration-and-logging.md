@@ -61,6 +61,43 @@ failing. The symptom surfaces much later as an empty library or a 404 nobody can
 - Extract the guard into a testable unit rather than leaving it inline in `Program.cs`, or it can
   only ever be exercised by a manual run.
 
+## Prohibited: the Data Protection API and user secrets
+
+Neither is used in this estate, in any project, for any reason. Never call `AddDataProtection()`,
+any `PersistKeysTo*` or `ProtectKeysWith*`, and never inject `IDataProtectionProvider`,
+`IDataProtector` or `ITimeLimitedDataProtector` to protect something of your own. `AddSession()` and
+`AddAntiforgery()` are prohibited for the same reason: they exist to drag the key ring in. Never run
+`dotnet user-secrets`, never add a `UserSecretsId` to a csproj, never call `AddUserSecrets(...)`, and
+never propose moving a value into user secrets. Settings live in `appsettings*.json`, in the
+environment file on the host, or in the estate's secrets service; real values stay in the
+git-ignored credentials files.
+
+A package can still pull the key ring in behind your back. `ModelContextProtocol.AspNetCore`
+protects MCP session ids with it and `Microsoft.Identity.Web` uses it for correlation cookies, and
+the tell is this line at startup:
+
+```text
+info: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[63]
+      User profile is available. Using '...\ASP.NET\DataProtection-Keys' as key repository and
+      Windows DPAPI to encrypt keys at rest.
+```
+
+Nothing in the source called for it, so grepping for `AddDataProtection` finds nothing and the line
+looks unexplainable. Neutralise it rather than hunting for a caller:
+
+```csharp
+builder.Services.AddSingleton<IDataProtectionProvider>(new EphemeralDataProtectionProvider());
+```
+
+plus `"Microsoft.AspNetCore.DataProtection": "None"` in the `Logging:LogLevel` block of every
+appsettings file. `EphemeralDataProtectionProvider` lives in the shared framework, so no
+PackageReference is added. Nothing is written to the user profile and the log line is gone. The cost
+is a per-process key: an MCP session or an OAuth correlation cookie in flight across a restart is
+invalidated and the client re-establishes.
+
+Verify by starting the app and reading the first twenty log lines: no `XmlKeyManager`, and no
+`DataProtection-Keys` folder created under the user profile.
+
 ## Error Handling & Logging
 
 - Use structured logging with `Microsoft.Extensions.Logging`.

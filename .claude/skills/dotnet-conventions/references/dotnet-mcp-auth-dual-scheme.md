@@ -25,6 +25,7 @@ builder.Services.AddAuthorization(o => o.AddPolicy("Mcp", p =>
 - The key handler **must return `AuthenticateResult.NoResult()` when its header is missing** (not `Fail()`), or the two schemes can't coexist — `Fail()` short-circuits the whole policy. Return `Fail()` only when a key is present but wrong.
 - Expose an **anonymous** RFC 9728 discovery endpoint so OAuth clients can find the auth server:
   `GET /.well-known/oauth-protected-resource` → `{ resource, authorization_servers, scopes_supported, bearer_methods_supported: ["header"] }`.
+- `scopes_supported` lists `access_as_user` **and** `offline_access`: clients request exactly these, and without `offline_access` Entra issues no refresh token, so the MCP connection demands a browser sign-in every hour. Keep `offline_access` out of the JWT scope check; it is never in `scp`.
 - On a 401 for `/mcp`, emit `WWW-Authenticate: Bearer resource_metadata="{scheme}://{host}/.well-known/oauth-protected-resource", error="invalid_token"` so clients auto-discover it.
 - For the OAuth `resource`/scope byte-match gotcha (AADSTS9010010), custom-domain requirement, and which clients support header auth vs. OAuth-only, see the `mcp-keybased-auth` / `mcp-claude` skills — those own the client side.
 

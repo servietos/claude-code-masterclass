@@ -14,5 +14,6 @@ Open the one sub-leaf that matches the symptom or task.
 | Build while a dev instance holds `bin/` (MSB3021/MSB3027, `No data found`) | [locked-bin](dotnet-testing-locked-bin.md) |
 | Fix an endpoint returning `Success = true` for a lookup that matched nothing | [false-success-endpoint](dotnet-testing-false-success-endpoint.md) |
 | Know what runtime evidence you still owe after a green unit test | [runtime-receipts](dotnet-testing-runtime-receipts.md) |
+| Unit-test a WPF window or view (STA thread, one `Application`, DPI, pack resources, cursor, wheel, window position, UI-thread stall) | [wpf-windows](dotnet-testing-wpf-windows.md) |
 
 **Never weaken an assertion to reach green.**

@@ -3,8 +3,7 @@
 ## The converter
 
 ```csharp
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Webp;
+using SkiaSharp;
 
 public static class WebpConverter
 {
@@ -13,29 +12,25 @@ public static class WebpConverter
     {
         if (!IsConvertible(fileName, contentType)) return (bytes, fileName, contentType);
 
-        try
-        {
-            using var image = Image.Load(bytes);
+        using var codec = SKCodec.Create(SKData.CreateCopy(bytes));
+        if (codec is null) return (bytes, fileName, contentType);
 
-            var lossy = Encode(image, new WebpEncoder { FileFormat = WebpFileFormatType.Lossy, Quality = 82 });
-            var lossless = Encode(image, new WebpEncoder { FileFormat = WebpFileFormatType.Lossless });
-            var best = lossless.Length < lossy.Length ? lossless : lossy;
+        using var bitmap = SKBitmap.Decode(codec);
+        if (bitmap is null) return (bytes, fileName, contentType);
 
-            if (best.Length >= bytes.Length) return (bytes, fileName, contentType);
+        var lossy = Encode(bitmap, 82);
+        var lossless = Encode(bitmap, 100);
+        var best = lossless.Length < lossy.Length ? lossless : lossy;
 
-            return (best, Path.ChangeExtension(fileName, ".webp"), "image/webp");
-        }
-        catch (ImageFormatException)
-        {
-            return (bytes, fileName, contentType);
-        }
+        if (best.Length >= bytes.Length) return (bytes, fileName, contentType);
+
+        return (best, Path.ChangeExtension(fileName, ".webp"), "image/webp");
     }
 
-    private static byte[] Encode(Image image, WebpEncoder encoder)
+    private static byte[] Encode(SKBitmap bitmap, int quality)
     {
-        using var ms = new MemoryStream();
-        image.Save(ms, encoder);
-        return ms.ToArray();
+        using var data = bitmap.Encode(SKEncodedImageFormat.Webp, quality);
+        return data.ToArray();
     }
 
     private static readonly HashSet<string> ConvertibleTypes =
@@ -48,5 +43,8 @@ public static class WebpConverter
     }
 }
 ```
+
+Quality 100 selects lossless WebP; quality 82 is lossy. Decode goes through `SKCodec.Create` because
+`SKBitmap.Decode(byte[])` throws on bytes it cannot read ([api-names](imagesharp-webp-api-names.md)).
 
 Back to the index: [imagesharp-webp](imagesharp-webp.md)

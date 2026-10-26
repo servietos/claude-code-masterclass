@@ -36,4 +36,14 @@ total instead makes a fixed endpoint look slow and a fast network look like an o
 **5. Expect one slow first request per deploy.** JIT plus EF model build plus the first pooled
 connection cost seconds on the first hit after a container restart. Warm it before quoting a number.
 
+## Cross-origin ETag: sent is not readable
+
+A browser script on another origin reads `ETag` as `null` unless the CORS policy exposes it, even when curl shows the header and a conditional request returns 304. Expose it in the default policy:
+
+```csharp
+policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().WithExposedHeaders("ETag", "Cache-Control");
+```
+
+The CORS policy is built at startup, so `dotnet watch` hot reload does not apply the change; restart the app. Verify with `curl -s -D - -o /dev/null -H "Origin: http://localhost:1313" <url>` showing `Access-Control-Expose-Headers`, then read `headers.get('ETag')` from page JS.
+
 Back to the index: [dotnet-response-caching-compression](dotnet-response-caching-compression.md)

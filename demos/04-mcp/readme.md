@@ -10,6 +10,7 @@
 - Tool list caching with prompt caching
 - Connector-backed artifact pages (optional)
 - Tool design: granularity, descriptions, contracts
+- MCP Tasks: long-running tool calls
 
 ## Topics
 
@@ -20,6 +21,7 @@
 | [03: MCP Apps](03-mcp-apps/readme.md) | The MCP Apps extension that renders interactive interfaces inline in compliant hosts, plus a C# QR code MCP server that returns a generated PNG. |
 | [04: Artifact Connectors](04-artifact-connectors/readme.md) | Published artifact pages that call MCP connectors at view time: why a local `.mcp.json` server cannot be reached from a page, the connector declaration made at publish time, calls running as the viewer rather than the author, and the sharing limits that follow. |
 | [05: Tool Design](05-tool-design/readme.md) | Why an exposed capability still gets ignored: granular tools over one generic schema, the description as the routing signal, naming pairs the model will not conflate, resources for bulk reads, the `isError` and `isRetryable` contract, and `defer_loading` once the tool count outgrows the context window. |
+| [06: MCP Tasks](06-mcp-tasks/readme.md) | Jobs that outlive a tool call, such as renders, imports and CI runs, handed to the MCP Tasks extension: the task handle a server returns to a client that opted in, polling with `tasks/get`, answers through `tasks/update`, the public beta in Claude Code with `/tasks`, and `.WithTasks` on a C# server. |
 
 ## Demos
 

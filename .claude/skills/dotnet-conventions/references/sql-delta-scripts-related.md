@@ -9,7 +9,8 @@
   UTF-8 fidelity, and COMMIT-to-ROLLBACK dry runs. Two traps bite this kind of script specifically:
   `-b` is load-bearing, because without it a `THROW` in an early batch does not stop the run and
   execution falls through into the DDL, and `-i` needs a backslash path on Windows while piping the
-  file on stdin runs and prints nothing.
+  file on stdin runs and prints nothing. A third: a filtered index needs `SET QUOTED_IDENTIFIER ON`
+  before it, because `-i` does not imply `-I` (see [anatomy](sql-delta-scripts-anatomy.md)).
 - [`dotnet-efcore`](dotnet-efcore.md): model and `IEntityTypeConfiguration` conventions, which still
   apply unchanged. Only the migration workflow is replaced.
 

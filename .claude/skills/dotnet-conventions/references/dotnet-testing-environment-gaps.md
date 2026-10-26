@@ -23,7 +23,7 @@ whether that difference could conceal the bug class under test:
 
 | Environment | Hides |
 |---|---|
-| In-memory EF provider | Schema drift, real FK and constraint behaviour, provider-specific SQL translation |
+| In-memory EF provider | Schema drift, real FK and constraint behaviour, provider-specific SQL translation, `HasMaxLength` (a 200-character value saves into a 60-character column), and `DateTimeKind` round-trips through value converters (a property with no UTC converter still comes back `Utc`, so a missing converter and a JSON timestamp without `Z` both stay green) |
 | The developer's own machine timezone | Anything reading `TimeZoneInfo.Local` or converting `DateTime` implicitly; a container with no `TZ` runs UTC |
 | A `date` column read back as `DateTime` | Time-of-day precision, and a `Kind` mismatch between the write echo and a fresh read |
 | A `WebApplicationFactory` whose test scheme authenticates every request | Every authorization decision under test: an "anonymous caller" assertion runs authenticated |

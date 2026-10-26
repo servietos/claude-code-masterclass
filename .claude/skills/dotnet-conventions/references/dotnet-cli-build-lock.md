@@ -40,6 +40,13 @@ Redirect only the OUTPUT path. Redirecting `BaseIntermediateOutputPath` as well 
 `CS0579: Duplicate 'System.Reflection.AssemblyVersionAttribute'`, because the generated
 `AssemblyInfo.cs` is then emitted twice, and that is a false failure of your own making.
 
+`--artifacts-path` is the whole-project version and the safe one for a test run: `dotnet build` and
+`dotnet test <tests>.csproj --artifacts-path <short scratch dir>` move `bin` and `obj` of every
+project in the graph, so nothing collides with a running `dotnet watch`. On 2026-10-24 it built and
+tested ten projects beside their live servers with no `CS0579`. Keep the path short: under a long
+scratchpad folder 29 tests failed with `DllNotFoundException` for `Microsoft.Data.SqlClient.SNI.dll`
+("filename or extension is too long", 259 characters), and a two-level folder fixed it.
+
 Confirm the scratch assembly is the new code rather than a cached copy, by looking for a symbol
 that only exists after the change:
 
