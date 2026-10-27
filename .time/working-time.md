@@ -84,5 +84,11 @@ Machine hours spent on this repository, one row per working day.
 
 | 2026-10-27 | 0.25 | 08:24 | 08:39 | GitHub sign-in warning traced to the VS Code pull request extension, fix provided |
 | 2026-10-27 | 0.20 | 08:39 | 08:51 | Lesson on finding where an error comes from recorded, learning loop closed out |
+| 2026-10-27 | 0.20 | 13:17 | 13:29 | Context window, sample conversation history and server-side prompt cache taught in module 1, two slides added |
+| 2026-10-27 | 0.07 | 13:46 | 13:50 | Slide insertion procedure and deck source rule recorded for reuse, learning loop closed out |
+| 2026-10-27 | 0.10 | 14:43 | 14:49 | GitHub Actions tooling added to the Hetzner deployment assistant |
+| 2026-10-27 | 0.10 | 15:06 | 15:12 | Lessons on repo-owned assistants and tool wiring recorded, learning loop closed out |
+| 2026-10-27 | 0.03 | 15:31 | 15:33 | QR code sample app explained and Claude model prices compared |
+| 2026-10-27 | 0.07 | 15:53 | 15:57 | Lesson on the learning loop's start message recorded, learning loop closed out |
 
-**Total: 45.52 hours**
+**Total: 46.09 hours**

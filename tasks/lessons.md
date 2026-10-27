@@ -1023,11 +1023,11 @@
 
 **Rule:** No `$` followed by a digit in a repo `SKILL.md`; `grep -nE '\$[0-9]' .claude/skills/*/SKILL.md` must print nothing. The data-aggregator sample output still carries it and needs the owner's choice of wording, since the demo script prints the dollar sign.
 
-## Deck delivery: a differing OneDrive copy is compared before it is overwritten
+## Deck edits start from the repo deck, OneDrive only receives it
 
-**Pattern (2026-10-20):** `02-harness.pptx` in the repo differed from the OneDrive copy. Slide text showed only the topic overview and dividers changed, from the "decks refreshed" commit of 2026-10-18, and the OneDrive file time matched the earlier delivery, so the repo deck was newer and safe to deliver.
+**Pattern (2026-10-27):** While adding two context window slides to module 01, the main thread compared the repo deck with the OneDrive copy before editing, as the 2026-10-20 entry here and the create-pptx skill asked. The owner: "the original pptx is on demos\..\pptx ... no need to search onedrive all the time".
 
-**Rule:** Before overwriting, diff slide text and notes of both decks with python-pptx and compare the OneDrive file time with the last delivery. Owner edits win; a repo deck that is only newer is delivered.
+**Rule:** The deck at `demos/<module>/pptx/<module>.pptx` is the original. Edit it directly, with no search, `cmp` or slide diff of the OneDrive copy first, then `deliver` it to the class folder. The create-pptx skill (`gamma-deck.md` Step 9, `finished-deck-edits.md`) carries the same rule since this session.
 
 ## The first look at a request is fact gathering and goes to the fact-gatherer
 
@@ -1094,3 +1094,34 @@
 **Pattern (2026-10-27):** The owner pasted "GitHub user features will not work. Your token has not been granted the required scopes ... ['repo', 'workflow']" with "fix that". The haiku delegate searched `~/.claude`, the repo and integrations-marketplace, found the `gh` and `GITHUB_TOKEN` tokens already carry `user:email` and `read:user`, and guessed the GitHub MCP connector. The main thread checked that absence claim by grepping the client installs: the text comes from the GitHub Pull Requests VS Code extension (`github.vscode-pull-request-github`), which shows it when a GraphQL call on VS Code's own GitHub sign-in returns `INSUFFICIENT_SCOPES`. The github.com/settings/tokens link in the message points at a personal access token that does not exist.
 
 **Rule:** For an error the owner pastes without naming the tool, take its client-specific prefix (the part GitHub, Azure or the server does not write) and grep it with `grep -rla --include=*.js` across `~/.vscode/extensions`, `~/.vscode-insiders/extensions`, the Claude Code package under the node install and `AppData/Local/Programs` before diagnosing any token or config. A delegate brief that locates an emitter names those trees. This one is fixed by a VS Code GitHub sign-out and a sign-in from the Pull Requests view, which asks for the missing scopes.
+
+## New slides mid-topic: park them before the spec renumber
+
+**Pattern (2026-10-27):** Two context window slides went in as `02-02` and `02-03` of module 01, ahead of the existing `02-02` and `02-03` cache slides. `permute-topic-specs.py --map 02-02=02-04` moves every spec and image whose name starts with the old prefix, so the new SVGs already named `02-02-*` and `02-03-*` would have moved with the old ones; they were parked in the scratchpad for the run.
+
+**Rule:** Write the new specs and SVGs, move them out of `pptx/`, run the permute map highest prefix first (`02-03=02-05,02-02=02-04`), move them back, then `check_specs.py --renumber --legacy`, render, and `add_spec_slide.py` once per new slide, with `--template` and `--after` counted on the deck as the previous insert left it. The procedure is in create-pptx `finished-deck-edits.md`.
+
+## `/context` runs headless, with MSYS path conversion off
+
+**Pattern (2026-10-27):** A real `/context` table for the module 01 teaching came from `claude -p "/context"`. In Git Bash the first attempt printed nothing useful, because MSYS rewrote the `/context` argument into a Windows path.
+
+**Rule:** Capture a slash command's output headless with `MSYS_NO_PATHCONV=1 claude -p "/context"` in Git Bash (PowerShell needs no prefix), run from a scratch folder, and teach the real numbers it prints.
+
+
+## A repo agent the owner asked for is not a copy to retire
+
+**Pattern (2026-10-27):** The owner had a session write `hetzner-devops-expert` into this repo's `.claude/agents/`, then had the next session add GitHub Actions tools to that file by path. A global `hetzner-devops-expert` with a different body exists beside it. The house rule retires a repo copy of a global agent without asking; the learn run kept this one, because the owner created it here by name, and left the global agent unchanged, because the other repos it serves have no `gh-actions-mcp` binary to start.
+
+**Rule:** A repo agent the owner asked for by name and path stays in the repo and is edited in place; the retire rule covers copies nobody asked for. A change to it reaches the global namesake only when the owner names that file.
+
+## A tool list for an agent is wired by kind and checked against the agent's rules
+
+**Pattern (2026-10-27):** The owner pasted a GitHub Actions toolkit (the official GitHub MCP, `gh-actions-mcp`, the REST log endpoints, OpenTelemetry webhooks, actionlint, a workflow schema validator, act) with "add this gh action tools". The two MCP servers went into the agent's `tools` and `mcpServers`, the command-line tools and log calls into a body table with their exact commands. OpenTelemetry webhooks were left out, being workflow-side setup with no call an agent makes, and so were the GitHub MCP's commit and pull request tools, which the agent's never-commit rule forbids; the reply named both. A haiku shell check ran beside the web fact-gatherer and found four of the tools missing on the PC and `gh-actions-mcp` without a release, which became the reply's one blocker.
+
+**Rule:** For a tool list to add to an agent: MCP servers go into `tools` by exact tool name and into `mcpServers`, command-line tools into the body with their command lines, and anything with no call or forbidden by the agent's hard rules is named in the reply as left out. Check which binaries exist on the PC in parallel with the web facts, and report the missing ones as the blocker with an install offer.
+
+## A background learn run announces after its Agent call
+
+**Pattern (2026-10-27):** On `/claude-learn` the main thread printed the announce line, launched the background fork, and ended the turn with no text, as the claude-learn skill says. The harness answered the empty closing message with "Your previous response had no visible output", and the main thread printed a reworded second announce: the echo the skill's 2026-10-25 rule was written to stop.
+
+**Rule:** Launch the `Agent` call first and print the announce line once, after it, as the turn's only text. The plugin's claude-learn skill still says to announce before the call; changing it waits for the owner's yes.

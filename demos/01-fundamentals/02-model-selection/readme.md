@@ -30,6 +30,68 @@ Run `/usage` to see where you stand. On a paid plan it also breaks recent usage 
 
 Tier selection is one lever, and it is the smaller one in a long session. What you send every turn matters more than which model reads it, because the whole conversation ships with every message. [Keep the Prompt Cache Warm](#keep-the-prompt-cache-warm) covers the mechanism that makes that affordable and the actions that throw it away, including the `/model` switch this topic is about.
 
+## What the Context Window Holds
+
+The context window is everything the model can see while it writes one response: its instructions, the tools it may call, the conversation so far, and the response itself. It is measured in tokens, and its size depends on the model; Opus 5.5 in Claude Code reports a window of one million tokens. Anything outside the window does not exist for the model, whether that is a file Claude has not read yet or a decision from yesterday's session.
+
+A Claude Code session fills the window in a fixed order. The first parts load at session start and stay the same from turn to turn, while the conversation grows with every message you send and every tool Claude runs.
+
+| Part | What it contains | When it loads |
+|---|---|---|
+| System prompt | Claude Code's core instructions, the environment (working directory, platform, git status), the output style | Session start |
+| System tools | Definitions of the built-in tools such as Read, Edit, Bash and Grep | Session start |
+| MCP tools | Tool names and server instructions; a full tool definition loads once Claude uses that tool | Session start, then on first use |
+| Custom agents and skills | One short description per agent and per skill; a skill's full body loads when it is invoked and stays | Session start, then on invocation |
+| Memory files | CLAUDE.md files, unscoped rules, and the first 200 lines of auto memory | Session start, and again after `/compact` |
+| Messages | Your prompts, Claude's responses and thinking, every tool call and every tool result | Every turn |
+| Free space | Room for the next response and the next tool results | Shrinks every turn |
+
+Messages are where the window fills. A file Claude reads stays in the conversation until the next compaction, and so does the output of every command it runs, so a session that has read twenty files carries all twenty into every later turn.
+
+![A context window as a stack: the parts loaded at session start, the messages that grow every turn, free space and the autocompact buffer, with the deferred tools listed outside the window](../pptx/images/02-02-context-window.svg)
+
+Run `/context` to see the breakdown for your own session. This is the category table from a fresh Opus 5.5 session in a repository with several MCP servers connected (model `claude-opus-5-5`, 34.4k of 1m tokens used, 3%):
+
+| Category | Tokens | Percentage |
+|----------|--------|------------|
+| System prompt | 4.4k | 0.4% |
+| System tools | 6k | 0.6% |
+| MCP tools | 1.3k | 0.1% |
+| MCP server instructions | 3.2k | 0.3% |
+| MCP tools (deferred) | 230.7k | 23.1% |
+| System tools (deferred) | 14.3k | 1.4% |
+| Custom agents | 5.9k | 0.6% |
+| Memory files | 3.8k | 0.4% |
+| Skills | 9.9k | 1.0% |
+| Messages | 10 | 0.0% |
+| Free space | 932.6k | 93.3% |
+| Autocompact buffer | 33k | 3.3% |
+
+The two deferred rows are listed for information and stay out of the total: the 34.4k are the loaded rows added up, and the 230.7k of deferred MCP definitions cost nothing until Claude calls one of those tools. The autocompact buffer is space Claude Code holds back so that compaction can run before the window is full.
+
+When the window fills, auto-compaction replaces the conversation with a structured summary, then reloads CLAUDE.md, auto memory and up to five recently touched files. `/compact` does the same on demand, and `/clear` starts over with an empty conversation. A subagent works in its own separate window and hands back only its summary, which keeps a large search out of yours.
+
+## A Short Conversation History
+
+A short history makes the window concrete. One prompt from you can produce several API requests: each tool call ends a request, Claude Code runs the tool on your machine, and the result goes back to the model at the end of the next request. This is the history Claude Code sends with your second prompt, after Claude answered the first one by reading a file:
+
+```text
+tools       Read, Edit, Bash, Grep, ... and the MCP tool names
+system      Claude Code instructions, environment, output style
+memory      CLAUDE.md, rules, auto memory
+user        What does GET /todos return?
+assistant   tool_use: Read Controllers/TodosController.cs
+user        tool_result: the content of TodosController.cs
+assistant   A list of todos, served by the HttpGet action of TodosController.
+user        Add a filter that returns only open todos.          <- new
+```
+
+The tool result travels in a user message, because in the API only the client can supply it. Every row above the last two was already part of the previous request, and the last two are what this turn adds.
+
+The prompt cache lives on Anthropic's servers, in the infrastructure that serves the model. Claude Code keeps no cache of its own: it re-sends the full text, and the server recognizes the prefix it processed for the previous request and skips that work. In the history above, everything up to the tool result is read from the cache, and the answer plus your new prompt are processed fresh and written to the cache for the next turn. The response reports both parts as `cache_read_input_tokens` and `cache_creation_input_tokens`, beside `input_tokens` for anything left uncached.
+
+![The conversation history above as a stack sent from Claude Code to Anthropic's servers, the first six rows read from the server-side prompt cache and the last two written to it](../pptx/images/02-03-conversation-cache.svg)
+
 ## Keep the Prompt Cache Warm
 
 The model remembers nothing between requests. Every turn you send, Claude Code re-sends the whole context: the system prompt, your project context, every prior message and tool result, and your new message. Prompt caching is how the API avoids reprocessing the part that did not change, and it is the single largest cost and latency lever in a long session.
