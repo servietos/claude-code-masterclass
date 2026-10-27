@@ -1,7 +1,7 @@
 ---
 name: review-performance-agent
 description: >-
-  Performance lens of the parallel review team in demos/06-subagents-agent-teams/06-parallel-review.
+  Performance lens of the parallel review team in demos/05-subagents-agent-teams/06-parallel-review.
   Reviews the EF Core DbContext and the query paths in the controllers for query shape,
   change tracking, un-awaited tasks and allocation per request, across both the read and the write path.
   Apply when the task is "review this API for performance", "what does this query emit",

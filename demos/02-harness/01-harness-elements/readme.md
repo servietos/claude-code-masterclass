@@ -13,7 +13,7 @@ It is composed of several file types, each responsible for a distinct aspect of 
 | [`.mcp.json`](../../04-mcp/readme.md) | Registers Model Context Protocol servers that extend Claude with external tools |
 | [`.claude/commands/`](../03-commands/readme.md) | Stores custom slash commands that package reusable multi-step workflows |
 | [`.claude/skills/`](../../03-skills/readme.md) | Holds installable agent skills that add domain-specific capabilities |
-| [`.claude/agents/`](../../06-subagents-agent-teams/readme.md) | Defines subagents with their own prompt, tool set, and model, so domain work routes to an owning expert |
+| [`.claude/agents/`](../../05-subagents-agent-teams/readme.md) | Defines subagents with their own prompt, tool set, and model, so domain work routes to an owning expert |
 | [`.claude/hooks/`](../04-hooks-mods/readme.md) | Holds the scripts that hook registrations execute on events like `PreToolUse`, `PostToolUse`, and `Stop` |
 | [`.claude/rules/`](../02-constitution/readme.md#path-scoped-rules) | Holds Markdown rule files: without `paths:` they load at session start like `CLAUDE.md`, with `paths:` only when Claude touches a matching file |
 | [`MEMORY.md`](../05-memory/readme.md) | Holds the auto-memory index and the memory files Claude saves across sessions |

@@ -140,41 +140,8 @@
     },
     {
       "num": "05",
-      "name": "Automate Claude Code from the Command Line",
-      "path": "demos/05-cli",
-      "assignee": "alexander-kastil",
-      "issueNumber": 667,
-      "subItems": [
-        {
-          "key": "theory",
-          "label": "Theory",
-          "issueNumber": 668
-        },
-        {
-          "key": "demos",
-          "label": "Code Demos",
-          "issueNumber": 669
-        },
-        {
-          "key": "labs",
-          "label": "Labs",
-          "issueNumber": 670
-        },
-        {
-          "key": "slides",
-          "label": "Slides",
-          "issueNumber": 671
-        }
-      ],
-      "theory": "done",
-      "demos": "done",
-      "labs": "done",
-      "slides": "done"
-    },
-    {
-      "num": "06",
       "name": "Scale task execution with sub-agents and agent teams",
-      "path": "demos/06-subagents-agent-teams",
+      "path": "demos/05-subagents-agent-teams",
       "assignee": "alexander-kastil",
       "issueNumber": 672,
       "subItems": [
@@ -197,6 +164,39 @@
           "key": "slides",
           "label": "Slides",
           "issueNumber": 676
+        }
+      ],
+      "theory": "done",
+      "demos": "done",
+      "labs": "done",
+      "slides": "done"
+    },
+    {
+      "num": "06",
+      "name": "Automate Claude Code from the Command Line",
+      "path": "demos/06-automate-cli",
+      "assignee": "alexander-kastil",
+      "issueNumber": 667,
+      "subItems": [
+        {
+          "key": "theory",
+          "label": "Theory",
+          "issueNumber": 668
+        },
+        {
+          "key": "demos",
+          "label": "Code Demos",
+          "issueNumber": 669
+        },
+        {
+          "key": "labs",
+          "label": "Labs",
+          "issueNumber": 670
+        },
+        {
+          "key": "slides",
+          "label": "Slides",
+          "issueNumber": 671
         }
       ],
       "theory": "done",
