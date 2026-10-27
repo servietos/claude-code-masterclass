@@ -1,4 +1,4 @@
-# Debate a root cause with a team
+# Debate a root cause with an agent team
 
 An agent that finds one plausible cause for a bug stops looking, and you cannot tell a confirmed theory from an unchallenged one. You end with a `findings.md` written by five teammates who each defended a different cause, ran a one-variable control experiment outside your project, and recorded exactly what killed every theory that did not survive.
 
@@ -19,7 +19,7 @@ The teaching behind this lab is in [Make teammates argue, and gate what they shi
 Open Claude Code inside your solution copy. Teammates inherit the lead's working directory, so the folder you launch from is the project the team investigates and the place `findings.md` lands. Step 0 creates the copy; run this from the repo root once it exists.
 
 ```bash
-cd labs/06-subagents-agent-teams/06-debate-a-root-cause/invoice-totals-py-solution
+cd labs/06-subagents-agent-teams/07-debate-a-root-cause/invoice-totals-py-solution
 claude
 ```
 
@@ -34,11 +34,11 @@ The same two commands work in PowerShell. Every path in the prompts below is rel
 `invoice-totals-py` is the starter: a script that totals orders per customer and checks them against a finance sheet. The team writes `findings.md` into the copy, and the control experiments never touch either folder. Run the copy once from the repo root, before you open Claude Code.
 
 ```bash
-cp -r labs/06-subagents-agent-teams/06-debate-a-root-cause/invoice-totals-py labs/06-subagents-agent-teams/06-debate-a-root-cause/invoice-totals-py-solution
+cp -r labs/06-subagents-agent-teams/07-debate-a-root-cause/invoice-totals-py labs/06-subagents-agent-teams/07-debate-a-root-cause/invoice-totals-py-solution
 ```
 
 ```powershell
-Copy-Item -Recurse labs/06-subagents-agent-teams/06-debate-a-root-cause/invoice-totals-py labs/06-subagents-agent-teams/06-debate-a-root-cause/invoice-totals-py-solution
+Copy-Item -Recurse labs/06-subagents-agent-teams/07-debate-a-root-cause/invoice-totals-py labs/06-subagents-agent-teams/07-debate-a-root-cause/invoice-totals-py-solution
 ```
 
 If the `-solution` folder already exists, both commands nest a second copy inside it. Delete the nested copy before you continue.
@@ -79,7 +79,7 @@ Acme is 24.00 short and Initech is 2.40 short. Both gaps are far larger than a r
 
 **Recipe:**
 
-If you finished Lab 04 the flag is already set. Otherwise add this to `~/.claude/settings.json` (on Windows `$HOME\.claude\settings.json`), keep everything already in the file, then restart with `/exit` and `claude`:
+If you finished Lab 06 the flag is already set. Otherwise add this to `~/.claude/settings.json` (on Windows `$HOME\.claude\settings.json`), keep everything already in the file, then restart with `/exit` and `claude`:
 
 ```json
 {
@@ -245,7 +245,7 @@ python invoice_totals.py
 Then confirm your solution folder was never edited. Run this from the repo root:
 
 ```bash
-git status --short labs/06-subagents-agent-teams/06-debate-a-root-cause
+git status --short labs/06-subagents-agent-teams/07-debate-a-root-cause
 ```
 
 **Expected Outcome:** in the scratch copy all three lines read `ok`, so that one change closes the gap to `finance.csv`. The `git status` output lists the new folders as untracked and no modified files, so the investigation changed no source. If your run still shows a `MISMATCH`, the survivor is unproven, and you send the team back to Step 5.

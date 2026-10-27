@@ -1,4 +1,4 @@
-# Build a specialized documentation agent with brand-voice enforcement
+# Build a specialized documentation subagent with brand-voice enforcement
 
 Build a documentation sub-agent by first reasoning through the design in conversation with Claude, then applying a ready-made recipe or your own findings to implement it.
 

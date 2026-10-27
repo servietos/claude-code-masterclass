@@ -1,4 +1,4 @@
-# Build a scoped unit-testing agent with minimal permissions
+# Build a scoped unit-testing subagent with minimal permissions
 
 Build a unit-testing sub-agent by first reasoning through the stack, permission model, and mocking rules in conversation with Claude, then applying a ready-made recipe or your own findings to implement it.
 

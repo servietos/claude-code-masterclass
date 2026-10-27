@@ -1,4 +1,4 @@
-# Orchestrate an agentic team to deliver customer data persistence
+# Orchestrate a team of subagents to deliver customer data persistence
 
 Coordinate the dotnet-expert and angular-expert as a team to add customer data persistence to the food-shop checkout page.
 

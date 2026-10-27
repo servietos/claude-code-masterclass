@@ -57,10 +57,11 @@ Topic 06 works in `06-parallel-review/catalog-service-cs`, topic 07 in `07-debat
 
 | Lab | Description |
 |-----|-------------|
-| [Build a Specialized Documentation Agent with Brand-Voice Enforcement](../../labs/06-subagents-agent-teams/lab-01-specialized-agents.md) | Reason through tools, model choice, MCP wiring and brand-voice rules to build a documentation sub-agent. |
-| [Build a Scoped Unit-Testing Agent with Minimal Permissions](../../labs/06-subagents-agent-teams/lab-02-unit-testing-agent.md) | Scope a testing sub-agent to one catalog-api stack with minimal Bash permissions and interface-only mocking, then evaluate its output. |
-| [Orchestrate an Agentic Team to Deliver Customer Data Persistence](../../labs/06-subagents-agent-teams/lab-03-agentic-team.md) | Coordinate `dotnet-expert` and `angular-expert` as a team to add customer data persistence to the food-shop checkout page. |
-| [Spawn a Review Team and Steer It](../../labs/06-subagents-agent-teams/lab-04-spawn-a-review-team.md) | Spawn three named reviewers on one unreviewed service, watch them claim tasks off the shared list, redirect one by message, and gate the fix behind plan approval. |
+| [Build a Specialized Documentation Subagent with Brand-Voice Enforcement](../../labs/06-subagents-agent-teams/lab-01-specialized-agents.md) | Reason through tools, model choice, MCP wiring and brand-voice rules to build a documentation sub-agent. |
+| [Build a Scoped Unit-Testing Subagent with Minimal Permissions](../../labs/06-subagents-agent-teams/lab-02-unit-testing-agent.md) | Scope a testing sub-agent to one catalog-api stack with minimal Bash permissions and interface-only mocking, then evaluate its output. |
+| [Orchestrate a Team of Subagents to Deliver Customer Data Persistence](../../labs/06-subagents-agent-teams/lab-03-agentic-team.md) | Coordinate `dotnet-expert` and `angular-expert` as a team to add customer data persistence to the food-shop checkout page. |
+| [Coordinate a Team of Subagents Through a Shared Ledger](../../labs/06-subagents-agent-teams/lab-04-subagent-ledger-team.md) | Let a tester and a fixer subagent hand defects to each other through a shared ledger, without the main session relaying them. |
+| [Spawn an Agent Team for Review and Steer It](../../labs/06-subagents-agent-teams/lab-06-spawn-a-review-team.md) | Spawn three named reviewers on one unreviewed service, watch them claim tasks off the shared list, redirect one by message, and gate the fix behind plan approval. |
 
 ## Knowledge Check
 

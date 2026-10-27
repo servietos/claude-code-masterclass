@@ -1,4 +1,4 @@
-# Converge a review loop with a stopping rule
+# Converge a subagent review loop with a stopping rule
 
 A fix that one agent writes and one agent checks ships whatever both of them happened to notice, and a reviewer told to find problems never runs out of them. You end with a hardened write path, a read-only reviewer, a ledger of every finding and its verdict, and a rule that decides when the loop stops. The optional extension moves the same split into a script where the merge and the vote are plain code.
 

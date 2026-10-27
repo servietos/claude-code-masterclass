@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 780" width="1920" height="780" role="img">
+<title>Convergent loop: implement, review, fix until a round is dry</title>
+<desc>Implement with dotnet-expert, then Review with a read-only agent. New findings go to Fix with dotnet-expert and back to Review. When a round is dry, the loop stops.</desc>
+<style>
+svg { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 26px; }
+.t { font-weight: 600; fill: #24292f; }
+.s { fill: #57606a; }
+.code { font-family: Consolas, 'Courier New', monospace; fill: #57606a; }
+.lbl { fill: #57606a; font-style: italic; }
+.box { stroke: #8c959f; stroke-width: 2; }
+.edge { fill: none; stroke: #8c959f; stroke-width: 3; }
+.hl { fill: none; stroke: #e0a534; stroke-width: 7; opacity: 0; animation: 22s linear infinite; }
+.tok { fill: #e0a534; stroke: #ffffff; stroke-width: 3; opacity: 0; animation: 22s linear infinite; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+@keyframes kh0 { 0.000% { opacity: 0; } 1.364% { opacity: 0; } 2.500% { opacity: 1; } 5.909% { opacity: 1; } 7.045% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh1 { 0.000% { opacity: 0; } 10.803% { opacity: 0; } 11.939% { opacity: 1; } 14.894% { opacity: 1; } 16.030% { opacity: 0; } 37.864% { opacity: 0; } 39.000% { opacity: 1; } 41.955% { opacity: 1; } 43.091% { opacity: 0; } 64.924% { opacity: 0; } 66.061% { opacity: 1; } 69.015% { opacity: 1; } 70.152% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh2 { 0.000% { opacity: 0; } 25.394% { opacity: 0; } 26.530% { opacity: 1; } 29.485% { opacity: 1; } 30.621% { opacity: 0; } 52.455% { opacity: 0; } 53.591% { opacity: 1; } 56.545% { opacity: 1; } 57.682% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh3 { 0.000% { opacity: 0; } 78.909% { opacity: 0; } 80.045% { opacity: 1; } 83.000% { opacity: 1; } 84.136% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kt0 { 0.000% { transform: translate(440px, 390px); opacity: 0; } 5.909% { transform: translate(440px, 390px); opacity: 0; } 5.955% { transform: translate(440px, 390px); opacity: 1; } 10.803% { transform: translate(760px, 390px); opacity: 1; } 11.030% { transform: translate(760px, 390px); opacity: 1; } 11.076% { transform: translate(760px, 390px); opacity: 0; } 100.000% { transform: translate(760px, 390px); opacity: 0; } }
+@keyframes kt1 { 0.000% { transform: translate(920px, 300px); opacity: 0; } 14.894% { transform: translate(920px, 300px); opacity: 0; } 14.939% { transform: translate(920px, 300px); opacity: 1; } 16.909% { transform: translate(920px, 170px); opacity: 1; } 25.394% { transform: translate(1480px, 170px); opacity: 1; } 25.621% { transform: translate(1480px, 170px); opacity: 1; } 25.667% { transform: translate(1480px, 170px); opacity: 0; } 100.000% { transform: translate(1480px, 170px); opacity: 0; } }
+@keyframes kt2 { 0.000% { transform: translate(1480px, 230px); opacity: 0; } 29.485% { transform: translate(1480px, 230px); opacity: 0; } 29.530% { transform: translate(1480px, 230px); opacity: 1; } 36.803% { transform: translate(1000px, 230px); opacity: 1; } 37.864% { transform: translate(1000px, 300px); opacity: 1; } 38.091% { transform: translate(1000px, 300px); opacity: 1; } 38.136% { transform: translate(1000px, 300px); opacity: 0; } 100.000% { transform: translate(1000px, 300px); opacity: 0; } }
+@keyframes kt3 { 0.000% { transform: translate(920px, 300px); opacity: 0; } 41.955% { transform: translate(920px, 300px); opacity: 0; } 42.000% { transform: translate(920px, 300px); opacity: 1; } 43.970% { transform: translate(920px, 170px); opacity: 1; } 52.455% { transform: translate(1480px, 170px); opacity: 1; } 52.682% { transform: translate(1480px, 170px); opacity: 1; } 52.727% { transform: translate(1480px, 170px); opacity: 0; } 100.000% { transform: translate(1480px, 170px); opacity: 0; } }
+@keyframes kt4 { 0.000% { transform: translate(1480px, 230px); opacity: 0; } 56.545% { transform: translate(1480px, 230px); opacity: 0; } 56.591% { transform: translate(1480px, 230px); opacity: 1; } 63.864% { transform: translate(1000px, 230px); opacity: 1; } 64.924% { transform: translate(1000px, 300px); opacity: 1; } 65.152% { transform: translate(1000px, 300px); opacity: 1; } 65.197% { transform: translate(1000px, 300px); opacity: 0; } 100.000% { transform: translate(1000px, 300px); opacity: 0; } }
+@keyframes kt5 { 0.000% { transform: translate(960px, 480px); opacity: 0; } 69.015% { transform: translate(960px, 480px); opacity: 0; } 69.061% { transform: translate(960px, 480px); opacity: 1; } 71.030% { transform: translate(960px, 610px); opacity: 1; } 78.909% { transform: translate(1480px, 610px); opacity: 1; } 79.136% { transform: translate(1480px, 610px); opacity: 1; } 79.182% { transform: translate(1480px, 610px); opacity: 0; } 100.000% { transform: translate(1480px, 610px); opacity: 0; } }
+</style>
+<rect width="1920" height="780" fill="#ffffff"/>
+<defs><marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="24" markerHeight="24" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#8c959f"/></marker></defs>
+<path class="edge" d="M440,390 L758,390" marker-end="url(#arr)"/>
+<path class="edge" d="M920,300 L920,170 L1478,170" marker-end="url(#arr)"/>
+<path class="edge" d="M1480,230 L1000,230 L1000,298" marker-end="url(#arr)"/>
+<path class="edge" d="M960,480 L960,610 L1478,610" marker-end="url(#arr)"/>
+<text class="lbl" x="1200" y="148" text-anchor="middle">new findings</text>
+<text class="lbl" x="1220" y="590" text-anchor="middle">round is dry</text>
+<rect class="box" x="60" y="300" width="380" height="180" rx="14" fill="#e9f7ef"/>
+<text class="t" x="250.0" y="380" text-anchor="middle">Implement</text>
+<text class="s" x="250.0" y="420" text-anchor="middle">dotnet-expert</text>
+<rect class="box" x="760" y="300" width="400" height="180" rx="14" fill="#f3edff"/>
+<text class="t" x="960.0" y="380" text-anchor="middle">Review</text>
+<text class="s" x="960.0" y="420" text-anchor="middle">read-only agent</text>
+<rect class="box" x="1480" y="110" width="380" height="180" rx="14" fill="#e9f7ef"/>
+<text class="t" x="1670.0" y="190" text-anchor="middle">Fix</text>
+<text class="s" x="1670.0" y="230" text-anchor="middle">dotnet-expert</text>
+<rect class="box" x="1480" y="520" width="380" height="180" rx="14" fill="#f6f8fa"/>
+<text class="t" x="1670.0" y="620" text-anchor="middle">Stop</text>
+<rect class="hl" id="h0" x="56" y="296" width="388" height="188" rx="17" style="animation-name: kh0;"/>
+<rect class="hl" id="h1" x="756" y="296" width="408" height="188" rx="17" style="animation-name: kh1;"/>
+<rect class="hl" id="h2" x="1476" y="106" width="388" height="188" rx="17" style="animation-name: kh2;"/>
+<rect class="hl" id="h3" x="1476" y="516" width="388" height="188" rx="17" style="animation-name: kh3;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt0;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt1;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt2;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt3;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt4;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt5;"/>
+</svg>

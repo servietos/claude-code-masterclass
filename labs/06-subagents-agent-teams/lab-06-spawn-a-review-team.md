@@ -1,4 +1,4 @@
-# Spawn a review team and steer it
+# Spawn an agent team for review and steer it
 
 Put three independent reviewers on one unreviewed service, watch them coordinate through a shared task list instead of through you, and end with a single ranked findings file that no one reviewer could have written alone.
 
@@ -20,7 +20,7 @@ Open Claude Code inside your solution copy, so the team reviews that tree and wr
 The solution copy is the tree the team works in, not the checked-in starter: Step 0 below scaffolds it; start the session there once it exists. Run this from the repo root; both commands work unchanged in PowerShell.
 
 ```bash
-cd labs/06-subagents-agent-teams/04-review/notes-api-py-solution
+cd labs/06-subagents-agent-teams/06-review/notes-api-py-solution
 claude
 ```
 
@@ -29,7 +29,7 @@ If you start Claude Code with the Claude Terminal extension (`Ctrl+F1` / `Cmd+F1
 > Note: you can also skip the folder switch entirely and name the path in the prompt instead, working from a session opened anywhere in the repo:
 
 ```text
-In labs/06-subagents-agent-teams/04-review/notes-api-py-solution spawn three teammates named security, perf and tests ....
+In labs/06-subagents-agent-teams/06-review/notes-api-py-solution spawn three teammates named security, perf and tests ....
 ```
 
 That works for any step whose result is just files, such as the merged `review-findings.md` in Step 6. It does not work for the team itself: teammates inherit the lead's working directory, so a session opened at the repo root puts three reviewers on the whole course repository and writes the findings file at the root. The agent-teams flag is the one piece that is immune, because it lives in your global `~/.claude/settings.json` rather than in the project. Launch inside the solution copy from Step 1 onward.
@@ -47,11 +47,11 @@ Launching inside the solution copy is what makes the repository a monorepo to th
 `notes-api-py` is a starter: no build output, no installed packages, nothing generated. The team you are about to spawn writes a findings file and, in Step 5, one source edit. Run the copy from a shell at the repository root, before you open Claude Code.
 
 ```bash
-cp -r labs/06-subagents-agent-teams/04-review/notes-api-py labs/06-subagents-agent-teams/04-review/notes-api-py-solution
+cp -r labs/06-subagents-agent-teams/06-review/notes-api-py labs/06-subagents-agent-teams/06-review/notes-api-py-solution
 ```
 
 ```powershell
-Copy-Item -Recurse labs/06-subagents-agent-teams/04-review/notes-api-py labs/06-subagents-agent-teams/04-review/notes-api-py-solution
+Copy-Item -Recurse labs/06-subagents-agent-teams/06-review/notes-api-py labs/06-subagents-agent-teams/06-review/notes-api-py-solution
 ```
 
 Run the copy once. If the `-solution` folder already exists, both commands nest a second copy inside it instead of overwriting, and the team then reviews the wrong tree.

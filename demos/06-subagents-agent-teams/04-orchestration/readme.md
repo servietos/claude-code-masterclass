@@ -6,11 +6,7 @@ An orchestrator does one job: it decides who does what, in which order, and what
 
 Delegation keeps the control flow in a prompt. The coordinator splits the task, spawns agents, and merges what they return. Loops keep it in a repetition rule: the same agents run again until a condition holds. A graph moves it into a script, where nodes are agent calls and edges are the data between them, so the plan is code rather than a sentence the model re-derives each run.
 
-```mermaid
-graph LR
-  D["Delegation<br/>plan lives in a prompt"] --> L["Loops<br/>plan repeats until a rule holds"]
-  L --> G["Graph<br/>plan lives in a script"]
-```
+![Delegation, where the plan lives in a prompt, leads to Loops, where it repeats until a rule holds, then to Graph, where it lives in a script](_images/04-orchestration-three-shapes.svg)
 
 The three are not alternatives to pick between once. A real orchestration usually delegates, loops on the parts that need convergence, and moves to a graph when the same decomposition is worth running more than once.
 
@@ -22,13 +18,7 @@ The coordinator understands the full scope, splits it into sub-tasks, and gives 
 
 Fan-out spawns several agents at once for independent workstreams, waits for all of them, then merges. Pipeline chains them, so the structured output of one is the input of the next. Domain decomposition assigns one agent per product boundary (backend, frontend, QA, deployment), each in its own worktree so nothing bleeds across.
 
-```mermaid
-graph TD
-  O["Coordinator<br/>splits the task"] --> B["dotnet-expert<br/>Controllers/ + Shared/"]
-  O --> R["request agent<br/>test-controllers.http"]
-  B --> M["Coordinator<br/>merges filesChanged"]
-  R --> M
-```
+![The coordinator splits the task between dotnet-expert in Controllers/ and Shared/ and the request agent in test-controllers.http, then merges filesChanged](_images/04-orchestration-delegation.svg)
 
 ### Choosing the Pattern from the Dependency Shape
 
@@ -146,13 +136,7 @@ Return the corrected JSON object only. No prose, no markdown fences.
 
 A convergent loop runs when the size of the work is unknown. Implement, review, fix, review again, and stop when a round surfaces nothing new. A fixed count is the wrong stopping rule for discovery: `while (found < 10)` always misses the tail, and stopping after one review round ships whatever the first reviewer happened to look at.
 
-```mermaid
-graph LR
-  I["Implement<br/>dotnet-expert"] --> R["Review<br/>read-only agent"]
-  R -->|"new findings"| F["Fix<br/>dotnet-expert"]
-  F --> R
-  R -->|"round is dry"| S["Stop"]
-```
+![Implement with dotnet-expert, review with a read-only agent, send new findings to Fix and back to Review, and stop when a round is dry](_images/04-orchestration-convergent-loop.svg)
 
 The cycle needs one detail to converge: dedupe against everything **seen**, not against everything **confirmed**. Deduping against confirmed results lets each rejected finding reappear in the next round forever, and the loop never goes dry.
 
@@ -212,19 +196,7 @@ const c = await parallel(b.map(...))
 
 That is a pipeline wearing a barrier. If five finders run and the slowest takes three times the fastest, the barrier throws away two thirds of the fast finders' head start.
 
-```mermaid
-graph TD
-  S["Script<br/>splits the task"] --> W1["Node<br/>Controllers/ + Shared/"]
-  S --> W2["Node<br/>test-controllers.http"]
-  W1 --> B["parallel() barrier<br/>merge in the script body"]
-  W2 --> B
-  B --> V1["Verify<br/>correctness lens"]
-  B --> V2["Verify<br/>security lens"]
-  B --> V3["Verify<br/>reproduction lens"]
-  V1 --> J["Vote counted in code"]
-  V2 --> J
-  V3 --> J
-```
+![The script splits the task into two nodes, the parallel() barrier waits for the slower one and merges in the script body, then three verifiers with the correctness, security and reproduction lens feed a vote counted in code](_images/04-orchestration-barrier.svg)
 
 ### Verification on the Edge
 
