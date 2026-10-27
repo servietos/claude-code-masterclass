@@ -5,10 +5,12 @@ import './FoodShopContainer.css';
 
 interface FoodShopContainerProps {
   catalogApiUrl: string;
+  sidebarVisible: boolean;
 }
 
 export const FoodShopContainer: React.FC<FoodShopContainerProps> = ({
   catalogApiUrl,
+  sidebarVisible,
 }) => {
   const [catalog, setCatalog] = useState<CatalogItem[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -86,21 +88,34 @@ export const FoodShopContainer: React.FC<FoodShopContainerProps> = ({
   };
 
   return (
-    <div className='food-shop-container'>
-      <aside className='cart-sidebar'>
-        <button className='actions-button'>Actions</button>
-        <div className='cart-info'>
-          <div className='cart-items'>Items {getTotalItems()} in cart</div>
-          <div className='cart-total'>
-            Sum Total €{getTotalPrice().toFixed(2)}
+    <main className='layout'>
+      {sidebarVisible && (
+        <aside className='aside panel' aria-label='Actions'>
+          <h2 className='panel-heading'>Actions</h2>
+          <div className='cart-info'>
+            <span className='cart-icon'>
+              <span className='material-icons'>shopping_cart</span>
+            </span>
+            <span className='cart-count'>{getTotalItems()} items in cart</span>
           </div>
-        </div>
-        <button className='checkout-btn' disabled>
-          Checkout
-        </button>
-      </aside>
-      <main className='items-container'>
-        <div className='shop-list'>
+          <div className='sum'>
+            <span className='sum-label'>Sum Total</span>
+            <span className='sum-value'>{getTotalPrice().toFixed(2)} €</span>
+          </div>
+          <button className='checkout-btn' disabled={cart.length === 0}>
+            <span className='material-icons'>shopping_cart</span>
+            Checkout
+          </button>
+        </aside>
+      )}
+      <div className='content'>
+        <section className='shop-list' aria-labelledby='food-title'>
+          <div className='page-title'>
+            <span className='title-tile'>
+              <span className='material-icons'>local_dining</span>
+            </span>
+            <h1 id='food-title'>Food</h1>
+          </div>
           {catalog.map((food) => (
             <ShopItem
               key={food.id}
@@ -109,11 +124,11 @@ export const FoodShopContainer: React.FC<FoodShopContainerProps> = ({
               onAmountChange={updateCart}
             />
           ))}
-        </div>
+        </section>
         {catalog.length === 0 && (
           <div className='no-items'>No items available in catalog</div>
         )}
-      </main>
-    </div>
+      </div>
+    </main>
   );
 };
