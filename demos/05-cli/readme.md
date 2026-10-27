@@ -19,6 +19,7 @@ Claude Code is not only an interactive assistant. Run with `-p`, it becomes a pr
 | [03: CI Gates](03-ci-gate/readme.md) | Wiring Claude into a CI workflow using sentinel tokens to produce deterministic exit codes that approve or block builds based on AI code-audit judgments. |
 | [04: Parallel Worktrees and Policy Hooks](04-parallel-hooks/readme.md) | Driving worktrees from a script (create them, commit inside each from a headless agent, merge back and clean up), showing that a PreToolUse gate lives in the checkout and therefore covers every lane, and scaling the two-worktree script into a task-queue orchestrator with per-agent exit codes. |
 | [05: Always-On and Goal Patterns](05-always-on/readme.md) | Long-running autonomous agents that loop until a measurable end-state condition is met, with the goal condition stated in the prompt and the run bounded by `--max-turns`. |
+| [06: Harness Interop](06-harness-interop/readme.md) | Optional. Claude Code drives GitHub Copilot CLI as a shell command: `claude -p` hands a prompt to `copilot -p` running on DeepSeek V4.1 Flash through your own DeepInfra key, with permissions on both sides. |
 
 ## Demos
 
@@ -29,6 +30,7 @@ Claude Code is not only an interactive assistant. Run with `-p`, it becomes a pr
 | [04: Parallel Worktrees and Policy Hooks](04-parallel-hooks/demo-parallel-hooks.md) | Prove the shipped `rm -rf` policy gate with one piped payload, then spawn two isolated agents in separate Git worktrees and see the same gate block the command in each lane. |
 | [04: Parallel Worktrees and Policy Hooks](04-parallel-hooks/demo-worktree-orchestration.md) | Optional. Design a task-queue script that drives the full worktree lifecycle (create, dispatch, merge, clean up) for a list of tasks. |
 | [05: Always-On and Goal Patterns](05-always-on/demo-always-on.md) | Set a measurable end-state condition, launch an autonomous agent with `claude -p --max-turns`, and watch it loop until the condition validates or the turn limit is reached. |
+| [06: Harness Interop](06-harness-interop/demo-copilot-from-claude.md) | Optional. Send one prompt to Copilot CLI on DeepSeek V4.1 Flash, prove the model from its event stream, then hand the same prompt to Copilot from an interactive Claude session and from `claude -p`. |
 
 Every demo has a presenter guide beside it (`demo-presenter-<slug>.md`) holding the same
 teaching in timed beats, for delivery without running the demo live.

@@ -1,5 +1,39 @@
 # Todo
 
+## Optional topic 05-cli/06: Harness Interop
+
+Owner ask (2026-10-27): "add an optional topic in which you demonstrate how you run gh copilot from claude using the -p switch ... or even claude -p -> to gh copilot -p using DeepSeek V 4.1 Flash". Later in the session: "text to pass through is just: create a poem about sighthounds", "we can start copilot -p dirctly", "call it harness interop", "show the output also", "it should be topic 06-harness-interop in modules 05 create a short teaching around it", "we dont want to demonstrate negative patterns", "update pptx using /create-pptx and publish to onedrive when done".
+
+Facts probed 2026-10-27: `copilot` 1.0.92, `claude` 2.1.311, `gh` 2.48.0 (no `gh copilot`; the launcher arrived in gh 2.86.0). DeepInfra serves `deepseek-ai/DeepSeek-V4.1-Flash`.
+
+### 1. Run-verify (receipts in the session scratchpad)
+
+- [x] `copilot -p "create a poem about sighthounds" -s`, without `-s`, and `--output-format json`: `model.call_final_result` names DeepSeek-V4.1-Flash with `isByok: true`, `premiumRequests: 0`; bash `grep` and PowerShell `ConvertFrom-Json` filters both run
+- [x] `copilot -p` from Claude Code's Bash tool: poem returned
+- [x] `claude -p ... --allowed-tools "Bash(copilot *)" --output-format json`: `is_error` false, `num_turns` 2, poem in `result`
+
+### 2. Author `demos/05-cli/06-harness-interop/`
+
+- [x] `readme.md` "Harness Interop": short teaching, duration line, flag table, BYOK variables, calling Copilot from Claude, command table, Key Topics links (all 200)
+- [x] `demo-copilot-from-claude.md`: four steps with the real outputs, no denial demo
+- [x] `demo-presenter-copilot-from-claude.md`: three beats
+
+### 3. Indexes
+
+- [x] `demos/05-cli/readme.md`: topic row and demo row marked Optional
+- [x] `demos/readme.md`: Module 5 bullet with ` (optional)`, schedule row "5 topics, 5 demos, 2 optional"
+
+### 4. Deck
+
+- [x] Specs 06-01 and 06-02 with SVGs; 00-02 overview diagram redrawn with five cards and a fifth bullet; `topics.json` entry 06; takeaways `order` 18
+- [x] OneDrive copy had no slide text or notes changes against the repo deck (`deck_diff.py differ=0`); built on it
+- [x] `add_spec_slide.py` twice, `swap-image`, `topics` (divider numbers now follow the `spec` prefix: 01, 03, 04, 05, 06), `notes` 18/18, `normalize_cards.py` over all cards (owner approved), `clean` twice, `slide_quality.py problems=0`
+- [x] Delivered: PPTX and PDF `cmp` match the OneDrive copies
+
+### 5. Verify
+
+- [x] `fence-lang.py` 0 untagged; `link-check.sh` broken=0; `link-rot.sh` 5 of 5 OK; no em dashes or negative parallelism in the new text
+
 ## Merge 01-fundamentals topics 01, 02 and 03 into one short topic
 
 Rationale: make room for advanced topics. Today `01-intro` (62 lines), `02-setup` (83) and
