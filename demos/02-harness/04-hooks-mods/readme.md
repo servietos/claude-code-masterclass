@@ -290,11 +290,11 @@ Proceed lets the command run. Cancel denies it with a message that tells Claude 
 
 ## Install Mods from a Marketplace
 
-A mod reaches a machine the way every plugin does: through a marketplace. A marketplace is a git repository or a folder that holds `.claude-plugin/marketplace.json`, a list of plugins with the path to each one. The integrations.at mods live in one such repository, `claude-mods`:
+A mod reaches a machine the way every plugin does: through a marketplace. A marketplace is a git repository or a folder that holds `.claude-plugin/marketplace.json`, a list of plugins with the path to each one. The integrations.at mods live in one such repository, `integrations-marketplace`:
 
 ```json
 {
-  "name": "claude-mods",
+  "name": "integrations-marketplace",
   "owner": { "name": "Alexander Kastil" },
   "plugins": [
     { "name": "intent-guard", "source": "./intent-guard" },
@@ -307,8 +307,8 @@ A mod reaches a machine the way every plugin does: through a marketplace. A mark
 `claude plugin marketplace add` takes four kinds of source: a GitHub `owner/repo`, the `https://` clone URL of any other git host, a local folder, or the URL of a hosted `marketplace.json`. The repository can be private. Claude Code clones it with the git credentials already on the machine and never prompts for a password, so anyone with read access can add it: over HTTPS after `gh auth login` and `gh auth setup-git`, or over SSH with a key loaded in the agent. A folder works too, which is how the author uses a marketplace before pushing it anywhere: plugins from a folder load in place, so an edit shows up at the next session start or after `/reload-plugins`.
 
 ```bash
-claude plugin marketplace add alexander-kastil/claude-mods
-claude plugin install intent-guard@claude-mods
+claude plugin marketplace add alexander-kastil/integrations-marketplace
+claude plugin install intent-guard@integrations-marketplace
 claude plugin list
 ```
 
@@ -320,9 +320,9 @@ claude plugin list
 | Project | `.claude/settings.json`, committed | Everyone in this repository, after each person runs the install once with `--scope project` |
 | Local | `.claude/settings.local.json` | You, in this repository only |
 
-So a mod is installed once per machine, not once per repository: install it at user scope and every session in every repository loads it. A second machine repeats the two commands. A mod that needs another plugin names it under `dependencies` in its `plugin.json`, and the install pulls it in from the same marketplace: installing `learn-queue` also installs `learn-loop`, which carries the `claude-learn` skill it starts. A mod with options, such as the five-minute intervals of `report-loop`, takes them with `claude plugin configure report-loop@claude-mods`.
+So a mod is installed once per machine, not once per repository: install it at user scope and every session in every repository loads it. A second machine repeats the two commands. A mod that needs another plugin names it under `dependencies` in its `plugin.json`, and the install pulls it in from the same marketplace: installing `learn-queue` also installs `learn-loop`, which carries the `claude-learn` skill it starts. A mod with options, such as the five-minute intervals of `report-loop`, takes them with `claude plugin configure report-loop@integrations-marketplace`.
 
-Plugins installed from the shell load in the next session, or in the open one after `/reload-plugins`. Background updates are off for a marketplace you added yourself: run `claude plugin marketplace update claude-mods`, or turn on auto-update for it under Marketplaces in `/plugin`.
+Plugins installed from the shell load in the next session, or in the open one after `/reload-plugins`. Background updates are off for a marketplace you added yourself: run `claude plugin marketplace update integrations-marketplace`, or turn on auto-update for it under Marketplaces in `/plugin`.
 
 ## Trust and Off Switches
 
