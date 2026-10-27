@@ -1,4 +1,4 @@
-import { ApplicationConfig, ErrorHandler, LOCALE_ID } from '@angular/core';
+import { ApplicationConfig, ErrorHandler, LOCALE_ID, inject, provideAppInitializer } from '@angular/core';
 import { provideRouter, withEnabledBlockingInitialNavigation } from '@angular/router';
 import { provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { provideZoneChangeDetection } from '@angular/core';
@@ -16,10 +16,16 @@ import { reducers, metaReducers } from './state/state';
 import { MsalAuthUtilModule } from './auth/msal-auth-util.module';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
+import { ThemeService } from './shared/theme/theme.service';
+import { cartFeature } from './food/state/cart/cart.state';
+import { cartEffects } from './food/state/cart/cart.effects';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideZoneChangeDetection({ eventCoalescing: true }),
+        provideAppInitializer(() => {
+            inject(ThemeService);
+        }),
         provideRouter(routes, withEnabledBlockingInitialNavigation()),
         provideHttpClient(withXhr(), withInterceptors([apimInterceptor])),
         { provide: LOCALE_ID, useValue: 'de' },
@@ -35,7 +41,8 @@ export const appConfig: ApplicationConfig = {
                     strictActionImmutability: true,
                 },
             }),
-            EffectsModule.forRoot([]),
+            StoreModule.forFeature(cartFeature),
+            EffectsModule.forRoot([cartEffects]),
             EntityDataModule.forRoot({}),
             !environment.production ? StoreDevtoolsModule.instrument({ connectInZone: true }) : [],
             MsalAuthUtilModule,

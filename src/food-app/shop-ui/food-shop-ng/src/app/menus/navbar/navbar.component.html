@@ -1,17 +1,29 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <div (click)="toggleMenu()" class="menu">
-      <mat-icon color="accent" class="clickable">menu</mat-icon>
-    </div>
+<header class="bar">
+  <button mat-icon-button type="button" class="menuButton" aria-label="Open menu" (click)="toggleMenu()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div class="brand">
+    <span class="logo"><mat-icon>restaurant</mat-icon></span>
+    <span class="brandName">Passion for Food</span>
+  </div>
+  <nav class="links" aria-label="Main">
     @for (mi of menuItems | async; track mi) {
-      <div
-        routerLink="{{ '/' + mi.url }}"
+      <a
+        [routerLink]="'/' + mi.url"
         routerLinkActive="navLink-active"
         [routerLinkActiveOptions]="{ exact: true }"
         class="navLink"
         >
         {{ mi.title }}
-      </div>
+      </a>
     }
-  </mat-toolbar-row>
-</mat-toolbar>
+  </nav>
+  <button
+    mat-icon-button
+    type="button"
+    class="themeToggle"
+    [attr.aria-label]="theme() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'"
+    (click)="themes.toggle()">
+    <mat-icon>{{ theme() === 'dark' ? 'light_mode' : 'dark_mode' }}</mat-icon>
+  </button>
+</header>

@@ -4,7 +4,7 @@
   align-content: stretch;
   margin: 10px 0;
   margin-bottom: 10px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--color-border);
 
   &:last-child{
     border-bottom: none;
@@ -13,7 +13,7 @@
 
 input:disabled
 {
-  background-color: white;
+  background-color: var(--color-surface);
   border: none;
 }
 

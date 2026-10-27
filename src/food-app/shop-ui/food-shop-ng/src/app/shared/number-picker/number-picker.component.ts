@@ -14,6 +14,7 @@ import {
   Validator,
 } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-number-picker',
@@ -33,12 +34,14 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [MatIconModule],
+  imports: [MatIconModule, MatButtonModule],
 })
 export class NumberPickerComponent implements ControlValueAccessor, Validator {
   quantity = 0;
 
   @Input() increment: number = 1;
+
+  @Input() itemName = '';
 
   @Output() amountChanged: EventEmitter<number> = new EventEmitter<number>();
 

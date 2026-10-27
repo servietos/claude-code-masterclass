@@ -1,6 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -9,7 +10,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./about.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Eager,
-  imports: [MatCardModule, JsonPipe]
+  imports: [MatCardModule, MatIconModule, JsonPipe]
 })
 export class AboutComponent {
   config = environment;

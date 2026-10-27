@@ -75,4 +75,14 @@ Machine hours spent on this repository, one row per working day.
 | 2026-10-23 | 0.10 | 11:35 | 11:41 | Answer rules for plain explanations and owner questions recorded |
 | 2026-10-23 | 0.48 | 11:41 | 12:10 | Session record located for the owner and the learning loop closed out |
 
-**Total: 44.22 hours**
+| 2026-10-26 | 0.52 | 13:56 | 14:27 | Git workflow commands made reusable across repositories, course settings kept in the repo |
+| 2026-10-26 | 0.00 | 14:09 | 14:11 | CLAUDE.md length guard restored from history and switched back on (parallel, not billed) |
+| 2026-10-26 | 0.08 | 14:27 | 14:32 | Lesson on reusable commands recorded and the learning loop closed out |
+| 2026-10-26 | 0.03 | 14:30 | 14:34 | Guard references updated, restore procedure recorded for reuse, learning loop closed out |
+| 2026-10-26 | 0.15 | 15:56 | 16:05 | Architecture diagram of the QR code app drawn and checked in light and dark mode |
+| 2026-10-26 | 0.07 | 16:22 | 16:26 | Diagram lessons and a render check recorded for reuse, learning loop closed out |
+
+| 2026-10-27 | 0.25 | 08:24 | 08:39 | GitHub sign-in warning traced to the VS Code pull request extension, fix provided |
+| 2026-10-27 | 0.20 | 08:39 | 08:51 | Lesson on finding where an error comes from recorded, learning loop closed out |
+
+**Total: 45.52 hours**

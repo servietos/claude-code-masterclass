@@ -71,7 +71,13 @@ Prerequisites, verified on the versions in brackets:
 - Node.js 18 or newer (verified on Node v24.15.0 with npm 11.12.1)
 - The .NET 10 SDK for the catalog API (verified on 10.0.110)
 
-The React app reads its catalog from the URL in `labs/02-harness/lab-02-food-shop/shop-ui/food-shop-react/.env`, which is `http://localhost:5000`. The two commands below run in their own terminals and both start from the repo root; only the Claude Code session stays inside the React app. Start the catalog API first:
+The React app reads its catalog from the URL in `labs/02-harness/lab-02-food-shop/shop-ui/food-shop-react/.env`. Git ignores that file, so a fresh clone does not have it: create it with this one line, which points the app at the catalog API on port 5000:
+
+```dotenv
+REACT_APP_CATALOG_API_URL=http://localhost:5000
+```
+
+The two commands below run in their own terminals and both start from the repo root; only the Claude Code session stays inside the React app. Start the catalog API first:
 
 ```bash
 cd labs/02-harness/lab-02-food-shop/catalog-api/catalog-service-cs

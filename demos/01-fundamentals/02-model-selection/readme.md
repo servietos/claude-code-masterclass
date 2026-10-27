@@ -8,7 +8,7 @@
 | Opus 5.5 (Default) | Complex reasoning, multi-step planning, challenging architectural decisions, agentic coding |
 | Opus 5.5 (1M context) | Same as Opus but with the extended context window selected explicitly: billed as extra usage |
 | Sonnet 5.5 | Everyday tasks, general-purpose coding, standard workflows, best value |
-| Haiku 4.5 | Fastest responses, quick answers, simple lookups, tight token budgets (200K context) |
+| Haiku 5.5 | Fastest responses, quick answers, simple lookups, tight token budgets (200K context) |
 
 Opus 5, Sonnet 5, Opus 4.8, Opus 4.7, and Sonnet 4.6 remain selectable for teams that pinned an older model, but new work should start on Fable 5.1, Opus 5.5 or Sonnet 5.5.
 

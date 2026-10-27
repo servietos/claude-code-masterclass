@@ -11,7 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AsyncPipe } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -21,7 +20,6 @@ import { environment } from '../../../environments/environment';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    MatToolbarModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
     MatButtonModule,

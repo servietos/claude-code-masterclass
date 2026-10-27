@@ -35,7 +35,7 @@ dotnet run
 
 ```bash
 cd demos/04-mcp/02-mcp/hr-mcp-server
-npx @modelcontextprotocol/inspector --config inspector.config.json --server hr-mcp --cli --method tools/list
+npx @modelcontextprotocol/inspector --cli --config inspector.config.json --server hr-mcp --method tools/list
 ```
 
 **Expected result:** a `tools` array with six entries, each carrying the `[Description]` text from the C# source and a full `inputSchema`:
@@ -55,7 +55,7 @@ npx @modelcontextprotocol/inspector --config inspector.config.json --server hr-m
 Call `assign_shift` against real data, then add the entry below to the project-level [.mcp.json](../../../.mcp.json). Claude Code uses the transport type `http` and the same root URL with no `/mcp` suffix.
 
 ```bash
-npx @modelcontextprotocol/inspector --config inspector.config.json --server hr-mcp --cli --method tools/call --tool-name assign_shift --tool-arg employeeName=Kenji --tool-arg date=2026-08-01 --tool-arg position="sushi bar"
+npx @modelcontextprotocol/inspector --cli --config inspector.config.json --server hr-mcp --method tools/call --tool-name assign_shift --tool-arg employeeName=Kenji --tool-arg date=2026-08-01 --tool-arg position="sushi bar"
 ```
 
 ```json

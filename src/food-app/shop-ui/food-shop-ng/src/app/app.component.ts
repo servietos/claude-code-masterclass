@@ -1,5 +1,4 @@
 import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { MatDrawerMode } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { filter, map, startWith, tap } from 'rxjs/operators';
@@ -9,7 +8,6 @@ import { SidenavFacade } from './state/sidenav/sidenav.facade';
 
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { NavbarComponent } from './menus/navbar/navbar.component';
 import { SidebarComponent } from './menus/sidebar/sidebar.component';
 import { LoginComponent } from './auth/components/login/login.component';
@@ -23,7 +21,6 @@ import { LoginComponent } from './auth/components/login/login.component';
   imports: [
     CommonModule,
     RouterOutlet,
-    MatSidenavModule,
     NavbarComponent,
     SidebarComponent,
     LoginComponent
@@ -31,12 +28,16 @@ import { LoginComponent } from './auth/components/login/login.component';
 })
 export class AppComponent implements OnDestroy {
   title = environment.title;
-  sidenavMode: MatDrawerMode = 'side';
   sidenavVisible = this.mf.getSideNavVisible();
   isIframe = window !== window.parent && !window.opener;
 
   authEnabled = environment.authEnabled;
   authenticated = this.af.isAuthenticated();
+  isHome = this.router.events.pipe(
+    startWith(null),
+    filter((e) => e === null || e instanceof NavigationEnd),
+    map(() => this.router.url.split(/[?#]/)[0] === '/')
+  );
   publicRoute = this.router.events.pipe(
     startWith(false),
     filter((e) => e instanceof NavigationEnd),
@@ -55,29 +56,10 @@ export class AppComponent implements OnDestroy {
     public mf: SidenavFacade,
     private router: Router
   ) {
-    this.mf.getSideNavPosition()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((mode: string) => {
-        this.sidenavMode = mode as MatDrawerMode;
-      });
   }
 
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
-  }
-
-  getWorbenchStyle() {
-    let result = {};
-    this.mf.getSideNavVisible()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((visible: boolean) => {
-        result = visible
-          ? {
-            'padding-left': '10px',
-          }
-          : {};
-      });
-    return result;
   }
 }

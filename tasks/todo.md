@@ -209,3 +209,13 @@ Blocked on a working `ANTHROPIC_API_KEY`: the four keys in the repo's `.env` fil
 - [ ] Update the counts in the topic readme bar table, demo, presenter guide, lab Steps 1 and 3, solution readme and the caveman `SKILL.md` band
 - [ ] Add `ANTHROPIC_API_KEY` to the guides' prerequisites and a Module 07 row in `labs/readme.md`
 - [ ] Update the caveman slides in `demos/07-optimize-observability/pptx/`
+
+## Food app light and dark theme with toggle
+
+Project: `src/food-app/shop-ui/food-shop-ng` (serves localhost:4200). Design: canvas "Food App Themes" (approved 2026-10-26).
+
+- [x] @theme-tokens (ui-specialist): tokens in `src/theme/tokens.scss` for light, `data-theme="dark"` and system dark; Material mapped to the tokens; indigo overrides removed from `src/theme/mat-overrides.scss`; Plus Jakarta Sans in `src/index.html`; prebuilt purple-green dropped from `angular.json`
+- [x] @theme-ui (angular-expert): `ThemeService` and the toggle in the navbar; top bar, Actions panel, shop cards, catalog table, edit form restyled to the canvas; hard-coded colours under `src/app` moved to tokens
+- [x] Main thread: check both themes on /food, /food/catalog and the edit form in Chrome at 1280 and 375
+- [x] Owner corrections: In Stock column shows numbers only (no "Low" text, no icon), low stock keeps the warning colour
+- [x] Owner: Catalog title row became the table card header (icon tile, title, count pill, Add Food), top-aligned with the Actions card

@@ -24,7 +24,7 @@ export class SidenavFacade {
         );
         if (enabled) {
           this.store.dispatch(
-            SideNavActions.setSideNavVisible({ visible: !isNarrow })
+            SideNavActions.setSideNavVisible({ visible: true })
           );
         }
       })

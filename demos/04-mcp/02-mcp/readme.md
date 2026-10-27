@@ -6,7 +6,7 @@ Hands-on demo: [Build an HR MCP Server with Streamable HTTP](demo-hr-mcp-server.
 
 ## HR MCP Server
 
-The [hr-mcp-server/](hr-mcp-server) project implements a restaurant HR management backend as a set of MCP tools. It uses `ModelContextProtocol` 1.2.0 and `ModelContextProtocol.AspNetCore` 1.2.0 to expose tools over Streamable HTTP on port 47002. Entity Framework Core 10 with a SQLite backend persists employee and shift data across server restarts.
+The [hr-mcp-server/](hr-mcp-server) project implements a restaurant HR management backend as a set of MCP tools. It uses `ModelContextProtocol` 2.3.0 and `ModelContextProtocol.AspNetCore` 2.3.0 to expose tools over Streamable HTTP on port 47002. Entity Framework Core 10 with a SQLite backend persists employee and shift data across server restarts.
 
 The server registers six tools, each decorated with `[McpServerTool]` and `[Description]` attributes that Claude and other AI clients read as tool metadata:
 

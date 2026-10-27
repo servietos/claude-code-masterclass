@@ -7,7 +7,7 @@
 
 .mdc-form-field > label {
   padding: 0 1rem;
-  color: white !important;
+  color: var(--color-text) !important;
 }
 
 .info {
@@ -36,5 +36,5 @@ mat-list-item span {
 }
 
 .mdc-form-field>label {
-  color: white !important;
+  color: var(--color-text) !important;
 }
