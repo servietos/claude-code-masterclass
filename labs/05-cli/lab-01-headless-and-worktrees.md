@@ -14,11 +14,31 @@ Each step contains:
 - **Node.js 20+** and **npm**, for the project you scaffold in Setup.
 - **Claude Code 2.x**: `claude --version` (this lab was verified against 2.1.219).
 
-## Where to Open Claude Code
+## Setup: Scaffold a Tiny Node CLI
 
-This lab builds its own harness, so open Claude Code inside the lab project. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
+This lab works in a small Node project called `cli-utils`. You create it yourself in this Setup, so you will not find a `cli-utils` folder in this repo. The finished version is checked in at [01-headless/cli-utils-solution/](01-headless/cli-utils-solution) as a reference.
 
-The project lives outside this course checkout, for the reason Setup gives, so it is not a folder you will find in this repo. Setup below creates it; start the session inside it. Both commands work unchanged in PowerShell.
+### Create the Project Folder Outside the Course Repo
+
+Steps 2 and 3 (and Lab 02) treat `cli-utils` as its own top-level git repository, so create it **outside this course repo**. Running `git init` inside the course repo nests a repository, and Step 3 then drops two extra working trees into the course checkout as untracked junk. `~/projects` is an example; any folder outside the course checkout works. These commands work unchanged in PowerShell.
+
+```bash
+cd ~/projects          # any folder OUTSIDE this course repo
+mkdir cli-utils
+cd cli-utils
+```
+
+### Open Claude Code Inside the Project
+
+This lab builds its own harness, so open Claude Code inside `cli-utils`. The harness is project-scoped: `CLAUDE.md`, `.claude/settings.json` hooks, `.claude/agents/`, `.claude/skills/`, `.claude/commands/` and `.mcp.json` all load from the directory the session was launched in. A session opened at the repo root leaves everything you write here inert, with no error to tell you.
+
+From the `cli-utils` folder you just created:
+
+```bash
+claude
+```
+
+Whenever you come back to the project later, including in Labs 02 and 03, start the session from the same folder:
 
 ```bash
 cd ~/projects/cli-utils
@@ -37,19 +57,9 @@ That works for any step whose result is just files. It does not work for the res
 
 The project is outside this course checkout, so the repo's own `CLAUDE.md`, `.claude/` and `.mcp.json` are not reachable by relative path at all and play no part in this lab. Every path in the prompts below is relative to the project folder.
 
-Labs 02 and 03 open their sessions in the same folder.
+### Scaffold the Starter
 
-## Setup: Scaffold a Tiny Node CLI
-
-Steps 2 and 3 (and Lab 02) treat `cli-utils` as its own top-level git repository, so scaffold it **outside this course repo**. Running `git init` inside the course repo nests a repository, and Step 3 then drops two extra working trees into the course checkout as untracked junk.
-
-```bash
-cd ~/projects          # any folder OUTSIDE this course repo
-mkdir cli-utils
-cd cli-utils
-```
-
-Start Claude Code in that folder as the launch block above shows, then build the starter:
+In the session you just opened inside `cli-utils`, build the starter:
 
 ```text
 Scaffold a Node.js CLI library at this folder:
