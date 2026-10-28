@@ -852,6 +852,7 @@
 
 **Pattern:** reviewers briefed to "write exactly one file" still wrote fetch caches: one into `$HOME/.bp_tmp_check.md`, another 21 pages into the scratchpad, and left both because their rules forbid deleting.
 **Rule:** a brief that limits outputs also names a scratch subfolder for incidental downloads ("cache fetched pages under <scratchpad>/<agent>/"), so nothing lands outside it.
+**Recurred (2026-10-28):** a read-only Haiku lookup wrote `window.tsv` into the user Temp folder, outside the scratchpad, because its brief named no place for temp files. The rule now sits in claude-orchestration's boundaries leaf, where every brief is written from.
 
 ## Moving a topic into the module that owns it moves only the delta
 
@@ -1145,3 +1146,21 @@
 **Pattern (2026-10-28):** Asked for the last prompt that modified `src/food-app/shop-ui/food-shop-react`, the main thread briefed a Haiku general-purpose agent, which wrote a one-off script, traced `parentUuid` chains that ended at injected teammate messages and stepped back to the typed prompts by hand. The main thread checked the prompt's uuid and text by grep and relayed the file list unchecked; it missed `src/index.css`. Git log only showed a rename commit and the initial import.
 
 **Rule:** Brief the shell lookup to run claude-learn's `session-find.py --touched <path regex> --project <slug part> --last 3`, which credits each write (subagents and shell writes included) to the typed prompt behind it. Check a delegate's file list against that output before relaying it; git log only names commits. Transcript times are UTC; give the owner local time.
+
+## A ` #` in a plain-scalar description cuts it without an error
+
+**Pattern (2026-10-28):** The new code-reviewer description ended in `"review PR #123".`, unquoted. YAML reads ` #` as the start of a comment, so the frontmatter parsed and the skill listing showed the description ending at `"review PR`. The main thread took it for a listing length limit and shortened the text, which changed nothing; single quotes fixed it. The 2026-07-24 rule "diagnose from the file, not from the rendered listing" did not hold, because the colon-space entry never named this case and the fixer's check passed it.
+
+**Rule:** A skill or agent description holding ` #` gets quotes or a `>-` block, the same as one holding `: `. After every description edit, compare the next skill-listing reminder word for word with the file. `fix-skill-frontmatter.py --check` reports the case since this session, and the distribute leaf's hygiene gate names it.
+
+## A demo's starter skill stays, and a global namesake hides it
+
+**Pattern (2026-10-28):** `.claude/skills/code-reviewer/SKILL.md` is the pristine starter of `demos/03-skills/05-test-and-package`, whose learner edits it in place. `~/.claude/skills/code-reviewer/SKILL.md` held the same text, so the retire rule would have deleted the starter as a copy. A personal skill also wins over a project skill with the same name: editing the global copy changed the skill listing in this repo, and the 21 recorded uses were the global copy's. On this machine the demo measures the global copy.
+
+**Rule:** A repo skill that a demo or lab edits as its exercise stays in the repo, and a learn run never syncs it with a global namesake in either direction; skill-sync's Retire section carries the exception. Before testing an edit to a repo skill, check `~/.claude/skills/<name>`: while a global namesake exists, the repo edit does not load on this machine.
+
+## Secrets in `.mcp.json` move to user environment variables by the names the repo already uses
+
+**Pattern (2026-10-28):** Asked to put the sensitive values of the `ssh-mcp` entry on environment variables, the fact-gatherer found the block in `.mcp.json` plus a `.vscode/mcp.json` sibling already prompting with `${input:SSH_HOST}`, `${input:SSH_USER}` and `${input:SSH_PASSWORD}`, and a `${WORKTIME_MCP_KEY}` reference in the same file. The main thread reused those names, pointed both password args at one variable, checked the names were unset before writing them as Windows user variables, and flagged once that the committed value stays in git history. `docs/cicd-project-specifics.md` still said the host pin lived in `.mcp.json` and was re-pointed by the learn run.
+
+**Rule:** Follow mcp-claude `claude-code-mcp-inventory.md`, "Moving a secret out of a committed `.mcp.json`": `${NAME}` references, names from the sibling config, a free-name check, user scope, a restart before the server connects, one history flag, and every doc that names the old location re-pointed in the same pass.
