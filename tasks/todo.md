@@ -316,3 +316,15 @@ Reference: `src/food-app/shop-ui/food-shop-ng` (the current Angular app: orange 
 - [ ] Integrate: `npm run build` (vue-tsc + vite) clean
 - [ ] Verify: parity review against the Angular source, then a browser run beside the Angular app
 - [ ] Fix what the verify stage confirms, rebuild
+
+## Lab 04 in labs/08-distribution: a mod that routes and briefs subagents
+
+Owner ask (2026-10-28): "to labs\08-distribution add a lab about a simple mod based orchestration and delegation with all assets it requires. when done run it and fix all errors in the guides"
+
+Shape: `lab-04-orchestrate-with-a-mod.md` at the module root, topic folder `04-orchestrate/`, starter `delegation-desk/` (a small `shop-api/` to ask lookups about, plus the `desk-router/` manifest), finished `delegation-desk-solution/`. The mod: a read-only `scout` agent on Haiku, a `prompt.submit` hook that attaches a delegation hint to lookups, an `agent.spawn` hook that reroutes generic lookup spawns to the scout and appends a brief, a ledger in `$.state` with a `/desk` command, a `claude plugin test` suite, and a directory marketplace to install it from. Claude Code 2.1.312.
+
+- [x] Starter and solution assets
+- [x] `claude plugin validate` and `claude plugin test` on the solution (5 pass), `tsc` clean against the 2.1.312 API types
+- [x] Guide, index row in `labs/08-distribution/readme.md`
+- [x] Run the guide against a run copy of the starter: every file block written from the guide is byte-identical to the solution; fixed `marketplace add .` (needs `./`), the `Read from:` line, the absolute `directory` path in project settings, the leftover empty settings file, the engine-written `tsconfig.json`
+- [x] Brand voice clean, fences tagged, links resolve; dead `plugin-dev` link in the module index repointed to `anthropics/claude-plugins-official`

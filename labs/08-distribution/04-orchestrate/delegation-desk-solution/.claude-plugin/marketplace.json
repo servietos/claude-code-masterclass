@@ -1,0 +1,13 @@
+{
+  "name": "delegation-desk",
+  "owner": { "name": "Claude Code Masterclass" },
+  "metadata": { "description": "Lab catalog that ships the desk-router mod." },
+  "plugins": [
+    {
+      "name": "desk-router",
+      "version": "0.1.0",
+      "description": "Routes lookups to a read-only scout agent, briefs every subagent and keeps a ledger of the delegations.",
+      "source": "./desk-router"
+    }
+  ]
+}
