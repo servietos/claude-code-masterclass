@@ -1,76 +1,63 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
-import { RouterView, useRoute } from 'vue-router';
-import LoginCard from '@/components/auth/LoginCard.vue';
-import AppNavbar from '@/components/layout/AppNavbar.vue';
-import AppSidebar from '@/components/layout/AppSidebar.vue';
-import { environment } from '@/environments/environment';
-import { useAuthStore } from '@/stores/auth';
-import { useSidenavStore } from '@/stores/sidenav';
+import { computed } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
+import LoginCard from '@/components/LoginCard.vue'
+import TheNavbar from '@/components/TheNavbar.vue'
+import TheSidebar from '@/components/TheSidebar.vue'
+import { useAuthStore } from '@/stores/auth'
+import { useSidenavStore } from '@/stores/sidenav'
+import { useThemeStore } from '@/stores/theme'
 
-const route = useRoute();
-const { isAuthenticated } = storeToRefs(useAuthStore());
-const { visible: sidenavVisible } = storeToRefs(useSidenavStore());
+const route = useRoute()
+const auth = useAuthStore()
+const sidenav = useSidenavStore()
+useThemeStore()
 
-const authEnabled = environment.authEnabled;
-const isIframe = window !== window.parent && !window.opener;
-const isHome = computed(() => route.path === '/');
-const publicRoute = computed(() => route.fullPath.includes('about'));
+const showLogin = computed(() => !auth.isAuthenticated && !route.meta.public)
+const showSidebar = computed(() => sidenav.visible && route.name !== 'home')
 </script>
 
 <template>
-  <div v-if="!isAuthenticated && !publicRoute" class="loginsplash">
+  <div
+    v-if="showLogin"
+    class="login-splash"
+  >
     <LoginCard />
   </div>
-  <div v-if="isAuthenticated || publicRoute" class="maingrid">
-    <div class="gdNavbar"><AppNavbar /></div>
-    <div class="gdMainrow">
-      <main class="layout">
-        <AppSidebar v-if="sidenavVisible && !isHome" class="aside" />
-        <div class="content">
-          <RouterView />
-        </div>
-      </main>
-    </div>
-  </div>
-  <div v-if="authEnabled" style="display: none">
-    <RouterView v-if="!isIframe" />
+  <div
+    v-else
+    class="main-grid"
+  >
+    <TheNavbar />
+    <main class="layout">
+      <TheSidebar
+        v-if="showSidebar"
+        class="aside"
+      />
+      <div class="content">
+        <RouterView />
+      </div>
+    </main>
   </div>
 </template>
 
 <style scoped>
-.loginsplash {
+.login-splash {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.maingrid {
+.main-grid {
   display: grid;
   grid-template-rows: auto 1fr;
-  grid-template-columns: auto;
-  grid-template-areas:
-    "navbar"
-    "mainrow";
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
 }
 
-.gdNavbar {
-  grid-area: navbar;
-}
-
-.gdMainrow {
-  grid-area: mainrow;
-  min-width: 0;
-  background-color: var(--color-bg);
-}
-
 .layout {
-  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -78,8 +65,7 @@ const publicRoute = computed(() => route.fullPath.includes('about'));
   width: 100%;
   max-width: var(--layout-max-width);
   margin: 0 auto;
-  padding: 32px var(--layout-pad-x) 40px;
-  padding-bottom: max(40px, env(safe-area-inset-bottom));
+  padding: 32px var(--layout-pad-x) max(40px, env(safe-area-inset-bottom));
 }
 
 .aside {

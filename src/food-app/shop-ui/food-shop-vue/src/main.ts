@@ -1,30 +1,18 @@
-import { createPinia } from 'pinia';
-import { createApp } from 'vue';
-import App from './App.vue';
-import { environment } from './environments/environment';
-import router from './router';
-import { logger } from './services/logger';
-import { useTheme } from './services/theme';
-import { useAuthStore } from './stores/auth';
-import './styles/tokens.css';
-import './styles/global.css';
+import './assets/main.css'
 
-async function bootstrap() {
-  const app = createApp(App);
-  const pinia = createPinia();
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
-  app.use(pinia);
-  app.use(router);
-  app.config.errorHandler = () => {};
+import App from './App.vue'
+import router from './router'
+import { useAuthStore } from './stores/auth'
 
-  useTheme();
-  logger.init();
+const app = createApp(App)
 
-  if (environment.authEnabled) {
-    await useAuthStore(pinia).init();
-  }
+app.use(createPinia())
+app.use(router)
 
-  app.mount('#app');
-}
+await useAuthStore().initialize()
+await router.isReady()
 
-bootstrap().catch((err) => console.error(err));
+app.mount('#app')

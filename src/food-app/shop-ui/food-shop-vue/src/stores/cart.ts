@@ -1,62 +1,32 @@
-import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
-import type { CartItem } from '@/models/cart-item';
-import { storage } from '@/services/storage';
-
-function updateCart(state: CartItem[], item: CartItem): CartItem[] {
-  let cart: CartItem[] = [...state];
-  if (cart.length == 0) {
-    cart.push({ ...item });
-  } else {
-    const idx = cart.findIndex((i) => i.id == item.id);
-    if (idx > -1) {
-      if (item.quantity == 0) {
-        cart = cart.filter((i) => i.id != item.id);
-      } else {
-        cart[idx] = { ...item };
-      }
-    } else {
-      cart.push({ ...item });
-    }
-  }
-  return cart;
-}
+import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
+import { useLogger } from '@/composables/useLogger'
+import type { CartItem } from '@/types/food'
 
 export const useCartStore = defineStore('cart', () => {
-  const items = ref<CartItem[]>([]);
-  const persist = ref(true);
+  const logger = useLogger()
+  const items = ref<CartItem[]>([])
 
-  const count = computed(() => items.value.reduce((runningSum, v) => runningSum + v.quantity, 0));
-  const sumTotal = computed(() => items.value.reduce((runningSum, v) => runningSum + v.quantity * v.price, 0));
+  const count = computed(() => items.value.reduce((sum, item) => sum + item.quantity, 0))
+  const total = computed(() =>
+    items.value.reduce((sum, item) => sum + item.quantity * item.price, 0),
+  )
 
-  function quantityOf(id: number): number {
-    const ct = items.value.find((i) => i.id === id);
-    return ct ? ct.quantity : 0;
+  function quantityOf(id: number) {
+    return items.value.find((item) => item.id === id)?.quantity ?? 0
   }
 
-  function set(item: CartItem) {
-    items.value = updateCart(items.value, item);
+  function update(item: CartItem) {
+    const index = items.value.findIndex((i) => i.id === item.id)
+    if (item.quantity === 0) items.value = items.value.filter((i) => i.id !== item.id)
+    else if (index > -1) items.value[index] = { ...item }
+    else items.value.push({ ...item })
+    logger.logEvent('Cart updated', { ...item })
   }
 
   function clear() {
-    items.value = [];
-    storage.clearStorage();
+    items.value = []
   }
 
-  function togglePersist() {
-    persist.value = !persist.value;
-    if (!persist.value) {
-      storage.clearStorage();
-    }
-  }
-
-  function saveToStorage() {
-    storage.saveToStorage(items.value);
-  }
-
-  function loadFromStorage() {
-    items.value = storage.loadFromStorage() || [];
-  }
-
-  return { items, persist, count, sumTotal, quantityOf, set, clear, togglePersist, saveToStorage, loadFromStorage };
-});
+  return { items, count, total, quantityOf, update, clear }
+})

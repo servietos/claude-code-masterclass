@@ -1,27 +1,26 @@
 <script setup lang="ts">
-const entryPic = '/assets/images/food.png';
+const entryImage = '/assets/images/food.png'
 </script>
 
 <template>
-  <div class="mainDiv">
-    <img :src="entryPic" alt="login-screen" class="entryImg" />
+  <div class="home">
+    <img
+      :src="entryImage"
+      alt="login-screen"
+      class="entry-image"
+    >
   </div>
 </template>
 
 <style scoped>
-.mainDiv {
+.home {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 80vh;
 }
 
-.entryImg {
+.entry-image {
   width: 250px;
-}
-
-.webfont {
-  font-family: 'MuseoModerno', cursive;
-  font-size: 2rem;
 }
 </style>

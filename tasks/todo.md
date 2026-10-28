@@ -1,5 +1,15 @@
 # Todo
 
+## food-shop-vue redo
+
+Owner ask (2026-10-28): "did you create basic vue skills", "why not -> create them", "you did not get the task right -> src\food-app\shop-ui\food-shop-vue this is not vue https://vuejs.org/", "delete the folder and re-do again". Original ask in session d3951cbd: "src\food-app\shop-ui we need a vue implementation of this frontend".
+
+- [x] Delete `src/food-app/shop-ui/food-shop-vue` (old Vite dev server stopped)
+- [x] Facts from vuejs.org
+- [x] Global skill `vue-conventions` (router `SKILL.md` plus `references/` leaves), grounded in vuejs.org
+- [x] Rebuild `food-shop-vue` from `npm create vue@latest`, following the skill, same features and APIs as `food-shop-ng`
+- [x] Verify: type-check, build, lint, every route in Chrome
+
 ## Optional topic 05-cli/06: Harness Interop
 
 Owner ask (2026-10-27): "add an optional topic in which you demonstrate how you run gh copilot from claude using the -p switch ... or even claude -p -> to gh copilot -p using DeepSeek V 4.1 Flash". Later in the session: "text to pass through is just: create a poem about sighthounds", "we can start copilot -p dirctly", "call it harness interop", "show the output also", "it should be topic 06-harness-interop in modules 05 create a short teaching around it", "we dont want to demonstrate negative patterns", "update pptx using /create-pptx and publish to onedrive when done".

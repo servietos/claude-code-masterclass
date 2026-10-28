@@ -1,77 +1,60 @@
-import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import * as api from '@/api/catalog';
-import type { CatalogItem } from '@/models/catalog-item';
-
-function sortByName(a: CatalogItem, b: CatalogItem): number {
-  return a.name.localeCompare(b.name);
-}
-
-function sorted(list: CatalogItem[]): CatalogItem[] {
-  return [...list].sort(sortByName);
-}
-
-function message(err: unknown): string {
-  return err instanceof Error ? err.message : String(err);
-}
+import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
+import { config } from '@/config'
+import { useApi } from '@/composables/useApi'
+import type { CatalogItem } from '@/types/food'
 
 export const useCatalogStore = defineStore('catalog', () => {
-  const items = ref<CatalogItem[]>([]);
-  const loaded = ref(false);
-  const loading = ref(false);
-  const error = ref<string | null>(null);
+  const api = useApi()
+  const url = `${config.catalogApi}/food`
 
-  async function getAll() {
-    loading.value = true;
-    error.value = null;
+  const items = ref<CatalogItem[]>([])
+  const loaded = ref(false)
+  const loading = ref(false)
+  const error = ref<string | null>(null)
+
+  const sortedItems = computed(() =>
+    [...items.value].sort((a, b) => a.name.localeCompare(b.name)),
+  )
+
+  async function run(action: () => Promise<void>) {
+    loading.value = true
+    error.value = null
     try {
-      items.value = sorted(await api.getAll());
-      loaded.value = true;
-    } catch (err) {
-      error.value = message(err);
+      await action()
+    } catch (e) {
+      error.value = (e as Error).message
     } finally {
-      loading.value = false;
+      loading.value = false
     }
   }
 
-  async function add(item: CatalogItem) {
-    loading.value = true;
-    error.value = null;
-    try {
-      const saved = await api.add(item);
-      items.value = sorted([...items.value.filter((i) => i.id !== saved.id), saved]);
-    } catch (err) {
-      error.value = message(err);
-    } finally {
-      loading.value = false;
-    }
+  function load() {
+    return run(async () => {
+      items.value = await api.get<CatalogItem[]>(url)
+      loaded.value = true
+    })
   }
 
-  async function update(item: CatalogItem) {
-    loading.value = true;
-    error.value = null;
-    try {
-      const saved = await api.update(item);
-      items.value = sorted(items.value.map((i) => (i.id === item.id ? { ...i, ...item, ...(saved ?? {}) } : i)));
-    } catch (err) {
-      error.value = message(err);
-    } finally {
-      loading.value = false;
-    }
+  function add(item: CatalogItem) {
+    return run(async () => {
+      items.value.push(await api.post<CatalogItem>(url, item))
+    })
   }
 
-  async function remove(id: number) {
-    loading.value = true;
-    error.value = null;
-    items.value = items.value.filter((i) => i.id !== id);
-    try {
-      await api.remove(id);
-    } catch (err) {
-      error.value = message(err);
-    } finally {
-      loading.value = false;
-    }
+  function update(item: CatalogItem) {
+    return run(async () => {
+      const saved = await api.put<CatalogItem>(url, item)
+      items.value = items.value.map((i) => (i.id === saved.id ? saved : i))
+    })
   }
 
-  return { items, loaded, loading, error, getAll, add, update, remove };
-});
+  function remove(id: number) {
+    return run(async () => {
+      await api.remove(`${url}/${id}`)
+      items.value = items.value.filter((i) => i.id !== id)
+    })
+  }
+
+  return { items, loaded, loading, error, sortedItems, load, add, update, remove }
+})

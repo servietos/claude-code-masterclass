@@ -1,18 +1,20 @@
-export {};
+/// <reference types="vite/client" />
 
-declare global {
-  interface FoodShopEnv {
-    CATALOG_API_URL?: string;
-    ORDERS_API_URL?: string;
-    AUTH_ENABLED?: string;
-    CLIENT_ID?: string;
-    AUTHORITY?: string;
-    REDIRECT_URI?: string;
-    APPLICATION_INSIGHTS?: string;
-    APIM_KEY?: string;
-  }
+interface ImportMetaEnv {
+  readonly VITE_CATALOG_API_URL: string
+  readonly VITE_ORDERS_API_URL: string
+  readonly VITE_AUTH_ENABLED: string
+  readonly VITE_CLIENT_ID: string
+  readonly VITE_AUTHORITY: string
+  readonly VITE_REDIRECT_URI: string
+  readonly VITE_APPLICATION_INSIGHTS: string
+  readonly VITE_APIM_KEY: string
+}
 
-  interface Window {
-    env?: FoodShopEnv;
-  }
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}
+
+interface Window {
+  env?: Record<string, string | undefined>
 }

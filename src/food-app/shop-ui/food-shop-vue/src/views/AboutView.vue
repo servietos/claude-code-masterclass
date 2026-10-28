@@ -1,75 +1,92 @@
 <script setup lang="ts">
-import { environment } from '@/environments/environment';
-
-const config = JSON.stringify(environment, null, 2);
+import BasePageTitle from '@/components/BasePageTitle.vue'
+import { config } from '@/config'
 </script>
 
 <template>
-  <div class="title">
-    <span class="tile"><span class="material-icons" aria-hidden="true">info</span></span>
-    <h1 class="pageTitle">About</h1>
-  </div>
-  <div class="card">
-    <div class="card-header">
-      <img class="card-avatar" src="https://avatars3.githubusercontent.com/u/16348023?s=460&v=4" />
-      <div>
-        <div class="card-title">Food App</div>
-        <div class="card-subtitle">By alexander.kastil@integrations.at</div>
+  <div class="about">
+    <BasePageTitle
+      icon="info"
+      title="About"
+    />
+    <article class="card">
+      <header class="card-header">
+        <img
+          class="avatar"
+          src="https://avatars3.githubusercontent.com/u/16348023?s=460&v=4"
+          alt="Alexander Kastil"
+        >
+        <div>
+          <h2 class="card-title">
+            Food App
+          </h2>
+          <p class="card-subtitle">
+            By alexander.kastil@integrations.at
+          </p>
+        </div>
+      </header>
+      <div class="card-content">
+        <p>
+          A .NET Core Api and Vue UI implemented a Cloud Native App with step by step Installation
+          Scripts used for ng-dev, ng-adv, az-native, az-400, az-204
+        </p>
+        <p>Using config:</p>
+        <pre class="config">{{ config }}</pre>
       </div>
-    </div>
-    <div class="card-content">
-      <div>
-        A .NET Core Api and Angular UI implemented a Cloud Native App with step by
-        step Installation Scripts used for ng-dev, ng-adv, az-native, az-400,
-        az-204
-      </div>
-      <div>
-        <span>Using config:</span>
-        <pre>
-        <p>{{ config }}</p>
-      </pre>
-      </div>
-    </div>
+    </article>
   </div>
 </template>
 
 <style scoped>
-.title {
+.about {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 0 0 16px;
-  padding: 20px 24px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
 }
 
-.tile {
+.card-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-control);
-  background-color: var(--color-primary-soft);
-  color: var(--color-on-primary-soft);
+  gap: 16px;
+  padding: 16px;
 }
 
-.pageTitle {
-  margin: 0;
-  font-size: 20px;
-  line-height: 28px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .card-subtitle {
+  font-size: 14px;
   color: var(--color-text-muted);
 }
 
-.card-content > div {
-  margin: 10px 0;
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0.8rem;
+}
+
+.config {
+  overflow-x: auto;
+  padding: 12px;
+  background-color: var(--color-surface-muted);
+  border-radius: var(--radius-control);
+  font-size: 13px;
 }
 </style>
