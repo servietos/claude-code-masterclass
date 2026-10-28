@@ -1,6 +1,6 @@
 # Route and Brief Subagents With a Mod
 
-Build `desk-router`, a mod that sends lookups to a cheap read-only agent, attaches the same brief to every subagent and keeps a ledger you print with `/desk`. Then prove it with `claude plugin test` and ship it through a catalog like any other plugin.
+Build `desk-router`, a mod that sends lookups to a cheap read-only agent, attaches the same brief to every subagent and keeps a ledger you print with `/desk`. You develop it in a marketplace folder of its own, prove it with `claude plugin test`, then install it from that marketplace into the class repo.
 
 What you practice here: turning delegation rules into hooks that run on every prompt and every subagent spawn.
 
@@ -13,20 +13,24 @@ Each step contains:
 
 > **Why this matters:** Your delegation rules live in a `CLAUDE.md` paragraph today: send lookups to a cheap agent, tell every subagent not to edit, keep reports short. The model reads that paragraph and follows it when it remembers. A mod turns the rules into code: the hint reaches the model with every lookup, and the brief and the reroute run on every spawn whatever the model chose.
 
-> **Two folders:** the starter at [`04-orchestrate/delegation-desk/`](04-orchestrate/delegation-desk/) holds `shop-api/`, a small Python shop to ask questions about, and `desk-router/` with nothing but its `plugin.json`. You write the agent, the hooks module, the state contract, the tests and the catalog. The completed result is checked in as [`04-orchestrate/delegation-desk-solution/`](04-orchestrate/delegation-desk-solution/); build your own first and use it to compare.
+> **Why a marketplace folder of its own:** one mod serves many repositories. Developing it in its own marketplace folder keeps its code apart from every project it steers, and each project installs it by name. The class repo is the first such project here.
+
+> **Two folders:** [`04-orchestrate/delegation-desk/`](04-orchestrate/delegation-desk/) holds `shop-api/`, a small Python shop to ask questions about. Beside it, [`04-orchestrate/desk-marketplace/`](04-orchestrate/desk-marketplace/) is the marketplace folder you develop the mod in, with `plugins/desk-router/` holding nothing but its `plugin.json`. You write the agent, the hooks module, the state contract, the tests and the catalog there. The completed marketplace is checked in as [`04-orchestrate/desk-marketplace-solution/`](04-orchestrate/desk-marketplace-solution/); build your own first and use it to compare.
 
 ---
 
 ## Where to Open Claude Code
 
-Open the session inside the starter and load the plugin from its folder. Run this from the repo root; both commands work unchanged in PowerShell:
+Open the session inside the shop and load the plugin from the marketplace folder. Run this from the repo root; both commands work unchanged in PowerShell:
 
 ```bash
 cd labs/08-distribution/04-orchestrate/delegation-desk
-claude --plugin-dir ./desk-router
+claude --plugin-dir ../desk-marketplace/plugins/desk-router
 ```
 
-`--plugin-dir` loads the plugin from disk for this session only, nothing is installed. The session reads the plugin's agents and its hooks module when it starts, so every step that changes the mod ends with a restart: `/exit`, then the same `claude --plugin-dir ./desk-router`. Keep a second terminal in `delegation-desk/` for the shell commands.
+`--plugin-dir` loads the plugin from disk for this session only, nothing is installed. The session reads the plugin's agents and its hooks module when it starts, so every step that changes the mod ends with a restart: `/exit`, then the same `claude --plugin-dir ../desk-marketplace/plugins/desk-router`.
+
+Keep a second terminal in `labs/08-distribution/04-orchestrate/desk-marketplace/` for the shell commands. That folder is where you develop the mod: every file path in Steps 2 to 6 is relative to it.
 
 This lab was run on Claude Code 2.1.312. Hooks modules are an early-access API that moves between releases; `claude --version` shows yours.
 
@@ -37,21 +41,24 @@ This lab was run on Claude Code 2.1.312. Hooks modules are an early-access API t
 ## Setup: Look at the Starter
 
 ```text
-delegation-desk/
-├── desk-router/
-│   └── .claude-plugin/plugin.json   name desk-router, version 0.1.0
-└── shop-api/
-    ├── app.py                       places one order and prints it
-    ├── inventory.py                 stock, reservations, low-stock list
-    ├── orders.py                    order lines and totals
-    ├── pricing.py                   loyalty discount, shipping, tax
-    └── settings.py                  every rate and threshold
+04-orchestrate/
+├── delegation-desk/
+│   └── shop-api/
+│       ├── app.py                           places one order and prints it
+│       ├── inventory.py                     stock, reservations, low-stock list
+│       ├── orders.py                        order lines and totals
+│       ├── pricing.py                       loyalty discount, shipping, tax
+│       └── settings.py                      every rate and threshold
+└── desk-marketplace/
+    └── plugins/
+        └── desk-router/
+            └── .claude-plugin/plugin.json   name desk-router, version 0.1.0
 ```
 
 Validate the empty plugin from the second terminal:
 
 ```bash
-claude plugin validate desk-router
+claude plugin validate plugins/desk-router
 ```
 
 **Expected result:** `✔ Validation passed`. The report validates the manifest and nothing else: no hooks, no agents. The plugin-directory block warns about a missing icon, which does not change the verdict.
@@ -80,7 +87,7 @@ Where is the loyalty discount calculated in shop-api, and what caps it?
 
 A plugin's agent is typed `<plugin>:<name>`, so this file becomes `desk-router:scout`. `tools` limits it to the three read tools, and `model: haiku` runs it on Haiku whatever model your session uses.
 
-Create `desk-router/agents/scout.md` in your editor:
+Create `plugins/desk-router/agents/scout.md` in your editor:
 
 ```markdown
 ---
@@ -93,7 +100,7 @@ model: haiku
 You answer one lookup about the code in the current folder. Search with Glob and Grep, read only the lines you need, and quote what you found. Say what you could not find. Never guess.
 ```
 
-Restart the session (`/exit`, then `claude --plugin-dir ./desk-router`) and ask:
+Restart the session (`/exit`, then `claude --plugin-dir ../desk-marketplace/plugins/desk-router`) and ask:
 
 **Prompt (in the Claude Code session):**
 
@@ -111,13 +118,13 @@ Which agent types whose name starts with desk-router can you delegate to? Answer
 
 A mod is a plugin whose `hooks/hooks.json` names one hooks module. The module exports `register(on)`, and every hook has the shape `($, e, next)`: `e` is the event's input, `next(e)` runs the rest of the chain, and `next({ ...e, context })` attaches a block the model reads and the user never sees. `e.origin.kind` keeps out prompts that a task notification or another plugin submitted, and `e.command` is set for slash commands.
 
-Create `desk-router/hooks/hooks.json`:
+Create `plugins/desk-router/hooks/hooks.json`:
 
 ```json
 { "modules": ["./router.ts"] }
 ```
 
-Create `desk-router/hooks/router.ts`:
+Create `plugins/desk-router/hooks/router.ts`:
 
 ```typescript
 import type { Register } from 'claude-code'
@@ -139,7 +146,7 @@ export const register: Register = on => {
 **Command:**
 
 ```bash
-claude plugin validate desk-router
+claude plugin validate plugins/desk-router
 ```
 
 **Expected result:** the hooks section of the report lists what the module hooks and calls, then the verdict:
@@ -168,7 +175,7 @@ Where is the shipping fee defined in shop-api, and when is it waived?
 
 `agent.spawn` fires before any subagent starts. `next({ ...e, subagentType, prompt })` starts a different agent with a longer prompt, and `next` resolves to the model it started on. A resumed agent can only be refused, a workflow agent keeps its type and a fork dispatches no other, so the hook passes those through. The ledger is an `atom` in `$.state`: it lives as long as the session, survives a reload of the module, and its type is declared in a contract file that `plugin.json` names.
 
-Create `desk-router/types/index.d.ts`:
+Create `plugins/desk-router/types/index.d.ts`:
 
 ```typescript
 export type Delegation = {
@@ -185,13 +192,13 @@ declare module 'claude-code' {
 }
 ```
 
-Name the contract in `desk-router/.claude-plugin/plugin.json`: put a comma after `"license": "MIT"` and add this line below it:
+Name the contract in `plugins/desk-router/.claude-plugin/plugin.json`: put a comma after `"license": "MIT"` and add this line below it:
 
 ```json
   "types": "./types/index.d.ts"
 ```
 
-Replace `desk-router/hooks/router.ts` with:
+Replace `plugins/desk-router/hooks/router.ts` with:
 
 ```typescript
 import { atom, read, update } from 'claude-code'
@@ -252,7 +259,7 @@ export const register: Register = on => {
 **Command:**
 
 ```bash
-claude plugin validate desk-router
+claude plugin validate plugins/desk-router
 ```
 
 **Expected result:** the report now names the contract and four hooks:
@@ -295,7 +302,7 @@ The description is the one Claude wrote and varies, and the model id follows you
 
 `claude plugin test` runs every `*.test.ts` under the folder against the engine itself. A test gets the engine's `$` and an `on` whose hooks sit beneath the plugin: they stand for the engine, so a test's `agent.spawn` hook receives exactly what the engine would start, the brief included.
 
-Create `desk-router/tests/router.test.ts`:
+Create `plugins/desk-router/tests/router.test.ts`:
 
 ```typescript
 import { expect, test } from 'claude-code/testing'
@@ -388,7 +395,7 @@ test('/desk lists every briefed subagent', async ($, on) => {
 **Command:**
 
 ```bash
-claude plugin test desk-router
+claude plugin test plugins/desk-router
 ```
 
 **Expected result:**
@@ -399,23 +406,23 @@ claude plugin test desk-router
 Ran 5 tests across 1 file.
 ```
 
-Now break the routing on purpose. In `desk-router/hooks/router.ts` change the `GENERIC` line to `new Set(['Explore'])`, save, and run `claude plugin test desk-router` again.
+Now break the routing on purpose. In `plugins/desk-router/hooks/router.ts` change the `GENERIC` line to `new Set(['Explore'])`, save, and run `claude plugin test plugins/desk-router` again.
 
 **Expected result:** `3 pass` and `2 fail`. The two failures are `a generic lookup spawn goes to the scout with the brief` and `/desk lists every briefed subagent`: a `general-purpose` lookup is no longer rerouted. Put `'general-purpose', ` back in front of `'Explore'` and run the tests once more to see `5 pass`.
 
 ---
 
-## Step 6: Put the Mod in a Catalog
+## Step 6: Turn the Folder Into a Marketplace
 
-**Goal:** List `desk-router` in a catalog, so a teammate installs the mod by name.
+**Goal:** List `desk-router` in a catalog at the root of `desk-marketplace/`, so any repository installs the mod by name.
 
-A mod ships exactly like the plugins of Lab 03: a `marketplace.json` lists it, and a relative `source` points at its folder. Here the catalog is the `delegation-desk/` folder itself.
+A mod ships exactly like the plugins of Lab 03: a `marketplace.json` lists it, and a relative `source` points at its folder. The catalog is `desk-marketplace/` itself, the folder you developed the mod in. A second mod later gets its own folder under `plugins/` and its own entry in the list.
 
-Create `.claude-plugin/marketplace.json` in `delegation-desk/`, beside `desk-router/`:
+Create `.claude-plugin/marketplace.json` in `desk-marketplace/`, beside `plugins/`:
 
 ```json
 {
-  "name": "delegation-desk",
+  "name": "desk-marketplace",
   "owner": { "name": "Claude Code Masterclass" },
   "metadata": { "description": "Lab catalog that ships the desk-router mod." },
   "plugins": [
@@ -423,7 +430,7 @@ Create `.claude-plugin/marketplace.json` in `delegation-desk/`, beside `desk-rou
       "name": "desk-router",
       "version": "0.1.0",
       "description": "Routes lookups to a read-only scout agent, briefs every subagent and keeps a ledger of the delegations.",
-      "source": "./desk-router"
+      "source": "./plugins/desk-router"
     }
   ]
 }
@@ -439,33 +446,34 @@ claude plugin validate .
 
 ---
 
-## Step 7: Install the Mod for This Project
+## Step 7: Install the Mod Into the Class Repo
 
-**Goal:** Install from the catalog at project scope, the scope a team commits, and see the mod load with no `--plugin-dir`.
+**Goal:** Install from the marketplace into the class repo at project scope, the scope a team commits, and see the mod load with no `--plugin-dir`.
 
-`--scope project` writes the catalog and the install into `delegation-desk/.claude/settings.json`, the file a team commits so that everyone who opens the folder is offered the same install. Your user settings stay untouched.
+`--scope project` writes the catalog and the install into the `.claude/settings.json` of the folder you run it in. Run it from the root of the class repo, so both land in the repo's own `.claude/settings.json` beside the `hooks` and `env` it already holds. A project install is read where a session starts: a session started in a subfolder such as `delegation-desk/` lists the mod as disabled.
 
-Exit the session first (`/exit`). In the second terminal:
+Exit the session first (`/exit`). In the second terminal, go up to the repo root and install:
 
 ```bash
-claude plugin marketplace add ./ --scope project
-claude plugin install desk-router@delegation-desk --scope project
+cd ../../../..
+claude plugin marketplace add ./labs/08-distribution/04-orchestrate/desk-marketplace --scope project
+claude plugin install desk-router@desk-marketplace --scope project
 claude plugin list
 ```
 
-The catalog path needs the `./`: a bare `.` is refused with `Invalid marketplace source format`.
+The path needs the `./`: without it the CLI reads `labs/...` as a GitHub `owner/repo` shorthand and refuses it.
 
-**Expected result:** the list carries an entry for the mod, read straight from your folder:
+**Expected result:** `✔ Successfully added marketplace: desk-marketplace (declared in project settings)`, `✔ Successfully installed plugin: desk-router@desk-marketplace (scope: project)`, and a list entry for the mod, read straight from your marketplace folder:
 
 ```text
-  ❯ desk-router@delegation-desk
+  ❯ desk-router@desk-marketplace
     Version: 0.1.0
-    Read from: <full path of your delegation-desk/desk-router folder>
+    Read from: <full path of your desk-marketplace/plugins/desk-router folder>
     Scope: project
     Status: ✔ enabled
 ```
 
-`.claude/settings.json` now exists in `delegation-desk/`. It holds the catalog under `extraKnownMarketplaces` as a `directory` source with the absolute path of your folder, and the mod under `enabledPlugins` as `"desk-router@delegation-desk": true`. An absolute path only resolves on your machine, so the catalog a team commits names a repository (`owner/repo`), as in Lab 03. Start a plain session, with no plugin flag:
+The repo's `.claude/settings.json` now carries two more keys: the catalog under `extraKnownMarketplaces` as a `directory` source with the absolute path of your `desk-marketplace/` folder, and the mod under `enabledPlugins` as `"desk-router@desk-marketplace": true`. An absolute path only resolves on your machine, so the catalog a team commits names a repository (`owner/repo`), as in Lab 03. Start a plain session at the repo root, with no plugin flag (add `--setting-sources project,local` if you used it so far; the project install still loads):
 
 ```bash
 claude
@@ -474,7 +482,7 @@ claude
 **Prompt (in the Claude Code session):**
 
 ```text
-Which module in shop-api lists the products that run low on stock?
+Which module in labs/08-distribution/04-orchestrate/delegation-desk/shop-api lists the products that run low on stock?
 ```
 
 Then:
@@ -483,25 +491,29 @@ Then:
 /desk
 ```
 
-**Expected result:** an `Agent` call to `desk-router:scout`, the answer `low_stock()` in `shop-api/inventory.py`, and a `/desk` row naming `desk-router:scout` on Haiku. The mod now loads from the install.
+**Expected result:** an `Agent` call to `desk-router:scout`, the answer `low_stock()` in `delegation-desk/shop-api/inventory.py`, and a `/desk` row naming `desk-router:scout` on Haiku. The mod now loads from the install in the class repo.
+
+The install reads the plugin straight from your marketplace folder, so you keep developing there: an edit in `desk-marketplace/plugins/desk-router/` reaches the class repo on the next session start, with no reinstall.
 
 ---
 
 ## Step 8: Clean Up and Compare
 
-**Goal:** Remove the install and the catalog, and compare your mod with the reference.
+**Goal:** Remove the install and the catalog from the class repo, and compare your marketplace with the reference.
 
-Exit the session (`/exit`), then in the second terminal:
+Exit the session (`/exit`), then in the second terminal at the repo root:
 
 ```bash
-claude plugin uninstall desk-router@delegation-desk --scope project
-claude plugin marketplace remove delegation-desk --scope project
+claude plugin uninstall desk-router@desk-marketplace --scope project
+claude plugin marketplace remove desk-marketplace --scope project
 claude plugin list
 ```
 
-**Expected result:** `✔ Successfully uninstalled plugin: desk-router (scope: project)` and `✔ Successfully removed marketplace: delegation-desk (from project settings)`. `claude plugin list` no longer shows `desk-router@delegation-desk`; other plugins on your machine stay in the list. `.claude/settings.json` in `delegation-desk/` is left with an empty `enabledPlugins` and an empty `extraKnownMarketplaces`: delete the `delegation-desk/.claude/` folder to return the starter to its checked-in state.
+**Expected result:** `✔ Successfully uninstalled plugin: desk-router (scope: project)` and `✔ Successfully removed marketplace: desk-marketplace (from project settings)`. `claude plugin list` no longer shows `desk-router@desk-marketplace`; other plugins on your machine stay in the list.
 
-Compare your `desk-router/` and `.claude-plugin/marketplace.json` with [`04-orchestrate/delegation-desk-solution/`](04-orchestrate/delegation-desk-solution/). Two extras in yours come from the engine, which writes them for your editor while a session loads the folder: `desk-router/.claude-plugin/types/` holds the API declarations and ignores itself with a `.gitignore` of `*`, and `desk-router/tsconfig.json` extends `./.claude-plugin/types/tsconfig.json`.
+The repo's `.claude/settings.json` is left with an empty `enabledPlugins` and an empty `extraKnownMarketplaces`, and the CLI rewrote the file with `env` above `hooks`. `git restore .claude/settings.json` returns it to its checked-in state.
+
+Compare your `desk-marketplace/` with [`04-orchestrate/desk-marketplace-solution/`](04-orchestrate/desk-marketplace-solution/). Two extras in yours come from the engine, which writes them for your editor while a session loads the plugin: `plugins/desk-router/.claude-plugin/types/` holds the API declarations and ignores itself with a `.gitignore` of `*`, and `plugins/desk-router/tsconfig.json` extends `./.claude-plugin/types/tsconfig.json`.
 
 ---
 
@@ -515,6 +527,7 @@ Compare your `desk-router/` and `.claude-plugin/marketplace.json` with [`04-orch
 | `agent.spawn` rewriting `subagentType` and `prompt` | 4 | The reroute and the brief hold whatever agent the model asked for |
 | `$.state` atom with a contract, `/desk` via `command.run` | 4 | A ledger of what really ran, which the model's own account can contradict |
 | `claude plugin test` with engine-standing hooks | 5 | Routing pinned by tests that see exactly what the engine would start |
-| `marketplace.json` and a project-scope install | 6, 7 | A mod ships to a team like any plugin |
+| A marketplace folder of its own with `marketplace.json` | 6 | The mod lives apart from every project it steers and installs by name |
+| A project-scope install into the class repo | 7 | A mod ships to a team like any plugin, and an edit in the marketplace reaches it on restart |
 
-[Lab 01](lab-01-build-a-plugin.md) packaged a harness into a plugin and [Lab 03](lab-03-publish-to-a-team-catalog.md) published one through a catalog. This lab puts code inside the plugin that steers how Claude delegates.
+[Lab 01](lab-01-build-a-plugin.md) packaged a harness into a plugin and [Lab 03](lab-03-publish-to-a-team-catalog.md) published one through a catalog. This lab puts code inside the plugin that steers how Claude delegates, develops it in its own marketplace and installs it into the class repo.
