@@ -24,11 +24,40 @@ The technical capabilities are close to identical: both forms support skills, ho
 | Skill namespace | `/hello` | `/my-plugin:hello` |
 | Marketplace distribution | No | Yes |
 
-The rule of thumb is to prototype in `.claude/` while the design is still moving, then convert to a plugin the day you need versioning or sharing. Treat the conversion as a packaging step, not a rewrite, since every file you already authored slots into the plugin layout almost unchanged.
+The rule of thumb is to prototype in `.claude/` while the design is still moving, then convert to a plugin the day you need versioning or sharing. Treat the conversion as a packaging step: every file you already authored slots into the plugin layout almost unchanged.
 
 ## Namespacing as the Only Real Cost
 
 Plugins add one user-visible change: a skill named `hello` inside `quality-review-plugin` becomes `/quality-review-plugin:hello`. That prefix is what lets two teams ship a `code-review` skill without colliding, and it is the only functional trade-off you accept when you move out of `.claude/`. Most teams find the prefix worth its weight the first time a colleague installs the wrong version of a skill from the wrong source.
+
+## Plugins in a Claude Team Environment
+
+On a Claude Team or Enterprise plan the twelve-teammates handoff gets an owner. An organization Owner decides once which plugins the members receive, and each member gets them at their next session start, signed in with their Claude account.
+
+```mermaid
+graph LR
+  A["Owner<br/>Organization settings"] --> B["claude.ai<br/>Plugins and skills"]
+  A --> C["Managed policy<br/>server, MDM or file"]
+  B -->|"Required or<br/>Installed by default"| D["Cowork"]
+  B -->|"same Claude account"| E["Claude Code<br/>next session start"]
+  C -->|"extraKnownMarketplaces<br/>enabledPlugins"| E
+```
+
+The Owner has two routes. Under **Organization settings > Plugins & skills** on claude.ai every plugin gets one of four states, and a plugin marked *Required* or *Installed by default* also installs in Claude Code for every member who signs in with the same Claude account. **Managed policy**, delivered from the server, through MDM or as a `managed-settings.json` file, adds the marketplace with `extraKnownMarketplaces` and switches the plugin on with `enabledPlugins`. Managed policy sits above user and project settings, so a plugin enabled there still loads after a member disables it in their own scope.
+
+| Admin state | What a member gets |
+|---|---|
+| Required | Installed and locked, the member cannot remove it |
+| Installed by default | Installed, the member can turn it off |
+| Available to install | Listed in the Discover tab, installed on demand |
+| Not available | Hidden |
+
+A few behaviours to know before you rely on it:
+
+- The claude.ai sync runs at every Claude Code start and needs a claude.ai sign-in, so a session started with an API key skips the synced plugins.
+- A synced repository ships an update when a pull request with a version bump merges into the default branch; until then members stay on the last synced version.
+- A plugin the Owner removes moves to `.trash/` at the member's next start.
+- Team and Enterprise both offer this; group-level plugin access is Enterprise only, so on Team every rule applies to the whole organization.
 
 ## Helpful Claude Slash Commands
 

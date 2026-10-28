@@ -253,3 +253,44 @@ Project: `src/food-app/shop-ui/food-shop-ng` (serves localhost:4200). Design: ca
 - [x] Main thread: check both themes on /food, /food/catalog and the edit form in Chrome at 1280 and 375
 - [x] Owner corrections: In Stock column shows numbers only (no "Low" text, no icon), low stock keeps the warning colour
 - [x] Owner: Catalog title row became the table card header (icon tile, title, count pill, Add Food), top-aligned with the Actions card
+
+## Module 07 deck: five new slides
+
+Deck: `demos/07-optimize-observability/pptx/07-optimize-observability.pptx`, no Gamma credits (`add_spec_slide.py`), then deliver to OneDrive.
+
+- [x] 02-03 How caveman mode is hooked: `UserPromptSubmit` hook, `settings.json` entry, exclusion list, `no caveman`
+- [x] 03-01 Where autoresearch comes from: karpathy/autoresearch loop, mapped onto `claude plugin eval` (existing 03-0N shift to 03-02..03-04)
+- [x] 04-01 Where threats enter your harness: what you install, what a cloned repo brings, what the model reads (existing 04-0N shift to 04-02..04-04)
+- [x] 05-0N Mods as guardrails: what mods are for, how a mod holds a tool call (end of topic 05)
+- [x] 06-04 Tracing, cost and failure diagnosis in practice: the demo's steps on one slide
+- [x] Permute specs, `check_specs.py --renumber --legacy`, render SVGs, insert five slides, `notes`, `clean`, `sheet`, look at each new page
+- [x] `deliver` to the OneDrive class folder
+
+## Module 06 deck: one use-case slide per topic, told as one week
+
+Owner ask (2026-10-28): "the cli decks are basically good but what i am missing is 1-2 practical use cases per topic as seperate slide .... maybe a continuing story? demos\06-automate-cli"
+
+Deck: `demos/06-automate-cli/pptx/06-automate-cli.pptx` (19 specs), no Gamma credits (`add_spec_slide.py`), then deliver to OneDrive. Readmes stay unchanged.
+
+Story: the platform team that owns the shared `slugify` and `kebab-to-camel` helpers (the code every demo of the module runs on) automates one week. Each slide closes its topic, layout `split-code`: the real command from the topic readme in the code panel, an SVG of trigger, run and outcome beside it, a day badge carrying the story.
+
+- [x] 01-04 Monday, nightly test-gap check: `claude -p` with `--tools "Read,Glob,Grep" --output-format json --max-turns 10`, the script reads `.result`; the night job can read and never edit
+- [x] 03-04 Tuesday, a pull request meets the gate: `LINT_FAIL` fails the Actions step and blocks the merge, the fix brings `LINT_PASS`
+- [x] 04-04 Wednesday, two features in two worktrees at once (`&` and `wait`); in one lane the policy gate stops `rm -rf` with exit 2 and the lane carries on
+- [x] 05-04 Thursday, the bug report `slugify('--hello--')`: goal condition file, `--permission-mode acceptEdits`, `--max-turns 15`, worst case $1.50
+- [x] 06-04 Friday, a second opinion on Thursday's uncommitted fix (`git diff`): Claude calls `copilot -p ... -s` on DeepSeek V4.1 Flash through BYOK, `premiumRequests: 0`
+- [x] Specs with `## Speaker Notes`, SVGs and PNGs, `check_specs.py --renumber --legacy` problems=0 (7 pre-existing photo-mix warnings), 13 `order:` values renumbered
+- [x] `add_spec_slide.py` x5 at slides 12, 17, 22, 27, 32 (33 slides); split-code panels inherited the bullet spacing and overflowed, fixed in the global `add_spec_slide.py` (115% line spacing, no paragraph spacing, panel 0.26 in per line) and the five slides rebuilt with `--drop`; `notes` 24/24 unmatched=0, `clean --skip 4` removed=0, five pages checked, `slide_quality.py` problems=0
+- [x] Delivered: PPTX and PDF `cmp` match the OneDrive copies
+
+## Module 05 deck: sub-agents or a team, one slide each for 06 and 07
+
+Owner ask (2026-10-28): "we should make this 2 finding clear and point out the use case on an extra slide each", then "publish to onedrive when done". Findings: parallel review runs with sub-agents too, the team adds the collision pass; debate and its controls need a team.
+
+Deck: `demos/05-subagents-agent-teams/pptx/05-subagents-agent-teams.pptx`, no Gamma credits (`add_spec_slide.py`). Readmes stay unchanged.
+
+- [x] 06-05 "Sub-agents or a team for parallel review", after slide 40, layout `diagram`, SVG and PNG
+- [x] 07-04 "Debate needs an agent team", after "Roles, permissions and team size", layout `diagram`, SVG and PNG
+- [x] `order:` 07-01..07-03 to 32..34, 99-01 to 36; `check_specs.py --legacy` problems=0
+- [x] `add_spec_slide.py` x2 (template slide 39; 07-04 redone once with shorter bullets), `notes` 36/36 unmatched=0, `clean --skip 4` twice removed=0, pages 41 and 46 checked, `slide_quality.py` problems=0
+- [x] Delivered: PPTX and PDF `cmp` match the OneDrive copies

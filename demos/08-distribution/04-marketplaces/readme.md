@@ -70,7 +70,7 @@ Anthropic also publishes a community marketplace of screened third-party plugins
 
 ## Enterprise Controls
 
-For org-managed deployments, several knobs in managed policy let admins decide what teams can install without auditing every plugin one by one. `managed-mcp.json` controls which MCP servers are allowed across the org; `deniedPlugins` and `enabledPlugins` allowlist or blocklist specific plugin names; `extraKnownMarketplaces` adds trusted catalogs to the default set; and `strictKnownMarketplaces` rejects any catalog outside the known list. The pattern most enterprises adopt is strict-mode plus an internal catalog, with the official marketplace allowed but every third-party install gated through the catalog they own.
+For org-managed deployments, several knobs in managed policy let admins decide what teams can install without auditing every plugin one by one. `managed-mcp.json` controls which MCP servers are allowed across the org; `enabledPlugins` set to `true` or `false` allows or blocks a specific plugin; `blockedMarketplaces` blocks a catalog source and is checked first; `extraKnownMarketplaces` adds trusted catalogs to the default set; and `strictKnownMarketplaces` rejects any catalog outside the known list. The pattern most enterprises adopt is strict-mode plus an internal catalog, with the official marketplace allowed but every third-party install gated through the catalog they own.
 
 ## Reserved Names
 
@@ -102,5 +102,5 @@ Plugins run code with your Claude Code environment's permissions, which means th
 ## Key Topics covered in this module
 
 - [Plugin Marketplaces](https://code.claude.com/docs/en/plugin-marketplaces): catalog schema, source types, and the pinning model
-- [Settings and Managed Policy](https://code.claude.com/docs/en/settings): `deniedPlugins`, `enabledPlugins`, and the strict-known-marketplaces flag
+- [Settings and Managed Policy](https://code.claude.com/docs/en/settings): `enabledPlugins`, `blockedMarketplaces`, and the strict-known-marketplaces flag
 - [Security](https://code.claude.com/docs/en/security): trust boundaries, review checklist, and rotation guidance for plugin-shipped secrets
