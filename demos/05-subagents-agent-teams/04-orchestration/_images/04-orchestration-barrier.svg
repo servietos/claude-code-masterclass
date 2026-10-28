@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1260" width="1920" height="1260" role="img">
+<title>parallel() barrier between two nodes and three verifiers</title>
+<desc>The script splits the task into a node for Controllers/ and Shared/ and a node for test-controllers.http. The parallel() barrier waits for the slower node and merges in the script body. Three verifiers with the correctness, security and reproduction lens run at once, and the vote is counted in code.</desc>
+<style>
+svg { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 26px; }
+.t { font-weight: 600; fill: #24292f; }
+.s { fill: #57606a; }
+.code { font-family: Consolas, 'Courier New', monospace; fill: #57606a; }
+.lbl { fill: #57606a; font-style: italic; }
+.box { stroke: #8c959f; stroke-width: 2; }
+.edge { fill: none; stroke: #8c959f; stroke-width: 3; }
+.hl { fill: none; stroke: #e0a534; stroke-width: 7; opacity: 0; animation: 16s linear infinite; }
+.tok { fill: #e0a534; stroke: #ffffff; stroke-width: 3; opacity: 0; animation: 16s linear infinite; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+@keyframes kh0 { 0.000% { opacity: 0; } 1.875% { opacity: 0; } 3.438% { opacity: 1; } 7.500% { opacity: 1; } 9.062% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh1 { 0.000% { opacity: 0; } 13.438% { opacity: 0; } 15.001% { opacity: 1; } 18.438% { opacity: 1; } 20.001% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh2 { 0.000% { opacity: 0; } 13.438% { opacity: 0; } 15.001% { opacity: 1; } 33.438% { opacity: 1; } 35.001% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh3 { 0.000% { opacity: 0; } 39.376% { opacity: 0; } 40.939% { opacity: 1; } 45.626% { opacity: 1; } 47.189% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh4 { 0.000% { opacity: 0; } 54.169% { opacity: 0; } 55.731% { opacity: 1; } 60.419% { opacity: 1; } 61.981% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh5 { 0.000% { opacity: 0; } 54.169% { opacity: 0; } 55.731% { opacity: 1; } 60.419% { opacity: 1; } 61.981% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh6 { 0.000% { opacity: 0; } 54.169% { opacity: 0; } 55.731% { opacity: 1; } 60.419% { opacity: 1; } 61.981% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh7 { 0.000% { opacity: 0; } 68.961% { opacity: 0; } 70.523% { opacity: 1; } 75.211% { opacity: 1; } 76.773% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kt0 { 0.000% { transform: translate(880px, 200px); opacity: 0; } 7.500% { transform: translate(880px, 200px); opacity: 0; } 7.562% { transform: translate(880px, 200px); opacity: 1; } 13.438% { transform: translate(600px, 310px); opacity: 1; } 13.751% { transform: translate(600px, 310px); opacity: 1; } 13.813% { transform: translate(600px, 310px); opacity: 0; } 100.000% { transform: translate(600px, 310px); opacity: 0; } }
+@keyframes kt1 { 0.000% { transform: translate(1040px, 200px); opacity: 0; } 7.500% { transform: translate(1040px, 200px); opacity: 0; } 7.562% { transform: translate(1040px, 200px); opacity: 1; } 13.438% { transform: translate(1320px, 310px); opacity: 1; } 13.751% { transform: translate(1320px, 310px); opacity: 1; } 13.813% { transform: translate(1320px, 310px); opacity: 0; } 100.000% { transform: translate(1320px, 310px); opacity: 0; } }
+@keyframes kt2 { 0.000% { transform: translate(600px, 460px); opacity: 0; } 18.438% { transform: translate(600px, 460px); opacity: 0; } 18.501% { transform: translate(600px, 460px); opacity: 1; } 24.376% { transform: translate(880px, 570px); opacity: 1; } 39.689% { transform: translate(880px, 570px); opacity: 1; } 39.751% { transform: translate(880px, 570px); opacity: 0; } 100.000% { transform: translate(880px, 570px); opacity: 0; } }
+@keyframes kt3 { 0.000% { transform: translate(1320px, 460px); opacity: 0; } 33.438% { transform: translate(1320px, 460px); opacity: 0; } 33.501% { transform: translate(1320px, 460px); opacity: 1; } 39.376% { transform: translate(1040px, 570px); opacity: 1; } 39.689% { transform: translate(1040px, 570px); opacity: 1; } 39.751% { transform: translate(1040px, 570px); opacity: 0; } 100.000% { transform: translate(1040px, 570px); opacity: 0; } }
+@keyframes kt4 { 0.000% { transform: translate(800px, 720px); opacity: 0; } 45.626% { transform: translate(800px, 720px); opacity: 0; } 45.689% { transform: translate(800px, 720px); opacity: 1; } 54.169% { transform: translate(380px, 830px); opacity: 1; } 54.481% { transform: translate(380px, 830px); opacity: 1; } 54.544% { transform: translate(380px, 830px); opacity: 0; } 100.000% { transform: translate(380px, 830px); opacity: 0; } }
+@keyframes kt5 { 0.000% { transform: translate(960px, 720px); opacity: 0; } 45.626% { transform: translate(960px, 720px); opacity: 0; } 45.689% { transform: translate(960px, 720px); opacity: 1; } 47.837% { transform: translate(960px, 830px); opacity: 1; } 54.481% { transform: translate(960px, 830px); opacity: 1; } 54.544% { transform: translate(960px, 830px); opacity: 0; } 100.000% { transform: translate(960px, 830px); opacity: 0; } }
+@keyframes kt6 { 0.000% { transform: translate(1120px, 720px); opacity: 0; } 45.626% { transform: translate(1120px, 720px); opacity: 0; } 45.689% { transform: translate(1120px, 720px); opacity: 1; } 54.169% { transform: translate(1540px, 830px); opacity: 1; } 54.481% { transform: translate(1540px, 830px); opacity: 1; } 54.544% { transform: translate(1540px, 830px); opacity: 0; } 100.000% { transform: translate(1540px, 830px); opacity: 0; } }
+@keyframes kt7 { 0.000% { transform: translate(380px, 980px); opacity: 0; } 60.419% { transform: translate(380px, 980px); opacity: 0; } 60.481% { transform: translate(380px, 980px); opacity: 1; } 68.961% { transform: translate(800px, 1090px); opacity: 1; } 69.273% { transform: translate(800px, 1090px); opacity: 1; } 69.336% { transform: translate(800px, 1090px); opacity: 0; } 100.000% { transform: translate(800px, 1090px); opacity: 0; } }
+@keyframes kt8 { 0.000% { transform: translate(960px, 980px); opacity: 0; } 60.419% { transform: translate(960px, 980px); opacity: 0; } 60.481% { transform: translate(960px, 980px); opacity: 1; } 62.629% { transform: translate(960px, 1090px); opacity: 1; } 69.273% { transform: translate(960px, 1090px); opacity: 1; } 69.336% { transform: translate(960px, 1090px); opacity: 0; } 100.000% { transform: translate(960px, 1090px); opacity: 0; } }
+@keyframes kt9 { 0.000% { transform: translate(1540px, 980px); opacity: 0; } 60.419% { transform: translate(1540px, 980px); opacity: 0; } 60.481% { transform: translate(1540px, 980px); opacity: 1; } 68.961% { transform: translate(1120px, 1090px); opacity: 1; } 69.273% { transform: translate(1120px, 1090px); opacity: 1; } 69.336% { transform: translate(1120px, 1090px); opacity: 0; } 100.000% { transform: translate(1120px, 1090px); opacity: 0; } }
+</style>
+<rect width="1920" height="1260" fill="#ffffff"/>
+<defs><marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="24" markerHeight="24" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#8c959f"/></marker></defs>
+<path class="edge" d="M880,200 L601.9,309.3" marker-end="url(#arr)"/>
+<path class="edge" d="M1040,200 L1318.1,309.3" marker-end="url(#arr)"/>
+<path class="edge" d="M600,460 L878.1,569.3" marker-end="url(#arr)"/>
+<path class="edge" d="M1320,460 L1041.9,569.3" marker-end="url(#arr)"/>
+<path class="edge" d="M800,720 L381.9,829.5" marker-end="url(#arr)"/>
+<path class="edge" d="M960,720 L960.0,828.0" marker-end="url(#arr)"/>
+<path class="edge" d="M1120,720 L1538.1,829.5" marker-end="url(#arr)"/>
+<path class="edge" d="M380,980 L798.1,1089.5" marker-end="url(#arr)"/>
+<path class="edge" d="M960,980 L960.0,1088.0" marker-end="url(#arr)"/>
+<path class="edge" d="M1540,980 L1121.9,1089.5" marker-end="url(#arr)"/>
+<rect class="box" x="680" y="50" width="560" height="150" rx="14" fill="#eaf2ff"/>
+<text class="t" x="960.0" y="115" text-anchor="middle">Script</text>
+<text class="s" x="960.0" y="155" text-anchor="middle">splits the task</text>
+<rect class="box" x="300" y="310" width="600" height="150" rx="14" fill="#e9f7ef"/>
+<text class="t" x="600.0" y="375" text-anchor="middle">Node</text>
+<text class="code" x="600.0" y="415" text-anchor="middle">Controllers/ + Shared/</text>
+<rect class="box" x="1020" y="310" width="600" height="150" rx="14" fill="#e9f7ef"/>
+<text class="t" x="1320.0" y="375" text-anchor="middle">Node</text>
+<text class="code" x="1320.0" y="415" text-anchor="middle">test-controllers.http</text>
+<rect class="box" x="630" y="570" width="660" height="150" rx="14" fill="#fff6e5"/>
+<text class="t" x="960.0" y="635" text-anchor="middle">parallel() barrier</text>
+<text class="s" x="960.0" y="675" text-anchor="middle">merge in the script body</text>
+<rect class="box" x="120" y="830" width="520" height="150" rx="14" fill="#f3edff"/>
+<text class="t" x="380.0" y="895" text-anchor="middle">Verify</text>
+<text class="s" x="380.0" y="935" text-anchor="middle">correctness lens</text>
+<rect class="box" x="700" y="830" width="520" height="150" rx="14" fill="#f3edff"/>
+<text class="t" x="960.0" y="895" text-anchor="middle">Verify</text>
+<text class="s" x="960.0" y="935" text-anchor="middle">security lens</text>
+<rect class="box" x="1280" y="830" width="520" height="150" rx="14" fill="#f3edff"/>
+<text class="t" x="1540.0" y="895" text-anchor="middle">Verify</text>
+<text class="s" x="1540.0" y="935" text-anchor="middle">reproduction lens</text>
+<rect class="box" x="660" y="1090" width="600" height="120" rx="14" fill="#eaf2ff"/>
+<text class="t" x="960.0" y="1160" text-anchor="middle">Vote counted in code</text>
+<rect class="hl" id="h0" x="676" y="46" width="568" height="158" rx="17" style="animation-name: kh0;"/>
+<rect class="hl" id="h1" x="296" y="306" width="608" height="158" rx="17" style="animation-name: kh1;"/>
+<rect class="hl" id="h2" x="1016" y="306" width="608" height="158" rx="17" style="animation-name: kh2;"/>
+<rect class="hl" id="h3" x="626" y="566" width="668" height="158" rx="17" style="animation-name: kh3;"/>
+<rect class="hl" id="h4" x="116" y="826" width="528" height="158" rx="17" style="animation-name: kh4;"/>
+<rect class="hl" id="h5" x="696" y="826" width="528" height="158" rx="17" style="animation-name: kh5;"/>
+<rect class="hl" id="h6" x="1276" y="826" width="528" height="158" rx="17" style="animation-name: kh6;"/>
+<rect class="hl" id="h7" x="656" y="1086" width="608" height="128" rx="17" style="animation-name: kh7;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt0;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt1;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt2;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt3;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt4;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt5;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt6;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt7;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt8;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt9;"/>
+</svg>

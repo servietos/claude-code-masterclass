@@ -62,7 +62,7 @@ info: Microsoft.Hosting.Lifetime[14]
 **Say:** A client learns what a server can do by asking it, so somewhere there is a machine-readable answer. Deriving it from the source removes the drift everybody has met with hand-maintained API descriptions.
 
 ```bash
-npx @modelcontextprotocol/inspector --config inspector.config.json --server hr-mcp --cli --method tools/list
+npx @modelcontextprotocol/inspector --cli --config inspector.config.json --server hr-mcp --method tools/list
 ```
 
 **Result:** no file written; `required` names exactly the three parameters that have no C# default, and `default: 8` is `shiftStartHour`'s

@@ -6,18 +6,14 @@
 <div class="maingrid">
   <div class="gdNavbar"><app-navbar></app-navbar></div>
   <div class="gdMainrow">
-    <mat-sidenav-container>
-      <mat-sidenav
-        #sidenav
-        [opened]="sidenavVisible | async"
-        [mode]="sidenavMode"
-      >
-        <app-sidebar></app-sidebar>
-      </mat-sidenav>
-      <mat-sidenav-content [ngStyle]="getWorbenchStyle()">
+    <main class="layout">
+      @if ((sidenavVisible | async) && (isHome | async) === false) {
+        <app-sidebar class="aside"></app-sidebar>
+      }
+      <div class="content">
         <router-outlet></router-outlet>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
+      </div>
+    </main>
   </div>
 </div>
 } @if (authEnabled) {

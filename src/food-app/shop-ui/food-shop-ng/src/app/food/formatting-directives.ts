@@ -40,7 +40,7 @@ export class CenteredDirective {
 
 @Directive({
   selector: '[border]',
-  host: { 'style': 'border:1px solid black; padding: 10px; margin-bottom: 10px;' },
+  host: { 'style': 'border:1px solid var(--color-border); padding: 10px; margin-bottom: 10px;' },
   standalone: true
 })
 export class BorderDirective {

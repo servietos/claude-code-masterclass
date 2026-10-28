@@ -1,4 +1,5 @@
 import { AsyncPipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import { Component, DestroyRef, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
@@ -23,6 +24,7 @@ import { AILoggerService } from 'src/app/logger/ai-logger.service';
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     ShopItemComponent,
+    MatIconModule,
     AsyncPipe
 ],
 })

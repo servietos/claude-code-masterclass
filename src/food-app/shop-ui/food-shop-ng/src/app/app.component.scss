@@ -12,33 +12,47 @@
   grid-template-areas:
     "navbar"
     "mainrow";
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
 }
 
-.gdNavbar{
+.gdNavbar {
   grid-area: navbar;
 }
 
-.gdMainrow{
+.gdMainrow {
   grid-area: mainrow;
-  overflow-x: hidden;
+  min-width: 0;
+  background-color: var(--color-bg);
 }
 
-mat-sidenav{
-  width: min(220px, 85vw);
-  min-width: 180px;
-  padding-bottom: env(safe-area-inset-bottom);
+.layout {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 32px var(--layout-pad-x) 40px;
+  padding-bottom: max(40px, env(safe-area-inset-bottom));
 }
 
-mat-sidenav-container{
-  background-color: white;
-  min-height: 90vh;
+.aside {
+  flex: 1 1 260px;
+  min-width: 0;
 }
 
-mat-sidenav-content{
-  padding: 0 1rem;
-  padding-right: max(1rem, env(safe-area-inset-right));
-  padding-bottom: env(safe-area-inset-bottom);
+.content {
+  flex: 999 1 560px;
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .layout {
+    padding: 20px var(--layout-pad-x) 32px;
+    gap: 20px;
+  }
 }

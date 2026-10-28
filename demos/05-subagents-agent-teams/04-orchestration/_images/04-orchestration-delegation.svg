@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 960" width="1920" height="960" role="img">
+<title>Delegation: a coordinator fans out and merges</title>
+<desc>The coordinator splits the task between dotnet-expert, working in Controllers/ and Shared/, and the request agent, working in test-controllers.http. Both run at once, and the coordinator merges filesChanged.</desc>
+<style>
+svg { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 26px; }
+.t { font-weight: 600; fill: #24292f; }
+.s { fill: #57606a; }
+.code { font-family: Consolas, 'Courier New', monospace; fill: #57606a; }
+.lbl { fill: #57606a; font-style: italic; }
+.box { stroke: #8c959f; stroke-width: 2; }
+.edge { fill: none; stroke: #8c959f; stroke-width: 3; }
+.hl { fill: none; stroke: #e0a534; stroke-width: 7; opacity: 0; animation: 10s linear infinite; }
+.tok { fill: #e0a534; stroke: #ffffff; stroke-width: 3; opacity: 0; animation: 10s linear infinite; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+@keyframes kh0 { 0.000% { opacity: 0; } 3.000% { opacity: 0; } 5.500% { opacity: 1; } 18.000% { opacity: 1; } 20.500% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh1 { 0.000% { opacity: 0; } 33.000% { opacity: 0; } 35.500% { opacity: 1; } 48.000% { opacity: 1; } 50.500% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh2 { 0.000% { opacity: 0; } 33.000% { opacity: 0; } 35.500% { opacity: 1; } 48.000% { opacity: 1; } 50.500% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh3 { 0.000% { opacity: 0; } 63.000% { opacity: 0; } 65.500% { opacity: 1; } 70.000% { opacity: 1; } 72.500% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kt0 { 0.000% { transform: translate(880px, 220px); opacity: 0; } 18.000% { transform: translate(880px, 220px); opacity: 0; } 18.100% { transform: translate(880px, 220px); opacity: 1; } 32.896% { transform: translate(540px, 400px); opacity: 1; } 33.500% { transform: translate(540px, 400px); opacity: 1; } 33.600% { transform: translate(540px, 400px); opacity: 0; } 100.000% { transform: translate(540px, 400px); opacity: 0; } }
+@keyframes kt1 { 0.000% { transform: translate(1040px, 220px); opacity: 0; } 18.000% { transform: translate(1040px, 220px); opacity: 0; } 18.100% { transform: translate(1040px, 220px); opacity: 1; } 32.896% { transform: translate(1380px, 400px); opacity: 1; } 33.500% { transform: translate(1380px, 400px); opacity: 1; } 33.600% { transform: translate(1380px, 400px); opacity: 0; } 100.000% { transform: translate(1380px, 400px); opacity: 0; } }
+@keyframes kt2 { 0.000% { transform: translate(540px, 560px); opacity: 0; } 48.000% { transform: translate(540px, 560px); opacity: 0; } 48.100% { transform: translate(540px, 560px); opacity: 1; } 62.896% { transform: translate(880px, 740px); opacity: 1; } 63.500% { transform: translate(880px, 740px); opacity: 1; } 63.600% { transform: translate(880px, 740px); opacity: 0; } 100.000% { transform: translate(880px, 740px); opacity: 0; } }
+@keyframes kt3 { 0.000% { transform: translate(1380px, 560px); opacity: 0; } 48.000% { transform: translate(1380px, 560px); opacity: 0; } 48.100% { transform: translate(1380px, 560px); opacity: 1; } 62.896% { transform: translate(1040px, 740px); opacity: 1; } 63.500% { transform: translate(1040px, 740px); opacity: 1; } 63.600% { transform: translate(1040px, 740px); opacity: 0; } 100.000% { transform: translate(1040px, 740px); opacity: 0; } }
+</style>
+<rect width="1920" height="960" fill="#ffffff"/>
+<defs><marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="24" markerHeight="24" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#8c959f"/></marker></defs>
+<path class="edge" d="M880,220 L540,398" marker-end="url(#arr)"/>
+<path class="edge" d="M1040,220 L1380,398" marker-end="url(#arr)"/>
+<path class="edge" d="M540,560 L880,738" marker-end="url(#arr)"/>
+<path class="edge" d="M1380,560 L1040,738" marker-end="url(#arr)"/>
+<rect class="box" x="660" y="60" width="600" height="160" rx="14" fill="#eaf2ff"/>
+<text class="t" x="960.0" y="130" text-anchor="middle">Coordinator</text>
+<text class="s" x="960.0" y="170" text-anchor="middle">splits the task</text>
+<rect class="box" x="220" y="400" width="640" height="160" rx="14" fill="#e9f7ef"/>
+<text class="t" x="540.0" y="470" text-anchor="middle">dotnet-expert</text>
+<text class="code" x="540.0" y="510" text-anchor="middle">Controllers/ + Shared/</text>
+<rect class="box" x="1060" y="400" width="640" height="160" rx="14" fill="#e9f7ef"/>
+<text class="t" x="1380.0" y="470" text-anchor="middle">request agent</text>
+<text class="code" x="1380.0" y="510" text-anchor="middle">test-controllers.http</text>
+<rect class="box" x="660" y="740" width="600" height="160" rx="14" fill="#eaf2ff"/>
+<text class="t" x="960.0" y="810" text-anchor="middle">Coordinator</text>
+<text class="s" x="960.0" y="850" text-anchor="middle">merges filesChanged</text>
+<rect class="hl" id="h0" x="656" y="56" width="608" height="168" rx="17" style="animation-name: kh0;"/>
+<rect class="hl" id="h1" x="216" y="396" width="648" height="168" rx="17" style="animation-name: kh1;"/>
+<rect class="hl" id="h2" x="1056" y="396" width="648" height="168" rx="17" style="animation-name: kh2;"/>
+<rect class="hl" id="h3" x="656" y="736" width="608" height="168" rx="17" style="animation-name: kh3;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt0;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt1;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt2;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt3;"/>
+</svg>

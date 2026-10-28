@@ -23,7 +23,7 @@ mat-card-subtitle {
 /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card-content {
   height: 550px;
-  background-color: lavender;
+  background-color: var(--color-surface-muted);
 }
 
 /* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */

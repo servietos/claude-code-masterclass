@@ -4,7 +4,6 @@ import { CartItem } from '../cart-item.model';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { EuroPipe } from '../../../shared/euro.pipe';
 import { NumberPickerComponent } from '../../../shared/number-picker/number-picker.component';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-shop-item',
@@ -13,7 +12,6 @@ import { MatCardModule } from '@angular/material/card';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
-    MatCardModule,
     NumberPickerComponent,
     ReactiveFormsModule,
     EuroPipe,

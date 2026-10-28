@@ -1023,11 +1023,11 @@
 
 **Rule:** No `$` followed by a digit in a repo `SKILL.md`; `grep -nE '\$[0-9]' .claude/skills/*/SKILL.md` must print nothing. The data-aggregator sample output still carries it and needs the owner's choice of wording, since the demo script prints the dollar sign.
 
-## Deck delivery: a differing OneDrive copy is compared before it is overwritten
+## Deck edits start from the repo deck, OneDrive only receives it
 
-**Pattern (2026-10-20):** `02-harness.pptx` in the repo differed from the OneDrive copy. Slide text showed only the topic overview and dividers changed, from the "decks refreshed" commit of 2026-10-18, and the OneDrive file time matched the earlier delivery, so the repo deck was newer and safe to deliver.
+**Pattern (2026-10-27):** While adding two context window slides to module 01, the main thread compared the repo deck with the OneDrive copy before editing, as the 2026-10-20 entry here and the create-pptx skill asked. The owner: "the original pptx is on demos\..\pptx ... no need to search onedrive all the time".
 
-**Rule:** Before overwriting, diff slide text and notes of both decks with python-pptx and compare the OneDrive file time with the last delivery. Owner edits win; a repo deck that is only newer is delivered.
+**Rule:** The deck at `demos/<module>/pptx/<module>.pptx` is the original. Edit it directly, with no search, `cmp` or slide diff of the OneDrive copy first, then `deliver` it to the class folder. The create-pptx skill (`gamma-deck.md` Step 9, `finished-deck-edits.md`) carries the same rule since this session.
 
 ## The first look at a request is fact gathering and goes to the fact-gatherer
 
@@ -1076,3 +1076,72 @@
 **Pattern (2026-10-23):** Topic 08/05 took about eight rework rounds. The owner's subject was one sentence: a plugin from a marketplace brings its own expert, and the expert gets each repo's details from a rule. The owner named the grounding: `copilot-studio-agents/.claude/rules/copilot-studio.md`, `integrations.at/.claude/rules`, `integrations-marketplace`. Each brief I wrote drifted away from that. I invented an acme demo with a freeze-guard hook and a scaffold skill, added plugins nobody named (learn-loop, harness), relabelled the plugin by its manifest id (`copilot-work-iq`) when the owner calls it the Copilot Studio plugin, drew the plugin installed into the repo when it installs globally, and filled the rule card with generic phrases taken from the agent file where the real rule file has concrete sections. Each image agent drew my brief faithfully, so every error was mine and came back looking finished. The coding parts of the same session (hooks, headless runs, deck scripts) needed no rework.
 
 **Rule:** For teaching prose, diagrams and slides, restate the owner's subject in one sentence and check every artifact against it before it is built. Every label and claim comes from a file or a sentence the owner gave, quoted or paraphrased in the owner's own terms (their product names, their scope words). A delegate brief carries the owner's messages verbatim plus the grounding files, never only my paraphrase, and the first deliverable is a label list for the owner to approve before anything is drawn.
+
+## Slash commands are single-source too
+
+**Pattern (2026-10-26):** Eight `git-*` commands copied from claude-harness carried that repo's name, pipeline and test command. Asked to align them, I rewrote the repo copies in place with this repo's facts. The owner then asked for them to be global and repo-agnostic, with the repo specifics as rules: the one-source rule for skills and agents already covered the case, I had not applied it to commands.
+
+**Rule:** A command that hardcodes one repo's facts is promoted to `~/.claude/commands/` as a repo-agnostic command, the facts go to the repo's `.claude/rules/<area>.md` (here `git.md`: upstream, base branch, pre-push check, release, package command), and the repo copies are deleted. The global command names the rules file it reads and stops when the file or a fact is missing; a repo with nothing to release says so in its rules file. Recorded in `~/.claude/CLAUDE.md` (Skill usage, one-source line).
+
+## A restored file is restored for its structure, its pointers re-checked
+
+**Pattern (2026-10-26):** Asked to restore the CLAUDE.md guard from history, the main thread brought `.claude/hooks/claude-md-guard.sh` back verbatim from `2732695^` with its `PostToolUse` binding and reported it "back exactly as it was". Its blocking message still sent the reader to `~/.claude/skills/create-class/references/create-guide.md` (now in the class-authoring plugin) and `.claude/skills/create-module-pptx/` (gone). The 2026-07-24 entry "Restoring deleted config means re-deriving it" already said this; it lived only here and did not fire.
+
+**Rule:** After any restore from history, check every path, skill and command the file names against today's tree and repoint the moved ones before reporting it restored. The procedure now lives in the global `git-history-ops` skill, leaf `references/restore-from-history.md`, which loads on "restore it from the history". The guard's pointers were repointed in the learn run.
+
+## A pasted error with no source is located by grepping its text in the installed clients
+
+**Pattern (2026-10-27):** The owner pasted "GitHub user features will not work. Your token has not been granted the required scopes ... ['repo', 'workflow']" with "fix that". The haiku delegate searched `~/.claude`, the repo and integrations-marketplace, found the `gh` and `GITHUB_TOKEN` tokens already carry `user:email` and `read:user`, and guessed the GitHub MCP connector. The main thread checked that absence claim by grepping the client installs: the text comes from the GitHub Pull Requests VS Code extension (`github.vscode-pull-request-github`), which shows it when a GraphQL call on VS Code's own GitHub sign-in returns `INSUFFICIENT_SCOPES`. The github.com/settings/tokens link in the message points at a personal access token that does not exist.
+
+**Rule:** For an error the owner pastes without naming the tool, take its client-specific prefix (the part GitHub, Azure or the server does not write) and grep it with `grep -rla --include=*.js` across `~/.vscode/extensions`, `~/.vscode-insiders/extensions`, the Claude Code package under the node install and `AppData/Local/Programs` before diagnosing any token or config. A delegate brief that locates an emitter names those trees. This one is fixed by a VS Code GitHub sign-out and a sign-in from the Pull Requests view, which asks for the missing scopes.
+
+## New slides mid-topic: park them before the spec renumber
+
+**Pattern (2026-10-27):** Two context window slides went in as `02-02` and `02-03` of module 01, ahead of the existing `02-02` and `02-03` cache slides. `permute-topic-specs.py --map 02-02=02-04` moves every spec and image whose name starts with the old prefix, so the new SVGs already named `02-02-*` and `02-03-*` would have moved with the old ones; they were parked in the scratchpad for the run.
+
+**Rule:** Write the new specs and SVGs, move them out of `pptx/`, run the permute map highest prefix first (`02-03=02-05,02-02=02-04`), move them back, then `check_specs.py --renumber --legacy`, render, and `add_spec_slide.py` once per new slide, with `--template` and `--after` counted on the deck as the previous insert left it. The procedure is in create-pptx `finished-deck-edits.md`.
+
+## `/context` runs headless, with MSYS path conversion off
+
+**Pattern (2026-10-27):** A real `/context` table for the module 01 teaching came from `claude -p "/context"`. In Git Bash the first attempt printed nothing useful, because MSYS rewrote the `/context` argument into a Windows path.
+
+**Rule:** Capture a slash command's output headless with `MSYS_NO_PATHCONV=1 claude -p "/context"` in Git Bash (PowerShell needs no prefix), run from a scratch folder, and teach the real numbers it prints.
+
+
+## A repo agent the owner asked for is not a copy to retire
+
+**Pattern (2026-10-27):** The owner had a session write `hetzner-devops-expert` into this repo's `.claude/agents/`, then had the next session add GitHub Actions tools to that file by path. A global `hetzner-devops-expert` with a different body exists beside it. The house rule retires a repo copy of a global agent without asking; the learn run kept this one, because the owner created it here by name, and left the global agent unchanged, because the other repos it serves have no `gh-actions-mcp` binary to start.
+
+**Rule:** A repo agent the owner asked for by name and path stays in the repo and is edited in place; the retire rule covers copies nobody asked for. A change to it reaches the global namesake only when the owner names that file.
+
+## A tool list for an agent is wired by kind and checked against the agent's rules
+
+**Pattern (2026-10-27):** The owner pasted a GitHub Actions toolkit (the official GitHub MCP, `gh-actions-mcp`, the REST log endpoints, OpenTelemetry webhooks, actionlint, a workflow schema validator, act) with "add this gh action tools". The two MCP servers went into the agent's `tools` and `mcpServers`, the command-line tools and log calls into a body table with their exact commands. OpenTelemetry webhooks were left out, being workflow-side setup with no call an agent makes, and so were the GitHub MCP's commit and pull request tools, which the agent's never-commit rule forbids; the reply named both. A haiku shell check ran beside the web fact-gatherer and found four of the tools missing on the PC and `gh-actions-mcp` without a release, which became the reply's one blocker.
+
+**Rule:** For a tool list to add to an agent: MCP servers go into `tools` by exact tool name and into `mcpServers`, command-line tools into the body with their command lines, and anything with no call or forbidden by the agent's hard rules is named in the reply as left out. Check which binaries exist on the PC in parallel with the web facts, and report the missing ones as the blocker with an install offer.
+
+## A background learn run announces after its Agent call
+
+**Pattern (2026-10-27):** On `/claude-learn` the main thread printed the announce line, launched the background fork, and ended the turn with no text, as the claude-learn skill says. The harness answered the empty closing message with "Your previous response had no visible output", and the main thread printed a reworded second announce: the echo the skill's 2026-10-25 rule was written to stop.
+
+**Rule:** Launch the `Agent` call first and print the announce line once, after it, as the turn's only text. The plugin's claude-learn skill still says to announce before the call; changing it waits for the owner's yes.
+
+**Recurred (2026-10-28):** The main thread launched the fork with no text and returned nothing after the tool result, so the same nudge came one second later. The lesson alone did not hold while the loaded skill text says otherwise: the skill edit is asked for again.
+
+## A change to a finished deck skips the Gamma playbook
+
+**Pattern (2026-10-28):** Asked for one extra slide each on topics 06 and 07 of module 05, `/create-repo-pptx` loaded its 14-step Gamma table (photo batch, paid Gamma calls) and asked for the missing `.claude/rules/decks.md`. The work that fit was create-pptx `finished-deck-edits.md`: two specs, two SVGs, `add_spec_slide.py`, `notes`, `clean --skip 4`, `slide_quality.py`, `deliver`, no credits and no `decks.md`. The first cloned card passed `slide_quality.py` with `dense=0` while its fifth bullet sat on the slide's bottom edge; only the rendered page showed it.
+
+**Rule:** A new, fixed, dropped or moved card in an existing module deck goes straight to `finished-deck-edits.md`; the OneDrive class folder is the `deliver` destination. Render every new page and look at it (PyMuPDF, since poppler is not installed), keep bullets near 60 characters, and redo a card in place with `add_spec_slide.py --after N --drop N`. The create-repo-pptx command and the create-pptx leaf carry both since this session.
+
+## The three free lookups are for checking my own edits
+
+**Pattern (2026-10-28):** While adding the module 05 slides, the main thread spent its free lookups on reading specs, script help and `order:` lines, so the delegation mod denied the final grep for em dashes and negative parallelism over the four files it had just written. A second session on the same day logged the same kind of slip while reading slide images it was about to publish.
+
+**Rule:** Put the pre-edit reading of repo files (the specs to clone, their `order:` lines) into the fact-gatherer brief and take script usage from the skill leaves, which are free, so the main-thread lookups stay for the checks of my own writes. Run those checks with absolute paths, never relative after a `cd`.
+
+## "Which prompt changed this app" is a transcript lookup with a script
+
+**Pattern (2026-10-28):** Asked for the last prompt that modified `src/food-app/shop-ui/food-shop-react`, the main thread briefed a Haiku general-purpose agent, which wrote a one-off script, traced `parentUuid` chains that ended at injected teammate messages and stepped back to the typed prompts by hand. The main thread checked the prompt's uuid and text by grep and relayed the file list unchecked; it missed `src/index.css`. Git log only showed a rename commit and the initial import.
+
+**Rule:** Brief the shell lookup to run claude-learn's `session-find.py --touched <path regex> --project <slug part> --last 3`, which credits each write (subagents and shell writes included) to the typed prompt behind it. Check a delegate's file list against that output before relaying it; git log only names commits. Transcript times are UTC; give the owner local time.

@@ -75,4 +75,25 @@ Machine hours spent on this repository, one row per working day.
 | 2026-10-23 | 0.10 | 11:35 | 11:41 | Answer rules for plain explanations and owner questions recorded |
 | 2026-10-23 | 0.48 | 11:41 | 12:10 | Session record located for the owner and the learning loop closed out |
 
-**Total: 44.22 hours**
+| 2026-10-26 | 0.52 | 13:56 | 14:27 | Git workflow commands made reusable across repositories, course settings kept in the repo |
+| 2026-10-26 | 0.00 | 14:09 | 14:11 | CLAUDE.md length guard restored from history and switched back on (parallel, not billed) |
+| 2026-10-26 | 0.08 | 14:27 | 14:32 | Lesson on reusable commands recorded and the learning loop closed out |
+| 2026-10-26 | 0.03 | 14:30 | 14:34 | Guard references updated, restore procedure recorded for reuse, learning loop closed out |
+| 2026-10-26 | 0.15 | 15:56 | 16:05 | Architecture diagram of the QR code app drawn and checked in light and dark mode |
+| 2026-10-26 | 0.07 | 16:22 | 16:26 | Diagram lessons and a render check recorded for reuse, learning loop closed out |
+
+| 2026-10-27 | 0.25 | 08:24 | 08:39 | GitHub sign-in warning traced to the VS Code pull request extension, fix provided |
+| 2026-10-27 | 0.20 | 08:39 | 08:51 | Lesson on finding where an error comes from recorded, learning loop closed out |
+| 2026-10-27 | 0.20 | 13:17 | 13:29 | Context window, sample conversation history and server-side prompt cache taught in module 1, two slides added |
+| 2026-10-27 | 0.07 | 13:46 | 13:50 | Slide insertion procedure and deck source rule recorded for reuse, learning loop closed out |
+| 2026-10-27 | 0.10 | 14:43 | 14:49 | GitHub Actions tooling added to the Hetzner deployment assistant |
+| 2026-10-27 | 0.10 | 15:06 | 15:12 | Lessons on repo-owned assistants and tool wiring recorded, learning loop closed out |
+| 2026-10-27 | 0.03 | 15:31 | 15:33 | QR code sample app explained and Claude model prices compared |
+| 2026-10-27 | 0.07 | 15:53 | 15:57 | Lesson on the learning loop's start message recorded, learning loop closed out |
+
+| 2026-10-28 | 0.10 | 09:17 | 09:23 | Delegation diagram in the subagents module extended with fact gathering, models and an optional plan review, slide deck published |
+| 2026-10-28 | 0.05 | 09:21 | 09:26 | Last change request for the React food shop sample traced in the session history |
+| 2026-10-28 | 0.08 | 09:40 | 09:45 | Learning loop closed out, the recurring start message fix put to the owner |
+| 2026-10-28 | 0.12 | 09:43 | 09:52 | Session history lookup by changed file made reusable, lesson recorded, learning loop closed out |
+
+**Total: 46.44 hours**

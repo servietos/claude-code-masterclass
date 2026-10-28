@@ -14,7 +14,6 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
     selector: 'app-food-edit',
@@ -24,7 +23,6 @@ import { MatCardModule } from '@angular/material/card';
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
     ReactiveFormsModule,
-    MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule
@@ -43,7 +41,7 @@ export class FoodEditComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['food']) {
-      this.form.setValue(changes['food'].currentValue);
+      this.form.patchValue(changes['food'].currentValue);
     }
   }
 

@@ -64,19 +64,7 @@ The class also covers everything required to pass the [Claude Certified Architec
 - Error and deferred-loading contract
 - MCP Tasks: long-running tool calls
 
-## Module 5: Automate Claude Code from the Command Line
-
-- Agent harness: tools, knowledge, action interfaces
-- CLI, terminal, and headless mode
-- Headless mode: print, JSON, exit codes
-- Least-privilege tool scoping
-- CI gates: sentinels and exit codes
-- GitHub Actions: scripting agentic workflows
-- Parallel worktree lanes and task-queue orchestration
-- PreToolUse policy gates across lanes
-- Always-on goal patterns with turn limits
-
-## Module 6: Scale task execution with sub-agents and agent teams
+## Module 5: Scale task execution with sub-agents and agent teams
 
 - Single-agent limits (optional)
 - Frontmatter: name, model, tools, permission mode
@@ -97,6 +85,19 @@ The class also covers everything required to pass the [Claude Certified Architec
 - Competing hypotheses in a team (optional)
 - Plan approval and lifecycle hooks (optional)
 - Team sizing, conflicts, and cost (optional)
+
+## Module 6: Automate Claude Code from the Command Line
+
+- Agent harness: tools, knowledge, action interfaces
+- CLI, terminal, and headless mode
+- Headless mode: print, JSON, exit codes
+- Least-privilege tool scoping
+- CI gates: sentinels and exit codes
+- GitHub Actions: scripting agentic workflows
+- Parallel worktree lanes and task-queue orchestration
+- PreToolUse policy gates across lanes
+- Always-on goal patterns with turn limits
+- Harness interop with Copilot CLI (optional)
 
 ## Module 7: Optimize, Secure and Observe the Agentic Harness
 
@@ -168,14 +169,14 @@ The class also covers everything required to pass the [Claude Certified Architec
 | 2   | 09:00 to 09:30 | 30m    | [Consuming & Designing MCP Tools](04-mcp/readme.md)                                                                | MCP architecture and transports, developer servers, building a server in C#, MCP apps, artifact connectors, tool design, MCP tasks (6 topics, 4 demos)                                                                                                                    |
 | 2   | 09:30 to 10:35 | 1h 05m | [Lab: Build the EventTrack Registration MCP Server](../labs/04-mcp/lab-02-eventtrack-mcp-server.md)                | Build a headless Python MCP server that manages events, attendee registrations and per-event capacity, then drive the full registration workflow from Claude Code.                                                                                                        |
 | 2   | 10:35 to 10:45 | 10m    | Break                                                                                                              |                                                                                                                                                                                                                                                                           |
-| 2   | 10:45 to 11:30 | 45m    | [Automate Claude Code from the Command Line](05-cli/readme.md)                                                     | Headless mode and tool scoping, CI gates, worktree lanes with policy hooks and parallel orchestration, always-on goal patterns (4 topics, 4 demos, 1 optional)                                                                                                                        |
-| 2   | 11:30 to 12:35 | 1h 05m | [Lab: Headless Claude Code and parallel git worktrees](../labs/05-cli/lab-01-headless-and-worktrees.md)            | Run `claude -p` one-shot prompts, wrap them in a script with meaningful exit codes, and run independent changes in parallel across git worktrees. Background tasks and on-demand skill injection close it out.                                                            |
-| 2   | 12:35 to 13:35 | 1h 00m | Lunch                                                                                                              |                                                                                                                                                                                                                                                                           |
-| 2   | 13:35 to 14:20 | 45m    | [Sub-Agents](06-subagents-agent-teams/readme.md)                                                                   | Frontmatter and scoping, backend, frontend and QA domain agents, evaluating agent performance, orchestration and workflow graphs (4 topics, 3 demos, 2 optional)                                                                                                                      |
-| 2   | 14:20 to 15:15 | 55m    | [Lab: Build a specialized documentation agent](../labs/06-subagents-agent-teams/lab-01-specialized-agents.md)      | Reason through the design of a documentation sub-agent in conversation first, then implement it with brand-voice enforcement built in.                                                                                                                                    |
-| 2   | 15:15 to 15:25 | 10m    | Break                                                                                                              |                                                                                                                                                                                                                                                                           |
-| 2   | 15:25 to 16:20 | 55m    | [Agent Teams](06-subagents-agent-teams/readme.md)                                                                  | Lead, teammates, shared task list and mailbox, spawning and steering a team, debate and quality gates (3 topics, 1 demo, 1 optional)                                                                                                                                                 |
-| 2   | 16:20 to 16:50 | 30m    | [Lab: Spawn a review team and steer it](../labs/06-subagents-agent-teams/lab-04-spawn-a-review-team.md)            | Enable agent teams, spawn three named reviewers on one codebase, watch them claim tasks off the shared list, redirect one by messaging it directly, and gate the single fix behind plan approval.                                                                         |
+| 2   | 10:45 to 11:30 | 45m    | [Sub-Agents](05-subagents-agent-teams/readme.md)                                                                   | Frontmatter and scoping, backend, frontend and QA domain agents, evaluating agent performance, orchestration and workflow graphs (4 topics, 3 demos, 2 optional)                                                                                                                      |
+| 2   | 11:30 to 12:25 | 55m    | [Lab: Build a specialized documentation subagent](../labs/05-subagents-agent-teams/lab-01-specialized-agents.md)      | Reason through the design of a documentation sub-agent in conversation first, then implement it with brand-voice enforcement built in.                                                                                                                                    |
+| 2   | 12:25 to 13:25 | 1h 00m | Lunch                                                                                                              |                                                                                                                                                                                                                                                                           |
+| 2   | 13:25 to 14:20 | 55m    | [Agent Teams](05-subagents-agent-teams/readme.md)                                                                  | Lead, teammates, shared task list and mailbox, spawning and steering a team, debate and quality gates (3 topics, 1 demo, 1 optional)                                                                                                                                                 |
+| 2   | 14:20 to 14:50 | 30m    | [Lab: Spawn an agent team for review and steer it](../labs/05-subagents-agent-teams/lab-06-spawn-a-review-team.md)            | Enable agent teams, spawn three named reviewers on one codebase, watch them claim tasks off the shared list, redirect one by messaging it directly, and gate the single fix behind plan approval.                                                                         |
+| 2   | 14:50 to 15:00 | 10m    | Break                                                                                                              |                                                                                                                                                                                                                                                                           |
+| 2   | 15:00 to 15:45 | 45m    | [Automate Claude Code from the Command Line](06-automate-cli/readme.md)                                                     | Headless mode and tool scoping, CI gates, worktree lanes with policy hooks and parallel orchestration, always-on goal patterns, harness interop with Copilot CLI (5 topics, 5 demos, 2 optional)                                                                                                                        |
+| 2   | 15:45 to 16:50 | 1h 05m | [Lab: Headless Claude Code and parallel git worktrees](../labs/06-automate-cli/lab-01-headless-and-worktrees.md)            | Run `claude -p` one-shot prompts, wrap them in a script with meaningful exit codes, and run independent changes in parallel across git worktrees. Background tasks and on-demand skill injection close it out.                                                            |
 | 3   | 09:00 to 09:25 | 25m    | [Optimize the Agentic Harness](07-optimize-observability/readme.md)                                                | Prompt audit, caveman compression, the autoresearch loop (3 topics, 2 demos, 1 optional)                                                                                                                                                                                              |
 | 3   | 09:25 to 10:30 | 1h 05m | [Lab: Compress a Bloated Harness with Caveman Mode](../labs/07-optimize-observability/lab-01-caveman-compress.md)  | Compress a bloated `CLAUDE.md` with a caveman rewrite, verify it still binds the model the same way the original did, then codify the rewrite prompt as a reusable skill.                                                                                                 |
 | 3   | 10:30 to 10:40 | 10m    | Break                                                                                                              |                                                                                                                                                                                                                                                                           |

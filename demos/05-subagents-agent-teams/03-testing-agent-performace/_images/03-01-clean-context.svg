@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <style>
+    svg{font-size:30px}
+    text{font-family:'Segoe UI',Helvetica,Arial,sans-serif;fill:#24292f;dominant-baseline:central}
+    .m{font-family:Consolas,monospace}
+    .s{fill:#57606a}
+    .b{font-weight:700}
+    .c{text-anchor:middle}
+    .box{stroke:#8c959f;stroke-width:2}
+    .amb{fill:#fff6e5;stroke:#e0a534;stroke-width:2}
+    .ar{stroke:#57606a;stroke-width:3;fill:none;marker-end:url(#ah)}
+    .em{stroke:#24292f;stroke-width:6;fill:none;marker-end:url(#ahe)}
+    .grid{stroke:#8c959f;stroke-width:2}
+  </style>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#57606a"/></marker>
+    <marker id="ahe" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#24292f"/></marker>
+  </defs>
+  <rect width="1920" height="1080" fill="#ffffff"/>
+
+  <rect class="box" x="60" y="60" width="620" height="420" rx="24" fill="#f3edff"/>
+  <text x="370" y="130" class="c b" style="font-size:34px">Main session (harness)</text>
+  <text x="370" y="220" class="c s">conversation</text>
+  <text x="370" y="285" class="c s">skills invoked</text>
+  <text x="370" y="350" class="c s">files already read</text>
+  <text x="370" y="415" class="c s">harness prompt</text>
+
+  <text x="850" y="195" class="c s">case prompt</text>
+  <path class="ar" d="M684,240 H1016"/>
+  <text x="850" y="315" class="c s">final message only</text>
+  <path class="ar" d="M1016,360 H684"/>
+
+  <rect class="box" x="1020" y="60" width="840" height="420" rx="24" fill="#eaf2ff"/>
+  <text x="1440" y="130" class="c b" style="font-size:34px"><tspan class="m">catalog-test-agent</tspan>: clean context</text>
+  <text x="1440" y="230" class="c s">system prompt: agent body</text>
+  <text x="1440" y="300" class="c s">task prompt: case prompt, verbatim</text>
+  <text x="1440" y="390" class="c m" style="font-size:28px">tools: Read, Write, Edit, Glob, Grep, Bash</text>
+
+  <path class="ar" d="M370,630 V484"/>
+  <text x="400" y="555" class="s">reads the rows, checks git status</text>
+
+  <path class="em" d="M1440,482 V622"/>
+  <text x="1475" y="552" class="b" style="font-size:34px">appends its own row</text>
+
+  <rect class="amb" x="60" y="630" width="1800" height="390" rx="24"/>
+  <text x="100" y="690"><tspan class="m b" style="font-size:32px">catalog-service-cs.Tests/ledger.md</tspan><tspan class="s" dx="24">outlives every clean context</tspan></text>
+
+  <rect x="90" y="740" width="1740" height="150" rx="12" fill="#ffffff" class="grid"/>
+  <rect x="91" y="741" width="1738" height="74" rx="11" fill="#f6f8fa"/>
+  <line class="grid" x1="90" y1="815" x2="1830" y2="815"/>
+  <line class="grid" x1="284" y1="740" x2="284" y2="890"/>
+  <line class="grid" x1="416" y1="740" x2="416" y2="890"/>
+  <line class="grid" x1="548" y1="740" x2="548" y2="890"/>
+  <line class="grid" x1="680" y1="740" x2="680" y2="890"/>
+  <line class="grid" x1="1059" y1="740" x2="1059" y2="890"/>
+  <g class="m b" style="font-size:28px">
+    <text x="110" y="778" class="m b">Target</text>
+    <text x="436" y="778" class="m b" style="font-size:28px">Passed</text>
+    <text x="304" y="778" class="m b">Status</text>
+    <text x="568" y="778" class="m b">Failed</text>
+    <text x="700" y="778" class="m b">Files written</text>
+    <text x="1079" y="778" class="m b">Defects</text>
+  </g>
+  <g style="font-size:28px">
+    <text x="110" y="852" class="m">DeleteFood</text>
+    <text x="304" y="852" class="m">fail</text>
+    <text x="436" y="852" class="m">8</text>
+    <text x="568" y="852" class="m">2</text>
+    <text x="700" y="852" class="m">FoodControllerTests.cs</text>
+    <text x="1079" y="852" class="m">GetById is not awaited, Remove receives a Task</text>
+  </g>
+  <text x="960" y="955" class="c s">the next run, a later session and other subagents read it</text>
+</svg>

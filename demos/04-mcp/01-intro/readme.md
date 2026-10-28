@@ -306,7 +306,7 @@ A server must declare `"tools": { "listChanged": true }` during `initialize` to 
 The MCP Inspector is the standard tool for exercising a server outside any host. It connects to a running server, lists the tools, resources, and prompts it exposes, and invokes them interactively while showing the raw JSON-RPC request and response for each call. It ships as a browser UI, a CLI, and a TUI. Use it to verify an implementation locally and again after a remote deployment, before wiring the server into Claude Code.
 
 ```powershell
-npx @modelcontextprotocol/inspector --config inspector.config.json --cli --server my-server
+npx @modelcontextprotocol/inspector --cli --config inspector.config.json --server my-server --method tools/list
 ```
 
 The config file uses the same `mcpServers` shape as a host config. Valid `type` values are `stdio`, `http` for Streamable HTTP, and `sse`:

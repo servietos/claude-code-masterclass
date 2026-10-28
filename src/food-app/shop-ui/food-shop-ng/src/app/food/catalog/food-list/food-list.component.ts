@@ -11,9 +11,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CatalogItem } from '../../catalog-item.model';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { EuroPipe } from '../../../shared/euro.pipe';
 
 @Component({
     selector: 'app-food-list',
@@ -22,16 +21,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
-        MatToolbarModule,
         MatButtonModule,
-        MatCardModule,
         MatTableModule,
         MatIconModule,
         MatTooltipModule,
+        EuroPipe,
     ],
 })
 export class FoodListComponent implements OnChanges {
   @Input() food: CatalogItem[] | null = [];
+  @Input() selected: CatalogItem | null = null;
   @Output() foodSelected: EventEmitter<CatalogItem> =
     new EventEmitter<CatalogItem>();
   @Output()
@@ -43,13 +42,15 @@ export class FoodListComponent implements OnChanges {
     'name',
     'price',
     'instock',
-    'deleteItem',
     'editItem',
+    'deleteItem',
   ];
   dataSource = new MatTableDataSource([]);
 
   ngOnChanges(changes: SimpleChanges) {
-    this.dataSource = new MatTableDataSource(changes['food'].currentValue);
+    if (changes['food']) {
+      this.dataSource = new MatTableDataSource(changes['food'].currentValue);
+    }
   }
 
   applyFilter(filterValue: string) {

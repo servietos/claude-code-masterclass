@@ -1276,6 +1276,828 @@
    "catalogue": {
     "action": "none"
    }
-  }
- ]
+  },
+  {
+   "date": "2026-10-26",
+   "from": "13:56",
+   "to": "14:27",
+   "sessionId": "ea9ef67f-c271-4ff1-b8f6-90e23e5b609f",
+   "branch": "delivery-26-10",
+   "commits": [],
+   "surfaces": [
+    "global git slash commands",
+    "repo rules file"
+   ],
+   "files": [
+    ".claude/rules/git.md",
+    "~/.claude/commands/git-contribute-setup.md",
+    "~/.claude/commands/git-contribute-start.md",
+    "~/.claude/commands/git-contribute-sync.md",
+    "~/.claude/commands/git-contribute-pr.md",
+    "~/.claude/commands/git-contribute-finish.md",
+    "~/.claude/commands/git-contribute-cleanup.md",
+    "~/.claude/commands/git-deploy-marketplace.md",
+    "~/.claude/commands/git-sideload.md"
+   ],
+   "mechanism": {
+    "takes": "slash commands copied from another repo with that repo's name, branches, pipeline and test command hardcoded",
+    "does": "rewrites them as repo-agnostic global commands that read upstream, base branch, pre-push check, release and package facts from the working repo's rules file and stop when a fact is missing, then retires the repo copies",
+    "returns": "one global fork-and-pull-request command set usable in any repo, plus a short per-repo rules file"
+   },
+   "portsAsIs": [
+    "global command plus per-repo rules file split",
+    "fork-based contribution command set (setup, start, sync, pr, finish, cleanup)"
+   ],
+   "perCustomer": [
+    "the upstream repo, base branch and pre-push check in the rules file"
+   ],
+   "evidence": [
+    ".claude/rules/git.md"
+   ],
+   "toolchain": {
+    "skills": [
+     "claude-orchestration",
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [],
+    "agents": [
+     "fact-gatherer",
+     "general-purpose",
+     "fork"
+    ]
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+  {
+   "date": "2026-10-26",
+   "from": "14:27",
+   "to": "14:32",
+   "sessionId": "ea9ef67f-c271-4ff1-b8f6-90e23e5b609f",
+   "branch": "delivery-26-10",
+   "commits": [],
+   "surfaces": [
+    "claude-learn closing run"
+   ],
+   "files": [
+    "tasks/lessons.md",
+    ".time/working-time.md",
+    ".time/working-time.json",
+    "~/.claude/CLAUDE.md"
+   ],
+   "mechanism": {
+    "takes": "the finished session in context",
+    "does": "records the one-source lesson for slash commands, extends the global house rule to commands and logs the session",
+    "returns": "a lessons entry, an extended house rule and two ledger rows"
+   },
+   "portsAsIs": [],
+   "perCustomer": [],
+   "evidence": [
+    "tasks/lessons.md"
+   ],
+   "toolchain": {
+    "skills": [
+     "claude-learn",
+     "claude-learn-worktime",
+     "track-time"
+    ],
+    "mcpServers": [
+     "worktime-mcp"
+    ],
+    "agents": [
+     "fork"
+    ]
+   },
+   "industry": "IT training, developer courses",
+   "status": "Built and running in-house",
+   "catalogue": {
+    "action": "none"
+   }
+  },
+    {
+      "date": "2026-10-26",
+      "from": "14:09",
+      "to": "14:11",
+      "sessionId": "7c3596a2-fc78-4460-8f5a-e7fe32e09c04",
+      "branch": "delivery-26-10",
+      "commits": [],
+      "surfaces": [
+        "repo harness"
+      ],
+      "files": [
+        ".claude/hooks/claude-md-guard.sh",
+        ".claude/settings.json"
+      ],
+      "mechanism": {
+        "takes": "a request to bring back a project rule enforcer that was removed in an older commit",
+        "does": "locates the deleting commit with a read-only history search, recovers the script from its parent commit and merges only its own post-edit trigger into the current settings",
+        "returns": "a live post-edit check that blocks the project instruction file from growing past 90 lines"
+      },
+      "portsAsIs": [
+        "history search for a deleted file and its registration",
+        "selective merge of one hook binding into current settings"
+      ],
+      "perCustomer": [
+        "the line cap",
+        "the skills the block message points to"
+      ],
+      "evidence": [
+        "hook run on a 95-line file: exit 2",
+        "hook run on the real 46-line CLAUDE.md: exit 0"
+      ],
+      "toolchain": {
+        "skills": [],
+        "mcpServers": [],
+        "agents": [
+          "general-purpose"
+        ]
+      },
+      "industry": "IT training, developer courses",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-26",
+      "from": "14:30",
+      "to": "14:34",
+      "sessionId": "7c3596a2-fc78-4460-8f5a-e7fe32e09c04",
+      "branch": "delivery-26-10",
+      "commits": [],
+      "surfaces": [
+        "claude-learn closing run"
+      ],
+      "files": [
+        ".claude/hooks/claude-md-guard.sh",
+        "tasks/lessons.md",
+        "~/.claude/skills/git-history-ops/references/restore-from-history.md",
+        "~/.claude/skills/git-history-ops/SKILL.md"
+      ],
+      "mechanism": {
+        "takes": "the finished session in context",
+        "does": "repoints the restored guard's stale skill references, records that a restore must re-check every path it names, and adds that procedure to the global git recovery skill",
+        "returns": "a lessons entry, a new restore leaf in the git recovery skill and two ledger rows"
+      },
+      "portsAsIs": [],
+      "perCustomer": [],
+      "evidence": [
+        "tasks/lessons.md",
+        "fix-skill-frontmatter --check: 0 broken"
+      ],
+      "toolchain": {
+        "skills": [
+          "claude-learn",
+          "claude-learn-harvest",
+          "claude-learn-worktime",
+          "track-time",
+          "git-history-ops"
+        ],
+        "mcpServers": [
+          "worktime-mcp"
+        ],
+        "agents": [
+          "fork"
+        ]
+      },
+      "industry": "IT training, developer courses",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-26",
+      "from": "15:56",
+      "to": "16:05",
+      "sessionId": "c9041d98-3a08-420d-9273-78f64043e56f",
+      "branch": "delivery-26-10",
+      "commits": [],
+      "surfaces": [
+        "src/qr-mcp-app-py"
+      ],
+      "files": [
+        "src/qr-mcp-app-py/server.py"
+      ],
+      "mechanism": {
+        "takes": "a small MCP server codebase with a tool, a UI resource and two transports",
+        "does": "maps its entry points, tool, UI resource and libraries through a read-only fact pass, draws them as one flowchart with request and reply on a single edge, and checks the render on a dark and a light page",
+        "returns": "a validated Mermaid architecture diagram readable in both themes"
+      },
+      "portsAsIs": [
+        "read-only fact pass before drawing",
+        "dark and light contrast check of the raw SVG"
+      ],
+      "perCustomer": [
+        "the app being drawn"
+      ],
+      "evidence": [
+        "Mermaid Chart MCP render valid=True type=flowchart error=False",
+        "dark page screenshot read back at #22272e"
+      ],
+      "toolchain": {
+        "skills": [
+          "mermaid-diagram",
+          "claude-orchestration"
+        ],
+        "mcpServers": [
+          "claude_ai_Mermaid_Chart",
+          "chrome-devtools"
+        ],
+        "agents": [
+          "fact-gatherer"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-26",
+      "from": "16:22",
+      "to": "16:26",
+      "sessionId": "c9041d98-3a08-420d-9273-78f64043e56f",
+      "branch": "delivery-26-10",
+      "commits": [],
+      "surfaces": [
+        "claude-learn closing run"
+      ],
+      "files": [
+        "~/.claude/skills/mermaid-diagram/resources/implementation-playbook.md",
+        "~/.claude/skills/mermaid-diagram/scripts/render-check.py",
+        "~/.claude/skills/mermaid-diagram/SKILL.md",
+        "~/.claude/skills/chrome-devtools/SKILL.md",
+        "~/.claude/harvest-registry.md"
+      ],
+      "mechanism": {
+        "takes": "the finished diagram session in context",
+        "does": "records the edge colour, cluster title and reply-edge layout fixes in the global diagram skill, adds a script that turns a saved render result into dark and light contrast pages, and notes the background-tab screenshot hang in the browser skill",
+        "returns": "updated global skills, one registered script and the session logged to the ledger"
+      },
+      "portsAsIs": [
+        "render-result to contrast-page script"
+      ],
+      "perCustomer": [],
+      "evidence": [
+        "render-check.py reproduced the hand-written dark page byte for byte",
+        "fix-skill-frontmatter --check: 0 broken"
+      ],
+      "toolchain": {
+        "skills": [
+          "claude-learn",
+          "claude-learn-harvest",
+          "claude-learn-worktime",
+          "track-time",
+          "report"
+        ],
+        "mcpServers": [],
+        "agents": [
+          "fork"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "from": "08:24",
+      "to": "08:39",
+      "sessionId": "f13fac97-7903-4ac8-b9bf-91452fd4096d",
+      "branch": "delivery-26-10",
+      "commits": [],
+      "surfaces": [
+        "developer workstation"
+      ],
+      "files": [],
+      "mechanism": {
+        "takes": "a pasted warning text that names no source, plus the local credential setup",
+        "does": "checks every local GitHub credential and its granted scopes, then searches the installed editor extensions and CLI packages for the warning text to find the component that raises it and the sign-in it relies on",
+        "returns": "the component that raised the warning and the sign-in steps that grant the missing scopes"
+      },
+      "portsAsIs": [
+        "search of installed client code for an error text",
+        "credential scope inventory without printing secrets"
+      ],
+      "perCustomer": [
+        "which editors and CLIs are installed"
+      ],
+      "evidence": [
+        "warning text found in github.vscode-pull-request-github dist/extension.js, raised on GraphQL INSUFFICIENT_SCOPES",
+        "gh auth status: both local tokens already carry user:email and read:user"
+      ],
+      "toolchain": {
+        "skills": [],
+        "mcpServers": [
+          "claude_ai_GitHub-MCP"
+        ],
+        "agents": [
+          "general-purpose"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "from": "08:39",
+      "to": "08:51",
+      "sessionId": "f13fac97-7903-4ac8-b9bf-91452fd4096d",
+      "branch": "delivery-26-10",
+      "commits": [],
+      "surfaces": [
+        "claude-learn closing run"
+      ],
+      "files": [
+        "tasks/lessons.md",
+        "~/.claude/harvest-registry.md",
+        "~/.claude/delegation-errors.jsonl"
+      ],
+      "mechanism": {
+        "takes": "the finished troubleshooting session in context",
+        "does": "records where to search for the component behind a pasted error, closes the delegation slip the session logged and registers the search as a script candidate",
+        "returns": "one lesson, one closed slip, one candidate row and the session logged to the ledger"
+      },
+      "portsAsIs": [],
+      "perCustomer": [],
+      "evidence": [
+        "delegation log: 0 open lines after the run"
+      ],
+      "toolchain": {
+        "skills": [
+          "claude-learn",
+          "claude-learn-harvest",
+          "claude-learn-worktime",
+          "track-time",
+          "report"
+        ],
+        "mcpServers": [],
+        "agents": [
+          "fork"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "from": "13:17",
+      "to": "13:29",
+      "sessionId": "4eb88f31-6d19-4849-aac3-ec3c0de8191e",
+      "branch": "master",
+      "commits": [],
+      "surfaces": [
+        "claude-code-masterclass module 01",
+        "module 01 slide deck"
+      ],
+      "files": [
+        "demos/01-fundamentals/02-model-selection/readme.md",
+        "demos/01-fundamentals/readme.md",
+        "demos/01-fundamentals/pptx/02-02-context-window.md",
+        "demos/01-fundamentals/pptx/02-03-conversation-cache.md",
+        "demos/01-fundamentals/pptx/images/02-02-context-window.svg",
+        "demos/01-fundamentals/pptx/images/02-03-conversation-cache.svg",
+        "demos/01-fundamentals/pptx/01-fundamentals.pptx",
+        "~/.claude/skills/create-pptx/references/gamma-deck.md",
+        "~/.claude/skills/create-pptx/references/finished-deck-edits.md"
+      ],
+      "mechanism": {
+        "takes": "an owner's request for a missing concept in a course module, the official docs and a live run of the tool being taught",
+        "does": "places the concept in the topic that depends on it, writes the teaching from a real headless /context capture and the vendor docs, draws matching diagrams once for readme and slides, and inserts the new slides into the finished branded deck without regenerating it",
+        "returns": "two teaching sections with a real context breakdown and a sample conversation history, two diagrams, and a deck with two new slides and speaker notes delivered to the class folder"
+      },
+      "portsAsIs": [
+        "headless capture of a CLI's own diagnostic output for teaching material",
+        "inserting spec-driven slides into a finished deck with no regeneration cost"
+      ],
+      "perCustomer": [
+        "the course topic and its demo code",
+        "the deck theme and the delivery folder"
+      ],
+      "evidence": [
+        "/context run on claude-opus-5-5: 34.4k of 1m tokens",
+        "deck 29 to 31 slides, slide_quality problems=0, notes unmatched=0, delivered pptx=6083633 pdf=2328211"
+      ],
+      "toolchain": {
+        "skills": [
+          "create-class",
+          "create-pptx",
+          "brand-voice-code"
+        ],
+        "mcpServers": [],
+        "agents": [
+          "fact-gatherer",
+          "general-purpose"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "from": "13:46",
+      "to": "13:50",
+      "sessionId": "4eb88f31-6d19-4849-aac3-ec3c0de8191e",
+      "branch": "master",
+      "commits": [],
+      "surfaces": [
+        "claude-learn closing run"
+      ],
+      "files": [
+        "tasks/lessons.md",
+        "~/.claude/skills/create-pptx/references/finished-deck-edits.md",
+        "~/.claude/harvest-registry.md",
+        "~/.claude/delegation-errors.jsonl",
+        "D:/git-projects/integrations-marketplace/plugins/orchestration/subagent-delegation-plugin/hooks/register.ts",
+        "D:/git-projects/integrations-marketplace/plugins/orchestration/subagent-delegation-plugin/tests/subagent-delegation.test.ts"
+      ],
+      "mechanism": {
+        "takes": "the finished course authoring session in context and the open delegation slips",
+        "does": "replaces the superseded OneDrive lesson, records the mid-topic slide insertion and the headless /context capture, frees image reads from the main-thread lookup cap with a test, and closes the open slips",
+        "returns": "three lessons, one skill paragraph, one candidate procedure, one delegation fix and the session logged to the ledger"
+      },
+      "portsAsIs": [],
+      "perCustomer": [],
+      "evidence": [
+        "subagent-delegation-plugin tests: 71 pass, 0 fail",
+        "delegation log: 0 open lines after the run"
+      ],
+      "toolchain": {
+        "skills": [
+          "claude-learn",
+          "claude-learn-harvest",
+          "claude-learn-worktime",
+          "track-time",
+          "report"
+        ],
+        "mcpServers": [],
+        "agents": [
+          "fork"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "from": "14:43",
+      "to": "14:49",
+      "sessionId": "d1ec3cc5-19bf-4ad6-9189-4598b06e489a",
+      "branch": "master",
+      "commits": [],
+      "surfaces": [
+        "hetzner-devops-expert agent"
+      ],
+      "files": [
+        ".claude/agents/hetzner-devops-expert.md"
+      ],
+      "mechanism": {
+        "takes": "a pasted list of CI pipeline tools and an existing deployment agent definition",
+        "does": "sorts each tool by kind, wires tool servers into the agent tool list and server block, writes linters, schema validation, log reading and local pipeline runs into a usage table with exact commands, leaves out what has no call or breaks the agent rules, and checks in parallel which binaries the workstation has",
+        "returns": "a deployment agent that lists, triggers, reruns and diagnoses pipeline runs, reads job logs, lints workflows and runs them locally, plus the tools still to install"
+      },
+      "portsAsIs": [
+        "tool list to agent wiring by kind",
+        "web facts and a local install check run in parallel"
+      ],
+      "perCustomer": [
+        "the CI system and deploy target the agent serves"
+      ],
+      "evidence": [
+        "local check: gh, docker and go installed; actionlint, act, check-jsonschema and gh-actions-mcp missing",
+        "facts: gh-actions-mcp exposes 14 tools, the GitHub MCP actions toolset 4"
+      ],
+      "toolchain": {
+        "skills": [
+          "claude-orchestration"
+        ],
+        "mcpServers": [],
+        "agents": [
+          "fact-gatherer",
+          "general-purpose"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "from": "15:06",
+      "to": "15:12",
+      "sessionId": "d1ec3cc5-19bf-4ad6-9189-4598b06e489a",
+      "branch": "master",
+      "commits": [],
+      "surfaces": [
+        "claude-learn closing run"
+      ],
+      "files": [
+        "tasks/lessons.md",
+        "~/.claude/delegation-errors.jsonl"
+      ],
+      "mechanism": {
+        "takes": "the finished agent tooling session in context and the open delegation slips",
+        "does": "records why a requested repo agent stays beside its global namesake and how a tool list is wired into an agent, closes the open slip against the existing lesson, and logs the session",
+        "returns": "two lessons, one closed slip and the session logged to the ledger"
+      },
+      "portsAsIs": [],
+      "perCustomer": [],
+      "evidence": [
+        "delegation log: 0 open lines after the run"
+      ],
+      "toolchain": {
+        "skills": [
+          "claude-learn",
+          "claude-learn-harvest",
+          "claude-learn-worktime",
+          "track-time",
+          "report"
+        ],
+        "mcpServers": [],
+        "agents": [
+          "fork"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "from": "15:31",
+      "to": "15:33",
+      "sessionId": "2f7dae6f-07ce-4821-9d5c-2959ab6653d8",
+      "branch": "master",
+      "commits": [],
+      "surfaces": [
+        "qr-mcp-app-py sample"
+      ],
+      "files": [],
+      "mechanism": {
+        "takes": "a question about a sample app folder and a question about current model prices",
+        "does": "hands the code reading to a low-cost read-only helper and answers from its facts, then answers the price question from the bundled API reference",
+        "returns": "a short app summary and a price table in chat"
+      },
+      "portsAsIs": [],
+      "perCustomer": [],
+      "evidence": [
+        "answers given in chat, no files changed",
+        "price table from the API reference cached 2026-10-06"
+      ],
+      "toolchain": {
+        "skills": [
+          "claude-api"
+        ],
+        "mcpServers": [],
+        "agents": [
+          "fact-gatherer"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-27",
+      "from": "15:53",
+      "to": "15:57",
+      "sessionId": "2f7dae6f-07ce-4821-9d5c-2959ab6653d8",
+      "branch": "master",
+      "commits": [],
+      "surfaces": [
+        "claude-learn closing run"
+      ],
+      "files": [
+        "tasks/lessons.md"
+      ],
+      "mechanism": {
+        "takes": "the finished question-and-answer session in context and its transcript",
+        "does": "finds that the background learn run printed its start message twice because the turn ended without text after the launch, records the order that avoids it, and logs the session",
+        "returns": "one lesson, one held-back change to the learning loop skill and the session logged to the ledger"
+      },
+      "portsAsIs": [],
+      "perCustomer": [],
+      "evidence": [
+        "transcript: harness nudge 'no visible output' at 14:53:33Z followed by a second start message",
+        "delegation log: 0 open lines before and after the run"
+      ],
+      "toolchain": {
+        "skills": [
+          "claude-learn",
+          "claude-learn-worktime",
+          "track-time"
+        ],
+        "mcpServers": [
+          "worktime-mcp"
+        ],
+        "agents": [
+          "fork"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-28",
+      "from": "09:17",
+      "to": "09:23",
+      "sessionId": "1df9b9c7-85ab-4c84-a41a-966dd0e8556c",
+      "branch": "master",
+      "commits": [],
+      "surfaces": [
+        "module 05 subagents and agent teams deck"
+      ],
+      "files": [
+        "demos/05-subagents-agent-teams/pptx/images/04-01-delegation.svg",
+        "demos/05-subagents-agent-teams/pptx/04-01-delegation.md",
+        "demos/05-subagents-agent-teams/pptx/05-subagents-agent-teams.pptx"
+      ],
+      "mechanism": {
+        "takes": "a screenshot of an existing slide diagram and a one-line change request",
+        "does": "has a low-cost read-only helper locate the diagram source, its slide spec and the model of each agent, redraws the diagram with the new steps and model labels, swaps the image into the finished deck at its embedded size, rewrites the speaker notes and re-exports the PDF",
+        "returns": "the updated deck and PDF in the class folder, byte-identical to the repo copies"
+      },
+      "portsAsIs": [
+        "diagram fix in a finished deck without regenerating it",
+        "delivery to the class folder with a byte compare"
+      ],
+      "perCustomer": [
+        "the diagram content",
+        "the class folder"
+      ],
+      "evidence": [
+        "swap-image: swapped=1 slide=23",
+        "notes: unmatched=0 missing=0",
+        "slide_quality: problems=0",
+        "deliver: cmp match for pptx and pdf"
+      ],
+      "toolchain": {
+        "skills": [
+          "create-pptx"
+        ],
+        "mcpServers": [],
+        "agents": [
+          "fact-gatherer"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-28",
+      "from": "09:40",
+      "to": "09:45",
+      "sessionId": "1df9b9c7-85ab-4c84-a41a-966dd0e8556c",
+      "branch": "master",
+      "commits": [],
+      "surfaces": [
+        "claude-learn closing run"
+      ],
+      "files": [
+        "tasks/lessons.md"
+      ],
+      "mechanism": {
+        "takes": "the finished deck session in context and its transcript",
+        "does": "finds the empty-turn nudge after the learn run's launch recurred despite the lesson, records the recurrence, dismisses one stale routing slip and logs the session",
+        "returns": "one lesson update, one held-back change to the learning loop skill and the session logged to the ledger"
+      },
+      "portsAsIs": [],
+      "perCustomer": [],
+      "evidence": [
+        "transcript: harness nudge 'no visible output' at 08:40:55Z right after the fork launch",
+        "delegation log: 1 open line dismissed, 0 open after the run"
+      ],
+      "toolchain": {
+        "skills": [
+          "claude-learn",
+          "claude-learn-worktime",
+          "track-time"
+        ],
+        "mcpServers": [
+          "worktime-mcp"
+        ],
+        "agents": [
+          "fork"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-28",
+      "from": "09:21",
+      "to": "09:26",
+      "sessionId": "afe439b1-aa8f-4213-af32-57475aca18f4",
+      "branch": "master",
+      "commits": [],
+      "surfaces": [
+        "session history lookup"
+      ],
+      "files": [],
+      "mechanism": {
+        "takes": "a folder path and the question which instruction last changed it",
+        "does": "scans every recorded AI coding session for file writes under the path and traces each write back to the typed instruction behind it",
+        "returns": "the instruction text with its session and time, and the files it changed"
+      },
+      "portsAsIs": [],
+      "perCustomer": [],
+      "evidence": [
+        "prompt uuid f0a64cf1 and its text confirmed by grep in transcript 5969506c"
+      ],
+      "toolchain": {
+        "skills": [],
+        "mcpServers": [],
+        "agents": [
+          "general-purpose"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    },
+    {
+      "date": "2026-10-28",
+      "from": "09:43",
+      "to": "09:52",
+      "sessionId": "afe439b1-aa8f-4213-af32-57475aca18f4",
+      "branch": "master",
+      "commits": [],
+      "surfaces": [
+        "claude-learn closing run"
+      ],
+      "files": [
+        "tasks/lessons.md"
+      ],
+      "mechanism": {
+        "takes": "a path pattern and an optional date window over the recorded AI coding sessions",
+        "does": "lists the typed instructions whose turn wrote a matching file, crediting delegated agents' writes to the instruction that briefed them",
+        "returns": "one block per instruction with its time and the files written, plus a count line"
+      },
+      "portsAsIs": [
+        "path-to-instruction lookup across session transcripts"
+      ],
+      "perCustomer": [],
+      "evidence": [
+        "session-find.py --touched food-shop-react reproduced the hand trace: writes=21 prompts=3 sessions=1",
+        "it listed src/index.css, which the hand trace missed"
+      ],
+      "toolchain": {
+        "skills": [
+          "claude-learn",
+          "claude-learn-harvest",
+          "claude-learn-worktime",
+          "track-time"
+        ],
+        "mcpServers": [
+          "worktime-mcp"
+        ],
+        "agents": [
+          "fork"
+        ]
+      },
+      "industry": "technical training",
+      "status": "Built and running in-house",
+      "catalogue": {
+        "action": "none"
+      }
+    }
+  ]
 }

@@ -5,9 +5,9 @@
   gap: 1rem;
   width: 50vw;
   min-width: 360px;
-  border: 1px dotted black;
+  border: 1px dotted var(--color-border-strong);
   padding: 1rem;
-  background-color: lightgrey;
+  background-color: var(--color-surface-muted);
 }
 
 .title{

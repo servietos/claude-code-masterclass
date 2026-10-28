@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 400" width="1920" height="400" role="img">
+<title>Three shapes of orchestration</title>
+<desc>Delegation, where the plan lives in a prompt, leads to Loops, where the plan repeats until a rule holds, which leads to Graph, where the plan lives in a script.</desc>
+<style>
+svg { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 26px; }
+.t { font-weight: 600; fill: #24292f; }
+.s { fill: #57606a; }
+.code { font-family: Consolas, 'Courier New', monospace; fill: #57606a; }
+.lbl { fill: #57606a; font-style: italic; }
+.box { stroke: #8c959f; stroke-width: 2; }
+.edge { fill: none; stroke: #8c959f; stroke-width: 3; }
+.hl { fill: none; stroke: #e0a534; stroke-width: 7; opacity: 0; animation: 10s linear infinite; }
+.tok { fill: #e0a534; stroke: #ffffff; stroke-width: 3; opacity: 0; animation: 10s linear infinite; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+@keyframes kh0 { 0.000% { opacity: 0; } 3.000% { opacity: 0; } 5.500% { opacity: 1; } 20.000% { opacity: 1; } 22.500% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh1 { 0.000% { opacity: 0; } 27.000% { opacity: 0; } 29.500% { opacity: 1; } 44.000% { opacity: 1; } 46.500% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kh2 { 0.000% { opacity: 0; } 51.000% { opacity: 0; } 53.500% { opacity: 1; } 66.000% { opacity: 1; } 68.500% { opacity: 0; } 100.000% { opacity: 0; } }
+@keyframes kt0 { 0.000% { transform: translate(600px, 200px); opacity: 0; } 20.000% { transform: translate(600px, 200px); opacity: 0; } 20.100% { transform: translate(600px, 200px); opacity: 1; } 27.243% { transform: translate(700px, 200px); opacity: 1; } 27.500% { transform: translate(700px, 200px); opacity: 1; } 27.600% { transform: translate(700px, 200px); opacity: 0; } 100.000% { transform: translate(700px, 200px); opacity: 0; } }
+@keyframes kt1 { 0.000% { transform: translate(1220px, 200px); opacity: 0; } 44.000% { transform: translate(1220px, 200px); opacity: 0; } 44.100% { transform: translate(1220px, 200px); opacity: 1; } 51.243% { transform: translate(1320px, 200px); opacity: 1; } 51.500% { transform: translate(1320px, 200px); opacity: 1; } 51.600% { transform: translate(1320px, 200px); opacity: 0; } 100.000% { transform: translate(1320px, 200px); opacity: 0; } }
+</style>
+<rect width="1920" height="400" fill="#ffffff"/>
+<defs><marker id="arr" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="24" markerHeight="24" markerUnits="userSpaceOnUse" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#8c959f"/></marker></defs>
+<path class="edge" d="M600,200 L698,200" marker-end="url(#arr)"/>
+<path class="edge" d="M1220,200 L1318,200" marker-end="url(#arr)"/>
+<rect class="box" x="80" y="100" width="520" height="200" rx="14" fill="#eaf2ff"/>
+<text class="t" x="340.0" y="190" text-anchor="middle">Delegation</text>
+<text class="s" x="340.0" y="230" text-anchor="middle">plan lives in a prompt</text>
+<rect class="box" x="700" y="100" width="520" height="200" rx="14" fill="#f3edff"/>
+<text class="t" x="960.0" y="190" text-anchor="middle">Loops</text>
+<text class="s" x="960.0" y="230" text-anchor="middle">plan repeats until a rule holds</text>
+<rect class="box" x="1320" y="100" width="520" height="200" rx="14" fill="#e9f7ef"/>
+<text class="t" x="1580.0" y="190" text-anchor="middle">Graph</text>
+<text class="s" x="1580.0" y="230" text-anchor="middle">plan lives in a script</text>
+<rect class="hl" id="h0" x="76" y="96" width="528" height="208" rx="17" style="animation-name: kh0;"/>
+<rect class="hl" id="h1" x="696" y="96" width="528" height="208" rx="17" style="animation-name: kh1;"/>
+<rect class="hl" id="h2" x="1316" y="96" width="528" height="208" rx="17" style="animation-name: kh2;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt0;"/>
+<circle class="tok" cx="0" cy="0" r="15" style="animation-name: kt1;"/>
+</svg>

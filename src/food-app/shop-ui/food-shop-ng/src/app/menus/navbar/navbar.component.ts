@@ -5,7 +5,8 @@ import { NavItem } from './nav-item.model';
 import { RouterLinkActive, RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { ThemeService } from '../../shared/theme/theme.service';
 
 @Component({
     selector: 'app-navbar',
@@ -14,7 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
-    MatToolbarModule,
+    MatButtonModule,
     MatIconModule,
     RouterLinkActive,
     RouterLink,
@@ -24,6 +25,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 export class NavbarComponent {
   http = inject(HttpClient);
   mf = inject(SidenavFacade);
+  themes = inject(ThemeService);
+  theme = this.themes.theme;
   menuItems = this.http.get<NavItem[]>('/assets/nav-items.json');
 
   toggleMenu() {

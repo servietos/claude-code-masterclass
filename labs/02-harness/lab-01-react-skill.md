@@ -39,6 +39,14 @@ Launching inside the starter is what makes the repository a monorepo to this lab
 
 The lab project is a copy of the React app, the same app Lab 02 works on, so the skill you install here is one folder copy away from the harness Lab 02 builds.
 
+The app reads the catalog API address from a `.env` file in the starter, and git ignores that file, so a fresh clone does not have it. Create `labs/02-harness/lab-01-react-skill/.env` with this one line, which points the app at port 5000, where Lab 02 starts the catalog API:
+
+```dotenv
+REACT_APP_CATALOG_API_URL=http://localhost:5000
+```
+
+Without it, `src/App.tsx` falls back to `https://localhost:5001`, where nothing listens, and the app shows `Error loading catalog`.
+
 The finished reference lives beside the starter at `labs/02-harness/lab-01-react-skill-solution/`; open it only if you get stuck.
 
 ---

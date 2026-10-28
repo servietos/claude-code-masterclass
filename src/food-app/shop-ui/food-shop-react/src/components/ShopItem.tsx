@@ -55,29 +55,36 @@ export const ShopItem: React.FC<ShopItemProps> = ({
   };
 
   return (
-    <div className='shop-item'>
-      <div className='item-header'>
-        <h3>
-          {food.name} - {food.price.toFixed(2)} €
-        </h3>
+    <article className={`shop-item${quantity > 0 ? ' in-cart' : ''}`}>
+      {food.pictureUrl && (
+        <img
+          src={`/assets/images/${food.pictureUrl}`}
+          alt={food.name}
+          className='item-image'
+          onError={(e) => {
+            (e.target as HTMLImageElement).style.display = 'none';
+          }}
+        />
+      )}
+      <div className='text-section'>
+        <h2 className='item-title'>{food.name}</h2>
+        <p className='description'>{food.description}</p>
       </div>
-      <div className='item-content'>
-        {food.pictureUrl && (
-          <img
-            src={`/assets/images/${food.pictureUrl}`}
-            alt={food.name}
-            className='item-image'
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-            }}
-          />
-        )}
-        <div className='text-section'>
-          <p className='description'>{food.description}</p>
-        </div>
-        <div className='controls-section'>
-          <button onClick={handleDecrement} className='icon-btn' title='Remove'>
-            ⊖
+      <div className='side-section'>
+        <span className='price'>{food.price.toFixed(2)} €</span>
+        <div
+          className='number-picker'
+          role='group'
+          aria-label={`Quantity of ${food.name}`}
+        >
+          <button
+            type='button'
+            onClick={handleDecrement}
+            className='picker-btn picker-remove'
+            aria-label={`Remove one ${food.name}`}
+            disabled={quantity <= 0}
+          >
+            <span className='material-icons'>remove</span>
           </button>
           <input
             type='number'
@@ -85,12 +92,18 @@ export const ShopItem: React.FC<ShopItemProps> = ({
             value={quantity}
             onChange={handleQuantityChange}
             className='quantity-input'
+            aria-label={`Quantity of ${food.name}`}
           />
-          <button onClick={handleIncrement} className='icon-btn' title='Add'>
-            ⊕
+          <button
+            type='button'
+            onClick={handleIncrement}
+            className='picker-btn picker-add'
+            aria-label={`Add one ${food.name}`}
+          >
+            <span className='material-icons'>add</span>
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 };

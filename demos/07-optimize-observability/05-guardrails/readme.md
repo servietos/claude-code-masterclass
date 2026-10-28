@@ -42,7 +42,7 @@ An allow rule only skips the prompt, it never restricts. Restriction comes from 
 
 ## Least Privilege Per Sub-Agent
 
-Scoping a sub-agent with `tools`, `disallowedTools`, and `permissionMode` in its frontmatter is taught in [Module 6](../../06-subagents-agent-teams/01-introduction/readme.md). Absence is the stronger of the two defenses on this page: interception inspects a call that was made, while a tool the agent never received leaves no call to inspect and no argument to reason about.
+Scoping a sub-agent with `tools`, `disallowedTools`, and `permissionMode` in its frontmatter is taught in [Module 5](../../05-subagents-agent-teams/01-introduction/readme.md). Absence is the stronger of the two defenses on this page: interception inspects a call that was made, while a tool the agent never received leaves no call to inspect and no argument to reason about.
 
 ## Demo: Hook Guardrails and Least Privilege
 

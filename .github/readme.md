@@ -13,8 +13,8 @@ Across 11 hands-on modules, you'll go from Claude Code fundamentals to productio
 | [02 Harness](/demos/02-harness/readme.md) | Settings hierarchy, custom slash commands, and event-driven hooks |
 | [03 Skills](/demos/03-skills/readme.md) | Skill anatomy, invocation model, authoring by hand and from a conversation |
 | [04 MCP](/demos/04-mcp/readme.md) | MCP architecture, connecting remote endpoints, wrapping REST APIs as servers |
-| [05 CLI](/demos/05-cli/readme.md) | Headless `-p` runs, tool scoping, parallel isolation, and long-running goal patterns |
-| [06 Sub-agents and Agent Teams](/demos/06-subagents-agent-teams/readme.md) | Sub-agent frontmatter, tool restriction, and orchestrator decomposition patterns; lead, teammates, shared task list and mailbox, and where a team beats a sub-agent |
+| [05 CLI](/demos/06-automate-cli/readme.md) | Headless `-p` runs, tool scoping, parallel isolation, and long-running goal patterns |
+| [06 Sub-agents and Agent Teams](/demos/05-subagents-agent-teams/readme.md) | Sub-agent frontmatter, tool restriction, and orchestrator decomposition patterns; lead, teammates, shared task list and mailbox, and where a team beats a sub-agent |
 | [07 Optimize and Observability](/demos/07-optimize-observability/readme.md) | Prompt audit, caveman compression, the autoresearch promote/revert loop, prompt injection, hook guardrails, and tracing |
 | [08 Distribution](/demos/08-distribution/readme.md) | Plugin manifests, converting a `.claude/` config, and marketplace catalogs |
 | [09 Agentic DevOps](/demos/09-agentic-devops/readme.md) | Containerized deploy to a plain Ubuntu host over SSH, with the agent proving the result |
