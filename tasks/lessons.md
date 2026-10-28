@@ -1125,3 +1125,23 @@
 **Pattern (2026-10-27):** On `/claude-learn` the main thread printed the announce line, launched the background fork, and ended the turn with no text, as the claude-learn skill says. The harness answered the empty closing message with "Your previous response had no visible output", and the main thread printed a reworded second announce: the echo the skill's 2026-10-25 rule was written to stop.
 
 **Rule:** Launch the `Agent` call first and print the announce line once, after it, as the turn's only text. The plugin's claude-learn skill still says to announce before the call; changing it waits for the owner's yes.
+
+**Recurred (2026-10-28):** The main thread launched the fork with no text and returned nothing after the tool result, so the same nudge came one second later. The lesson alone did not hold while the loaded skill text says otherwise: the skill edit is asked for again.
+
+## A change to a finished deck skips the Gamma playbook
+
+**Pattern (2026-10-28):** Asked for one extra slide each on topics 06 and 07 of module 05, `/create-repo-pptx` loaded its 14-step Gamma table (photo batch, paid Gamma calls) and asked for the missing `.claude/rules/decks.md`. The work that fit was create-pptx `finished-deck-edits.md`: two specs, two SVGs, `add_spec_slide.py`, `notes`, `clean --skip 4`, `slide_quality.py`, `deliver`, no credits and no `decks.md`. The first cloned card passed `slide_quality.py` with `dense=0` while its fifth bullet sat on the slide's bottom edge; only the rendered page showed it.
+
+**Rule:** A new, fixed, dropped or moved card in an existing module deck goes straight to `finished-deck-edits.md`; the OneDrive class folder is the `deliver` destination. Render every new page and look at it (PyMuPDF, since poppler is not installed), keep bullets near 60 characters, and redo a card in place with `add_spec_slide.py --after N --drop N`. The create-repo-pptx command and the create-pptx leaf carry both since this session.
+
+## The three free lookups are for checking my own edits
+
+**Pattern (2026-10-28):** While adding the module 05 slides, the main thread spent its free lookups on reading specs, script help and `order:` lines, so the delegation mod denied the final grep for em dashes and negative parallelism over the four files it had just written. A second session on the same day logged the same kind of slip while reading slide images it was about to publish.
+
+**Rule:** Put the pre-edit reading of repo files (the specs to clone, their `order:` lines) into the fact-gatherer brief and take script usage from the skill leaves, which are free, so the main-thread lookups stay for the checks of my own writes. Run those checks with absolute paths, never relative after a `cd`.
+
+## "Which prompt changed this app" is a transcript lookup with a script
+
+**Pattern (2026-10-28):** Asked for the last prompt that modified `src/food-app/shop-ui/food-shop-react`, the main thread briefed a Haiku general-purpose agent, which wrote a one-off script, traced `parentUuid` chains that ended at injected teammate messages and stepped back to the typed prompts by hand. The main thread checked the prompt's uuid and text by grep and relayed the file list unchecked; it missed `src/index.css`. Git log only showed a rename commit and the initial import.
+
+**Rule:** Brief the shell lookup to run claude-learn's `session-find.py --touched <path regex> --project <slug part> --last 3`, which credits each write (subagents and shell writes included) to the typed prompt behind it. Check a delegate's file list against that output before relaying it; git log only names commits. Transcript times are UTC; give the owner local time.

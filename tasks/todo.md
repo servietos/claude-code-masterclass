@@ -294,3 +294,15 @@ Deck: `demos/05-subagents-agent-teams/pptx/05-subagents-agent-teams.pptx`, no Ga
 - [x] `order:` 07-01..07-03 to 32..34, 99-01 to 36; `check_specs.py --legacy` problems=0
 - [x] `add_spec_slide.py` x2 (template slide 39; 07-04 redone once with shorter bullets), `notes` 36/36 unmatched=0, `clean --skip 4` twice removed=0, pages 41 and 46 checked, `slide_quality.py` problems=0
 - [x] Delivered: PPTX and PDF `cmp` match the OneDrive copies
+
+## Vue port of the food shop UI
+
+Owner ask (2026-10-28): "src\food-app\shop-ui we need a vue implementation of this frontend ... implement it ultracode"
+
+Reference: `src/food-app/shop-ui/food-shop-ng` (the current Angular app: orange tokens, dark mode, Plus Jakarta Sans). Target: `src/food-app/shop-ui/food-shop-vue`, Vue 3 + Vite + TypeScript + vue-router + Pinia, no UI library, dev server on 4200 like the Angular app.
+
+- [ ] Foundation: project config, public assets, env, models, API, stores, services, shell (navbar, sidebar, home, about, login, current user, number picker)
+- [ ] Features in parallel: catalog (list, edit) and shop (shop, item, checkout, form, response)
+- [ ] Integrate: `npm run build` (vue-tsc + vite) clean
+- [ ] Verify: parity review against the Angular source, then a browser run beside the Angular app
+- [ ] Fix what the verify stage confirms, rebuild

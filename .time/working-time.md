@@ -91,4 +91,9 @@ Machine hours spent on this repository, one row per working day.
 | 2026-10-27 | 0.03 | 15:31 | 15:33 | QR code sample app explained and Claude model prices compared |
 | 2026-10-27 | 0.07 | 15:53 | 15:57 | Lesson on the learning loop's start message recorded, learning loop closed out |
 
-**Total: 46.09 hours**
+| 2026-10-28 | 0.10 | 09:17 | 09:23 | Delegation diagram in the subagents module extended with fact gathering, models and an optional plan review, slide deck published |
+| 2026-10-28 | 0.05 | 09:21 | 09:26 | Last change request for the React food shop sample traced in the session history |
+| 2026-10-28 | 0.08 | 09:40 | 09:45 | Learning loop closed out, the recurring start message fix put to the owner |
+| 2026-10-28 | 0.12 | 09:43 | 09:52 | Session history lookup by changed file made reusable, lesson recorded, learning loop closed out |
+
+**Total: 46.44 hours**
