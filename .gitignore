@@ -27,4 +27,4 @@ agent-instructions/
 demos/**/pptx/
 exam-prep/
 
-labs/09-agentic-devops/azure-linux.md
+labs/09-agentic-devops/**/azure-linux.md

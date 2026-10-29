@@ -12,7 +12,7 @@ Each step contains:
 
 ## Prerequisites
 
-- **Your lab VM**: the access data your instructor handed out, with the VM's public IP, the user `azureuser` and a password. The VM runs Ubuntu 24.04, and cloud-init installed Docker Engine with the Compose plugin, Node.js 24, Google Chrome and Claude Code on its first boot. Its network security group admits SSH on port 22 only, so everything this lab publishes stays reachable from the VM alone. The instructor creates the VMs with [create-lab-vm.azcli](create-lab-vm.azcli), which installs the tools through [cloud-init.yaml](cloud-init.yaml) and writes each VM's access data to `azure-linux.md`.
+- **Your lab VM**: the access data your instructor handed out, with the VM's public IP, the user `azureuser` and a password. The VM runs Ubuntu 24.04, and cloud-init installed Docker Engine with the Compose plugin, Node.js 24, Google Chrome and Claude Code on its first boot. Its network security group admits SSH on port 22 only, so everything this lab publishes stays reachable from the VM alone. The instructor creates the VMs with [create-lab-vm.azcli](az-provision/create-lab-vm.azcli), which installs the tools through [cloud-init.yaml](az-provision/cloud-init.yaml) and writes each VM's access data to `azure-linux.md`.
 - **An SSH client on your own machine**: `ssh` ships with Windows 10 and 11, macOS and Linux. Confirm with `ssh -V`.
 - **Ports 2222, 8080 and 8443 free on the VM**: the box publishes SSH on 2222 and the edge's 80 and 443 on 8080 and 8443. A fresh lab VM has all three free.
 - **Claude Code 2.x**: preinstalled on the VM. Step 9 writes a sub-agent definition, which needs a 2.x harness.

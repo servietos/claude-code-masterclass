@@ -1,5 +1,15 @@
 # Todo
 
+## Lab 05 in labs/09-agentic-devops: a compliance skill from researched links
+
+Owner ask (2026-10-29): "add lab 05 where you let the users create something like our /compliance skills by letting them search 3 links for each of the compliance subtopics like a11y, dsvgo, eu ai act and then optimize there sites". Owner answers: discover-recipe format, the Hugo blog from Lab 03 as the site, two files (container and VM editions).
+
+- [x] Facts: `my-blog/` theme, third-party requests, pages; Lab 03 build, tunnel and redeploy commands in both editions
+- [x] `lab-05-compliance-skill-container.md` and `lab-05-compliance-skill-vm.md`: three link-research steps (a11y, DSGVO, EU AI Act), build the skill from the nine links, audit the deployed blog, fix, redeploy, re-audit
+- [x] Rows in `labs/09-agentic-devops/readme.md` (lab table, prerequisites, starters table, total time)
+- [x] Verify: fences tagged, links and anchors resolve, no em dashes, no negative parallelism, paragraphs at most 4 sentences; the Step 6 fixes applied to a scratch copy of `my-blog` build with Hugo and every Step 6 grep matches
+- [ ] Not run: the lab end to end on a box (web research, skill build, audit, redeploy)
+
 ## Lab 09 guides for the Azure lab VMs
 
 Owner ask (2026-10-29): "write alternativ guides with a *-vm suffix for the azure vms" for `lab-01` to `lab-04` in `labs/09-agentic-devops`.

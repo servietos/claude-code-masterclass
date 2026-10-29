@@ -6,14 +6,15 @@
 | 02  | Container Apps     | Deploy a React + Vite App to the Ubuntu Box                | [Local container](lab-02-react-vite-ubuntu-box-container.md) or [Azure lab VM](lab-02-react-vite-ubuntu-box-vm.md)     | Optional | Intermediate | 45m    | Build the `react-devops` image, ship it over SSH to the Lab 01 box, run it in its own nginx container on a dedicated port, and prove it serves through an SSH tunnel.                                                                                              |
 | 03  | Static Sites       | Deploy a Hugo Blog to the Ubuntu Box                       | [Local container](lab-03-hugo-blog-ubuntu-box-container.md) or [Azure lab VM](lab-03-hugo-blog-ubuntu-box-vm.md)       | Optional | Intermediate | 1h 15m | Generate two blog posts with Claude Code, build the Clarity blog inside a container so no Hugo install is needed, then ship and serve it on the same box, ending with a redeploy that proves the new post is live.                                                 |
 | 04  | Web Vitals and SEO | Optimize Web Vitals and SEO on the Deployed App            | [Local container](lab-04-web-vitals-and-seo-container.md) or [Azure lab VM](lab-04-web-vitals-and-seo-vm.md)           | Optional | Intermediate | 1h 15m | Audit the app served through the Lab 01 Caddy edge with the `agentic-seo` skill and Lighthouse CI, assert LCP, TBT and CLS thresholds, then fix three findings in the layer that owns each, site source or Caddyfile, and prove every change on the deployed URL. |
+| 05  | Compliance         | Build a Compliance Skill and Audit Your Site               | [Local container](lab-05-compliance-skill-container.md) or [Azure lab VM](lab-05-compliance-skill-vm.md)               | Optional | Intermediate | 1h 15m | Research three sources each for accessibility, the DSGVO and the EU AI Act, build a `site-compliance` skill from the nine links, then audit the Lab 03 blog on the box, fix one finding per topic in a template override or the content, and prove each fix on the served site. |
 
 Every lab ships in two editions that teach the same steps. The **local container** edition runs the box as a container on Docker on your own machine. The **Azure lab VM** edition runs the same lab on an Ubuntu VM your instructor provides, with Docker Engine, Node.js, Google Chrome and Claude Code preinstalled, so your own machine needs only an SSH client. Pick one edition and stay with it: Labs 02 to 04 reuse the box Lab 01 built.
 
-The instructor creates the lab VMs with [create-lab-vm.azcli](create-lab-vm.azcli). It asks for the number of VMs, installs the tools on each one through [cloud-init.yaml](cloud-init.yaml), and writes every VM's public IP, user and password to `azure-linux.md` for handing out.
+The instructor creates the lab VMs with [create-lab-vm.azcli](az-provision/create-lab-vm.azcli). It asks for the number of VMs, installs the tools on each one through [cloud-init.yaml](az-provision/cloud-init.yaml), and writes every VM's public IP, user and password to `azure-linux.md` for handing out.
 
 **Core** is the one lab that teaches this module's central capability; run it if you run nothing else. **Optional** labs go deeper or cover a second build pipeline. **Level** rates the lab itself: Beginner needs no prior Claude Code experience, Intermediate assumes you have configured a harness before, Advanced assumes you are comfortable with hooks, subagents, or headless scripting.
 
-Core path: 1h 30m. All labs: 4h 45m.
+Core path: 1h 30m. All labs: 6h.
 
 Every lab needs a working Docker installation, which is why no figure includes a Docker install. Lab 04 also runs `npx` tools on your machine, so it needs Node.js and Chrome there.
 
@@ -28,6 +29,7 @@ Every path here stays account-light. The local container editions need only Dock
 - Lab 01 needs **Claude Code 2.x**, because Step 9 writes a sub-agent definition.
 - Labs 02 and 03 build on Lab 01: they need its box running with the `deploy` user, Docker, and the `vfs` storage driver in place.
 - Lab 04 builds on Lab 01 through Step 8: it needs the box and the Caddy edge running, the `react-devops/deploy/` folder still in place for its key and CA certificate, **Node.js 20 or newer**, **Google Chrome**, and the global `agentic-seo` skill.
+- Lab 05 builds on Lab 03: it needs the box from Lab 01, the `my-blog` starter with its posts and `dockerfile`, and web access for Claude Code's WebSearch and WebFetch tools.
 
 ## Starters and Solutions
 
@@ -37,6 +39,7 @@ Every path here stays account-light. The local container editions need only Dock
 | 02  | The image tag and the container commands in `react-devops/`                                                                                                        | `react-devops-solution/`                                                                                                                                                                                                                                          |
 | 03  | The `baseURL`, both blog posts and the containerized `dockerfile` in the Hugo starter at `my-blog/`                                                                | `my-blog-solution/`                                                                                                                                                                                                                                               |
 | 04  | The scored `.seo/` audits, `.lighthouserc.json`, and three fixes in `index.html` and the box's Caddyfile, inside the pristine copy at `react-devops-seo/` | None checked in. The nearest finished example of the same loop is the module demo [Optimize a Site on the Box with Agentic SEO and Lighthouse CI](../../demos/09-agentic-devops/03-agentic-optimization/demo-agentic-seo-optimization.md) |
+| 05  | The `site-compliance` skill with its `sources.md`, the `.compliance/` audit reports, and the fixes under `layouts/` and `content/` in the Hugo starter at `my-blog/` | None checked in. The repository's own [compliance skill](../../.claude/skills/compliance/SKILL.md) is the model the lab's skill follows |
 
 Lab 01 and Lab 02 share the same starter at `react-devops/`. Work there and keep it pristine: no `node_modules`, no build output, no test reports committed back. Build your own result from the guide first and treat a solution folder as a check.
 
