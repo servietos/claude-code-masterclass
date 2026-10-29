@@ -13,14 +13,14 @@
 
 | Topic | Description |
 |-------|-------------|
-| [01: Core API Surface](01-api-surface/readme.md) | Where the Agent SDK sits next to the Messages API, Claude Code and Managed Agents; the `query()` async iterator and its options; resume, continue and fork; custom tools as in-process MCP servers; typed output; and the API-level output controls `tool_choice`, Structured Outputs and the Message Batches API. |
-| [02: Parallel Agents](02-parallel-agents/readme.md) | The parallel pattern with `Promise.all`, the canary isolation test, the orchestrator pattern, and typed contracts across agent boundaries. |
-| [03: Managed Agents Foundations](03-foundations/readme.md) | When the hosted runtime pays off over running the loop yourself, the three resources (Agent, Environment, Session), and the session state machine. |
-| [04: Sessions & Streaming](04-sessions-streaming/readme.md) | Cloud containers with networking and file mounts, the SSE event model, mid-execution steering, session threads, and a 25-minute end-to-end demo that touches every primitive in one flow. |
-| [05: Production Features](05-production-features/readme.md) | Vaults with automatic token refresh, webhooks on `session.status_idled`, per-tool permission policies, agent versioning, Console observability, scheduled deployments, and the `ant` CLI for YAML-versioned resources. |
-| [06: Tools & MCP](06-tools-mcp/readme.md) | The two extension points on an Agent: MCP servers declared alongside an `mcp_toolset` grant with its own permission policy, and skills that mount a procedure into the container and load on demand. |
-| [07: Human-in-the-Loop](07-human-in-the-loop/readme.md) | The two blocking handoffs that drive approval gates, a 20-minute custom-tool HITL demo with allow and deny verdicts, and a migration path from the Messages API and the Agent SDK. |
-| [08: Multiagent, Outcomes & Memory](08-multiagent/readme.md) | Delegation with the `multiagent_20261001` block and session threads, outcomes graded against a rubric, memory stores that outlive the session, and one budget shared by every thread. |
+| [01: Core API Surface](01-sdk-basics/readme.md) | Where the Agent SDK sits next to the Messages API, Claude Code and Managed Agents; the `query()` async iterator and its options; resume, continue and fork; custom tools as in-process MCP servers; typed output; and the API-level output controls `tool_choice`, Structured Outputs and the Message Batches API. |
+| [02: Parallel Agents](02-sdk-parallel-agents/readme.md) | The parallel pattern with `Promise.all`, the canary isolation test, the orchestrator pattern, and typed contracts across agent boundaries. |
+| [03: Managed Agents Foundations](03-agent-foundations/readme.md) | When the hosted runtime pays off over running the loop yourself, the three resources (Agent, Environment, Session), and the session state machine. |
+| [04: Sessions & Streaming](04-agent-sessions-streaming/readme.md) | Cloud containers with networking and file mounts, the SSE event model, mid-execution steering, session threads, and a 25-minute end-to-end demo that touches every primitive in one flow. |
+| [05: Production Features](05-agent-production-features/readme.md) | Vaults with automatic token refresh, webhooks on `session.status_idled`, per-tool permission policies, agent versioning, Console observability, scheduled deployments, and the `ant` CLI for YAML-versioned resources. |
+| [06: Tools & MCP](06-agent-tools-mcp/readme.md) | The two extension points on an Agent: MCP servers declared alongside an `mcp_toolset` grant with its own permission policy, and skills that mount a procedure into the container and load on demand. |
+| [07: Human-in-the-Loop](07-agent-human-in-the-loop/readme.md) | The two blocking handoffs that drive approval gates, a 20-minute custom-tool HITL demo with allow and deny verdicts, and a migration path from the Messages API and the Agent SDK. |
+| [08: Multiagent, Outcomes & Memory](08-agent-multiagent/readme.md) | Delegation with the `multiagent_20261001` block and session threads, outcomes graded against a rubric, memory stores that outlive the session, and one budget shared by every thread. |
 
 Topics 01 and 02 run the agent loop in your own process with the Agent SDK in TypeScript. Topics 03 to 08 hand the same loop to Anthropic's cloud with Managed Agents in Python.
 
@@ -28,14 +28,14 @@ Topics 01 and 02 run the agent loop in your own process with the Agent SDK in Ty
 
 | Topic | Description |
 |-------|-------------|
-| [01: Core API Surface](01-api-surface/demo-messages-api-to-sdk.md) | Four-step progression from a streaming `query()` call to a Zod-validated CI exit-code script. |
-| [02: Parallel Agents](02-parallel-agents/demo-parallel-reviewers.md) | Three specialist agents review a flawed auth file in parallel, then an orchestrator synthesizes a typed verdict. |
-| [03: Managed Agents Foundations](03-foundations/demo-session-lifecycle.md) | Creates all three resources, polls one Session from `running` to `idle`, reads the persisted event log, and cleans up the two resources that are safe to delete. |
-| [04: Sessions & Streaming](04-sessions-streaming/demo-first-agent.md) | Uploads a CSV, mounts it on a Session, streams the analysis over SSE, and downloads the artifact the agent wrote. |
-| [05: Production Features](05-production-features/demo-agent-versioning.md) | Optional. Publishes two Agent versions, pins a Session to each, and shows the same `bash` call running unattended on one and pausing for `user.tool_confirmation` on the other. |
-| [06: Tools & MCP](06-tools-mcp/demo-mcp-and-skills.md) | Optional. Attaches the Microsoft Learn MCP server and the `docx` skill to one Agent, then reads the event log while a single turn searches the docs and writes a document you download. |
-| [07: Human-in-the-Loop](07-human-in-the-loop/demo-approval-gate.md) | Optional. Declares a custom tool, parks the Session at `requires_action`, and resumes it with both an allow and a deny verdict. |
-| [08: Multiagent, Outcomes & Memory](08-multiagent/demo-feedback-digest.md) | Optional. Turns one agent into a lead with a Haiku reader subagent, a rubric-graded outcome, a memory store and a session budget. |
+| [01: Core API Surface](01-sdk-basics/demo-messages-api-to-sdk.md) | Four-step progression from a streaming `query()` call to a Zod-validated CI exit-code script. |
+| [02: Parallel Agents](02-sdk-parallel-agents/demo-parallel-reviewers.md) | Three specialist agents review a flawed auth file in parallel, then an orchestrator synthesizes a typed verdict. |
+| [03: Managed Agents Foundations](03-agent-foundations/demo-session-lifecycle.md) | Creates all three resources, polls one Session from `running` to `idle`, reads the persisted event log, and cleans up the two resources that are safe to delete. |
+| [04: Sessions & Streaming](04-agent-sessions-streaming/demo-first-agent.md) | Uploads a CSV, mounts it on a Session, streams the analysis over SSE, and downloads the artifact the agent wrote. |
+| [05: Production Features](05-agent-production-features/demo-agent-versioning.md) | Optional. Publishes two Agent versions, pins a Session to each, and shows the same `bash` call running unattended on one and pausing for `user.tool_confirmation` on the other. |
+| [06: Tools & MCP](06-agent-tools-mcp/demo-mcp-and-skills.md) | Optional. Attaches the Microsoft Learn MCP server and the `docx` skill to one Agent, then reads the event log while a single turn searches the docs and writes a document you download. |
+| [07: Human-in-the-Loop](07-agent-human-in-the-loop/demo-approval-gate.md) | Optional. Declares a custom tool, parks the Session at `requires_action`, and resumes it with both an allow and a deny verdict. |
+| [08: Multiagent, Outcomes & Memory](08-agent-multiagent/demo-feedback-digest.md) | Optional. Turns one agent into a lead with a Haiku reader subagent, a rubric-graded outcome, a memory store and a session budget. |
 
 Every demo has a presenter guide beside it (`demo-presenter-<slug>.md`) holding the same
 teaching in timed beats, for delivery without running the demo live.
@@ -44,34 +44,16 @@ Every runnable project folder in this module is the starter you code in, and it 
 
 The TypeScript projects in topics 01 and 02 pin `@anthropic-ai/claude-agent-sdk` 0.3.302; install them with `npm install`. The Python projects from topic 03 on install with `pip install -r requirements.txt`. Topics 03 to 07 target `anthropic>=0.118.0`, because earlier releases have no `client.beta.agents` namespace at all, and topic 08 needs `anthropic>=1.15.0` for memory stores and the multiagent types.
 
-> **Note:** every `query()` call and every Session in this module is billed, and every script reads your key from `.env` in this folder, which is git-ignored. Create it before the first run and paste your own key into it, one `KEY=value` per line and no quotes:
->
-> ```text
-> ANTHROPIC_API_KEY=sk-ant-api03-...
-> ```
->
-> Each script loads that file itself, resolved from its own location, so nothing has to be exported into the shell first and the run works from any working directory. The TypeScript scripts load it with:
->
-> ```ts
-> config({ path: fileURLToPath(new URL("../../.env", import.meta.url)), quiet: true });
-> ```
->
-> The Python scripts load it with:
->
-> ```python
-> load_dotenv(Path(__file__).resolve().parents[2] / ".env")
-> ```
->
-> A key already in the environment wins over the file, so a logged-in `claude` CLI, an `ant auth login` profile or an exported `ANTHROPIC_API_KEY` still takes precedence.
+> **Note:** Get your API key from the [API keys page of the Claude Console](https://platform.claude.com/settings/keys).
 
 ## Labs
 
 | Lab | Description |
 |-----|-------------|
-| [Embed Claude in a TypeScript Program](../../labs/10-sdk-managed-agents/lab-01-embed-claude.md) | Spawn Claude from inside your own program: one-shot calls, streaming, session resume, custom tools, typed output schemas, and a CI script. |
-| [Run Parallel SDK Agents With Session Isolation](../../labs/10-sdk-managed-agents/lab-02-parallel-sdk-agents.md) | Build a review pipeline from three parallel SDK sessions plus an orchestrator that reconciles their findings, packaged as a CI job. |
-| [Build a Managed Agent for Codebase Triage](../../labs/10-sdk-managed-agents/lab-03-managed-agent-codebase-triage.md) | Mount a broken Python repo into a cloud Session and stream the fix loop, then publish a second Agent version with a custom tool and resume the parked Session with both verdicts. |
-| [Review Code with Specialist Subagents, a Rubric and Team Memory](../../labs/10-sdk-managed-agents/lab-04-review-team-memory.md) | Two read-only reviewer subagents, a graded review, a read-only conventions store and a read-write history a second session recalls. |
+| [Embed Claude in a TypeScript Program](../../labs/10-sdk-managed-agents/lab-01-sdk-embed-claude.md) | Spawn Claude from inside your own program: one-shot calls, streaming, session resume, custom tools, typed output schemas, and a CI script. |
+| [Run Parallel SDK Agents With Session Isolation](../../labs/10-sdk-managed-agents/lab-02-sdk-parallel-agents.md) | Build a review pipeline from three parallel SDK sessions plus an orchestrator that reconciles their findings, packaged as a CI job. |
+| [Build a Managed Agent for Codebase Triage](../../labs/10-sdk-managed-agents/lab-03-agent-codebase-triage.md) | Mount a broken Python repo into a cloud Session and stream the fix loop, then publish a second Agent version with a custom tool and resume the parked Session with both verdicts. |
+| [Review Code with Specialist Subagents, a Rubric and Team Memory](../../labs/10-sdk-managed-agents/lab-04-agent-review-team-memory.md) | Two read-only reviewer subagents, a graded review, a read-only conventions store and a read-write history a second session recalls. |
 
 ## Knowledge Check
 

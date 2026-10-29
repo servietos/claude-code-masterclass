@@ -158,7 +158,7 @@ Runnable project folders are starters and stay pristine, with no `node_modules`,
 ### Node and Angular projects
 
 ```bash
-cd demos/10-sdk-managed-agents/01-api-surface/sdk-basics-solution
+cd demos/10-sdk-managed-agents/01-sdk-basics/sdk-basics-solution
 npm install
 npm start
 ```

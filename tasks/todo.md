@@ -1,5 +1,13 @@
 # Todo
 
+## Module 10 naming
+
+Owner ask (2026-10-29): "same naming conventions here demos\10-sdk-managed-agents\02-parallel-agents\parallel-reviewer-solution and in all topics including presenter guid update", "from the topic names like demos\10-sdk-managed-agents\02-parallel-agents we dont see where we are in skd and where in agents ... fix that".
+
+- [x] Solution scripts in topics 02 to 08 renamed `01-<name>`; package.json, solution readmes, starter readme links, demo and presenter guides follow
+- [x] Topic folders carry `sdk-` (01, 02) or `agent-` (03 to 08); every link to them follows (module readme, topic readmes, guides, labs 03 to 05, `.devcontainer/readme.md`, `dashboard/index.html`)
+- [x] Verify: no stale reference, every relative link resolves, `tsc --noEmit` in both TypeScript solutions
+
 ## food-shop-vue redo
 
 Owner ask (2026-10-28): "did you create basic vue skills", "why not -> create them", "you did not get the task right -> src\food-app\shop-ui\food-shop-vue this is not vue https://vuejs.org/", "delete the folder and re-do again". Original ask in session d3951cbd: "src\food-app\shop-ui we need a vue implementation of this frontend".

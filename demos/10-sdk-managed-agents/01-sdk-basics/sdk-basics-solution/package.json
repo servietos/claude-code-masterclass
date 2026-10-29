@@ -1,0 +1,23 @@
+{
+  "name": "demo-sdk-basics",
+  "version": "1.0.0",
+  "description": "Agent SDK streaming and CI exit-code demos",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "stream": "tsx 01-stream-response.ts",
+    "ci": "tsx 03-audit-code.ts",
+    "weather": "tsx 02-tool-call.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "0.3.302",
+    "dotenv": "^17.2.3",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  }
+}
