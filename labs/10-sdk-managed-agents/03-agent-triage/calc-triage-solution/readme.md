@@ -32,7 +32,7 @@ Each failure names one bug: `median` ignores the even-length case, `percent_chan
 
 ## Running the Scripts
 
-Both scripts create real Managed Agents resources and bill session-hours plus model tokens. Neither needs anything in your shell: each one loads `ANTHROPIC_API_KEY` from [`demos/10-sdk-managed-agents/.env`](../../../../demos/10-sdk-managed-agents), resolved from the script's own location.
+Both scripts create real Managed Agents resources and bill session-hours plus model tokens. Neither needs anything in your shell: each one loads `ANTHROPIC_API_KEY` from [`labs/10-sdk-managed-agents/.env`](../..), resolved from the script's own location.
 
 ```bash
 .venv/Scripts/python triage.py

@@ -1,0 +1,56 @@
+env=dev
+loc=westeurope
+grp=ccm-m09-agentic-devops-$env
+nsg=labvm-nsg-$env
+size=Standard_D2s_v5
+user=azureuser
+out=azure-linux.md
+read -p "Number of VMs: " count
+
+az group create -n $grp -l $loc
+
+# allow ssh from anywhere
+az network nsg create -g $grp -n $nsg -l $loc
+az network nsg rule create -g $grp --nsg-name $nsg -n allow-ssh --priority 1000 \
+  --source-address-prefixes '*' --destination-port-ranges 22 --access Allow --protocol Tcp
+
+cat > $out <<EOF
+# Azure Linux Lab VMs
+
+Resource group \`$grp\` in \`$loc\`: $count x \`$size\`, Ubuntu 24.04, 64 GB Standard SSD.
+
+## Access
+
+1. Connect with the SSH command from your row and enter the password.
+2. Run \`cloud-init status --wait\` until it reports \`status: done\`, then disconnect and connect again.
+3. Clone the repo with \`git clone https://github.com/alexander-kastil/claude-code-masterclass.git\` and run \`claude\` to sign in.
+
+## VMs
+
+| VM | Public IP | User | Password | SSH |
+| --- | --- | --- | --- | --- |
+EOF
+
+# create vms, cloud-init installs the lab tools
+for i in $(seq 1 $count); do
+  vm=labvm-$env-$i
+  pwd=Lab-$(openssl rand -hex 6)
+  ip=$(az vm create -g $grp -n $vm -l $loc \
+    --image Ubuntu2404 \
+    --size $size \
+    --os-disk-size-gb 64 \
+    --storage-sku StandardSSD_LRS \
+    --admin-username $user \
+    --authentication-type password \
+    --admin-password $pwd \
+    --public-ip-sku Standard \
+    --nsg $nsg \
+    --custom-data cloud-init.yaml \
+    --query publicIpAddress -o tsv)
+  echo "| $vm | $ip | $user | $pwd | \`ssh $user@$ip\` |" >> $out
+done
+
+echo "** VM data written to $out"
+
+# Do not execute
+az group delete -n $grp --yes

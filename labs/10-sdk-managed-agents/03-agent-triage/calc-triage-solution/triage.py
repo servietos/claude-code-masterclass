@@ -6,7 +6,7 @@ from uuid import uuid4
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).resolve().parents[4] / "demos" / "10-sdk-managed-agents" / ".env")
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 sys.stdout.reconfigure(encoding="utf-8")
 
 client = Anthropic()

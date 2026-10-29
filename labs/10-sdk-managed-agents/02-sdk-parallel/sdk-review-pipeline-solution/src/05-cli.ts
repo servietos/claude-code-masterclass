@@ -5,7 +5,7 @@ import { reviewers } from "./reviewers.js";
 import { runReviewer } from "./run-reviewer.js";
 import { orchestrate, printSummary, VERDICT_EXIT_CODES } from "./orchestrate.js";
 
-config({ path: fileURLToPath(new URL("../../../../../demos/10-sdk-managed-agents/.env", import.meta.url)), quiet: true });
+config({ path: fileURLToPath(new URL("../../../.env", import.meta.url)), quiet: true });
 
 const filePath = process.argv[2];
 

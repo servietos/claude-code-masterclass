@@ -43,4 +43,4 @@ FAILED test_inventory.py::test_low_stock_includes_items_at_their_reorder_level
 
 ## The Key
 
-Every script you write loads `ANTHROPIC_API_KEY` from [`demos/10-sdk-managed-agents/.env`](../../../../demos/10-sdk-managed-agents), resolved from the script's own location, so there is nothing to export and nothing to source.
+Every script you write loads `ANTHROPIC_API_KEY` from [`labs/10-sdk-managed-agents/.env`](../..), resolved from the script's own location, so there is nothing to export and nothing to source.

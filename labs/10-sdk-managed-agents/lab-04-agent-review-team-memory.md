@@ -23,7 +23,7 @@ Build a code review team on Managed Agents: a lead that sends one module to two 
 | Part | Runnable now | Needs |
 |------|--------------|-------|
 | Setup: install and `pytest` | Yes, offline and free | Python 3.11+ |
-| Steps 1 to 11 | Yes, billed | `ANTHROPIC_API_KEY` in `demos/10-sdk-managed-agents/.env`, network access to `api.anthropic.com`, `anthropic` 1.15.0 or later |
+| Steps 1 to 11 | Yes, billed | `ANTHROPIC_API_KEY` in `labs/10-sdk-managed-agents/.env`, network access to `api.anthropic.com`, `anthropic` 1.15.0 or later |
 
 This lab builds on the multiagent, outcome and memory store concepts of [topic 08](../../demos/10-sdk-managed-agents/08-agent-multiagent/readme.md). Read its readme first; the steps below link back to it for the concepts.
 
@@ -38,7 +38,7 @@ cd labs/10-sdk-managed-agents/04-agent-multiagent/review-team
 claude
 ```
 
-Every terminal command below also expects a shell sitting in `review-team/`, because the `parents[4]` loader counts its way to the repo root from there.
+Every terminal command below also expects a shell sitting in `review-team/`, because the `parents[2]` loader counts its way to `labs/10-sdk-managed-agents/` from there.
 
 ---
 
@@ -81,7 +81,7 @@ from uuid import uuid4
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).resolve().parents[4] / "demos" / "10-sdk-managed-agents" / ".env")
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 sys.stdout.reconfigure(encoding="utf-8")
 
 client = Anthropic()
@@ -426,7 +426,7 @@ from uuid import uuid4
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).resolve().parents[4] / "demos" / "10-sdk-managed-agents" / ".env")
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 sys.stdout.reconfigure(encoding="utf-8")
 
 client = Anthropic()
@@ -499,7 +499,7 @@ from pathlib import Path
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).resolve().parents[4] / "demos" / "10-sdk-managed-agents" / ".env")
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 client = Anthropic()
 stores_file = Path(__file__).parent / "stores.json"

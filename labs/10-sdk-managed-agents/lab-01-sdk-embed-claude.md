@@ -84,22 +84,22 @@ The shipped `tsconfig.json` carries an `include` so `tsc` only ever compiles `sr
 
 Without that line `tsc` falls back to its default `**/*` glob. It costs nothing here, and it is what stops Lab 02 from failing with `TS6059: File 'target/auth.ts' is not under 'rootDir'` when you copy this same `tsconfig.json` across.
 
-The key lives outside this project. Every script here loads it from the repository's own `demos/10-sdk-managed-agents/.env`, resolved from the script's own location rather than from whatever directory you happen to be in:
+The key lives outside this project. Every script here loads it from `labs/10-sdk-managed-agents/.env`, the file every lab in this module shares, resolved from the script's own location rather than from whatever directory you happen to be in:
 
 ```ts
 import { config } from "dotenv";
 import { fileURLToPath } from "node:url";
 
-config({ path: fileURLToPath(new URL("../../../../../demos/10-sdk-managed-agents/.env", import.meta.url)), quiet: true });
+config({ path: fileURLToPath(new URL("../../../.env", import.meta.url)), quiet: true });
 ```
 
-That file holds a single line, `ANTHROPIC_API_KEY=sk-ant-api03-...`, and it is gitignored. Nothing has to be exported into the shell and no key is copied into the lab folder. The five `../` steps climb from `src/` out to the repository root, one for each of `sdk-embed`, `01-sdk-embed`, `10-sdk-managed-agents` and `labs`, then down into `demos/10-sdk-managed-agents/`. Anchoring on `import.meta.url` is what makes it independent of the working directory; a bare `import "dotenv/config"` only ever looks in the current one.
+That file holds a single line, `ANTHROPIC_API_KEY=sk-ant-api03-...`, and it is gitignored. Nothing has to be exported into the shell and no key is copied into the lab folder. The three `../` steps climb from `src/` out of `sdk-embed` and `01-sdk-embed` into `labs/10-sdk-managed-agents/`. Anchoring on `import.meta.url` is what makes it independent of the working directory; a bare `import "dotenv/config"` only ever looks in the current one.
 
 The artifacts are already ignored. The shipped `.gitignore` covers `node_modules/`, `dist/`, `.env` and `.session-id.txt`, so nothing you generate here reaches the repository.
 
 Every program in this lab starts with that `config({ path: ... })` call, which is the single mechanism that loads the key. The `step` script in `package.json` is a bare `tsx`; do not add `--env-file=...` to it. `--env-file` is a hard failure when the file is absent (`node: .env: not found`, exit code 9), whereas `dotenv` shrugs and moves on. That difference is what lets the same script run in CI, where no `.env` is ever checked out and the key arrives as an environment variable instead.
 
-**Expected result:** `npm install` reports `found 0 vulnerabilities` and `npx tsc --version` prints `Version 7.0.2`. You have a TypeScript project with the SDK installed, reading the API key straight out of `demos/10-sdk-managed-agents/.env`. Run `npm run step src/<file>.ts` after each step; npm appends the path straight through to `tsx`, no `--` separator needed.
+**Expected result:** `npm install` reports `found 0 vulnerabilities` and `npx tsc --version` prints `Version 7.0.2`. You have a TypeScript project with the SDK installed, reading the API key straight out of `labs/10-sdk-managed-agents/.env`. Run `npm run step src/<file>.ts` after each step; npm appends the path straight through to `tsx`, no `--` separator needed.
 
 ---
 
@@ -113,7 +113,7 @@ Every program in this lab starts with that `config({ path: ... })` call, which i
 Create src/01-oneshot.ts. It should:
 
   1. Start with the dotenv loader from Setup, the config({ path: ... }) call
-     that resolves demos/10-sdk-managed-agents/.env from import.meta.url.
+     that resolves labs/10-sdk-managed-agents/.env from import.meta.url.
   2. Import { query } from "@anthropic-ai/claude-agent-sdk".
   3. Call query({ prompt: "What's the most important habit for an engineer to develop in their first year? Answer in three short bullets." })
   4. Iterate the returned value with for await. It is an AsyncGenerator of SDKMessage.

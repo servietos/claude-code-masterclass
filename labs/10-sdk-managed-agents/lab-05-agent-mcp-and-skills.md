@@ -19,7 +19,7 @@ Give one Managed Agent a documentation server and a document skill, then read it
 | Part | Runnable now | Needs |
 |------|--------------|-------|
 | Setup: install and import check | Yes, offline and free | Python 3.11+ |
-| Steps 1 to 4, 6, 7 | Yes, billed | `ANTHROPIC_API_KEY` in `demos/10-sdk-managed-agents/.env`, network access to `api.anthropic.com` |
+| Steps 1 to 4, 6, 7 | Yes, billed | `ANTHROPIC_API_KEY` in `labs/10-sdk-managed-agents/.env`, network access to `api.anthropic.com` |
 | Step 5: audit | Yes, reads sessions that already exist | The session IDs printed by Steps 2 and 4 |
 
 The Microsoft Learn MCP endpoint is public and needs no credentials, so the lab uses no vault. This lab builds on [Extend an Agent with MCP Servers and Skills](../../demos/10-sdk-managed-agents/06-agent-tools-mcp/readme.md); the concepts live there and the steps below link back to them.
@@ -35,7 +35,7 @@ cd labs/10-sdk-managed-agents/05-agent-extend/docs-agent
 claude
 ```
 
-Every terminal command below expects a shell sitting in `docs-agent/`, because the `parents[4]` loader in `common.py` counts its way to the repo root from there.
+Every terminal command below expects a shell sitting in `docs-agent/`, because the `parents[2]` loader in `common.py` counts its way to `labs/10-sdk-managed-agents/` from there.
 
 ---
 

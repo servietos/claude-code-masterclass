@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { type Review } from "./reviewers.js";
 import { orchestrate, printSummary } from "./orchestrate.js";
 
-config({ path: fileURLToPath(new URL("../../../../../demos/10-sdk-managed-agents/.env", import.meta.url)), quiet: true });
+config({ path: fileURLToPath(new URL("../../../.env", import.meta.url)), quiet: true });
 
 const reviews: Review[] =["security", "performance", "style"].map(
   (name) => JSON.parse(readFileSync(`results/${name}.json`, "utf8")) as Review,

@@ -9,7 +9,7 @@ Each step contains:
 
 > **This lab costs money.** It needs an `ANTHROPIC_API_KEY`, and every `query()` call is a billed API request against your own account. This lab is heavier than Lab 01: Step 2 makes three calls, Step 3 makes six (two reviewers times three rounds), and Steps 4 and 5 add the orchestrator on top. Budget accordingly.
 
-> **Prerequisite:** Complete [Lab 01](lab-01-sdk-embed-claude.md) through Step 5, the step that pairs `query()` with a Zod schema. This lab assumes you have used that typed-output pattern once already, and it reads the same key from `demos/10-sdk-managed-agents/.env`.
+> **Prerequisite:** Complete [Lab 01](lab-01-sdk-embed-claude.md) through Step 5, the step that pairs `query()` with a Zod schema. This lab assumes you have used that typed-output pattern once already, and it reads the same key from `labs/10-sdk-managed-agents/.env`.
 
 Work in [`02-sdk-parallel/sdk-review-pipeline/`](02-sdk-parallel/sdk-review-pipeline); the finished result is beside it in [`02-sdk-parallel/sdk-review-pipeline-solution/`](02-sdk-parallel/sdk-review-pipeline-solution). Open the solution when a step will not compile.
 
@@ -71,10 +71,10 @@ No API key lives in this folder, because there is none to copy in. Every entry p
 import { config } from "dotenv";
 import { fileURLToPath } from "node:url";
 
-config({ path: fileURLToPath(new URL("../../../../../demos/10-sdk-managed-agents/.env", import.meta.url)), quiet: true });
+config({ path: fileURLToPath(new URL("../../../.env", import.meta.url)), quiet: true });
 ```
 
-The five `../` steps climb from `src/` past `sdk-review-pipeline`, `02-sdk-parallel`, `10-sdk-managed-agents` and `labs` to the repository root, then descend into `demos/10-sdk-managed-agents/`. Nothing has to be exported into the shell.
+The three `../` steps climb from `src/` out of `sdk-review-pipeline` and `02-sdk-parallel` into `labs/10-sdk-managed-agents/`. Nothing has to be exported into the shell.
 
 The shipped `tsconfig.json` carries an explicit `include`, and that line is load-bearing:
 

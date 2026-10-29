@@ -22,7 +22,7 @@ What runs where:
 | Part | Runnable now | Needs |
 |------|--------------|-------|
 | Setup: install and `pytest` | Yes, offline and free | Python 3.11+ |
-| Steps 1 to 5, 7, 8 | Yes, billed | `ANTHROPIC_API_KEY` in `demos/10-sdk-managed-agents/.env` and network access to `api.anthropic.com` |
+| Steps 1 to 5, 7, 8 | Yes, billed | `ANTHROPIC_API_KEY` in `labs/10-sdk-managed-agents/.env` and network access to `api.anthropic.com` |
 | Step 6: Console trace | No, browser only | A Console login |
 
 This lab drives the API through the **`anthropic` Python SDK**, the same surface the [module demos](../../demos/10-sdk-managed-agents/readme.md) use. Anthropic also ships an [`ant` CLI](https://platform.claude.com/docs/en/api/sdks/cli) that exposes the same resources as shell subcommands; it is the better tool for version-controlled agent YAML, but this repo's devcontainer does not install it, so the lab stays on the SDK. Neither the SDK nor the CLI is preinstalled: you install the SDK in Setup.
@@ -79,7 +79,7 @@ FAILED test_calc.py::test_running_total_is_inclusive - assert [0, 1, 3] == [1...
 3 failed in 0.04s
 ```
 
-The key lives in [`demos/10-sdk-managed-agents/.env`](../../demos/10-sdk-managed-agents), which is git-ignored, shared with every demo in the module. Create it if the module demos have not already, and paste your own key into it:
+The key lives in `labs/10-sdk-managed-agents/.env`, which is git-ignored and shared by every lab in the module. Create it if an earlier lab has not already, and paste your own key into it:
 
 ```text
 ANTHROPIC_API_KEY=sk-ant-api03-...
@@ -88,11 +88,11 @@ ANTHROPIC_API_KEY=sk-ant-api03-...
 There is nothing to export and nothing to source. Every driver script you write in this lab opens with the same two lines, and the path resolves from the script's own location, so a run works from any working directory:
 
 ```python
-load_dotenv(Path(__file__).resolve().parents[4] / "demos" / "10-sdk-managed-agents" / ".env")
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 sys.stdout.reconfigure(encoding="utf-8")
 ```
 
-`parents[4]` walks `calc-triage/`, `03-agent-triage/`, `10-sdk-managed-agents/`, `labs/` and lands on the repo root. The second line is not decoration on Windows: the agent narrates its own fixes in prose containing arrows and dashes, and a default `cp1252` console raises `UnicodeEncodeError` mid-stream, after the Session is already created and billing.
+`parents[2]` walks `calc-triage/` and `03-agent-triage/` and lands on `labs/10-sdk-managed-agents/`. The second line is not decoration on Windows: the agent narrates its own fixes in prose containing arrows and dashes, and a default `cp1252` console raises `UnicodeEncodeError` mid-stream, after the Session is already created and billing.
 
 To check the credential the SDK will actually resolve, run `ant auth status` if you have the CLI; otherwise a failed call returns `401 authentication_error`, which is a clear enough signal.
 
@@ -111,7 +111,7 @@ from uuid import uuid4
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).resolve().parents[4] / "demos" / "10-sdk-managed-agents" / ".env")
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 sys.stdout.reconfigure(encoding="utf-8")
 
 client = Anthropic()

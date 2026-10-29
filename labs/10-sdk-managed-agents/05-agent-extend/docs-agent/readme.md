@@ -28,4 +28,4 @@ python -c "import common; print('ready', common.suffix)"
 
 ## The Key
 
-Every script loads `ANTHROPIC_API_KEY` from [`demos/10-sdk-managed-agents/.env`](../../../../demos/10-sdk-managed-agents), resolved from the script's own location, so there is nothing to export and nothing to source.
+Every script loads `ANTHROPIC_API_KEY` from [`labs/10-sdk-managed-agents/.env`](../..), resolved from the script's own location, so there is nothing to export and nothing to source.

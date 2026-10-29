@@ -3,7 +3,7 @@ import { createSdkMcpServer, query, tool } from "@anthropic-ai/claude-agent-sdk"
 import { config } from "dotenv";
 import { fileURLToPath } from "node:url";
 
-config({ path: fileURLToPath(new URL("../../../../../demos/10-sdk-managed-agents/.env", import.meta.url)), quiet: true });
+config({ path: fileURLToPath(new URL("../../../.env", import.meta.url)), quiet: true });
 
 const currentWeather = tool(
   "current_weather",

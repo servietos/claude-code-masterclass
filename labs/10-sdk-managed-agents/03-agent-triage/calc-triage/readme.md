@@ -41,4 +41,4 @@ Each failure names one bug: `median` ignores the even-length case, `percent_chan
 
 ## The Key
 
-Both scripts you write load `ANTHROPIC_API_KEY` from [`demos/10-sdk-managed-agents/.env`](../../../../demos/10-sdk-managed-agents), resolved from the script's own location, so there is nothing to export and nothing to source.
+Both scripts you write load `ANTHROPIC_API_KEY` from [`labs/10-sdk-managed-agents/.env`](../..), resolved from the script's own location, so there is nothing to export and nothing to source.

@@ -4,7 +4,7 @@ from pathlib import Path
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).resolve().parents[4] / "demos" / "10-sdk-managed-agents" / ".env")
+load_dotenv(Path(__file__).resolve().parents[2] / ".env")
 
 client = Anthropic()
 stores_file = Path(__file__).parent / "stores.json"

@@ -14,7 +14,7 @@ The module runs the same agent loop in two places. Labs 01 and 02 embed it in yo
 
 Core path: 1h. All labs: 5h 25m.
 
-> **Every lab is billed.** They need an `ANTHROPIC_API_KEY` from [the Claude Console](https://platform.claude.com), and every `query()` call and every Session is a paid API request against your own account. The Managed Agents labs bill session-hours on top of model tokens, so read Lab 03's "Before You Start" table before running anything. The wall-clock times above exclude account setup and do not account for spend.
+> **Every lab is billed.** They need an `ANTHROPIC_API_KEY` from [the Claude Console](https://platform.claude.com), and every `query()` call and every Session is a paid API request against your own account. The Managed Agents labs bill session-hours on top of model tokens, so read Lab 03's "Before You Start" table before running anything. The wall-clock times above exclude account setup and do not account for spend. On a Max or Team plan, [claim your monthly API credits](claim-funds.md) first.
 
 All labs ship their starters, so there is nothing to scaffold before you begin. Each completed reference sits beside its project:
 
