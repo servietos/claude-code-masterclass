@@ -6,14 +6,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "stream": "tsx 01-stream-response.ts",
-    "ci": "tsx 03-audit-code.ts",
-    "weather": "tsx 02-tool-call.ts"
+    "stream-response": "tsx 01-stream-response.ts",
+    "tool-call": "tsx 02-tool-call.ts",
+    "audit-code": "tsx 03-audit-code.ts"
   },
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "0.3.302",
     "dotenv": "^17.2.3",
-    "zod": "^4.4.3"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
