@@ -1,10 +1,10 @@
-# Optimize Web Vitals and SEO on the Deployed App
+# Optimize Web Vitals and SEO on the Deployed App (Azure Lab VM)
 
 Audit the `react-devops` app exactly as the public reaches it, through the Caddy edge on the Ubuntu box from Lab 01, and fix what the audit finds. You will hold a scored baseline under `.seo/`, a `.lighthouserc.json` that asserts LCP below 2500 ms, TBT below 200 ms and CLS below 0.1, and three fixes, each assigned to the layer that owns it: the site source or the Caddyfile.
 
 On your own box nobody tells you which layer a finding belongs to. A missing meta description is a line in `index.html`; a missing `Content-Encoding` header is a line in the Caddyfile, and no amount of editing React changes it. Guessing the layer costs a rebuild and a redeploy per wrong guess, so this lab makes you name the layer first and prove each change on the deployed URL afterwards.
 
-The teaching behind this lab is the topic [Agentic Optimization: Web Vitals and SEO](../../demos/09-agentic-devops/03-agentic-optimization/readme.md) and its demo [Optimize a Site on the Box with Agentic SEO and Lighthouse CI](../../demos/09-agentic-devops/03-agentic-optimization/demo-agentic-seo-optimization.md). The demo shows the loop on the box-stack sample; this lab runs it on the app you shipped yourself.
+This is the Azure lab VM edition of [Lab 04](lab-04-web-vitals-and-seo-container.md). The browser and Lighthouse run on your lab VM, which has no display, so Chrome runs headless there. The teaching behind this lab is the topic [Agentic Optimization: Web Vitals and SEO](../../demos/09-agentic-devops/03-agentic-optimization/readme.md) and its demo [Optimize a Site on the Box with Agentic SEO and Lighthouse CI](../../demos/09-agentic-devops/03-agentic-optimization/demo-agentic-seo-optimization.md). The demo shows the loop on the box-stack sample; this lab runs it on the app you shipped yourself.
 
 Each step contains:
 
@@ -14,11 +14,19 @@ Each step contains:
 
 ## Prerequisites
 
-- **Lab 01 completed through Step 8, and not cleaned up.** The `box-target` container must be running with the Compose stack in `/opt/react-devops`, and the sibling folder [react-devops/](react-devops) must still hold `deploy/target-box/keys/box_key` and `deploy/box-local-ca.crt`. This lab reads both by relative path. If you ran Lab 01's Cleanup, repeat its Steps 2 to 8 first.
-- **Node.js 20 or newer and Google Chrome** on your own machine. The `chrome-devtools` MCP server and Lighthouse CI both launch a local Chrome, and both start from `npx`. Check with `node --version` and open Chrome once so its first-run dialog is out of the way.
-- **Claude Code 2.x** with the global `agentic-seo` skill installed. Check that `/agentic-seo` autocompletes inside a session.
-- **Host ports 2222, 8080 and 8443** are the ones Lab 01 published; nothing in this lab changes them.
-- **A shell**: Bash (git-bash or WSL on Windows, any shell on macOS and Linux) or PowerShell 7. Command blocks that differ between the shells ship a `powershell` twin directly below the `bash` one. The substitutions from Lab 01 apply unchanged: `curl.exe` for `curl`, `NUL` for `/dev/null`, `--ssl-revoke-best-effort` on every `curl.exe` call that passes `--cacert`, and a staged tar file where Bash pipes `docker save | ssh`.
+- **Lab 01 completed through Step 8, and not cleaned up.** The `box-target` container must be running on your lab VM with the Compose stack in `/opt/react-devops`, and the sibling folder [react-devops/](react-devops) must still hold `deploy/target-box/keys/box_key` and `deploy/box-local-ca.crt`. This lab reads both by relative path. If you ran Lab 01's Cleanup, repeat its Steps 2 to 8 first.
+- **Your lab VM, connected and signed in** as in [Connect to the lab VM](lab-01-deploy-to-an-ubuntu-box-vm.md#connect-to-the-lab-vm), with the repository cloned to `~/claude-code-masterclass`. Node.js 24 and Google Chrome are preinstalled there; the `chrome-devtools` MCP server and Lighthouse CI both launch that Chrome headless, and both start from `npx`.
+- **The `agentic-seo` skill** in the VM's Claude Code. The clone carries it; copy it into your user skills once:
+
+  ```bash
+  mkdir -p ~/.claude/skills
+  cp -r ~/claude-code-masterclass/.claude/skills/agentic-seo ~/.claude/skills/
+  ```
+
+  Check that `/agentic-seo` autocompletes inside a session.
+- **Ports 2222, 8080 and 8443 on the VM** are the ones Lab 01 published; nothing in this lab changes them.
+
+Every command in this lab runs in Bash on the VM, inside the `tmux` session from Lab 01 (`tmux attach -t lab`, or `tmux new -s lab` after a VM restart).
 
 You work in the starter at [react-devops-seo/](react-devops-seo). It is a pristine copy of the `react-devops` source plus two files the lab consumes: `.mcp.json`, which registers the `chrome-devtools` server with a hostname mapping for `app.box.test`, and `.claude/rules/seo.md`, the site-facts file the `agentic-seo` skill reads before any audit.
 
@@ -26,15 +34,20 @@ You work in the starter at [react-devops-seo/](react-devops-seo). It is a pristi
 
 ## Where to Open Claude Code
 
-Open Claude Code inside the starter. `.mcp.json`, `.claude/rules/` and `.claude/agents/` load from the directory the session was launched in, so a session started at the repo root registers no `chrome-devtools` server and the skill never sees the site facts. Run this from the repo root; both commands work unchanged in PowerShell.
+Open Claude Code inside the starter. `.mcp.json`, `.claude/rules/` and `.claude/agents/` load from the directory the session was launched in, so a session started at the repo root registers no `chrome-devtools` server and the skill never sees the site facts.
 
-**Bash:**
+The VM has no display, so the MCP's Chrome must start headless. `--headless` is the `chrome-devtools-mcp` switch for it and defaults to off, and `.mcp.json` is read at startup, so add the switch before you launch:
+
 ```bash
-cd labs/09-agentic-devops/react-devops-seo
+cd ~/claude-code-masterclass/labs/09-agentic-devops/react-devops-seo
+sed -i 's/"--acceptInsecureCerts",/"--headless",\n        "--acceptInsecureCerts",/' .mcp.json
+grep -n headless .mcp.json
 claude
 ```
 
-Approve the project-scoped `chrome-devtools` server when Claude Code asks. The repo's own `/.mcp.json` stays out of the session, which is intended: it carries servers this lab does not use.
+Do the same `cd` in your control shell (`Ctrl+b c` opens one in tmux), because every relative path below starts from this folder. Approve the project-scoped `chrome-devtools` server when Claude Code asks. The repo's own `/.mcp.json` stays out of the session, which is intended: it carries servers this lab does not use.
+
+**Expected result:** `grep` prints one line with `"--headless",` inside the `args` array, and Claude Code starts in `react-devops-seo`.
 
 ---
 
@@ -44,9 +57,8 @@ Approve the project-scoped `chrome-devtools` server when Claude Code asks. The r
 
 An audit of a URL that does not answer produces a confident report about an error page. Check the edge first with `curl --resolve`, which supplies the address `app.box.test` would resolve to, and verify the certificate chain against the CA you pulled off the box in Lab 01 and keep certificate verification on.
 
-**Commands**, in a terminal you keep for the whole lab, run from `react-devops-seo`:
+**Commands**, in your control shell, which you keep for the whole lab, run from `react-devops-seo`:
 
-**Bash:**
 ```bash
 export KEY=../react-devops/deploy/target-box/keys/box_key
 export CA=../react-devops/deploy/box-local-ca.crt
@@ -58,18 +70,6 @@ edge https://app.box.test:8443/ | head -9
 $DEPLOY 'cd /opt/react-devops && docker compose ps --format "{{.Service}} {{.Image}} {{.State}}"'
 ```
 
-**PowerShell:**
-```powershell
-$Key = '../react-devops/deploy/target-box/keys/box_key'
-$Ca = '../react-devops/deploy/box-local-ca.crt'
-$SshOpts = @('-i',$Key,'-o','IdentitiesOnly=yes','-o','UserKnownHostsFile=NUL','-o','StrictHostKeyChecking=no')
-function Deploy { ssh -p 2222 @SshOpts deploy@localhost @args }
-function Edge { curl.exe -s --ssl-revoke-best-effort --cacert $Ca --resolve app.box.test:8443:127.0.0.1 @args }
-Edge -o NUL -w '%{http_code}\n' https://app.box.test:8443/
-Edge https://app.box.test:8443/ | Select-Object -First 9
-Deploy 'cd /opt/react-devops && docker compose ps --format "{{.Service}} {{.Image}} {{.State}}"'
-```
-
 **Expected result:** `200`, then the first lines of the app's `index.html` showing `<title>React Food Shop</title>`, then two lines: `web` running the image tag Lab 01 left behind (`react-devops:v1` or `react-devops:v2`) and `caddy` running `caddy:2-alpine`. Note the web image tag now, because Step 7 replaces it. If the `curl` fails with a certificate error, the `CA` path is wrong for your current directory; if it fails to connect, the box container is not running.
 
 ---
@@ -78,7 +78,7 @@ Deploy 'cd /opt/react-devops && docker compose ps --format "{{.Service}} {{.Imag
 
 **Goal:** Have the `chrome-devtools` MCP open `https://app.box.test:8443/` and read the page, the same way a reader of the public site would.
 
-`app.box.test` resolves nowhere on your machine, and the edge's certificate comes from Caddy's local CA, which no browser trusts. The starter's `.mcp.json` solves both inside the MCP's own Chrome: `--chromeArg=--host-resolver-rules=MAP app.box.test 127.0.0.1` maps the name to your loopback, and `--acceptInsecureCerts` accepts the local CA. Nothing on your machine's resolver or trust store changes.
+`app.box.test` resolves nowhere on the VM, and the edge's certificate comes from Caddy's local CA, which no browser trusts. The starter's `.mcp.json` solves both inside the MCP's own Chrome: `--chromeArg=--host-resolver-rules=MAP app.box.test 127.0.0.1` maps the name to the VM's loopback, and `--acceptInsecureCerts` accepts the local CA. Nothing on the VM's resolver or trust store changes.
 
 **Prompt:**
 
@@ -92,9 +92,9 @@ Use the chrome-devtools MCP to open https://app.box.test:8443/ and report:
 Do not change any file.
 ```
 
-If `/mcp` does not list `chrome-devtools` as connected, run `/exit`, start `claude` again in the starter and approve the server; `.mcp.json` is read at startup.
+If `/mcp` does not list `chrome-devtools` as connected, check that `.mcp.json` carries `--headless`, run `/exit`, start `claude` again in the starter and approve the server; `.mcp.json` is read at startup.
 
-**Expected result:** The title `React Food Shop`, an h1 reading `React Food Shop`, no meta description, no canonical link and no JSON-LD script, and an empty console. Claude should not mention a certificate warning or a name-resolution failure; if it does, the two `args` in `.mcp.json` did not load.
+**Expected result:** The title `React Food Shop`, an h1 reading `React Food Shop`, no meta description, no canonical link and no JSON-LD script, and an empty console. Claude should not mention a certificate warning or a name-resolution failure; if it does, the `args` in `.mcp.json` did not load.
 
 ---
 
@@ -122,7 +122,9 @@ score well because the content does not exist yet, and keep them out of the
 findings list.
 ```
 
-**Expected result:** One HTML route plus `/healthz`, a title of `React Food Shop`, no meta description, no canonical, no Open Graph tags and no JSON-LD. The bundle response carries no `Content-Encoding` and no `Cache-Control`, and the protocol is `h2`. Claude recommends a scope that covers the home page only and names Content Quality and Authority as limited by the missing content. Push back if it invents a sitemap, a services page or a blog index, or if it reports compression as present from a request without `Accept-Encoding`: nginx in the app container never compresses, and the edge adds nothing yet.
+**Expected result:** One HTML route plus `/healthz`, a title of `React Food Shop`, no meta description, no canonical, no Open Graph tags and no JSON-LD. The bundle response carries no `Content-Encoding` and no `Cache-Control`, and the protocol is `h2`. Claude recommends a scope that covers the home page only and names Content Quality and Authority as limited by the missing content.
+
+Push back if it invents a sitemap, a services page or a blog index, or if it reports compression as present from a request without `Accept-Encoding`: nginx in the app container never compresses, and the edge adds nothing yet.
 
 ---
 
@@ -151,7 +153,7 @@ checks. Score Technical SEO, On-Page SEO, Content Quality and Authority out of
 
 **Goal:** A `.lighthouserc.json` that fails the run when LCP, TBT or CLS cross their limits, and the baseline numbers it produces.
 
-Lighthouse CI measures against the same hostname, so it has to resolve the name and accept the local CA exactly as the MCP's Chrome does. The `chromeFlags` setting carries both flags into the Chrome that Lighthouse launches. The file also pins `numberOfRuns` to 3, because a single Lighthouse run varies by tens of milliseconds and the median of three is the number worth asserting on.
+Lighthouse CI measures against the same hostname, so it has to resolve the name and accept the local CA exactly as the MCP's Chrome does. The `chromeFlags` setting carries both flags into the Chrome that Lighthouse launches, and Lighthouse CI starts that Chrome headless by default, so the file needs nothing extra on the VM. It also pins `numberOfRuns` to 3, because a single Lighthouse run varies by tens of milliseconds and the median of three is the number worth asserting on.
 
 **Prompt:**
 
@@ -212,7 +214,9 @@ prioritized backlog. For each one, classify it as a "site source" fix or a
 Do not fix anything yet.
 ```
 
-**Expected result:** A table of three rows. The typical split is two source fixes and one Caddyfile fix: the meta description (and a sharper title) in `index.html`, a JSON-LD `WebSite` or `WebApplication` block in `index.html`, and `encode zstd gzip` inside the `app.box.test` block of the Caddyfile, proven with `curl -sI` and a `Content-Encoding` header. Cache headers on `/assets/*` are the usual fourth candidate. Push back if Claude proposes a Vite plugin or a build change for compression, or an nginx change for a header the edge owns: the lab keeps the app container as Lab 01 built it.
+**Expected result:** A table of three rows. The typical split is two source fixes and one Caddyfile fix: the meta description (and a sharper title) in `index.html`, a JSON-LD `WebSite` or `WebApplication` block in `index.html`, and `encode zstd gzip` inside the `app.box.test` block of the Caddyfile, proven with `curl -sI` and a `Content-Encoding` header. Cache headers on `/assets/*` are the usual fourth candidate.
+
+Push back if Claude proposes a Vite plugin or a build change for compression, or an nginx change for a header the edge owns: the lab keeps the app container as Lab 01 built it.
 
 ---
 
@@ -224,18 +228,10 @@ The source layer redeploys through the loop from Lab 01: build, ship the image o
 
 Pull the live Compose file first, so the edit starts from what the box runs:
 
-**Bash:**
 ```bash
 mkdir -p box
 scp -P 2222 $SSHO deploy@localhost:/opt/react-devops/docker-compose.yml deploy@localhost:/opt/react-devops/Caddyfile box/
 ls box
-```
-
-**PowerShell:**
-```powershell
-New-Item -ItemType Directory -Force box | Out-Null
-scp -P 2222 @SshOpts deploy@localhost:/opt/react-devops/docker-compose.yml deploy@localhost:/opt/react-devops/Caddyfile box/
-Get-ChildItem box
 ```
 
 **Expected result:** `box/` holds `Caddyfile` and `docker-compose.yml`, both copied from the box. They are your working copies for this step and Step 8.
@@ -265,20 +261,11 @@ Do not touch box/Caddyfile in this step. Report what you changed and what the
 browser returned.
 ```
 
-On PowerShell, add one sentence to item 3: "Stage the image with `docker save -o` to a tar file, copy it with `scp`, and load it with `docker load -i`; do not pipe the archive through PowerShell." The pipeline re-encodes binary data and corrupts the tar.
+Then check the claims from your control shell, because Claude's summary is a claim:
 
-Then check the claims from your own terminal, because Claude's summary is a claim:
-
-**Bash:**
 ```bash
 $DEPLOY 'docker inspect react-devops-web --format "{{.Config.Image}}"'
 edge https://app.box.test:8443/ | grep -iE '<title>|name="description"|ld\+json'
-```
-
-**PowerShell:**
-```powershell
-Deploy 'docker inspect react-devops-web --format "{{.Config.Image}}"'
-Edge https://app.box.test:8443/ | Select-String -Pattern '<title>|name="description"|ld\+json'
 ```
 
 **Expected result:** `react-devops:seo-1` as the running image, and the served HTML now contains the new `<title>`, a `<meta name="description" ...>` line and the `application/ld+json` script. In the browser, Claude reports the new title, a description of 70 to 160 characters and a JSON-LD object whose `@type` is the one the plan chose. The old tag is still on the box as an unused image, which is your rollback.
@@ -312,16 +299,9 @@ the same header changed on the HTML document.
 
 Then repeat the proof yourself:
 
-**Bash:**
 ```bash
 JS=$(edge https://app.box.test:8443/ | grep -o '/assets/[^"]*\.js' | head -1)
 edge -sI -H 'Accept-Encoding: gzip' "https://app.box.test:8443$JS" | grep -iE 'HTTP/|content-encoding|vary|cache-control'
-```
-
-**PowerShell:**
-```powershell
-$Js = [regex]::Match((Edge https://app.box.test:8443/ | Out-String), '/assets/[^"]+\.js').Value
-Edge -sI -H 'Accept-Encoding: gzip' "https://app.box.test:8443$Js" | Select-String -Pattern 'HTTP/|content-encoding|vary|cache-control'
 ```
 
 **Expected result:** The bundle response now includes `Content-Encoding: gzip` (or `zstd` when the request asks for it) and `Vary: Accept-Encoding`, where Step 3 showed neither. If the plan also added a long-lived `Cache-Control` for `/assets/*`, that header appears too. Without the `Accept-Encoding` request header the same command returns no `Content-Encoding`, which is correct: compression is negotiated, and a check that forgets the header reports a fix that did not land.
@@ -348,26 +328,19 @@ three fixes, the layer each one lived in, and the evidence that proved each on
 the deployed URL.
 ```
 
-**Expected result:** A second `SEO_AUDIT-GENERAL-<hhmm>.md`, a comparison file, and a runs log with two rows. On-Page SEO rises because the meta description and structured data exist, and Technical SEO rises because the bundle is compressed. `.seo/vitals-after.md` shows the Performance score at or above the baseline and `assert` passes all three thresholds. The closing table has three rows: two marked "site source" with the title, description or JSON-LD evidence from the browser, and one marked "Caddyfile" with the `Content-Encoding` header from `curl -sI`.
+**Expected result:** A second `SEO_AUDIT-GENERAL-<hhmm>.md`, a comparison file, and a runs log with two rows. On-Page SEO rises because the meta description and structured data exist, and Technical SEO rises because the bundle is compressed. `.seo/vitals-after.md` shows the Performance score at or above the baseline and `assert` passes all three thresholds.
+
+The closing table has three rows: two marked "site source" with the title, description or JSON-LD evidence from the browser, and one marked "Caddyfile" with the `Content-Encoding` header from `curl -sI`.
 
 ---
 
 ## Cleanup
 
-Everything this lab wrote locally lives in the starter and returns `git status` to clean when removed. The box keeps running the `seo-1` image and the edited Caddyfile until you tear it down; [Lab 01's Cleanup](lab-01-deploy-to-an-ubuntu-box.md#cleanup) does that, and Labs 02 and 03 deploy to the same box, so run it last.
+Everything this lab wrote locally lives in the starter and returns `git status` to clean when removed, the `--headless` edit to `.mcp.json` included. The box keeps running the `seo-1` image and the edited Caddyfile until you tear it down; [Lab 01's Cleanup](lab-01-deploy-to-an-ubuntu-box-vm.md#cleanup) does that, and Labs 02 and 03 deploy to the same box, so run it last.
 
-**Bash:**
 ```bash
 rm -rf .seo .lighthouseci box .lighthouserc.json
-git checkout -- index.html
-docker image rm react-devops:seo-1
-git status --short
-```
-
-**PowerShell:**
-```powershell
-Remove-Item -Recurse -Force .seo, .lighthouseci, box, .lighthouserc.json
-git checkout -- index.html
+git checkout -- index.html .mcp.json
 docker image rm react-devops:seo-1
 git status --short
 ```
@@ -382,10 +355,10 @@ git status --short
 | Host mapping and insecure certs scoped to the MCP's own Chrome   | 2, 5 | Auditing a hostname with no DNS record and a local CA                  |
 | Scoping an audit from the served bytes                           | 3    | Keeping fake findings out of the backlog of a one-page site            |
 | Timestamped `.seo/` snapshots and a runs log                     | 4, 9 | A baseline every later improvement is measured against                 |
-| Lighthouse CI assertions on LCP, TBT and CLS with a median of 3  | 5    | Failing a run on regressions with a number    |
+| Lighthouse CI assertions on LCP, TBT and CLS with a median of 3  | 5    | Failing a run on regressions with a number                             |
 | Classifying a finding as source or Caddyfile before editing      | 6    | Choosing the right redeploy loop the first time                        |
 | New image tag, `up -d web` and a browser read of the DOM         | 7    | Source fixes that cannot silently deploy as a no-op                    |
 | In-place write of a bind-mounted config, reload and `curl -sI`   | 8    | Edge fixes proven on the wire with the `Accept-Encoding` request header |
 | Second audit plus compare                                        | 9    | Turning a fix into a score delta                                       |
 
-[Lab 03](lab-03-hugo-blog-ubuntu-box.md) applies the same box to a static Hugo site. The demo [Optimize a Site on the Box with Agentic SEO and Lighthouse CI](../../demos/09-agentic-devops/03-agentic-optimization/demo-agentic-seo-optimization.md) adds the GitHub Actions workflow that repeats the Lighthouse run after every push.
+[Lab 03](lab-03-hugo-blog-ubuntu-box-vm.md) applies the same box to a static Hugo site. The demo [Optimize a Site on the Box with Agentic SEO and Lighthouse CI](../../demos/09-agentic-devops/03-agentic-optimization/demo-agentic-seo-optimization.md) adds the GitHub Actions workflow that repeats the Lighthouse run after every push.

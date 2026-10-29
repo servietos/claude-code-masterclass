@@ -2,7 +2,7 @@
 
 Build and deploy the `react-devops` app using Claude Code and Docker. You will build the app image on your own machine, ship it to the Ubuntu box from Lab 01 over SSH, run it there, and prove it serves. Where Lab 01 put a Caddy edge and a TLS certificate in front of the app, this lab is the direct route: the app's own nginx container, published on a port, reached over an SSH tunnel.
 
-This lab is an optional companion to the module's core lab, [Deploy a Containerized React App to an Ubuntu Box over SSH](lab-01-deploy-to-an-ubuntu-box.md). Both labs deploy this same `react-devops` app to the same box. Lab 01 hardened the box, built a Caddy edge and terminated TLS, so it teaches the operational spine of a deployment. This lab drops the edge and the certificate to isolate the one thing a managed platform hides: how the build artifact actually gets onto the host and becomes a running, reachable service.
+This lab is an optional companion to the module's core lab, [Deploy a Containerized React App to an Ubuntu Box over SSH](lab-01-deploy-to-an-ubuntu-box-container.md). Both labs deploy this same `react-devops` app to the same box. Lab 01 hardened the box, built a Caddy edge and terminated TLS, so it teaches the operational spine of a deployment. This lab drops the edge and the certificate to isolate the one thing a managed platform hides: how the build artifact actually gets onto the host and becomes a running, reachable service.
 
 Each step contains:
 
@@ -12,7 +12,7 @@ Each step contains:
 
 ## Prerequisites
 
-- **Lab 01 completed at least through Step 4.** The box from [lab-01-deploy-to-an-ubuntu-box.md](lab-01-deploy-to-an-ubuntu-box.md) must be running with `deploy` created, Docker installed with the Compose plugin, and the `vfs` storage driver in place. Everything below assumes that box. If you also ran Lab 01 Step 5, root SSH is closed on it, which is why every command in this lab connects as `deploy` and never as `root`: a `root@localhost` login on a hardened box answers `Permission denied (publickey)`.
+- **Lab 01 completed at least through Step 4.** The box from [lab-01-deploy-to-an-ubuntu-box-container.md](lab-01-deploy-to-an-ubuntu-box-container.md) must be running with `deploy` created, Docker installed with the Compose plugin, and the `vfs` storage driver in place. Everything below assumes that box. If you also ran Lab 01 Step 5, root SSH is closed on it, which is why every command in this lab connects as `deploy` and never as `root`: a `root@localhost` login on a hardened box answers `Permission denied (publickey)`.
 - **Docker**: Docker Desktop or Docker Engine, running before you start. The app image builds here and runs on the box.
 - **A shell**: Bash (git-bash or WSL on Windows, any shell on macOS and Linux) or PowerShell 7. Every command block that is not byte-identical across the two ships a `powershell` twin below the `bash` one. Three substitutions recur and each fails silently rather than loudly: `UserKnownHostsFile=NUL` instead of `/dev/null`, `curl.exe` instead of `curl`, and a staged tar file instead of `docker save | ssh`, because PowerShell's pipeline carries .NET objects and corrupts a binary stream.
 - **No GitHub account and no Node install.** The app's `dockerfile` is multi-stage and runs `npm ci` and `npm run build` inside the build container.
@@ -273,4 +273,4 @@ The box itself stays: it is shared with Lab 01, and Lab 03 deploys to it next.
 | Delegating the proven loop to Claude              | 6    | Turning a rehearsed sequence into a repeatable instruction  |
 | A distinguishing byte in the new build            | 7    | Proving a redeploy moved the served content                 |
 
-[Lab 03](lab-03-hugo-blog-ubuntu-box.md) deploys a Hugo blog to the same box, which is the static-generator half of this one: the build produces files instead of an image, and the nginx container serves them directly.
+[Lab 03](lab-03-hugo-blog-ubuntu-box-container.md) deploys a Hugo blog to the same box, which is the static-generator half of this one: the build produces files instead of an image, and the nginx container serves them directly.

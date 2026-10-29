@@ -4,7 +4,7 @@ Build and deploy a static blog using Hugo, Claude Code, and Docker. You will ope
 
 Hugo is a static site generator written in Go. It turns Markdown files into a complete website in milliseconds without a database or server runtime. Content lives in plain text files versioned with Git, themes are swapped by changing a single config value, and the built output is a folder of static HTML that any web server can serve.
 
-This lab is optional. The module's core lab, [Deploy a Containerized React App to an Ubuntu Box over SSH](lab-01-deploy-to-an-ubuntu-box.md), ships a containerized app to a host you own and operate over SSH. Lab 02 ships a React app the same way. This lab is the static-generator half: the build produces files instead of an app bundle, and the same `docker save` pipe carries them to the same box.
+This lab is optional. The module's core lab, [Deploy a Containerized React App to an Ubuntu Box over SSH](lab-01-deploy-to-an-ubuntu-box-container.md), ships a containerized app to a host you own and operate over SSH. Lab 02 ships a React app the same way. This lab is the static-generator half: the build produces files instead of an app bundle, and the same `docker save` pipe carries them to the same box.
 
 Each step contains:
 
@@ -14,7 +14,7 @@ Each step contains:
 
 ## Prerequisites
 
-- **Lab 01 completed through Step 4.** The box from [lab-01-deploy-to-an-ubuntu-box.md](lab-01-deploy-to-an-ubuntu-box.md) must be running with `deploy` created and Docker installed with the `vfs` storage driver.
+- **Lab 01 completed through Step 4.** The box from [lab-01-deploy-to-an-ubuntu-box-container.md](lab-01-deploy-to-an-ubuntu-box-container.md) must be running with `deploy` created and Docker installed with the `vfs` storage driver.
 - **Docker**: Docker Desktop or Docker Engine, running before you start. The blog builds inside a container and runs on the box.
 - **A shell**: Bash (git-bash or WSL on Windows, any shell on macOS and Linux) or PowerShell 7. Every command block that is not byte-identical across the two ships a `powershell` twin below the `bash` one. Three substitutions recur and each fails silently rather than loudly: `UserKnownHostsFile=NUL` instead of `/dev/null`, `curl.exe` instead of `curl`, and a staged tar file instead of `docker save | ssh`, because PowerShell's pipeline carries .NET objects and corrupts a binary stream.
 - **No Hugo install and no GitHub account.** The multi-stage `dockerfile` downloads Hugo Extended inside its build stage, and the box receives the finished image over SSH.
@@ -352,5 +352,5 @@ The box itself stays: it is shared with Lab 01 and Lab 02.
 | SSH tunnel for verification | 8 | Reaching a service on a private interface honestly |
 | A distinguishing page in the new build | 9 | Proving a redeploy moved the served content |
 
-[Lab 01](lab-01-deploy-to-an-ubuntu-box.md) is the full version of what Labs 02 and 03 simplified: the same box, with a Caddy edge, TLS, and a deployment sub-agent in front of the app.
+[Lab 01](lab-01-deploy-to-an-ubuntu-box-container.md) is the full version of what Labs 02 and 03 simplified: the same box, with a Caddy edge, TLS, and a deployment sub-agent in front of the app.
 

@@ -1,5 +1,19 @@
 # Todo
 
+## Lab 09 guides for the Azure lab VMs
+
+Owner ask (2026-10-29): "write alternativ guides with a *-vm suffix for the azure vms" for `lab-01` to `lab-04` in `labs/09-agentic-devops`.
+
+Shape: the VM from `create-lab-vm.azcli` is the learner's workstation (cloud-init installs Docker Engine, Node 24, Chrome, Claude Code; NSG admits 22 only), the box container runs on it. Bash only, PowerShell twins and Docker Desktop specifics dropped, Lab 04 runs the MCP's Chrome headless and copies `agentic-seo` from the clone. Probed on `labvm-dev-1`: Docker 29.9.2, Compose v5.6.1, Node 24.22.2, Chrome 156, Claude Code 2.1.312, tmux, headless Chrome, `chrome-devtools-mcp --headless`, LHCI headless by default.
+
+- [x] `lab-01-deploy-to-an-ubuntu-box-vm.md`
+- [x] `lab-02-react-vite-ubuntu-box-vm.md`
+- [x] `lab-03-hugo-blog-ubuntu-box-vm.md`
+- [x] `lab-04-web-vitals-and-seo-vm.md`
+- [x] Owner ask: "rename the other ones to *-container"; links in the guides, `demos/09-agentic-devops/readme.md` and `demos/readme.md` repointed
+- [x] Owner ask: "re-link all to the readme as alternatives", "mention this vm creation script": Guide column with both editions, editions paragraph, `create-lab-vm.azcli` in the readme and the Lab 01 VM prerequisites
+- [x] Verify: no em dashes, no negative parallelism, paragraphs at most 4 sentences, fences tagged, links and anchors resolve, no stale original filename
+
 ## Module 10 naming
 
 Owner ask (2026-10-29): "same naming conventions here demos\10-sdk-managed-agents\02-parallel-agents\parallel-reviewer-solution and in all topics including presenter guid update", "from the topic names like demos\10-sdk-managed-agents\02-parallel-agents we dont see where we are in skd and where in agents ... fix that".
