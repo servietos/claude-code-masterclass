@@ -1,5 +1,37 @@
 # Todo
 
+## Lab 05 in labs/09-agentic-devops: a compliance skill from researched links
+
+Owner ask (2026-10-29): "add lab 05 where you let the users create something like our /compliance skills by letting them search 3 links for each of the compliance subtopics like a11y, dsvgo, eu ai act and then optimize there sites". Owner answers: discover-recipe format, the Hugo blog from Lab 03 as the site, two files (container and VM editions).
+
+- [x] Facts: `my-blog/` theme, third-party requests, pages; Lab 03 build, tunnel and redeploy commands in both editions
+- [x] `lab-05-compliance-skill-container.md` and `lab-05-compliance-skill-vm.md`: three link-research steps (a11y, DSGVO, EU AI Act), build the skill from the nine links, audit the deployed blog, fix, redeploy, re-audit
+- [x] Rows in `labs/09-agentic-devops/readme.md` (lab table, prerequisites, starters table, total time)
+- [x] Verify: fences tagged, links and anchors resolve, no em dashes, no negative parallelism, paragraphs at most 4 sentences; the Step 6 fixes applied to a scratch copy of `my-blog` build with Hugo and every Step 6 grep matches
+- [ ] Not run: the lab end to end on a box (web research, skill build, audit, redeploy)
+
+## Lab 09 guides for the Azure lab VMs
+
+Owner ask (2026-10-29): "write alternativ guides with a *-vm suffix for the azure vms" for `lab-01` to `lab-04` in `labs/09-agentic-devops`.
+
+Shape: the VM from `create-lab-vm.azcli` is the learner's workstation (cloud-init installs Docker Engine, Node 24, Chrome, Claude Code; NSG admits 22 only), the box container runs on it. Bash only, PowerShell twins and Docker Desktop specifics dropped, Lab 04 runs the MCP's Chrome headless and copies `agentic-seo` from the clone. Probed on `labvm-dev-1`: Docker 29.9.2, Compose v5.6.1, Node 24.22.2, Chrome 156, Claude Code 2.1.312, tmux, headless Chrome, `chrome-devtools-mcp --headless`, LHCI headless by default.
+
+- [x] `lab-01-deploy-to-an-ubuntu-box-vm.md`
+- [x] `lab-02-react-vite-ubuntu-box-vm.md`
+- [x] `lab-03-hugo-blog-ubuntu-box-vm.md`
+- [x] `lab-04-web-vitals-and-seo-vm.md`
+- [x] Owner ask: "rename the other ones to *-container"; links in the guides, `demos/09-agentic-devops/readme.md` and `demos/readme.md` repointed
+- [x] Owner ask: "re-link all to the readme as alternatives", "mention this vm creation script": Guide column with both editions, editions paragraph, `create-lab-vm.azcli` in the readme and the Lab 01 VM prerequisites
+- [x] Verify: no em dashes, no negative parallelism, paragraphs at most 4 sentences, fences tagged, links and anchors resolve, no stale original filename
+
+## Module 10 naming
+
+Owner ask (2026-10-29): "same naming conventions here demos\10-sdk-managed-agents\02-parallel-agents\parallel-reviewer-solution and in all topics including presenter guid update", "from the topic names like demos\10-sdk-managed-agents\02-parallel-agents we dont see where we are in skd and where in agents ... fix that".
+
+- [x] Solution scripts in topics 02 to 08 renamed `01-<name>`; package.json, solution readmes, starter readme links, demo and presenter guides follow
+- [x] Topic folders carry `sdk-` (01, 02) or `agent-` (03 to 08); every link to them follows (module readme, topic readmes, guides, labs 03 to 05, `.devcontainer/readme.md`, `dashboard/index.html`)
+- [x] Verify: no stale reference, every relative link resolves, `tsc --noEmit` in both TypeScript solutions
+
 ## food-shop-vue redo
 
 Owner ask (2026-10-28): "did you create basic vue skills", "why not -> create them", "you did not get the task right -> src\food-app\shop-ui\food-shop-vue this is not vue https://vuejs.org/", "delete the folder and re-do again". Original ask in session d3951cbd: "src\food-app\shop-ui we need a vue implementation of this frontend".
@@ -316,3 +348,15 @@ Reference: `src/food-app/shop-ui/food-shop-ng` (the current Angular app: orange 
 - [ ] Integrate: `npm run build` (vue-tsc + vite) clean
 - [ ] Verify: parity review against the Angular source, then a browser run beside the Angular app
 - [ ] Fix what the verify stage confirms, rebuild
+
+## Lab 04 in labs/08-distribution: a mod that routes and briefs subagents
+
+Owner ask (2026-10-28): "to labs\08-distribution add a lab about a simple mod based orchestration and delegation with all assets it requires. when done run it and fix all errors in the guides"
+
+Shape: `lab-04-orchestrate-with-a-mod.md` at the module root, topic folder `04-orchestrate/`, starter `delegation-desk/` (a small `shop-api/` to ask lookups about, plus the `desk-router/` manifest), finished `delegation-desk-solution/`. The mod: a read-only `scout` agent on Haiku, a `prompt.submit` hook that attaches a delegation hint to lookups, an `agent.spawn` hook that reroutes generic lookup spawns to the scout and appends a brief, a ledger in `$.state` with a `/desk` command, a `claude plugin test` suite, and a directory marketplace to install it from. Claude Code 2.1.312.
+
+- [x] Starter and solution assets
+- [x] `claude plugin validate` and `claude plugin test` on the solution (5 pass), `tsc` clean against the 2.1.312 API types
+- [x] Guide, index row in `labs/08-distribution/readme.md`
+- [x] Run the guide against a run copy of the starter: every file block written from the guide is byte-identical to the solution; fixed `marketplace add .` (needs `./`), the `Read from:` line, the absolute `directory` path in project settings, the leftover empty settings file, the engine-written `tsconfig.json`
+- [x] Brand voice clean, fences tagged, links resolve; dead `plugin-dev` link in the module index repointed to `anthropics/claude-plugins-official`

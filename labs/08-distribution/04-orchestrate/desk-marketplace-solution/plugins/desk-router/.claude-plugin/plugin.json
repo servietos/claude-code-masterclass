@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "desk-router",
+  "version": "0.1.0",
+  "description": "Routes lookups to a read-only scout agent, briefs every subagent and keeps a ledger of the delegations.",
+  "author": {
+    "name": "Claude Code Masterclass"
+  },
+  "license": "MIT",
+  "types": "./types/index.d.ts"
+}

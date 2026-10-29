@@ -26,3 +26,5 @@ labs/10-sdk-managed-agents/**/.env
 agent-instructions/
 demos/**/pptx/
 exam-prep/
+
+labs/09-agentic-devops/**/azure-linux.md

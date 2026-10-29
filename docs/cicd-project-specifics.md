@@ -14,7 +14,7 @@ Declared in the agent frontmatter, resolved from the repo's `.mcp.json`:
 
 ## The ssh-mcp host pin
 
-`ssh-mcp` is pinned to one host in `.mcp.json`; the deployment manifest names the host asked for. Compare them before the first command and stop if they disagree. An MCP call landing on the wrong box is the one failure no later check catches, because every check then runs on the wrong box too. Confirm on the connection itself (`hostname`, `hostname -I`), never by trusting either file.
+`ssh-mcp` is pinned to one host: `.mcp.json` reads it from the `SSH_HOST` user environment variable, beside `SSH_USER` and `SSH_PASSWORD`; the deployment manifest names the host asked for. Compare them before the first command and stop if they disagree. An MCP call landing on the wrong box is the one failure no later check catches, because every check then runs on the wrong box too. Confirm on the connection itself (`hostname`, `hostname -I`), never by trusting the variable or the manifest.
 
 Fall back to `ssh` and `scp` for any other host, for file transfer, and when the server is not connected.
 

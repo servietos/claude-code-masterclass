@@ -46,9 +46,9 @@ Work in `box-stack/`; the finished result is beside it in `box-stack-solution/`,
 
 | Lab | Description |
 |-----|-------------|
-| [Deploy a Containerized React App to an Ubuntu Box over SSH](../../labs/09-agentic-devops/lab-01-deploy-to-an-ubuntu-box.md) | Bootstrap and harden a throwaway Ubuntu target, ship the image without a registry, front it with a Caddy edge that owns TLS, then hand the redeploy loop to a sub-agent and audit its evidence. |
-| [Deploy a React + Vite App to the Ubuntu Box](../../labs/09-agentic-devops/lab-02-react-vite-ubuntu-box.md) | Build the `react-devops` image, ship it over SSH, run it in its own nginx container on a dedicated port, and prove it serves through an SSH tunnel. |
-| [Deploy a Hugo Blog to the Ubuntu Box](../../labs/09-agentic-devops/lab-03-hugo-blog-ubuntu-box.md) | Generate two posts, build the Clarity blog inside a container so no Hugo install is needed, then ship it and redeploy to prove the new post is live. |
+| [Deploy a Containerized React App to an Ubuntu Box over SSH](../../labs/09-agentic-devops/lab-01-deploy-to-an-ubuntu-box-container.md) | Bootstrap and harden a throwaway Ubuntu target, ship the image without a registry, front it with a Caddy edge that owns TLS, then hand the redeploy loop to a sub-agent and audit its evidence. |
+| [Deploy a React + Vite App to the Ubuntu Box](../../labs/09-agentic-devops/lab-02-react-vite-ubuntu-box-container.md) | Build the `react-devops` image, ship it over SSH, run it in its own nginx container on a dedicated port, and prove it serves through an SSH tunnel. |
+| [Deploy a Hugo Blog to the Ubuntu Box](../../labs/09-agentic-devops/lab-03-hugo-blog-ubuntu-box-container.md) | Generate two posts, build the Clarity blog inside a container so no Hugo install is needed, then ship it and redeploy to prove the new post is live. |
 
 ## Knowledge Check
 

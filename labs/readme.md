@@ -44,7 +44,7 @@ Four modules carry prerequisites that sit outside the time above, because they d
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 05     | A GitHub account with `gh` authenticated, plus optional OpenAI Codex and Aider installs for the comparison                                                         |
 | 09     | Docker running locally for every lab, no cloud or GitHub account needed. Labs 02 and 03 deploy to the box Lab 01 builds, and every build runs inside a container, so no local Node or Hugo install either |
-| 10     | A funded Claude Console account and an `ANTHROPIC_API_KEY` in `demos/10-sdk-managed-agents/.env`. Every `query()` call and every Managed Agents Session in the labs is billed to it |
+| 10     | A funded Claude Console account and an `ANTHROPIC_API_KEY` in `labs/10-sdk-managed-agents/.env`. Every `query()` call and every Managed Agents Session in the labs is billed to it |
 | 11     | `uv` for the Spec Kit CLI in Lab 02, which installs `specify-cli` 1.2.1 into your user profile, and Node 18 or later for the BMAD-METHOD installer |
 
 Add 15 to 30 minutes to Modules 02, 04, 06 and 09 on a cold machine: they install Angular, .NET or React dependency trees, and a first `npm install` on the Angular app is the slowest single wait in the course.
