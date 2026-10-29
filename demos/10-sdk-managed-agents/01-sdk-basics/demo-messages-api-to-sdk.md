@@ -47,7 +47,7 @@ const currentWeather = tool(
 const weatherServer = createSdkMcpServer({ name: "weather", version: "1.0.0", tools: [currentWeather] });
 ```
 
-Run `npm run weather`; its prompt asks about a jacket for Berlin and Madrid and forces two tool calls:
+Run `npm run tool-call`; its prompt asks about a jacket for Berlin and Madrid and forces two tool calls:
 
 ```text
 [tool_use] mcp__weather__current_weather {"city":"Berlin"}
@@ -60,7 +60,7 @@ Run `npm run weather`; its prompt asks about a jacket for Berlin and Madrid and 
 
 ### Part C: CI Exit Code (4 min)
 
-Run `npm run ci`. The script reads `package.json`, sends it to Claude with a prompt that spells out the JSON schema, validates the response with Zod, and exits with code 0 (pass), 1 (comment), or 2 (block).
+Run `npm run audit-code`. The script reads `package.json`, sends it to Claude with a prompt that spells out the JSON schema, validates the response with Zod, and exits with code 0 (pass), 1 (comment), or 2 (block).
 
 ```json
 {

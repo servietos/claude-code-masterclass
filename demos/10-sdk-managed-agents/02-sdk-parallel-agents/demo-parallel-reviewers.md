@@ -9,7 +9,7 @@ You need Node 18 or newer and working Claude credentials: either a logged-in `cl
 ```bash
 cd demos/10-sdk-managed-agents/02-sdk-parallel-agents/parallel-reviewer
 npm install
-npm run review
+npm run parallel-review
 ```
 
 ### Part A: Sequential Baseline (3 min)
@@ -37,7 +37,7 @@ Expect heavy overlap. The flaws in this file are blatant enough that every revie
 
 ### Part C: Isolation Test (4 min)
 
-The isolation test runs automatically at the start of `npm run review`. Session A receives a canary word in its prompt; Session B runs in parallel without it. The test searches Session B's output for the canary.
+The isolation test runs automatically at the start of `npm run parallel-review`. Session A receives a canary word in its prompt; Session B runs in parallel without it. The test searches Session B's output for the canary.
 
 ```text
 Isolation test: PASS
@@ -63,7 +63,7 @@ const result = await db.query(sql, [username, hashPassword(password)]);
 ```
 
 ```bash
-npm run review
+npm run parallel-review
 ```
 
 The exit code does not move yet, and that is the lesson. MD5 with a static salt, a cache holding plaintext passwords, and a `validateSession` that accepts any 11-character string are each critical on their own, so the orchestrator keeps returning `block`. Clear all of them (a real KDF with a per-user salt, no credential cache, a verified session token) before the pipeline drops to `comment` or `approve`. The exact code you land on is a model judgement, so aim for 1 or 0 and read whatever the run prints.

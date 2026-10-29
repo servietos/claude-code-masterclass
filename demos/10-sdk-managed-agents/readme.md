@@ -44,7 +44,7 @@ Every runnable project folder in this module is the starter you code in, and it 
 
 The TypeScript projects in topics 01 and 02 pin `@anthropic-ai/claude-agent-sdk` 0.3.302; install them with `npm install`. The Python projects from topic 03 on install with `pip install -r requirements.txt`. Topics 03 to 07 target `anthropic>=0.118.0`, because earlier releases have no `client.beta.agents` namespace at all, and topic 08 needs `anthropic>=1.15.0` for memory stores and the multiagent types.
 
-> **Note:** Get your API key from the [API keys page of the Claude Console](https://platform.claude.com/settings/keys).
+> **Note:** Get your API key from the [API keys page of the Claude Console](https://platform.claude.com/settings/keys). On a Max or Team plan, [claim your monthly API credits](claim-funds.md) first.
 
 ## Labs
 

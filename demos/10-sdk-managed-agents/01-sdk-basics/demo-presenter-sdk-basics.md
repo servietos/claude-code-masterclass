@@ -64,7 +64,7 @@ const weatherServer = createSdkMcpServer({
 });
 ```
 
-**Result:** [`sdk-basics-solution/02-tool-call.ts`](sdk-basics-solution/02-tool-call.ts) and its `npm run weather` run from Part B, each `[tool]` line printed by the handler in this process
+**Result:** [`sdk-basics-solution/02-tool-call.ts`](sdk-basics-solution/02-tool-call.ts) and its `npm run tool-call` run from Part B, each `[tool]` line printed by the handler in this process
 
 ```text
 [tool_use] mcp__weather__current_weather {"city":"Berlin"}
@@ -118,7 +118,7 @@ const EXIT_CODES: Record<string, number> = { pass: 0, comment: 1, block: 2 };
 }
 ```
 
-Remove `description` and re-run, or run `npm run ci -- <path>`: 0 lets CI proceed, 1 posts findings, 2 stops it. Close on [Structured Outputs](readme.md#structured-outputs-guaranteeing-the-shape): `outputFormat` enforces this shape up front.
+Remove `description` and re-run, or run `npm run audit-code -- <path>`: 0 lets CI proceed, 1 posts findings, 2 stops it. Close on [Structured Outputs](readme.md#structured-outputs-guaranteeing-the-shape): `outputFormat` enforces this shape up front.
 
 **Gotcha:** a parse failure lands in `main().catch` and exits 1, the same code as `comment`, so CI cannot tell a malformed answer from findings.
 

@@ -61,7 +61,7 @@ Compare wall-clock times: the parallel block finishes in about 21 seconds, rough
 Isolation test: PASS
 ```
 
-**Gotcha:** it runs first on every `npm run review`, so the room sees the guarantee before the results that depend on it.
+**Gotcha:** it runs first on every `npm run parallel-review`, so the room sees the guarantee before the results that depend on it.
 
 ### Beat 3: the orchestrator reads the reviews, never the file (1 min)
 

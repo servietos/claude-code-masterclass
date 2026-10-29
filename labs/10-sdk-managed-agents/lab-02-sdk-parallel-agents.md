@@ -34,7 +34,7 @@ If you start Claude Code with the Claude Terminal extension (`Ctrl+F1` / `Cmd+F1
 In labs/10-sdk-managed-agents/02-sdk-parallel/sdk-review-pipeline create src/reviewers.ts with the security, performance and style reviewer configs ....
 ```
 
-That works for every step whose result is just files, and here that is all of them: this lab writes no `.claude/skills/`, no `.claude/settings.json` hooks, no `.claude/commands/`, no `.claude/agents/` and no `.mcp.json`, so nothing depends on the launch directory. The terminal work does: `npm install` in Setup, `npm run step src/02-sdk-parallel.ts` and `npm run review target/auth.ts` all resolve from a shell sitting in `sdk-review-pipeline/`. Launch inside `sdk-review-pipeline` from Step 1 onward.
+That works for every step whose result is just files, and here that is all of them: this lab writes no `.claude/skills/`, no `.claude/settings.json` hooks, no `.claude/commands/`, no `.claude/agents/` and no `.mcp.json`, so nothing depends on the launch directory. The terminal work does: `npm install` in Setup, `npm run step src/02-parallel.ts` and `npm run review target/auth.ts` all resolve from a shell sitting in `sdk-review-pipeline/`. Launch inside `sdk-review-pipeline` from Step 1 onward.
 
 Launching inside the starter makes the repository a monorepo to this lab: the repo's own `/CLAUDE.md`, `/.claude/` and `/.mcp.json` stay out of the session. You read them from the repo root without ever writing into them, and every path in the prompts below is relative to the lab folder.
 
@@ -229,7 +229,7 @@ It should:
   4. Validate with config.reviewerSchema.parse(parseJsonBlock(text)).
   5. Return { reviewer, review, costUsd, durationMs }.
 
-Then create src/02-sdk-parallel.ts that:
+Then create src/02-parallel.ts that:
   1. Starts with the dotenv loader from Setup.
   2. Reads target/auth.ts and mkdirSync("results", { recursive: true }).
   3. Maps the reviewers array through runReviewer and awaits Promise.all,
@@ -247,7 +247,7 @@ Because the three reviewers run under `Promise.all`, one reviewer guessing diffe
 Run:
 
 ```bash
-npm run step src/02-sdk-parallel.ts
+npm run step src/02-parallel.ts
 ```
 
 **Expected result:** Three JSON files under `results/`, and six log lines. The security reviewer should find the SQL injection and the MD5-with-static-salt hashing, the performance reviewer the unbounded `cache`, and the style reviewer the weak `validateSession` and the loose `db: any`. Exactly which findings each model reports, and how many, is not deterministic.
